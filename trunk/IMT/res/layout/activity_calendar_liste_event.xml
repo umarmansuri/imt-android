@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/calendar_liste_event_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mard 17 octobre 2012 à 18h"
+            android:background="@color/background_other"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/black" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/calendar_liste_event_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Titre du prochain evenement"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/calendar_liste_event_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie, leo eget viverra luctus, massa sem lacinia est, at bibendum ipsum tellus eu tortor. Donec quis interdum leo. Curabitur in magna magna. Aliquam a odio sem, eu tempus lorem. Praesent consectetur odio nec massa dignissim a luctus purus rhoncus. Donec vitae risus non arcu cursus sodales et nec enim. Nam."
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+
+</FrameLayout>

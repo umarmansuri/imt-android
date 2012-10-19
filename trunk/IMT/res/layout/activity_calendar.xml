@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/main_frame_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/handler_size" >
+    </FrameLayout>
+
+    <SlidingDrawer
+        android:id="@+id/main_sliding_compte"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:content="@+id/main_liste_compte"
+        android:handle="@+id/main_handle" >
+
+        <FrameLayout
+            android:id="@+id/main_handle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/handler_size"
+            android:background="@color/page_month_day_text_color" >
+
+            <ImageView
+                android:id="@+id/main_handle_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:rotation="180"
+                android:src="@android:drawable/ic_menu_more" />
+        </FrameLayout>
+
+        <ListView
+            android:id="@+id/main_liste_compte"
+            android:layout_width="match_parent"
+            android:layout_height="202dp"
+            android:background="@android:color/white" >
+        </ListView>
+    </SlidingDrawer>
+
+</RelativeLayout>
