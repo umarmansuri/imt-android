@@ -97,6 +97,13 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		setSupportProgressBarIndeterminateVisibility(true);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.activity_calendar, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
 	public void showProgressBar(boolean show) {
 		setSupportProgressBarIndeterminateVisibility(show);
 	}
@@ -119,13 +126,6 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 
 	public void setCurrentCalendar(GregorianCalendar cal) {
 		curentCal = cal;
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.activity_calendar, menu);
-		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override

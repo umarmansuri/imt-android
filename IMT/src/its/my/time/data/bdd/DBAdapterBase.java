@@ -39,23 +39,6 @@ public class DBAdapterBase {
 		this.DBHelper = new DatabaseHelper(this.context);
 	}
 
-	private static class DatabaseHelper extends SQLiteOpenHelper 
-	{
-		DatabaseHelper(Context context){
-			super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		}
-
-		@Override
-		public void onCreate(SQLiteDatabase db){
-			Log.d("DbAdapter","passe dans onCreate!");
-			db.execSQL(CREATE_TABLE_COMPTE);
-			db.execSQL(CREATE_TABLE_EVENT);    
-		}
-
-		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion,int newVersion){}
-	}
-
 	public DBAdapterBase open() throws SQLException 
 	{
 		this.db = this.DBHelper.getWritableDatabase();
@@ -63,4 +46,21 @@ public class DBAdapterBase {
 	}
 
 	public void close(){this.DBHelper.close();}
+
+	private static class DatabaseHelper extends SQLiteOpenHelper 
+	{
+		DatabaseHelper(Context context){
+			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		}
+	
+		@Override
+		public void onCreate(SQLiteDatabase db){
+			Log.d("DbAdapter","passe dans onCreate!");
+			db.execSQL(CREATE_TABLE_COMPTE);
+			db.execSQL(CREATE_TABLE_EVENT);    
+		}
+	
+		@Override
+		public void onUpgrade(SQLiteDatabase db, int oldVersion,int newVersion){}
+	}
 }

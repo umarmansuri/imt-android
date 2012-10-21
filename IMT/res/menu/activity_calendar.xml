@@ -2,8 +2,8 @@
 
     <item
         android:id="@+id/menu_today"
-        android:icon="@android:drawable/ic_menu_today"
-        android:showAsAction="always"/>
+        android:icon="@drawable/ic_menu_today"
+        android:showAsAction="always|withText"/>
     <item
         android:id="@+id/menu_profil"
         android:icon="@drawable/ic_action_profil"

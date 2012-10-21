@@ -8,47 +8,31 @@
         android:id="@+id/event_coment_listeComent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/event_coment_editComent"
-        android:layout_alignParentLeft="true" >
+        android:layout_above="@+id/event_layout_new_comment"
+        android:layout_alignParentLeft="true" />
 
-        <TextView
-            android:id="@+id/event_coment_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_other"
-            android:text="Mard 17 octobre 2012 à 18h"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/black" >
-        </TextView>
-
-        <TextView
-            android:id="@+id/event_coment_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Titre du prochain commentaire"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/event_coment_coments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie, leo eget viverra luctus, massa sem lacinia est, at bibendum ipsum tellus eu tortor. Donec quis interdum leo. Curabitur in magna magna. Aliquam a odio sem, eu tempus lorem. Praesent consectetur odio nec massa dignissim a luctus purus rhoncus. Donec vitae risus non arcu cursus sodales et nec enim. Nam."
-            android:textSize="@dimen/text_size_small" />
-    </ListView>
-
-    <EditText
-        android:id="@+id/event_coment_editComent"
+    <LinearLayout
+        android:id="@+id/event_layout_new_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="TESTESTESTESTCGHjbxwv,;cx,; :x,cvn bx,;cvx;:bncv,"
-        android:textSize="@dimen/text_size_small" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" >
+
+        <Button
+            android:id="@+id/button1"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <EditText
+            android:id="@+id/event_coment_editComent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:ems="10"
+            android:maxLines="3"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
 
 </RelativeLayout>
