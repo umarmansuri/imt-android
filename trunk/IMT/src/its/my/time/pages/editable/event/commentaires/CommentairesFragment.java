@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -22,8 +22,10 @@ public class CommentairesFragment extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		ListView mListView = (ListView)findViewById(R.id.event_coment_listeComent);
+		RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_commentaires, null);
+		ListView mListView = (ListView)mView.findViewById(R.id.event_coment_listeComent);
 		mListView.setAdapter(new CommentairesAdapter(getSherlockActivity()));
-		return mListView;
+		
+		return mView;
 	}
 }

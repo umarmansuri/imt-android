@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+
 public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	public static final int NB_PAGE = 1000;

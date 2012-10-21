@@ -6,9 +6,9 @@ import its.my.time.pages.editable.event.participants.ParticipantsFragment;
 import its.my.time.pages.editable.event.pj.PjFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class EventPagerAdapter extends FragmentPagerAdapter {
+public class EventPagerAdapter extends FragmentStatePagerAdapter {
 	
 	public EventPagerAdapter(FragmentManager fm) {
 		super(fm);
