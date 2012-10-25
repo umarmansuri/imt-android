@@ -1,11 +1,11 @@
 package its.my.time.data.bdd.utilisateur;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 public class UtilisateurBean {
 	
 	private String adresse;
-	private GregorianCalendar dateNaissance;
+	private Calendar dateNaissance;
 	private long id = -1;
 	private String identifiant;
 	private String mdp;
@@ -30,7 +30,7 @@ public class UtilisateurBean {
 	public void setVille(String ville) {
 		Ville = ville;
 	}
-	public GregorianCalendar getDateNaissance() {
+	public Calendar getDateNaissance() {
 		return dateNaissance;
 	}
 	public long getId() {
@@ -54,7 +54,7 @@ public class UtilisateurBean {
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
-	public void setDateNaissance(GregorianCalendar dateNaissance) {
+	public void setDateNaissance(Calendar dateNaissance) {
 		this.dateNaissance = dateNaissance;
 	}
 	public void setId(long id) {

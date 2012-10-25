@@ -26,7 +26,7 @@ public class DateUtil {
 	}
 
 
-	public static String getDay(GregorianCalendar cal) {
+	public static String getDay(Calendar cal) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("EEEE, d MMMMM yyyy");
 
@@ -110,7 +110,7 @@ public class DateUtil {
 	public static String FORMAT_DATE_ISO="yyyy-MM-dd' 'HH:mm:ssZ";
 
 
-	public static String getTimeInIso(GregorianCalendar cal, String format, TimeZone tz)
+	public static String getTimeInIso(Calendar cal, String format, TimeZone tz)
 	{
 		if( format == null ) format = FORMAT_DATE_ISO;
 		if( tz == null ) tz = TimeZone.getDefault();
@@ -119,7 +119,7 @@ public class DateUtil {
 		return f.format(cal.getTime());
 	}
 
-	public static String getTimeInIso(GregorianCalendar cal){ 
+	public static String getTimeInIso(Calendar cal){ 
 		if(cal == null) {
 			return "";
 		} else {
@@ -144,7 +144,7 @@ public class DateUtil {
 	 * @param calDay Le jour
 	 * @return true si l'evenement est dans le jour, sinon false
 	 */
-	public static boolean isInDay(EventBean event, GregorianCalendar calDay) {
+	public static boolean isInDay(EventBean event, Calendar calDay) {
 		GregorianCalendar calDayDeb = new GregorianCalendar(
 				calDay.get(Calendar.YEAR),
 				calDay.get(Calendar.MONTH),
@@ -164,7 +164,7 @@ public class DateUtil {
 	}
 
 
-	public static float getNbHeure(GregorianCalendar hDeb, GregorianCalendar hFin, GregorianCalendar day) {
+	public static float getNbHeure(Calendar hDeb, Calendar hFin, Calendar day) {
 		long millisecondsDeb;
 		long millisecondsFin;
 		
@@ -199,8 +199,8 @@ public class DateUtil {
 	}
 
 
-	public static boolean isInDay(GregorianCalendar gethDeb,
-			GregorianCalendar cal) {
+	public static boolean isInDay(Calendar gethDeb,
+			Calendar cal) {
 		GregorianCalendar calBef = new GregorianCalendar(
 				cal.get(Calendar.YEAR),
 				cal.get(Calendar.MONTH),

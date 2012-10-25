@@ -10,13 +10,13 @@ import android.support.v4.app.FragmentManager;
 
 public class DayPagerAdapter extends BasePagerAdapter{
 
-	public DayPagerAdapter(FragmentManager fm, GregorianCalendar cal) {
+	public DayPagerAdapter(FragmentManager fm, Calendar cal) {
 		super(fm, cal);
 	}
 
 	@Override
 	protected Fragment getView(int incrementation) {
-		GregorianCalendar displayedDay = (GregorianCalendar) getCurrentCalendar().clone();
+		Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
 		displayedDay.add(Calendar.DAY_OF_MONTH, incrementation);
 		return new DayFragment(displayedDay);
 	}
