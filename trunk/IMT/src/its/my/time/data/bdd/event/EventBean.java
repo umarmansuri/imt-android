@@ -1,13 +1,13 @@
 package its.my.time.data.bdd.event;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 
 public class EventBean {
 	
 	private String details;
-	private GregorianCalendar hDeb;
-	private GregorianCalendar hFin;
+	private Calendar hDeb;
+	private Calendar hFin;
 	private int id;
 	private String title;
 	private int cid;
@@ -15,10 +15,10 @@ public class EventBean {
 	public String getDetails() {
 		return details;
 	}
-	public GregorianCalendar gethDeb() {
+	public Calendar gethDeb() {
 		return hDeb;
 	}
-	public GregorianCalendar gethFin() {
+	public Calendar gethFin() {
 		return hFin;
 	}
 	public int getId() {
@@ -30,10 +30,10 @@ public class EventBean {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	public void sethDeb(GregorianCalendar hDeb) {
+	public void sethDeb(Calendar hDeb) {
 		this.hDeb = hDeb;
 	}
-	public void sethFin(GregorianCalendar hFin) {
+	public void sethFin(Calendar hFin) {
 		this.hFin = hFin;
 	}
 	public void setId(int id) {

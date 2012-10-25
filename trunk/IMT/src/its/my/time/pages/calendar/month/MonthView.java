@@ -23,7 +23,7 @@ public class MonthView extends BaseView {
 	private MonthDisplayHelper helper;
 	private OnDayClickListener listener;
 
-	public MonthView(Context context, GregorianCalendar cal, OnDayClickListener listener) {
+	public MonthView(Context context, Calendar cal, OnDayClickListener listener) {
 		super(context);
 		this.helper = new MonthDisplayHelper(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), DateUtil.FIRST_DAY);
 		this.listener = listener;

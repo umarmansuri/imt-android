@@ -49,9 +49,9 @@ public class DayView extends BaseView{
 	
 	private int totWidth;
 
-	public DayView(Context context, GregorianCalendar cal) {
+	public DayView(Context context, Calendar cal) {
 		super(context);
-		this.cal = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+		this.cal = new GregorianCalendar(cal.get(GregorianCalendar.YEAR), cal.get(GregorianCalendar.MONTH), cal.get(GregorianCalendar.DAY_OF_MONTH), 0, 0, 0);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class DayView extends BaseView{
 				@Override
 				public boolean onLongClick(View v) {
 					Intent intent = new Intent(getContext(), EventActivity.class);
-					GregorianCalendar calHeure = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), hour, cal.get(Calendar.MINUTE));
+					GregorianCalendar calHeure = new GregorianCalendar(cal.get(GregorianCalendar.YEAR), cal.get(GregorianCalendar.MONTH), cal.get(GregorianCalendar.DAY_OF_MONTH), hour, cal.get(GregorianCalendar.MINUTE));
 					intent.putExtra(EventActivity.KEY_EXTRA_ISO, DateUtil.getTimeInIso(calHeure));
 					getContext().startActivity(intent);
 					return true;
@@ -128,7 +128,7 @@ public class DayView extends BaseView{
 			float nbH = DateUtil.getNbHeure(event.gethDeb(), event.gethFin(), cal);
 			params.height = ((int)(nbH * ligneHeight));
 			if(DateUtil.isInDay(event.gethDeb(), cal)) {
-				params.margeTop = ((int) (event.gethDeb().get(Calendar.HOUR_OF_DAY)  * ligneHeight + (((float)event.gethDeb().get(Calendar.MINUTE)/ 60) * ligneHeight)));
+				params.margeTop = ((int) (event.gethDeb().get(GregorianCalendar.HOUR_OF_DAY)  * ligneHeight + (((float)event.gethDeb().get(GregorianCalendar.MINUTE)/ 60) * ligneHeight)));
 			}
 			params.indexListePoids = currentListe;
 			boolean isCoteUsed = false;
@@ -223,20 +223,20 @@ public class DayView extends BaseView{
 	private void createTabHeure() {
 
 		GregorianCalendar calDeb = new GregorianCalendar(
-				cal.get(Calendar.YEAR),
-				cal.get(Calendar.MONTH),
-				cal.get(Calendar.DAY_OF_MONTH),
+				cal.get(GregorianCalendar.YEAR),
+				cal.get(GregorianCalendar.MONTH),
+				cal.get(GregorianCalendar.DAY_OF_MONTH),
 				0,
 				0,
 				0);
 		GregorianCalendar calFin = new GregorianCalendar(
-				cal.get(Calendar.YEAR),
-				cal.get(Calendar.MONTH),
-				cal.get(Calendar.DAY_OF_MONTH),
+				cal.get(GregorianCalendar.YEAR),
+				cal.get(GregorianCalendar.MONTH),
+				cal.get(GregorianCalendar.DAY_OF_MONTH),
 				0,
 				0,
 				0);
-		calFin.add(Calendar.DAY_OF_MONTH, 1);
+		calFin.add(GregorianCalendar.DAY_OF_MONTH, 1);
 
 		List<EventBean> listEventsTmp;
 		events = new ArrayList<EventBean>();
@@ -257,9 +257,9 @@ public class DayView extends BaseView{
 		for (int i = 0;  i < 6; i++) {
 			bean = new EventBean();
 			bean.setId(i);
-			calDeb2 = new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),8,0);
+			calDeb2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),8,0);
 			bean.sethDeb(calDeb2);
-			calFin2 = new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),9+i,0);
+			calFin2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),9+i,0);
 			bean.sethFin(calFin2);
 			events.add(bean);
 		}

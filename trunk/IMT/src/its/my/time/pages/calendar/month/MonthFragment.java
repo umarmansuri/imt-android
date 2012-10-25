@@ -3,6 +3,7 @@ package its.my.time.pages.calendar.month;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.util.DateUtil;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import android.os.Bundle;
@@ -16,15 +17,15 @@ import com.actionbarsherlock.app.SherlockFragment;
 public class MonthFragment extends SherlockFragment {
 
 
-	private GregorianCalendar cal;
+	private Calendar cal;
 
 
 
 	public MonthFragment() {
-		this(new GregorianCalendar());
+		this(Calendar.getInstance());
 	}
 
-	public MonthFragment(GregorianCalendar cal) {
+	public MonthFragment(Calendar cal) {
 		super();
 		this.cal = cal;
 	}
@@ -42,7 +43,6 @@ public class MonthFragment extends SherlockFragment {
 		}
 
 		public void onDayClickListener(GregorianCalendar day) {
-			
 			((CalendarActivity)getSherlockActivity()).showDays(day);
 		}
 	}; 

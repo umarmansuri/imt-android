@@ -9,9 +9,20 @@ import its.my.time.pages.calendar.month.MonthPagerAdapter;
 import its.my.time.pages.editable.compte.ListeCompteAdapter;
 import its.my.time.pages.editable.profil.ProfilActivity;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
+import java.util.Calendar;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -55,8 +66,8 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	private int indexCurrentPager = -1;
 
 	private FrameLayout mainFramePager;
-	
-	public static GregorianCalendar curentCal;
+
+	public static Calendar curentCal;
 
 
 	private static boolean isFirstMenuSelectedOk;
@@ -74,9 +85,9 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 
 		mainFramePager = (FrameLayout)findViewById(R.id.main_frame_pager);
 		((ListView)findViewById(R.id.main_liste_compte)).setAdapter(new ListeCompteAdapter(this));
-		
-		curentCal = new GregorianCalendar();
-		new ChangePageTask().execute(INDEX_PAGER_MONTH,curentCal);
+
+		curentCal = Calendar.getInstance();
+		new ChangePageTask().execute(INDEX_PAGER_MONTH);
 	}
 
 	private void initialiseActionBar() {
@@ -101,30 +112,77 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.activity_calendar, menu);
+		
+		int today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		Bitmap bm = drawTextToBitmap(this, R.drawable.ic_menu_today, String.valueOf(today));
+		Drawable dr = new BitmapDrawable(getResources(), bm);
+		menu.findItem(R.id.menu_today).setIcon(dr);
+		
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	public Bitmap drawTextToBitmap(Context gContext, 
+			int gResId, 
+			String gText) {
+		Resources resources = gContext.getResources();
+		float scale = resources.getDisplayMetrics().density;
+		Bitmap bitmap = 
+				BitmapFactory.decodeResource(resources, gResId);
+
+		android.graphics.Bitmap.Config bitmapConfig =
+				bitmap.getConfig();
+		// set default bitmap config if none
+		if(bitmapConfig == null) {
+			bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+		}
+		// resource bitmaps are imutable, 
+		// so we need to convert it to mutable one
+		bitmap = bitmap.copy(bitmapConfig, true);
+
+		Canvas canvas = new Canvas(bitmap);
+		// new antialised Paint
+		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		// text color - #3D3D3D
+		paint.setColor(Color.WHITE);//rgb(61, 61, 61));
+		// text size in pixels
+		paint.setTextSize((int) (15 * scale));
+		// text shadow
+		paint.setShadowLayer(1f, 0f, 1f, Color.rgb(64, 64, 64));
+
+		// draw text to the Canvas center
+		Rect bounds = new Rect();
+		paint.getTextBounds(gText, 0, gText.length(), bounds);
+		int x = (bitmap.getWidth() - bounds.width())/2;
+		int y = (bitmap.getHeight() + bounds.height()/2)/2;
+
+		canvas.drawText(gText, x * scale, y * scale, paint);
+
+		return bitmap;
 	}
 
 	public void showProgressBar(boolean show) {
 		setSupportProgressBarIndeterminateVisibility(show);
 	}
 
-	public void showDays(GregorianCalendar cal) {
-		new ChangePageTask().execute(INDEX_PAGER_DAY, cal);
+	public void showDays(Calendar cal) {
+		curentCal = cal;
+		getSupportActionBar().setSelectedNavigationItem(INDEX_NAVIGATION_DAY);
 	}
-	
+
 	public void showListe() {
-		new ChangePageTask().execute(INDEX_PAGER_LISTE);
+		getSupportActionBar().setSelectedNavigationItem(INDEX_PAGER_LISTE);
 	}
 
-	public void showMonths(GregorianCalendar cal) {
-		new ChangePageTask().execute(INDEX_PAGER_MONTH, cal);
+	public void showMonths(Calendar cal) {
+		curentCal = cal;
+		getSupportActionBar().setSelectedNavigationItem(INDEX_NAVIGATION_MONTH);
 	}
 
-	public GregorianCalendar getCurrentCalendar() {
+	public Calendar getCurrentCalendar() {
 		return curentCal;
 	}
 
-	public void setCurrentCalendar(GregorianCalendar cal) {
+	public void setCurrentCalendar(Calendar cal) {
 		curentCal = cal;
 	}
 
@@ -143,7 +201,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 			startActivity(intent);
 			return true;
 		case R.id.menu_today:
-			gotoDate(new GregorianCalendar());
+			gotoDate(Calendar.getInstance());
 			return true;
 		default:
 			return false;
@@ -157,21 +215,21 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 			if(indexCurrentPager == INDEX_PAGER_DAY) {
 				Toast.makeText(this, "Vous êtes déjà en vue jour!", Toast.LENGTH_SHORT).show();
 			} else {
-				showDays(getCurrentCalendar());
+				new ChangePageTask().execute(INDEX_PAGER_DAY);
 			}
 			return true;
 		case INDEX_NAVIGATION_MONTH:
 			if(indexCurrentPager == INDEX_PAGER_MONTH) {
 				Toast.makeText(this, "Vous êtes déjà en vue mois!", Toast.LENGTH_SHORT).show();
 			} else {
-				showMonths(getCurrentCalendar());
+				new ChangePageTask().execute(INDEX_PAGER_DAY);
 			}
 			return true;
 		case INDEX_NAVIGATION_LISTE:
 			if(indexCurrentPager == INDEX_PAGER_LISTE) {
 				Toast.makeText(this, "Vous êtes déjà en vue liste!", Toast.LENGTH_SHORT).show();
 			} else {
-				showListe();
+				new ChangePageTask().execute(INDEX_PAGER_LISTE);
 			}
 			return true;
 		}
@@ -179,7 +237,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		return false;
 	}
 
-	private void gotoDate(GregorianCalendar cal) {
+	private void gotoDate(Calendar cal) {
 		((BasePagerAdapter)((ViewPager)mainFramePager.getChildAt(0)).getAdapter()).setCurrentCalendar(cal);
 		((ViewPager)mainFramePager.getChildAt(0)).setCurrentItem(BasePagerAdapter.NB_PAGE/2);
 	}
@@ -214,7 +272,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		return false;
 	}
 
-	private class ChangePageTask extends AsyncTask<Object, Void, View> {
+	private class ChangePageTask extends AsyncTask<Integer, Void, View> {
 
 		private int nextIndexMenu;
 		@Override
@@ -226,18 +284,18 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		}
 
 		@Override
-		protected View doInBackground(Object... params) {
-			int indexNextPage = (Integer) params[0];
+		protected View doInBackground(Integer... params) {
+			int indexNextPage = params[0];
 			ViewPager v = new ViewPager(getApplicationContext());
 			v.setId(ID_PAGER);
 			switch (indexNextPage) {
 			case INDEX_PAGER_DAY:
-				v.setAdapter(new DayPagerAdapter(getSupportFragmentManager(), (GregorianCalendar) params[1]));
+				v.setAdapter(new DayPagerAdapter(getSupportFragmentManager(), curentCal));
 				indexCurrentPager = INDEX_PAGER_DAY;
 				nextIndexMenu = 1;
 				break;
 			case INDEX_PAGER_MONTH:
-				v.setAdapter(new MonthPagerAdapter(getSupportFragmentManager(), (GregorianCalendar) params[1]));
+				v.setAdapter(new MonthPagerAdapter(getSupportFragmentManager(), (Calendar) curentCal));
 				v.getAdapter().notifyDataSetChanged();
 				indexCurrentPager = INDEX_PAGER_MONTH;
 				break;
@@ -259,7 +317,6 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 			anim.setFillAfter(true);
 			anim.setDuration(ANIM_DURATION);
 			mainFramePager.startAnimation(anim);
-			getSupportActionBar().setSelectedNavigationItem(indexCurrentPager);
 		}
 	}
 }

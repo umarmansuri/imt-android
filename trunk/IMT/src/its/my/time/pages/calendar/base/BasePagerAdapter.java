@@ -2,7 +2,7 @@ package its.my.time.pages.calendar.base;
 
 import its.my.time.pages.calendar.CalendarActivity;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,10 +13,10 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	public static final int NB_PAGE = 1000;
 	
-	private GregorianCalendar cal;
+	private Calendar cal;
 
 	
-	public BasePagerAdapter(FragmentManager fm, GregorianCalendar cal) {
+	public BasePagerAdapter(FragmentManager fm, Calendar cal) {
 		super(fm);
 		this.cal = cal;
 	}
@@ -32,12 +32,12 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	protected abstract Fragment getView(int incrementation);
 
-	public GregorianCalendar getCurrentCalendar() {
+	public Calendar getCurrentCalendar() {
 		cal = CalendarActivity.curentCal;
 		return cal;
 	}
 	
-	public void setCurrentCalendar(GregorianCalendar cal) {
+	public void setCurrentCalendar(Calendar cal) {
 		this.cal = cal;
 		notifyDataSetChanged();
 	}

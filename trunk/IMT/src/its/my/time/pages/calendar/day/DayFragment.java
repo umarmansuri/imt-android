@@ -1,6 +1,6 @@
 package its.my.time.pages.calendar.day;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,13 +12,13 @@ import com.actionbarsherlock.app.SherlockFragment;
 public class DayFragment extends SherlockFragment{
 
 	
-	private GregorianCalendar cal;
+	private Calendar cal;
 
 	public DayFragment() {
-		this(new GregorianCalendar());
+		this(Calendar.getInstance());
 	}
 	
-	public DayFragment(GregorianCalendar cal) {
+	public DayFragment(Calendar cal) {
 		this.cal = cal;
 	}
 
