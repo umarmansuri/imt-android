@@ -1,11 +1,14 @@
 package its.my.time.pages.editable.event.commentaires;
 
 import its.my.time.data.bdd.coment.ComentBean;
+import its.my.time.data.bdd.coment.ComentDBAdapter;
+import its.my.time.pages.editable.event.EventActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,24 +25,35 @@ public class CommentairesAdapter implements ListAdapter{
 	public CommentairesAdapter(Context context) {
 		this.context = context;
 		indexComent = 0;
-		loadNextEvents();
+		loadNextComents();
 	}
 
-	private void loadNextEvents() {
+	private void loadNextComents() {
 		if(coments == null) {
 			coments = new ArrayList<ComentBean>();
 		}
 
 		//TODO supprimer et recuperer les events de la bdd
-		ComentBean comentBean;
-		for(int i = 0; i < NB_COMENT_LOADED; i++){
+		ComentBean comentBean = new ComentBean();
+		ComentDBAdapter comentBeanDBAdapter = new ComentDBAdapter(null);
+		Cursor c = comentBeanDBAdapter.getByIdEvent(Long.parseLong(EventActivity.KEY_EXTRA_ID));
+		for(c.moveToFirst(); c.isLast(); c.moveToNext())
+		{
+			comentBean = new ComentBean();
+			comentBean.getTitle();
+			comentBean.getComent();
+			comentBean.getDate();
+			coments.add(comentBean);
+		}
+		
+		/*for(int i = 0; i < NB_COMENT_LOADED; i++){
 			comentBean = new ComentBean();
 			comentBean.setId(indexComent + i);
 			comentBean.setTitle("Titre du commentaire " + (indexComent + i) );
 			comentBean.setComent("Détails du commentaire " + (indexComent + i) + ": Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie, leo eget viverra luctus, massa sem lacinia est, at bibendum ipsum tellus eu tortor. Donec quis interdum leo. Curabitur in magna magna. Aliquam a odio sem, eu tempus lorem. Praesent consectetur odio nec massa dignissim a luctus purus rhoncus. Donec vitae risus non arcu cursus sodales et nec enim. Nam.");
 			coments.add(comentBean);
 		}
-		indexComent+=NB_COMENT_LOADED;
+		indexComent+=NB_COMENT_LOADED;*/
 	}
 
 	@Override
@@ -90,7 +104,5 @@ public class CommentairesAdapter implements ListAdapter{
 
 	@Override
 	public boolean isEnabled(int position) {return false;}
-
-
 
 }
