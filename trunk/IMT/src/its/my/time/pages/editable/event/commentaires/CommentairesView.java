@@ -4,6 +4,7 @@ import its.my.time.R;
 import its.my.time.data.bdd.coment.ComentBean;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class CommentairesView extends FrameLayout{
 		super(context);
 		inflate(context, R.layout.activity_event_commentaires_little, this);
 		setBackgroundColor(Color.WHITE);
+		
 		this.coment = coment;
 		
 		initialiseDetails();
