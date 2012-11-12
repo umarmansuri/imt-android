@@ -12,6 +12,30 @@ public class EventBean {
 	private String title;
 	private int cid;
 	
+	
+	
+	public EventBean(String details, Calendar hDeb, Calendar hFin, int id,
+			String title, int cid) {
+		super();
+		this.details = details;
+		this.hDeb = hDeb;
+		this.hFin = hFin;
+		this.id = id;
+		this.title = title;
+		this.cid = cid;
+	}
+	
+	public EventBean() {
+		super();
+		this.details = "";
+		this.hDeb = null;
+		this.hFin = null;
+		this.id = -1;
+		this.title = "";
+		this.cid = -1;
+	}
+	
+	
 	public String getDetails() {
 		return details;
 	}
