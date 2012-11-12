@@ -1,5 +1,6 @@
 package its.my.time.pages.editable.event;
 
+import its.my.time.data.bdd.event.EventBean;
 import its.my.time.pages.editable.event.commentaires.CommentairesFragment;
 import its.my.time.pages.editable.event.details.DetailsFragment;
 import its.my.time.pages.editable.event.participants.ParticipantsFragment;
@@ -10,8 +11,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class EventPagerAdapter extends FragmentStatePagerAdapter {
 	
-	public EventPagerAdapter(FragmentManager fm) {
+	private EventBean event;
+
+
+	public EventPagerAdapter(FragmentManager fm, EventBean event) {
 		super(fm);
+		this.event = event;
 	}
 
 	public static final String TITLE_PAGE_DETAILS = "Evènement";
@@ -28,10 +33,10 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
-		case INDEX_PAGE_EVENT:return new DetailsFragment();
-		case INDEX_PAGE_PARTICIPANTS:return new ParticipantsFragment();
-		case INDEX_PAGE_COMMENTAIRES:return new CommentairesFragment();
-		case INDEX_PAGE_PJ:return new PjFragment();
+		case INDEX_PAGE_EVENT:return new DetailsFragment(event);
+		case INDEX_PAGE_PARTICIPANTS:return new ParticipantsFragment(event.getId());
+		case INDEX_PAGE_COMMENTAIRES:return new CommentairesFragment(event.getId());
+		case INDEX_PAGE_PJ:return new PjFragment(event.getId());
 		}
 		return null;
 	}

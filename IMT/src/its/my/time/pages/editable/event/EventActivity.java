@@ -1,6 +1,10 @@
 package its.my.time.pages.editable.event;
 
+import its.my.time.data.bdd.event.EventBean;
 import its.my.time.pages.editable.BaseActivity;
+import its.my.time.util.ActivityUtil;
+import its.my.time.util.DatabaseUtil;
+import its.my.time.util.DateUtil;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -16,24 +20,35 @@ import com.actionbarsherlock.app.ActionBar.TabListener;
 
 public class EventActivity extends BaseActivity{
 
-	public static final String KEY_EXTRA_ISO = "key_iso";
-	public static final String KEY_EXTRA_ID = "key_id";
-	
 	private ViewPager mPager;
 	private Tab newTabEvent;
 	private Tab newTabParticipants;
 	private Tab newTabCommentaires;
 	private Tab newTabPj;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
+	//for start from Extra
+	private EventBean event;
 
 	@Override
-	protected int getContentViewId() {
-		return R.layout.activity_event;
+	protected void onCreate(Bundle savedInstance) {
+		setContentView(R.layout.activity_event);
+		
+		Bundle bundle = getIntent().getExtras();
+		if(bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
+			event = DatabaseUtil.getEventRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID)); 
+		} 
+		if(event == null){
+			event = new EventBean();
+			event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
+		}
+		
+		mPager = (ViewPager) findViewById(R.id.event_pager);
+		mPager.setOnPageChangeListener(pageListener);
+		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager(), event));
+		
+		super.onCreate(bundle);
 	}
+	
 
 	@Override
 	protected CharSequence getActionBarTitle() {
@@ -44,11 +59,6 @@ public class EventActivity extends BaseActivity{
 	protected void initialiseActionBar() {
 
 		super.initialiseActionBar();
-
-
-		mPager = (ViewPager) findViewById(R.id.event_pager);
-		mPager.setOnPageChangeListener(pageListener);
-		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
 
 		ActionBar mActionBar = getSupportActionBar();
 
@@ -78,8 +88,6 @@ public class EventActivity extends BaseActivity{
 			String[] items = new String[]{EventPagerAdapter.TITLE_PAGE_DETAILS, EventPagerAdapter.TITLE_PAGE_PARTICIPANTS, EventPagerAdapter.TITLE_PAGE_COMMENTAIRES, EventPagerAdapter.TITLE_PAGE_PJ};
 			mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this, R.layout.sherlock_spinner_dropdown_item, items), navigationListener);
 		}
-
-
 	}
 
 	private TabListener tabListener = new ActionBar.TabListener() {
@@ -97,9 +105,9 @@ public class EventActivity extends BaseActivity{
 		@Override public void onPageScrolled(int arg0, float arg1, int arg2) {}
 		@Override public void onPageScrollStateChanged(int arg0) {}
 	};
-	
+
 	private OnNavigationListener navigationListener = new OnNavigationListener() {
-		
+
 		@Override
 		public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 			mPager.setCurrentItem(itemPosition);

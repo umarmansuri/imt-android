@@ -1,11 +1,10 @@
 package its.my.time;
 
-import its.my.time.data.bdd.DBAdapterBase;
+import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.data.bdd.event.EventBean;
-import its.my.time.data.bdd.event.EventDBAdapter;
-import its.my.time.pages.calendar.CalendarActivity;
+import its.my.time.data.bdd.event.EventRepository;
+import its.my.time.util.ActivityUtil;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,9 +40,10 @@ public class SplashActivity extends Activity {
 	private class LoadMainActivity extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			new DBAdapterBase(getApplicationContext());
-
-			EventDBAdapter adapter = new EventDBAdapter(SplashActivity.this);
+			
+			deleteDatabase(DatabaseHandler.DATABASE_NAME);
+			
+			EventRepository adapter = new EventRepository(SplashActivity.this);
 			for(int i = 0; i < 15; i++) {
 				EventBean event = new EventBean();
 				event.setCid(0);
@@ -79,8 +79,7 @@ public class SplashActivity extends Activity {
 					@Override
 					public void run() {
 						findViewById(R.id.splash_main).setVisibility(View.INVISIBLE);
-						Intent mainIntent = new Intent(SplashActivity.this, CalendarActivity.class);
-						SplashActivity.this.startActivity(mainIntent);
+						ActivityUtil.startCalendarActivity(SplashActivity.this);
 						finish();
 					}
 				}, 2000);

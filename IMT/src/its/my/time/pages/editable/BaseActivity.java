@@ -17,13 +17,10 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 	public static final int INDEX_MENU_SAVE = 1;
 	public static final int INDEX_MENU_CANCEL = 2;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-		setContentView(getContentViewId());
-
+	protected void onCreate(Bundle bundle) {
 		initialiseActionBar();
+		super.onCreate(bundle);
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 	private void showEdit() {
@@ -65,8 +62,5 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	protected abstract int getContentViewId();
-
 	protected abstract CharSequence getActionBarTitle();
-
 }
