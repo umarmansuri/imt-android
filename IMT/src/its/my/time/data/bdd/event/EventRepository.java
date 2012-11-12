@@ -1,6 +1,6 @@
 package its.my.time.data.bdd.event;
 
-import its.my.time.data.bdd.DBAdapterBase;
+import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.util.DateUtil;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-public class EventDBAdapter extends DBAdapterBase{
+public class EventRepository extends DatabaseHandler{
 
 	public static final String KEY_ID = "id";
 	public static final String KEY_DETAILS = "details";
@@ -28,25 +28,33 @@ public class EventDBAdapter extends DBAdapterBase{
 
 	public static final String DATABASE_TABLE = "event";
 
+	public static final String CREATE_TABLE =  "create table " + DATABASE_TABLE + "("
+			+ KEY_ID + " integer primary key autoincrement,"
+			+ KEY_TITLE + " text not null,"
+			+ KEY_DETAILS+ " text,"
+			+ KEY_HDEB+ " text not null,"
+			+ KEY_HFIN+ " text not null,"
+			+ KEY_CID+ " integer not null);";
+	
 	private String[] allAttr = new String[]{KEY_ID, KEY_DETAILS, KEY_HDEB, KEY_HFIN, KEY_TITLE, KEY_CID};
 
-	public EventDBAdapter(Context context) {
+	public EventRepository(Context context) {
 		super(context);
 	}
 
-	public List<EventBean> ConvertCursorToMapObject(Cursor c) {
+	public List<EventBean> convertCursorToListObject(Cursor c) {
 		List<EventBean> liste = new ArrayList<EventBean>();
 		if (c.getCount() == 0){return liste;}
 		c.moveToFirst();
 		do {
-			EventBean event = ConvertCursorToObject(c);
+			EventBean event = convertCursorToObject(c);
 			liste.add(event);
 		} while (c.moveToNext());
 		c.close();
 		return liste;
 	}
 
-	public EventBean ConvertCursorToObject(Cursor c) {
+	public EventBean convertCursorToObject(Cursor c) {
 		EventBean event = new EventBean();
 		event.setId(c.getInt(KEY_INDEX_ID));
 		event.setCid(c.getInt(KEY_INDEX_CID));
@@ -57,12 +65,12 @@ public class EventDBAdapter extends DBAdapterBase{
 		return event;
 	}
 
-	public EventBean ConvertCursorToOneObject(Cursor c) {
+	public EventBean convertCursorToOneObject(Cursor c) {
 		if(c.getCount() <= 0) {
 			return null;
 		}
 		c.moveToFirst();
-		EventBean event = ConvertCursorToObject(c);
+		EventBean event = convertCursorToObject(c);
 		c.close();
 		return event;
 	}
@@ -87,17 +95,18 @@ public class EventDBAdapter extends DBAdapterBase{
 		return res;
 	}
 
-	public Cursor getAllEvent() {
+	public List<EventBean> getAllEvent() {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, null, null, null, null, null);
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, null, null, null, null, KEY_HDEB);
+		List<EventBean> res = convertCursorToListObject(c);
 		close();
-		return c;
+		return res;
 	}
 	
 	public EventBean getById(long id) {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null);
-		EventBean res = ConvertCursorToOneObject(c);
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_ID + "=?", new String[] { "" + id }, null, null, null);
+		EventBean res = convertCursorToOneObject(c);
 		close();
 		return res;
 	}
