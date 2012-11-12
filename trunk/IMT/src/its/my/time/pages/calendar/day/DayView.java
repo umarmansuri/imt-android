@@ -3,7 +3,7 @@ package its.my.time.pages.calendar.day;
 import its.my.time.R;
 import its.my.time.data.bdd.event.EventBean;
 import its.my.time.pages.calendar.base.BaseView;
-import its.my.time.pages.editable.event.EventActivity;
+import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.EventUtil;
 import its.my.time.util.ViewUtil;
@@ -16,7 +16,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
@@ -41,9 +40,7 @@ public class DayView extends BaseView{
 	private View.OnClickListener onEventClickLIstener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(getContext(), EventActivity.class);
-			intent.putExtra(EventActivity.KEY_EXTRA_ID, v.getId());
-			((Activity)getContext()).startActivityForResult(intent, 1);
+			ActivityUtil.startEventActivity(getContext(), v.getId());
 		}
 	};
 	
@@ -85,10 +82,8 @@ public class DayView extends BaseView{
 			mTextView.setOnLongClickListener(new OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
-					Intent intent = new Intent(getContext(), EventActivity.class);
 					GregorianCalendar calHeure = new GregorianCalendar(cal.get(GregorianCalendar.YEAR), cal.get(GregorianCalendar.MONTH), cal.get(GregorianCalendar.DAY_OF_MONTH), hour, cal.get(GregorianCalendar.MINUTE));
-					intent.putExtra(EventActivity.KEY_EXTRA_ISO, DateUtil.getTimeInIso(calHeure));
-					getContext().startActivity(intent);
+					ActivityUtil.startEventActivity(getContext(), calHeure);
 					return true;
 				}
 			});

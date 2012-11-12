@@ -1,14 +1,12 @@
 package its.my.time.pages.editable.event.commentaires;
 
-import its.my.time.data.bdd.coment.ComentBean;
-import its.my.time.data.bdd.coment.ComentDBAdapter;
-import its.my.time.pages.editable.event.EventActivity;
+import its.my.time.data.bdd.comment.CommentBean;
+import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,50 +14,35 @@ import android.widget.ListAdapter;
 
 public class CommentairesAdapter implements ListAdapter{
 
-	private static final int NB_COMENT_LOADED = 10;
+	private static final int NB_COMmENT_LOADED = 10;
 
 	private Context context;
-	private List<ComentBean> coments;
-	private int indexComent;
+	private List<CommentBean> comments;
+	private int indexComment;
 
-	public CommentairesAdapter(Context context) {
+	private int idEvent;
+
+	public CommentairesAdapter(Context context, int id) {
 		this.context = context;
-		indexComent = 0;
-		loadNextComents();
+		this.idEvent = id;
+		indexComment = 0;
+		loadNextEvents();
 	}
 
-	private void loadNextComents() {
-		if(coments == null) {
-			coments = new ArrayList<ComentBean>();
+	private void loadNextEvents() {
+		if(comments == null) {
+			comments = new ArrayList<CommentBean>();
 		}
 
-		//TODO supprimer et recuperer les events de la bdd
-		ComentBean comentBean = new ComentBean();
-		ComentDBAdapter comentBeanDBAdapter = new ComentDBAdapter(null);
-		Cursor c = comentBeanDBAdapter.getByIdEvent(Long.parseLong(EventActivity.KEY_EXTRA_ID));
-		for(c.moveToFirst(); c.isLast(); c.moveToNext())
-		{
-			comentBean = new ComentBean();
-			comentBean.getTitle();
-			comentBean.getComent();
-			comentBean.getDate();
-			coments.add(comentBean);
-		}
+		comments = DatabaseUtil.getCommentRepository(context).getAllByEid(idEvent);
 		
-		/*for(int i = 0; i < NB_COMENT_LOADED; i++){
-			comentBean = new ComentBean();
-			comentBean.setId(indexComent + i);
-			comentBean.setTitle("Titre du commentaire " + (indexComent + i) );
-			comentBean.setComent("Détails du commentaire " + (indexComent + i) + ": Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie, leo eget viverra luctus, massa sem lacinia est, at bibendum ipsum tellus eu tortor. Donec quis interdum leo. Curabitur in magna magna. Aliquam a odio sem, eu tempus lorem. Praesent consectetur odio nec massa dignissim a luctus purus rhoncus. Donec vitae risus non arcu cursus sodales et nec enim. Nam.");
-			coments.add(comentBean);
-		}
-		indexComent+=NB_COMENT_LOADED;*/
+		indexComment+=NB_COMmENT_LOADED;
 	}
 
 	@Override
 	public int getCount() {
-		if(coments != null) {
-			return coments.size();
+		if(comments != null) {
+			return comments.size();
 		}
 		return 0;
 	}
@@ -68,14 +51,14 @@ public class CommentairesAdapter implements ListAdapter{
 	public Object getItem(int position) {return null;}
 
 	@Override
-	public long getItemId(int position) {return coments.get(position).getId();}
+	public long getItemId(int position) {return comments.get(position).getId();}
 
 	@Override
 	public int getItemViewType(int position) {return 0;}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		return new CommentairesView(context, coments.get(position));
+		return new CommentairesView(context, comments.get(position));
 	}
 
 	@Override
@@ -90,7 +73,7 @@ public class CommentairesAdapter implements ListAdapter{
 
 	@Override
 	public boolean isEmpty() {
-		if(coments == null | coments.size() == 0) {return true;} else {return false;}
+		if(comments == null | comments.size() == 0) {return true;} else {return false;}
 	}
 
 	@Override
@@ -104,5 +87,7 @@ public class CommentairesAdapter implements ListAdapter{
 
 	@Override
 	public boolean isEnabled(int position) {return false;}
+
+
 
 }

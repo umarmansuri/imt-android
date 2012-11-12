@@ -2,13 +2,23 @@ package its.my.time.pages.calendar.list;
 
 import its.my.time.R;
 import its.my.time.data.bdd.event.EventBean;
+import its.my.time.util.ActivityUtil;
 import android.content.Context;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 public class LittleEventView extends FrameLayout {
 
 	private EventBean event;
+	
+	private OnClickListener listener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			ActivityUtil.startEventActivity(getContext(), event.getId());
+		}
+	};
+
 	
 	public LittleEventView(Context context, EventBean event) {
 		super(context);
@@ -17,6 +27,8 @@ public class LittleEventView extends FrameLayout {
 		this.event = event;
 		
 		initialiseDetails();
+		
+		setOnClickListener(listener);
 	}
 
 	private void initialiseDetails() {

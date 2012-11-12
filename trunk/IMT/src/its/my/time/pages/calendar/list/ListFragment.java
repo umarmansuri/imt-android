@@ -21,7 +21,7 @@ public class ListFragment extends SherlockFragment {
 			Bundle savedInstanceState) {
 		
 		ListView mListView = new ListView(getSherlockActivity());
-		mListView.setAdapter(new ListEventAdapter(getSherlockActivity()));
+		mListView.setAdapter(new ListEventAdapter(getActivity()));
 		return mListView;
 	}
 }

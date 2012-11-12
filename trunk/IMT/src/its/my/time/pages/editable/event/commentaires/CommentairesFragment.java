@@ -12,10 +12,14 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 public class CommentairesFragment extends SherlockFragment {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		
-		super.onCreate(savedInstanceState);
+	private int eventId;
+
+	public CommentairesFragment() {
+		this(-1);
+	}
+	
+	public CommentairesFragment(int eventId) {
+		super();
 	}
 	
 	@Override
@@ -23,8 +27,8 @@ public class CommentairesFragment extends SherlockFragment {
 			Bundle savedInstanceState) {
 		
 		RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_commentaires, null);
-		ListView mListView = (ListView)mView.findViewById(R.id.event_coment_listeComent);
-		mListView.setAdapter(new CommentairesAdapter(getSherlockActivity()));
+		ListView mListComment = (ListView)mView.findViewById(R.id.event_comment_liste);
+		mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId));
 		
 		return mView;
 	}

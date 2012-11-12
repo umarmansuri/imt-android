@@ -2,8 +2,8 @@ package its.my.time.pages.editable.compte;
 
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
+import its.my.time.util.DatabaseUtil;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import android.content.Context;
@@ -25,7 +25,7 @@ public class ListeCompteAdapter implements ListAdapter {
 	public ListeCompteAdapter(Context context) {
 		this.context = context;
 		//TODO
-		listeCompte = new ArrayList<CompteBean>();
+		listeCompte = DatabaseUtil.getCompteRepository(context).getAllCompte();
 	}
 
 	public int getCount() {

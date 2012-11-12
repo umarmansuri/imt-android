@@ -1,7 +1,7 @@
 package its.my.time.pages.calendar;
 
 import its.my.time.R;
-import its.my.time.data.bdd.DBAdapterBase;
+import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
 import its.my.time.pages.calendar.list.ListEventAdapter;
@@ -9,7 +9,6 @@ import its.my.time.pages.calendar.month.MonthPagerAdapter;
 import its.my.time.pages.editable.compte.ListeCompteAdapter;
 import its.my.time.pages.editable.profil.ProfilActivity;
 
-import java.util.Calendar;
 import java.util.Calendar;
 
 import android.content.Context;
@@ -252,7 +251,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 			case INDEX_PAGER_MONTH:
 				if(isWaitingEnd) {
 					//TODO enlever pour prod
-					deleteDatabase(DBAdapterBase.DATABASE_NAME);
+					deleteDatabase(DatabaseHandler.DATABASE_NAME);
 					finish();
 				} else {
 					isWaitingEnd = true;
@@ -301,7 +300,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 				break;
 			case INDEX_PAGER_LISTE:
 				ListView mListView = new ListView(getApplicationContext());
-				mListView.setAdapter(new ListEventAdapter(getApplicationContext()));
+				mListView.setAdapter(new ListEventAdapter(CalendarActivity.this));
 				indexCurrentPager = INDEX_PAGER_LISTE;
 				return mListView;
 			}
