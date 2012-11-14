@@ -8,10 +8,6 @@ public class PreferenceConnector{
 	public static final String PREF_NAME = "IMT";
 	public static final int MODE = Context.MODE_PRIVATE;
 	
-	public static final String NAME = "NAME";
-	public static final String SURNAME = "SURNAME";
-	public static final String AGE = "AGE";
-
 	public static void writeBoolean(Context context, String key, boolean value) {
 		getEditor(context).putBoolean(key, value).commit();
 	}

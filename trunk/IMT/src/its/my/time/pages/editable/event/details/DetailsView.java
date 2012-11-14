@@ -5,6 +5,7 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.event.EventBean;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
+import its.my.time.util.PreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +47,13 @@ public class DetailsView extends FrameLayout{
 		mTextDateDeb.setText(DateUtil.getDayHour(event.gethDeb()));
 
 		mTextDateFin = (TextView)findViewById(R.id.event_details_text_hfin);
-		mTextDateFin.setText(DateUtil.getDayHour(event.gethFin()));
+
+		if(event.gethFin() != null) {
+			mTextDateFin.setText(DateUtil.getDayHour(event.gethFin()));
+		}
 
 
-		mListCompte = DatabaseUtil.getCompteRepository(getContext()).getAllCompte();
+		mListCompte = DatabaseUtil.getCompteRepository(getContext()).getAllCompteByUid(PreferencesUtil.getCurrentUid(getContext()));
 		mListCompteLabels = new ArrayList<String>();
 		for (CompteBean compte : mListCompte) {
 			mListCompteLabels.add(compte.getTitle());

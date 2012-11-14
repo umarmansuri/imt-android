@@ -15,11 +15,13 @@ public class CompteRepository extends DatabaseHandler{
 	public static final String KEY_TITLE = "title";
 	public static final String KEY_COLOR = "color";
 	public static final String KEY_TYPE = "type";
+	public static final String KEY_UID = "uid";
 
 	public static final int KEY_INDEX_ID = 0;
 	public static final int KEY_INDEX_TITLE = 1;
 	public static final int KEY_INDEX_COLOR = 2;
 	public static final int KEY_INDEX_TYPE = 3;
+	public static final int KEY_INDEX_UID = 4;
 
 
 	public static final String DATABASE_TABLE = "compte";
@@ -28,10 +30,11 @@ public class CompteRepository extends DatabaseHandler{
 			+ KEY_ID + " INTEGER primary key autoincrement,"
 			+ KEY_TITLE + " TEXT not null,"
 			+ KEY_COLOR + " INTEGER not null,"
-			+ KEY_TYPE + " INTEGER not null);";
+			+ KEY_TYPE + " INTEGER not null,"
+			+ KEY_UID + " INTEGER not null);";
 
 
-	private String[] allAttr = new String[]{KEY_ID, KEY_TITLE, KEY_COLOR, KEY_TYPE};
+	private String[] allAttr = new String[]{KEY_ID, KEY_TITLE, KEY_COLOR, KEY_TYPE, KEY_UID};
 
 	public CompteRepository(Context context) {
 		super(context);
@@ -55,6 +58,7 @@ public class CompteRepository extends DatabaseHandler{
 		compte.setTitle(c.getString(KEY_INDEX_TITLE));
 		compte.setType(c.getInt(KEY_INDEX_TYPE));
 		compte.setColor(c.getInt(KEY_INDEX_COLOR));
+		compte.setUid(c.getInt(KEY_INDEX_UID));
 		return compte;
 	}
 
@@ -73,6 +77,7 @@ public class CompteRepository extends DatabaseHandler{
 		initialValues.put(KEY_TITLE, compte.getTitle());
 		initialValues.put(KEY_COLOR, compte.getColor());
 		initialValues.put(KEY_TYPE, compte.getType());
+		initialValues.put(KEY_UID, compte.getUid());
 		open();
 		long res = this.db.insert(DATABASE_TABLE, null, initialValues);
 		close();
@@ -86,9 +91,9 @@ public class CompteRepository extends DatabaseHandler{
 		return res;
 	}
 
-	public List<CompteBean> getAllCompte() {
+	public List<CompteBean> getAllCompteByUid(long uid) {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, null, null, null, null, null);
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_UID + "=?", new String[] { "" + uid }, null, null, null);
 		List<CompteBean> res = convertCursorToListObject(c);
 		close();
 		return res;
