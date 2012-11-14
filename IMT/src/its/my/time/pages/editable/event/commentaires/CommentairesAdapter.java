@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.event.commentaires;
 
-import its.my.time.data.bdd.comment.CommentBean;
+import its.my.time.data.bdd.event.comment.CommentBean;
 import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
@@ -14,18 +14,14 @@ import android.widget.ListAdapter;
 
 public class CommentairesAdapter implements ListAdapter{
 
-	private static final int NB_COMmENT_LOADED = 10;
-
 	private Context context;
 	private List<CommentBean> comments;
-	private int indexComment;
 
 	private int idEvent;
 
 	public CommentairesAdapter(Context context, int id) {
 		this.context = context;
 		this.idEvent = id;
-		indexComment = 0;
 		loadNextEvents();
 	}
 
@@ -35,8 +31,6 @@ public class CommentairesAdapter implements ListAdapter{
 		}
 
 		comments = DatabaseUtil.getCommentRepository(context).getAllByEid(idEvent);
-		
-		indexComment+=NB_COMmENT_LOADED;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package its.my.time.pages.editable.compte;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.util.DatabaseUtil;
+import its.my.time.util.PreferencesUtil;
 
 import java.util.Collection;
 
@@ -25,7 +26,7 @@ public class ListeCompteAdapter implements ListAdapter {
 	public ListeCompteAdapter(Context context) {
 		this.context = context;
 		//TODO
-		listeCompte = DatabaseUtil.getCompteRepository(context).getAllCompte();
+		listeCompte = DatabaseUtil.getCompteRepository(context).getAllCompteByUid(PreferencesUtil.getCurrentUid(context));
 	}
 
 	public int getCount() {

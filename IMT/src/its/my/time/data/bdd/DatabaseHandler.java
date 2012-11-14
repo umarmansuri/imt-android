@@ -1,8 +1,10 @@
 package its.my.time.data.bdd;
 
-import its.my.time.data.bdd.comment.CommentRepository;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.event.EventRepository;
+import its.my.time.data.bdd.event.comment.CommentRepository;
+import its.my.time.data.bdd.event.participant.ParticipantRepository;
+import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -42,9 +44,11 @@ public class DatabaseHandler {
 		@Override
 		public void onCreate(SQLiteDatabase db){
 			Log.d("DbAdapter","passe dans onCreate!");
+			db.execSQL(UtilisateurRepository.CREATE_TABLE);
 			db.execSQL(CompteRepository.CREATE_TABLE);
 			db.execSQL(EventRepository.CREATE_TABLE);   
-			db.execSQL(CommentRepository.CREATE_TABLE);    
+			db.execSQL(CommentRepository.CREATE_TABLE); 
+			db.execSQL(ParticipantRepository.CREATE_TABLE);    
 		}
 	
 		@Override

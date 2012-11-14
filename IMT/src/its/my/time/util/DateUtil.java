@@ -73,6 +73,19 @@ public class DateUtil {
 		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " " + leMois;
 		return res;
 	}
+	
+	/**
+	 * 
+	 * @param cal La date a retourner
+	 * @return Un string sous la forme "Mar. 3 Avril 2012"
+	 */
+	public static String getLongDateTime(Calendar cal) {
+		String leJour = getDay(cal.get(Calendar.DAY_OF_WEEK));
+		leJour = Character.toUpperCase(leJour.charAt(0)) + leJour.substring(1, leJour.length());
+		String leMois = getMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
+		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " " + leMois + " à " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+		return res;
+	}
 
 
 	/**

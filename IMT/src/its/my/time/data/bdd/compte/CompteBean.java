@@ -8,6 +8,7 @@ public class CompteBean {
 	private String title;
 	private int color;
 	private int type;
+	private int uid;
 	
 	public String getTitle() {
 		return title;
@@ -32,5 +33,11 @@ public class CompteBean {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
 	}
 }

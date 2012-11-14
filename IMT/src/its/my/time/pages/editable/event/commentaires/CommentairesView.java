@@ -1,7 +1,8 @@
 package its.my.time.pages.editable.event.commentaires;
 
 import its.my.time.R;
-import its.my.time.data.bdd.comment.CommentBean;
+import its.my.time.data.bdd.event.comment.CommentBean;
+import its.my.time.util.DateUtil;
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.FrameLayout;
@@ -25,8 +26,7 @@ public class CommentairesView extends FrameLayout{
 	}
 
 	private void initialiseDetails() {
-		((TextView)findViewById(R.id.event_comment_date)).setText("Mardi 17 octobre à 17h30");
-		((TextView)findViewById(R.id.event_comment_title)).setText(comment.getTitle());
+		((TextView)findViewById(R.id.event_comment_date)).setText(DateUtil.getLongDateTime(comment.getDate()));
 		((TextView)findViewById(R.id.event_comment_comments)).setText(comment.getComment());
 	}
 }

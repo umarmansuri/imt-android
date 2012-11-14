@@ -25,6 +25,10 @@ public class SplashActivity extends Activity {
 
 		startClockAnimation();
 
+		//TODO enlever
+		//deleteDatabase(DatabaseHandler.DATABASE_NAME);
+		
+		
 		new LoadMainActivity().execute();
 	}
 
