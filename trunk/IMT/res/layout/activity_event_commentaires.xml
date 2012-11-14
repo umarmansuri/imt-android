@@ -5,28 +5,30 @@
     android:layout_height="match_parent" >
 
     <ListView
-        android:id="@+id/event_coment_listeComent"
+        android:id="@+id/event_comment_liste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/event_layout_new_comment"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
     <LinearLayout
         android:id="@+id/event_layout_new_comment"
+        android:layout_below="@+id/event_comment_liste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" >
+        android:layout_alignParentLeft="true"
+        android:paddingTop="10dp" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/event_comment_save"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Envoyer" />
 
         <EditText
-            android:id="@+id/event_coment_editComent"
+            android:id="@+id/event_comment_editComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
