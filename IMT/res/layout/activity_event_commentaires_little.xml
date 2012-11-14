@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/event_coment_date"
+        android:id="@+id/event_comment_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_other"
@@ -16,16 +16,7 @@
     </TextView>
 
     <TextView
-        android:id="@+id/event_coment_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Titre du prochain commentaire"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/black" />
-
-    <TextView
-        android:id="@+id/event_coment_coments"
+        android:id="@+id/event_comment_comments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
