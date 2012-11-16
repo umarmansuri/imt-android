@@ -1,5 +1,6 @@
 package its.my.time.data.bdd;
 
+import its.my.time.data.bdd.comment.CommentRepository;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.event.EventRepository;
 import android.content.Context;
@@ -12,22 +13,7 @@ public class DBAdapterBase {
 
 	public static final String DATABASE_NAME = "IMT";
 
-	public static final int DATABASE_VERSION = 2;
-
-	public static final String CREATE_TABLE_COMPTE =  "create table " + CompteRepository.DATABASE_TABLE + "("
-			+ CompteRepository.KEY_ID + " integer primary key autoincrement,"
-			+ CompteRepository.KEY_TITLE + " text not null,"
-			+ CompteRepository.KEY_COLOR + " text not null,"
-			+ CompteRepository.KEY_TYPE + " integer not null);";
-
-
-	public static final String CREATE_TABLE_EVENT =  "create table " + EventRepository.DATABASE_TABLE + "("
-			+ EventRepository.KEY_ID + " integer primary key autoincrement,"
-			+ EventRepository.KEY_TITLE + " text not null,"
-			+ EventRepository.KEY_DETAILS+ " text,"
-			+ EventRepository.KEY_HDEB+ " text not null,"
-			+ EventRepository.KEY_HFIN+ " text not null,"
-			+ EventRepository.KEY_CID+ " integer not null);";
+	public static final int DATABASE_VERSION = 1;
 
 	private final Context context; 
 	private DatabaseHelper DBHelper;
@@ -56,8 +42,9 @@ public class DBAdapterBase {
 		@Override
 		public void onCreate(SQLiteDatabase db){
 			Log.d("DbAdapter","passe dans onCreate!");
-			db.execSQL(CREATE_TABLE_COMPTE);
-			db.execSQL(CREATE_TABLE_EVENT);    
+			db.execSQL(CompteRepository.CREATE_TABLE);
+			db.execSQL(EventRepository.CREATE_TABLE);   
+			db.execSQL(CommentRepository.CREATE_TABLE);    
 		}
 	
 		@Override
