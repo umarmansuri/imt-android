@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Nom"
+                    android:text="@string/view_profil_lastname"
                     android:textColor="#000000" />
 
                 <EditText
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Identifiant"
+                    android:text="@string/view_profil_login"
                     android:textColor="#000000" />
 
                 <EditText
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Date de Naissance"
+                    android:text="@string/view_profil_birthday"
                     android:textColor="#000000" />
 
                 <EditText
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Adresse"
+                    android:text="@string/view_profil_adresse"
                     android:textColor="#000000" />
 
                 <EditText
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Ville"
+                    android:text="@string/view_profil_city"
                     android:textColor="#000000" />
 
                 <EditText
@@ -122,8 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:layout_marginLeft="20dip"
-                tools:ignore="HardcodedText" >
+                android:layout_marginLeft="20dip">
 
                 <TextView
                     android:id="@+id/textPrenom"
@@ -131,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Prenom"
+                    android:text="@string/view_profil_firstname"
                     android:textColor="#000000" />
 
                 <EditText
@@ -148,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Mot de Passe"
+                    android:text="@string/view_profil_password"
                     android:textColor="#000000" />
 
                 <EditText
@@ -165,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Mot de Passe"
+                    android:text="@string/view_profil_password_again"
                     android:textColor="#000000" />
 
                 <EditText
@@ -182,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Code Postal"
+                    android:text="@string/view_profil_code_postal"
                     android:textColor="#000000" />
 
                 <EditText
@@ -199,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="10dp"
-                    android:text="Téléphonne"
+                    android:text="@string/view_profil_phone"
                     android:textColor="#000000" />
 
                 <EditText

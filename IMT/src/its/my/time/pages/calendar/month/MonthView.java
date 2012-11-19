@@ -33,7 +33,6 @@ public class MonthView extends BaseView {
 	@Override
 	protected View createView() {
 		LinearLayout view = (LinearLayout) inflate(getContext(), R.layout.activity_calendar_month, null);
-		createLigneJour(view);
 		createTabDay(view);
 		return view;
 	}
@@ -44,7 +43,7 @@ public class MonthView extends BaseView {
 	}
 	
 	private void addStyleEvent(TextView view) {
-		view.setBackgroundResource(R.drawable.border_backgrnd_with_event);
+		
 	}
 
 	private void addStyleToday(TextView view) {
@@ -52,29 +51,8 @@ public class MonthView extends BaseView {
 	}
 
 	private void addStyleOutOfMonth(TextView view) {
-		view.setBackgroundResource(R.drawable.border_backgrnd_disable);
-	}
-
-
-	private void createLigneJour(LinearLayout view) {
-		LinearLayout top = ((LinearLayout)view.findViewById(R.id.llLibJour));
-		TextView lblJour;
-		lblJour = (TextView) top.getChildAt(0);
-		lblJour.setText("Sem.");
-		lblJour = (TextView) top.getChildAt(1);
-		lblJour.setText("Lun.");
-		lblJour = (TextView) top.getChildAt(2);
-		lblJour.setText("Mar.");
-		lblJour = (TextView) top.getChildAt(3);
-		lblJour.setText("Mer.");
-		lblJour = (TextView) top.getChildAt(4);
-		lblJour.setText("Jeu.");
-		lblJour = (TextView) top.getChildAt(5);
-		lblJour.setText("Ven.");
-		lblJour = (TextView) top.getChildAt(6);
-		lblJour.setText("Sam.");
-		lblJour = (TextView) top.getChildAt(7);
-		lblJour.setText("Dim.");
+		view.setTextColor(Color.GRAY);
+		view.setEnabled(false);
 	}
 
 
@@ -104,7 +82,7 @@ public class MonthView extends BaseView {
 		LinearLayout ligne;
 		TextView txtVw;
 		for (int i = 0; i < 5; i++){
-			ligne = (LinearLayout) tabJour.getChildAt(i + 1);
+			ligne = (LinearLayout) tabJour.getChildAt(i);
 
 			//cellule du numério de semaine
 

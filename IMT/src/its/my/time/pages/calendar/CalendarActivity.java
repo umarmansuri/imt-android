@@ -20,6 +20,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -103,6 +104,9 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		listMenu.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 		mActionBar.setListNavigationCallbacks(listMenu, this);
 		mActionBar.setSelectedNavigationItem(INDEX_NAVIGATION_MONTH);
+		BitmapDrawable dr = (BitmapDrawable)getResources().getDrawable(R.drawable.background_header_drawable);
+		dr.setTileModeX(TileMode.REPEAT);
+		mActionBar.setBackgroundDrawable(dr);
 		setSupportProgressBarIndeterminate(true);
 		setSupportProgressBarIndeterminateVisibility(true);
 	}
