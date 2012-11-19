@@ -14,7 +14,6 @@
             android:id="@+id/calendar_liste_event_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mard 17 octobre 2012 à 18h"
             android:background="@color/background_other"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/black" >
@@ -25,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Titre du prochain evenement"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/black" />
 
@@ -36,7 +34,6 @@
             android:layout_marginLeft="10dp"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie, leo eget viverra luctus, massa sem lacinia est, at bibendum ipsum tellus eu tortor. Donec quis interdum leo. Curabitur in magna magna. Aliquam a odio sem, eu tempus lorem. Praesent consectetur odio nec massa dignissim a luctus purus rhoncus. Donec vitae risus non arcu cursus sodales et nec enim. Nam."
             android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 
