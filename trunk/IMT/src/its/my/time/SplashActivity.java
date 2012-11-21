@@ -44,7 +44,8 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			deleteDatabase(DatabaseHandler.DATABASE_NAME);
+			//TODO enlever
+			//deleteDatabase(DatabaseHandler.DATABASE_NAME);
 			
 			EventRepository adapter = new EventRepository(SplashActivity.this);
 			for(int i = 0; i < 15; i++) {

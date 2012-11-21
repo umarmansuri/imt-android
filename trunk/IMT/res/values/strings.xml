@@ -6,7 +6,7 @@
 	<string name="view_compte_name">Intitulé</string>
 	<string name="view_compte_type">Type</string>
 	
-	
+	<string name="view_event_pj_Btenvoi">Enregistrer</string>
 	<string name="view_event_date_from">De</string>
 	<string name="view_event_date_to">à</string>
 	<string name="view_event_account">Compte</string>
@@ -37,4 +37,5 @@
 	<string name="view_month_fri">Ven.</string>
 	<string name="view_month_sat">Sam.</string>
 	<string name="view_month_sun">Dim.</string>
+
 </resources>

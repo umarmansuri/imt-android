@@ -21,10 +21,6 @@ public class CommentairesFragment extends SherlockFragment {
 	private Button mButtonSend;
 	private EditText mTextCommentaire;
 	private ListView mListComment;
-
-	public CommentairesFragment() {
-		this(-1);
-	}
 	
 	public CommentairesFragment(int eventId) {
 		super();

@@ -1,6 +1,7 @@
 package its.my.time.data.bdd.event.pj;
 
 import its.my.time.data.bdd.DatabaseHandler;
+import its.my.time.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,27 +14,30 @@ public class PjRepository extends DatabaseHandler{
 
 	public static final String KEY_ID = "id";
 	public static final String KEY_TITLE = "title";
-	public static final String KEY_COMMENT = "comment";
+	public static final String KEY_DATE = "date";
+	public static final String KEY_TYPE = "type";
 	public static final String KEY_UID = "uid";
 	public static final String KEY_EID = "eid";
 
 	public static final int KEY_INDEX_ID = 0;
 	public static final int KEY_INDEX_TITLE = 1;
-	public static final int KEY_INDEX_COMMENT = 2;
-	public static final int KEY_INDEX_UID = 3;
-	public static final int KEY_INDEX_EID = 4;
+	public static final int KEY_INDEX_DATE = 2;
+	public static final int KEY_INDEX_TYPE = 3;
+	public static final int KEY_INDEX_UID = 4;
+	public static final int KEY_INDEX_EID = 5;
 
 
-	public static final String DATABASE_TABLE = "comment";
+	public static final String DATABASE_TABLE = "pj";
 
 	public static final String CREATE_TABLE =  "create table " + DATABASE_TABLE + "("
 			+ KEY_ID + " integer primary key autoincrement,"
 			+ KEY_TITLE + " text not null,"
-			+ KEY_COMMENT + " text,"
+			+ KEY_DATE + " text not null,"
+			+ KEY_TYPE + " text not null,"
 			+ KEY_UID + " INTEGER not null,"
 			+ KEY_EID + " INTEGER not null);";
 
-	private String[] allAttr = new String[]{KEY_ID, KEY_TITLE, KEY_COMMENT, KEY_UID, KEY_EID};
+	private String[] allAttr = new String[]{KEY_ID, KEY_TITLE, KEY_DATE, KEY_TYPE, KEY_UID, KEY_EID};
 
 	public PjRepository(Context context) {
 		super(context);
@@ -44,21 +48,22 @@ public class PjRepository extends DatabaseHandler{
 		if (c.getCount() == 0){return liste;}
 		c.moveToFirst();
 		do {
-			PjBean comment = convertCursorToObject(c);
-			liste.add(comment);
+			PjBean pj = convertCursorToObject(c);
+			liste.add(pj);
 		} while (c.moveToNext());
 		c.close();
 		return liste;
 	}
 
 	public PjBean convertCursorToObject(Cursor c) {
-		PjBean comment = new PjBean();
-		comment.setId(c.getInt(KEY_INDEX_ID));
-		comment.setTitle(c.getString(KEY_INDEX_TITLE));
-		comment.setComment(c.getString(KEY_INDEX_COMMENT));
-		comment.setUid(c.getInt(KEY_INDEX_UID));
-		comment.setEid(c.getInt(KEY_INDEX_EID));
-		return comment;
+		PjBean pj = new PjBean();
+		pj.setId(c.getInt(KEY_INDEX_ID));
+		pj.setName(c.getString(KEY_INDEX_TITLE));
+		pj.setDate(DateUtil.getDateFromISO(c.getString(KEY_INDEX_DATE)));
+		pj.setType(c.getString(KEY_INDEX_TYPE));
+		pj.setUid(c.getInt(KEY_INDEX_UID));
+		pj.setEid(c.getInt(KEY_INDEX_EID));
+		return pj;
 	}
 
 	public PjBean convertCursorToOneObject(Cursor c) {
@@ -71,27 +76,27 @@ public class PjRepository extends DatabaseHandler{
 		return event;
 	}
 
-	public long insertcomment(PjBean comment){
+	public long insertpj(PjBean pj){
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_TITLE, comment.getTitle());
-		initialValues.put(KEY_COMMENT, comment.getComment());
-		initialValues.put(KEY_EID, comment.getEid());
-		initialValues.put(KEY_UID, comment.getUid());
-		initialValues.put(KEY_ID, comment.getId());
+		initialValues.put(KEY_TITLE, pj.getName());
+		initialValues.put(KEY_DATE, DateUtil.getTimeInIso(pj.getDate()));
+		initialValues.put(KEY_TYPE, pj.getType());
+		initialValues.put(KEY_EID, pj.getEid());
+		initialValues.put(KEY_UID, pj.getUid());
 		open();
 		long res = this.db.insert(DATABASE_TABLE, null, initialValues);
 		close();
 		return res;
 	}
 
-	public boolean deletecomment(long rowId) {
+	public boolean deletepj(long rowId) {
 		open();
 		boolean res = this.db.delete(DATABASE_TABLE, KEY_ID + "=" + rowId, null) > 0;
 		close();
 		return res;
 	}
 
-	public PjBean getAllcomment() {
+	public PjBean getAllpj() {
 		open();
 		Cursor c = this.db.query(DATABASE_TABLE,allAttr, null, null, null, null, null);
 		PjBean res = convertCursorToOneObject(c);
@@ -110,6 +115,14 @@ public class PjRepository extends DatabaseHandler{
 	public List<PjBean> getAllByEid(int eid) {
 		open();
 		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_EID + "=?", new String[] { "" + eid }, null, null, null);
+		List<PjBean> res = convertCursorToListObject(c);
+		close();
+		return res;
+	}
+	
+	public List<PjBean> getAllByUid(int uid) {
+		open();
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_EID + "=?", new String[] { "" + uid }, null, null, null);
 		List<PjBean> res = convertCursorToListObject(c);
 		close();
 		return res;

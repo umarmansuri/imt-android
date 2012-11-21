@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/event_pj_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_other"
+        android:text="Titre de la prochaine Pièce Jointe"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black" >
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/event_pj_icone"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="Image Profil"
+            android:src="@drawable/ic_action_profil_black" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/event_pj_icone" >
+        
+        <TextView
+            android:id="@+id/event_pj_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/event_pj_icone"
+            android:layout_weight="1"
+            android:text="Jean Louis"
+            android:textColor="@color/black"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/event_pj_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_pj_owner"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/event_pj_icone"
+            android:layout_weight="1"
+            android:text="Mard 17 octobre 2012 à 18h30"
+            android:textColor="@color/black"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ImageButton
+            android:id="@+id/event_pj_bouton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@android:drawable/stat_sys_download" />
+        
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
