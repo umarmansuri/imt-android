@@ -4,6 +4,7 @@ import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.event.EventRepository;
 import its.my.time.data.bdd.event.comment.CommentRepository;
 import its.my.time.data.bdd.event.participant.ParticipantRepository;
+import its.my.time.data.bdd.event.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import android.content.Context;
 
@@ -34,6 +35,13 @@ public class DatabaseUtil {
 		return commentRepo;
 	}
 	
+	private static PjRepository pjRepo;
+	public static PjRepository getPjRepository(Context context) {
+		if(pjRepo == null) {
+			pjRepo = new PjRepository(context);
+		}
+		return pjRepo;
+	}
 
 	private static ParticipantRepository participantRepo;
 	public static ParticipantRepository getParticipantRepository(Context context) {

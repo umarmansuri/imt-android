@@ -1,7 +1,6 @@
 package its.my.time.pages.calendar;
 
 import its.my.time.R;
-import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
 import its.my.time.pages.calendar.list.ListEventAdapter;
@@ -77,6 +76,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	@Override
 	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
+		
 		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 		isWaitingEnd = false;
 		isFirstMenuSelectedOk = false;
@@ -254,8 +254,6 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 				return true;
 			case INDEX_PAGER_MONTH:
 				if(isWaitingEnd) {
-					//TODO enlever pour prod
-					deleteDatabase(DatabaseHandler.DATABASE_NAME);
 					finish();
 				} else {
 					isWaitingEnd = true;

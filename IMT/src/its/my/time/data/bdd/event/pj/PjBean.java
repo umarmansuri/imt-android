@@ -1,30 +1,73 @@
 package its.my.time.data.bdd.event.pj;
 
+import java.util.Calendar;
+
 
 
 public class PjBean {
  
 	private int id;
-	private String title;
-	private String comment;
-	private int uid;
-	private int eid;
+	private String name;
+	private Calendar date;
+	private String type;
+	private String link;
+	private long uid;
+	private long eid;
 	
-	public PjBean(int id, String title, String comment, int uid, int eid) {
+	public PjBean(int id, Calendar cal, String name, String type, String link, long uid, long eid) {
 		super();
 		this.id = id;
-		this.title = title;
-		this.comment = comment;
+		this.date = cal;
+		this.name = name;
+		this.type = type;
+		this.link = link;
 		this.uid = uid;
 		this.eid = eid;
 	}
 
 	public PjBean() {
 		this.id = -1;
-		this.title = "";
-		this.comment = "";
+		this.name = "";
+		this.date = null;
+		this.type = "";
+		this.link = "";
 		this.uid = -1;
 		this.eid = -1;
+	}
+	
+	
+
+	public Calendar getDate() {
+		return date;
+	}
+
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
+
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public int getId() {
@@ -35,35 +78,19 @@ public class PjBean {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public int getUid() {
+	public long getUid() {
 		return uid;
 	}
 
-	public void setUid(int uid) {
+	public void setUid(long uid) {
 		this.uid = uid;
 	}
 
-	public int getEid() {
+	public long getEid() {
 		return eid;
 	}
 
-	public void setEid(int eid) {
+	public void setEid(long eid) {
 		this.eid = eid;
 	}
 	

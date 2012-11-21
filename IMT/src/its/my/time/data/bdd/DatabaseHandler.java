@@ -4,6 +4,7 @@ import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.event.EventRepository;
 import its.my.time.data.bdd.event.comment.CommentRepository;
 import its.my.time.data.bdd.event.participant.ParticipantRepository;
+import its.my.time.data.bdd.event.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import android.content.Context;
 import android.database.SQLException;
@@ -49,6 +50,7 @@ public class DatabaseHandler {
 			db.execSQL(EventRepository.CREATE_TABLE);   
 			db.execSQL(CommentRepository.CREATE_TABLE); 
 			db.execSQL(ParticipantRepository.CREATE_TABLE);    
+			db.execSQL(PjRepository.CREATE_TABLE);
 		}
 	
 		@Override
