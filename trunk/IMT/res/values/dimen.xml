@@ -1,7 +1,7 @@
 <resources>
 
 <dimen name="handler_size">40dp</dimen>
-<dimen name="view_day_height_ligne_heure">50dp</dimen>
+<dimen name="view_day_height_ligne_heure">40dp</dimen>
 
 <dimen name="text_size_small">16sp</dimen>
 <dimen name="text_size_medium">18sp</dimen>
