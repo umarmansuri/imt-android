@@ -1,5 +1,6 @@
 package its.my.time.pages.calendar.month;
 
+import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
 import its.my.time.data.bdd.event.EventBean;
 import its.my.time.pages.calendar.base.BaseView;
@@ -149,6 +150,11 @@ public class MonthView extends BaseView {
 						}
 					});
 				}
+				
+
+				ligne.removeViewAt(j);
+				txtVw = new MooncakeIcone(getContext(), MooncakeIcone.icon_coffee, 2);
+				ligne.addView(txtVw,j);
 			}
 		}
 	}

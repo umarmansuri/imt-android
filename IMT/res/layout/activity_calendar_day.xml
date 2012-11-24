@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
     <TextView
@@ -21,203 +22,441 @@
         android:layout_weight="1" >
 
         <RelativeLayout
-            android:id="@+id/rLlHeure"
+            android:id="@+id/activity_calendar_day_layoutHeure"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="40dp" >
 
-            <LinearLayout
-                android:id="@+id/liste_ligne_heure"
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh01"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh02"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh01"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh03"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh02"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh04"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh03"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh05"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh04"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh06"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh05"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh07"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh06"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh08"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh07"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh09"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh08"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh10"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh09"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh11"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh10"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh12"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh11"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh13"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh12"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh14"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh13"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh15"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh14"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh16"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh15"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh17"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh16"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh18"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh17"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh19"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh18"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh20"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh19"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh21"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh20"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh22"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh21"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh23"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh22"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/activity_calendar_day_labelh24"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_labelh23"
+                android:gravity="center_horizontal|right"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/activity_calendar_day_h01"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh01"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h02"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h01"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh02"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h03"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h02"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh03"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h04"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h03"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh04"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h05"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h04"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh05"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h06"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h05"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh06"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h07"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h06"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh07"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h08"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h07"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh08"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h09"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h08"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh09"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h09"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh10"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h11"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h10"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh11"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h12"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h11"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh12"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h13"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h12"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh13"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h14"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h13"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh14"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h15"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h14"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh15"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h15"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh16"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h17"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h16"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh17"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h18"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h17"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh18"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h19"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h18"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh19"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h20"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h19"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh20"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h21"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h20"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh21"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h22"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h21"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh22"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <View
+                android:id="@+id/activity_calendar_day_h23"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h22"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh23"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
-                    android:gravity="top|left"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:background="#95f47a"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/textView1"
-                android:background="#95f47a"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <View
+                android:id="@+id/activity_calendar_day_h24"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_day_height_ligne_heure"
+                android:layout_below="@+id/activity_calendar_day_h23"
+                android:layout_toRightOf="@+id/activity_calendar_day_labelh24"
+                android:background="@drawable/border_backgrnd_ligne"
+                android:gravity="top|left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
     </ScrollView>
 

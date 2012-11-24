@@ -2,10 +2,8 @@ package its.my.time.pages.calendar.base;
 
 import its.my.time.R;
 import its.my.time.pages.calendar.CalendarActivity;
-import its.my.time.util.AwesomeFontUtil;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
