@@ -55,6 +55,7 @@ public class PjFragment extends SherlockFragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType("file/*");
+				
 				intent.addCategory(Intent.CATEGORY_OPENABLE);
 				Intent i = Intent.createChooser(intent, "File");
 				try {

@@ -4,6 +4,7 @@ import its.my.time.R;
 import its.my.time.data.bdd.event.EventBean;
 import its.my.time.pages.calendar.base.BaseView;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.EventUtil;
 
@@ -33,7 +34,7 @@ public class DayView extends BaseView{
 	private View.OnClickListener onEventClickLIstener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			ActivityUtil.startEventActivity(getContext(), v.getId());
+			ActivityUtil.startEventActivity(getContext(), 1);
 		}
 	};
 
@@ -146,22 +147,6 @@ public class DayView extends BaseView{
 		bean.sethFin(calFin2);
 		events.add(bean);
 
-		bean = new EventBean();
-		bean.setId(6);
-		calDeb2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),8,0);
-		bean.sethDeb(calDeb2);
-		calFin2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),10, 30);
-		bean.sethFin(calFin2);
-		events.add(bean);
-
-		bean = new EventBean();
-		bean.setId(7);
-		calDeb2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),8,0);
-		bean.sethDeb(calDeb2);
-		calFin2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),10, 30);
-		bean.sethFin(calFin2);
-		events.add(bean);
-
 		
 		
 		LinearLayout eventView;
@@ -175,6 +160,8 @@ public class DayView extends BaseView{
 			eventView = (LinearLayout) inflate(getContext(), R.layout.activity_calendar_day_little, null);
 			int height = (int) (DateUtil.getNbHeure(event.gethDeb(), event.gethFin(), cal) * getContext().getResources().getDimension(R.dimen.view_day_height_ligne_heure));
 			eventView.findViewById(R.id.activity_calendar_day_little_event).getLayoutParams().height = height;
+			eventView.findViewById(R.id.activity_calendar_day_little_event).setOnClickListener(onEventClickLIstener);
+			eventView.findViewById(R.id.activity_calendar_day_little_event).setId(event.getId());
 			blankBefore = eventView.findViewById(R.id.activity_calendar_day_little_blank_before);
 			for (EventBean prevEvent : mapEventViews.keySet()) {
 				if(EventUtil.isAtSameTime(event, prevEvent)) {
@@ -191,7 +178,6 @@ public class DayView extends BaseView{
 				}
 			}
 
-			((TextView)eventView.findViewById(R.id.activity_calendar_day_little_event)).setText("" + event.getId());
 			mapBottomUse.put(event.getId(),false);
 			mapRightUse.put(event.getId(),false);
 			mapEventViews.put(event, eventView);
