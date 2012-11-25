@@ -1,7 +1,12 @@
 package its.my.time.pages.editable.event.commentaires;
 
 import its.my.time.R;
-import android.content.Intent;
+import its.my.time.data.bdd.event.comment.CommentBean;
+import its.my.time.util.DatabaseUtil;
+import its.my.time.util.PreferencesUtil;
+
+import java.util.Calendar;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +43,7 @@ public class CommentairesFragment extends SherlockFragment {
 		mTextCommentaire = (EditText)mView.findViewById(R.id.event_comment_editComment); 
 		
 		mButtonSend = (Button)mView.findViewById(R.id.event_comment_save);
-		/*mButtonSend.setOnClickListener(new OnClickListener() {
+		mButtonSend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				//TODO envoyer via ws
@@ -54,27 +59,7 @@ public class CommentairesFragment extends SherlockFragment {
 				mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId));
 				mTextCommentaire.setText("");
 			}
-		});*/
-		
-		mButtonSend.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				 Intent intent = new Intent(Intent.ACTION_GET_CONTENT); 
-			        intent.setType("*/*"); 
-			        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-			        try {
-			            startActivityForResult(
-			                    Intent.createChooser(intent, "Select a File to Upload"),
-			                    0);
-			        } catch (android.content.ActivityNotFoundException ex) {
-			            // Potentially direct the user to the Market with a Dialog
-			            Toast.makeText(getActivity(), "Please install a File Manager.", 
-			                    Toast.LENGTH_SHORT).show();
-			        }
-			}
 		});
-		
 		
 		
 		return mView;
