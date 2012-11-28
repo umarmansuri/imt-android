@@ -1,12 +1,14 @@
 <resources>
 
 <dimen name="handler_size">40dp</dimen>
-<dimen name="view_day_height_ligne_heure">40dp</dimen>
-<dimen name="view_day_height_ligne_heure_half">20dp</dimen>
+<dimen name="view_day_height_ligne_heure">60dp</dimen>
+<dimen name="view_day_height_ligne_heure_half">30dp</dimen>
 
 <dimen name="text_size_small">16sp</dimen>
 <dimen name="text_size_medium">18sp</dimen>
 <dimen name="text_size_large">20sp</dimen>
 
-<dimen name="radius">5dp</dimen>
+<dimen name="day_event_little_radius">2dp</dimen>
+<dimen name="day_event_little_title_height">20dp</dimen>
+<dimen name="day_event_little_min_height">20dp</dimen>
 </resources>

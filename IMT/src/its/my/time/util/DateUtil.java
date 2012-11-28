@@ -73,7 +73,7 @@ public class DateUtil {
 		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " " + leMois;
 		return res;
 	}
-	
+
 	/**
 	 * 
 	 * @param cal La date a retourner
@@ -116,6 +116,11 @@ public class DateUtil {
 
 	public static CharSequence getLittleDate(GregorianCalendar cal) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+		return dateFormat.format(cal.getTime());
+	}
+
+	public static CharSequence getHourLabel(Calendar cal) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		return dateFormat.format(cal.getTime());
 	}
 
@@ -180,20 +185,20 @@ public class DateUtil {
 	public static float getNbHeure(Calendar hDeb, Calendar hFin, Calendar day) {
 		long millisecondsDeb;
 		long millisecondsFin;
-		
-		
+
+
 		GregorianCalendar dayDeb = new GregorianCalendar(
 				day.get(Calendar.YEAR),
 				day.get(Calendar.MONTH),
 				day.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-		
+
 
 		GregorianCalendar dayFin = new GregorianCalendar(
 				day.get(Calendar.YEAR),
 				day.get(Calendar.MONTH),
 				day.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		dayFin.add(Calendar.DAY_OF_MONTH, 1);
-		
+
 		if(hDeb.before(dayDeb) && hFin.after(dayFin)) {
 			return 24;
 		} 
@@ -224,6 +229,14 @@ public class DateUtil {
 				cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		calAft.add(Calendar.DAY_OF_MONTH,1);
 		return calBef.before(gethDeb) && calAft.after(gethDeb);
+	}
+
+
+	public static CharSequence getHourLabel(Calendar start, Calendar end) {
+		StringBuilder hourLabel = new StringBuilder();
+		hourLabel.append(DateUtil.getHourLabel(start));
+		if(end != null) {hourLabel.append(" - " + DateUtil.getHourLabel(end));}
+		return hourLabel.toString();
 	}
 }
 

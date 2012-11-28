@@ -7,14 +7,14 @@
         </shape>
     </item>
     
-    <item android:top="20dp" android:left="10dp">
+    <item android:top="@dimen/view_day_height_ligne_heure_half" android:left="10dp">
         <shape>
             <solid android:color="#aaaaaa"/>
         </shape>
     </item>
     
     
-    <item android:top="21dp">
+    <item android:top="31dp">
         <shape>
             <solid android:color="#ffffff"/>
         </shape>
@@ -22,7 +22,7 @@
     
     
     <item android:bottom="1dp"
-        android:top="38dp">
+        android:top="58dp">
         <shape>
             <size android:height="1dp"/>
             <solid android:color="#000000"/>
