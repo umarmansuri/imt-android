@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/form_activity_day_event_little"
+    android:minHeight="@dimen/day_event_little_min_height" >
+
+    <TextView
+        android:id="@+id/activity_calendar_day_event_little_hour"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/day_event_little_title_height"
+        android:layout_alignParentTop="true"
+        android:textColor="#fff"
+        android:paddingLeft="5dp"
+        android:text="08:11 - 11:15" />
+
+    <TextView
+        android:id="@+id/activity_calendar_day_event_little_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_above="@+id/activity_calendar_day_event_little_bottom"
+        android:layout_below="@+id/activity_calendar_day_event_little_hour"
+        android:textColor="#fff" />
+
+    <TextView
+        android:id="@+id/activity_calendar_day_event_little_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:text="="
+        android:textColor="#fff" />
+
+</RelativeLayout>

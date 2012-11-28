@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_day_height_ligne_heure_half"
         android:background="@android:color/black"
         android:gravity="center"
         android:text="Octobre 2012"
@@ -234,13 +234,13 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
-                android:id="@+id/activity_calendar_day_labelh24"
                 android:layout_width="@dimen/view_day_height_ligne_heure_half"
                 android:layout_height="@dimen/view_day_height_ligne_heure"
                 android:layout_below="@+id/activity_calendar_day_labelh23"
                 android:gravity="center"
                 android:text="24"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+            
 
             <View
                 android:id="@+id/activity_calendar_day_h01"

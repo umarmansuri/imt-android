@@ -1,43 +1,35 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item>
-        <shape android:shape="rectangle" >
-            <solid android:color="#000000" />
-
-            <corners android:radius="@dimen/radius" />
+    
+    <item >
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
         </shape>
     </item>
-    <item
-        android:bottom="1dp"
-        android:left="1dp"
-        android:right="1dp"
-        android:top="1dp">
-        <shape android:shape="rectangle" >
-            <solid android:color="#aa562e" />
-
-            <corners android:radius="@dimen/radius" />
+    
+     <item >
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="0.5dp"
+                android:color="#2352a1" />
+            <corners android:radius="@dimen/day_event_little_radius" />
         </shape>
     </item>
-    <item
-        android:bottom="3dp"
-        android:left="3dp"
-        android:right="3dp"
-        android:top="3dp">
-        <shape android:shape="rectangle" >
-            <solid android:color="#000000" />
 
-            <corners android:radius="@dimen/radius" />
+    <item android:left="0.5dp" android:top="0.5dp" android:right="0.5dp" android:bottom="0.5dp">
+        <shape android:shape="rectangle" >
+			<gradient android:startColor="#2c73dc" android:endColor="#2964c8"/>
+            <corners android:radius="@dimen/day_event_little_radius" />
         </shape>
     </item>
-    <item
-        android:bottom="4dp"
-        android:left="4dp"
-        android:right="4dp"
-        android:top="4dp">
+    
+    
+    <item android:top="@dimen/day_event_little_title_height" android:left="0.5dp" android:right="0.5dp" android:bottom="0.5dp">
         <shape android:shape="rectangle" >
-            <solid android:color="#ffffff" />
+            <solid android:color="#6a99e1" />
 
-            <corners android:radius="@dimen/radius" />
+            <corners android:radius="@dimen/day_event_little_radius" />
+
         </shape>
     </item>
 

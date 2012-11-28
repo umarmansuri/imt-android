@@ -10,17 +10,31 @@ import java.util.GregorianCalendar;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class EventLittleView extends TextView{
+public class EventLittleView extends FrameLayout{
 
 	private EventBean event;
+	private View mainView;
+	private View mBottom;
+	private float ligneHeight;
+	private TextView mTitle;
+	private TextView mContent;
 
 	public EventLittleView(Context context, EventBean event, Calendar day) {
 		super(context);
 		this.event = event;	
+		
+		mainView = inflate(getContext(), R.layout.activity_calendar_day_event_little, null);
+		addView(mainView);
+		
+		mTitle = (TextView)findViewById(R.id.activity_calendar_day_event_little_hour);
+		mTitle.setText(DateUtil.getHourLabel(event.gethDeb(), event.gethFin()));
+		mContent = (TextView)findViewById(R.id.activity_calendar_day_event_little_content);
+		mContent.setText("Titre");
+		mBottom = findViewById(R.id.activity_calendar_day_event_little_bottom);
 		
 		setOnClickListener(new OnClickListener() {
 			@Override
@@ -29,17 +43,53 @@ public class EventLittleView extends TextView{
 			}
 		});
 
-		setText("Titre");
-		float ligneHeight =  getResources().getDimension(R.dimen.view_day_height_ligne_heure);
+		ligneHeight =  getResources().getDimension(R.dimen.view_day_height_ligne_heure);
 		int height = (int) (DateUtil.getNbHeure(event.gethDeb(), event.gethFin(), day) * ligneHeight) ;
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
 		if(DateUtil.isInDay(event.gethDeb(), day)) {
 			params.topMargin = ((int) (event.gethDeb().get(GregorianCalendar.HOUR_OF_DAY)  * ligneHeight + (((float)event.gethDeb().get(GregorianCalendar.MINUTE)/ 60) * ligneHeight)));
 		}
 		setLayoutParams(params);
-		setBackgroundResource(R.drawable.form_activity_day_event_little);
-		final float scale = getContext().getResources().getDisplayMetrics().density;
-		int pixels = (int) (5.5 * scale + 0.5f);
-		setPadding(pixels, pixels, pixels, pixels);
 	}
+
+	public EventBean getEvent() {
+		return event;
+	}
+
+	public void setEvent(EventBean event) {
+		this.event = event;
+	}
+
+	public View getBottomDraggable() {
+		return mBottom;
+	}
+
+	protected boolean onSetAlpha(int alpha) {
+		mainView.getBackground().setAlpha(alpha);
+	    return true;
+	}
+
+	public void updateFromLayout(RelativeLayout.LayoutParams layout) {
+		setLayoutParams(layout);
+		
+		float nbHeure = layout.height / ligneHeight;
+		float hourDeb = layout.topMargin / ligneHeight;
+
+		event.gethDeb().set(Calendar.HOUR_OF_DAY, 0);
+		event.gethDeb().set(Calendar.MINUTE, 0);
+		event.gethDeb().set(Calendar.SECOND, 0);
+		event.gethDeb().add(Calendar.SECOND, (int) (hourDeb * 3600));
+		
+
+		event.gethFin().set(Calendar.HOUR_OF_DAY, 0);
+		event.gethFin().set(Calendar.MINUTE, 0);
+		event.gethFin().set(Calendar.SECOND, 0);
+		event.gethFin().add(Calendar.SECOND, (int) ((hourDeb + nbHeure)* 3600));
+		
+		mTitle.setText(DateUtil.getHourLabel(event.gethDeb(), event.gethFin()));
+		
+	}
+	
+	
+	
 }
