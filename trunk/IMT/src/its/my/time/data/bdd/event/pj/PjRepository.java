@@ -15,14 +15,14 @@ public class PjRepository extends DatabaseHandler{
 	public static final String KEY_ID = "id";
 	public static final String KEY_TITLE = "title";
 	public static final String KEY_DATE = "date";
-	public static final String KEY_TYPE = "type";
+	public static final String KEY_LINK = "Link";
 	public static final String KEY_UID = "uid";
 	public static final String KEY_EID = "eid";
 
 	public static final int KEY_INDEX_ID = 0;
 	public static final int KEY_INDEX_TITLE = 1;
 	public static final int KEY_INDEX_DATE = 2;
-	public static final int KEY_INDEX_TYPE = 3;
+	public static final int KEY_INDEX_LINK = 3;
 	public static final int KEY_INDEX_UID = 4;
 	public static final int KEY_INDEX_EID = 5;
 
@@ -33,11 +33,11 @@ public class PjRepository extends DatabaseHandler{
 			+ KEY_ID + " integer primary key autoincrement,"
 			+ KEY_TITLE + " text not null,"
 			+ KEY_DATE + " text not null,"
-			+ KEY_TYPE + " text not null,"
+			+ KEY_LINK + " text not null,"
 			+ KEY_UID + " INTEGER not null,"
 			+ KEY_EID + " INTEGER not null);";
 
-	private String[] allAttr = new String[]{KEY_ID, KEY_TITLE, KEY_DATE, KEY_TYPE, KEY_UID, KEY_EID};
+	private String[] allAttr = new String[]{KEY_ID, KEY_TITLE, KEY_DATE, KEY_LINK, KEY_UID, KEY_EID};
 
 	public PjRepository(Context context) {
 		super(context);
@@ -60,7 +60,7 @@ public class PjRepository extends DatabaseHandler{
 		pj.setId(c.getInt(KEY_INDEX_ID));
 		pj.setName(c.getString(KEY_INDEX_TITLE));
 		pj.setDate(DateUtil.getDateFromISO(c.getString(KEY_INDEX_DATE)));
-		pj.setType(c.getString(KEY_INDEX_TYPE));
+		pj.setLink(c.getString(KEY_INDEX_LINK));
 		pj.setUid(c.getInt(KEY_INDEX_UID));
 		pj.setEid(c.getInt(KEY_INDEX_EID));
 		return pj;
@@ -80,7 +80,7 @@ public class PjRepository extends DatabaseHandler{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_TITLE, pj.getName());
 		initialValues.put(KEY_DATE, DateUtil.getTimeInIso(pj.getDate()));
-		initialValues.put(KEY_TYPE, pj.getType());
+		initialValues.put(KEY_LINK, pj.getLink());
 		initialValues.put(KEY_EID, pj.getEid());
 		initialValues.put(KEY_UID, pj.getUid());
 		open();

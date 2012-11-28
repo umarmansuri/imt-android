@@ -9,7 +9,6 @@ public class PjBean {
 	private int id;
 	private String name;
 	private Calendar date;
-	private String type;
 	private String link;
 	private long uid;
 	private long eid;
@@ -19,7 +18,6 @@ public class PjBean {
 		this.id = id;
 		this.date = cal;
 		this.name = name;
-		this.type = type;
 		this.link = link;
 		this.uid = uid;
 		this.eid = eid;
@@ -29,7 +27,6 @@ public class PjBean {
 		this.id = -1;
 		this.name = "";
 		this.date = null;
-		this.type = "";
 		this.link = "";
 		this.uid = -1;
 		this.eid = -1;
@@ -53,15 +50,6 @@ public class PjBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-	
 	public String getLink() {
 		return link;
 	}
