@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" >
-
+
         <Button
             android:id="@+id/event_pj_Btenvoi"
             style="?android:attr/buttonStyleSmall"
@@ -26,16 +26,6 @@
             android:layout_height="wrap_content"
             android:text="@string/view_event_pj_Btenvoi" />
 
-        <TextView
-            android:id="@+id/event_pj_editPj"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:ellipsize="end"
-            android:ems="10"
-            android:maxLines="3"
-            android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 
 </RelativeLayout>
