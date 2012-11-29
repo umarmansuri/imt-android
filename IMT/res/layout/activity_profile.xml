@@ -21,274 +21,295 @@
 
         <ImageView
             android:id="@+id/event_pj_icone"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="2dp"
-            android:layout_alignParentTop="true"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
             android:contentDescription="@string/descriptionPicureProfil"
             android:src="@drawable/ic_action_profil_black" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
-
-        <TextView
-            android:id="@+id/textNom"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_lastname"
-            android:textColor="#000000" />
+            android:layout_below="@+id/event_pj_icone" >
 
-        <EditText
-            android:id="@+id/editNom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textNom"
-            android:ellipsize="end"
-            android:inputType="textPersonName"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/layout_conteneur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textPrenom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_firstname"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textNom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_lastname"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editPrenom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textPrenom"
-            android:ellipsize="end"
-            android:inputType="textPersonName"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editNom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textNom"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textIdentifiant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_identifiant"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textPrenom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_firstname"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editIdentifiantInscription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textIdentifiant"
-            android:ellipsize="end"
-            android:inputType="textPersonName"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editPrenom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textPrenom"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textMdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_password"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textIdentifiant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_identifiant"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editMdpInscription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textMdp"
-            android:ellipsize="end"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editIdentifiantInscription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textIdentifiant"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textMdpConf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_password_again"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textMdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_password"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editMdpInscriptionConf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textMdpConf"
-            android:ellipsize="end"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editMdpInscription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textMdp"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textDateNaissance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_birthday"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textMdpConf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_password_again"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editDateNaissance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textDateNaissance"
-            android:ellipsize="end"
-            android:inputType="date"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editMdpInscriptionConf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textMdpConf"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textTel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_phone"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textDateNaissance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_birthday"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editTel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textTel"
-            android:ellipsize="end"
-            android:inputType="number"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editDateNaissance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textDateNaissance"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textAdresse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_adresse"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textTel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_phone"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editAdresse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textAdresse"
-            android:ellipsize="end"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editTel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textTel"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textVille"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_city"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textAdresse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_adresse"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editVille"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textVille"
-            android:ellipsize="end"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
-    </RelativeLayout>
+                    <EditText
+                        android:id="@+id/editAdresse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textAdresse"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
 
-        <TextView
-            android:id="@+id/textCDP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/view_profil_code_postal"
-            android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textVille"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_city"
+                        android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/editCDP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textCDP"
-            android:ellipsize="end"
-            android:inputType="number"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small" />
+                    <EditText
+                        android:id="@+id/editVille"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textVille"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border" >
+
+                    <TextView
+                        android:id="@+id/textCDP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/view_profil_code_postal"
+                        android:textColor="#000000" />
+
+                    <EditText
+                        android:id="@+id/editCDP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/textCDP"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
     </RelativeLayout>
 
 </LinearLayout>
