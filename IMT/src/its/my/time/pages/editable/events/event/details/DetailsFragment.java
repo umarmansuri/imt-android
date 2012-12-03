@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.event.details;
+package its.my.time.pages.editable.events.event.details;
 
 import its.my.time.data.bdd.event.EventBean;
 import android.os.Bundle;

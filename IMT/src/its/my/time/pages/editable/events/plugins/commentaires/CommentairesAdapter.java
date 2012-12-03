@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.event.commentaires;
+package its.my.time.pages.editable.events.plugins.commentaires;
 
 import its.my.time.data.bdd.event.comment.CommentBean;
 import its.my.time.util.DatabaseUtil;

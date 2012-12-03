@@ -1,10 +1,10 @@
-package its.my.time.pages.editable.event;
+package its.my.time.pages.editable.events.event;
 
 import its.my.time.data.bdd.event.EventBean;
-import its.my.time.pages.editable.event.commentaires.CommentairesFragment;
-import its.my.time.pages.editable.event.details.DetailsFragment;
-import its.my.time.pages.editable.event.participants.ParticipantsFragment;
-import its.my.time.pages.editable.event.pj.PjFragment;
+import its.my.time.pages.editable.events.event.details.DetailsFragment;
+import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
+import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
+import its.my.time.pages.editable.events.plugins.pj.PjFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;

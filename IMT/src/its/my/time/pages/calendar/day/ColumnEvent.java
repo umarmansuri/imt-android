@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -57,6 +58,9 @@ public class ColumnEvent extends RelativeLayout{
 		if(events.contains(view.getEvent())) {
 			events.remove(view.getEvent());
 			removeView(view);
+			if(events.size() == 0) {
+				((ViewGroup)getParent()).removeView(this);
+			}
 			return true;
 		}
 		return false;

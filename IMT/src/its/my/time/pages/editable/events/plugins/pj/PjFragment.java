@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.event.pj;
+package its.my.time.pages.editable.events.plugins.pj;
 
 import its.my.time.R;
 import its.my.time.data.bdd.event.pj.PjBean;
