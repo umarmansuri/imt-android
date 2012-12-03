@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.event;
+package its.my.time.pages.editable.events.event;
 
 import its.my.time.data.bdd.event.EventBean;
 import its.my.time.pages.editable.BaseActivity;

@@ -152,7 +152,7 @@ public class DayView extends BaseView{
 		llEvent.addView(column);
 		return eventView;
 	}
-	
+
 	private EventLittleView addEventView(EventLittleView view) {
 		ColumnEvent column;
 		for (int i = 0; i < llEvent.getChildCount(); i++) {
@@ -196,7 +196,7 @@ public class DayView extends BaseView{
 			draggedView.onSetAlpha(100);
 			mainScroll.requestDisallowInterceptTouchEvent(true);
 			draggedView.setOnTouchListener(this);
-			v.bringToFront();
+			draggedView.bringToFront();
 			return false;
 		}
 
@@ -255,7 +255,7 @@ public class DayView extends BaseView{
 		public boolean onLongClick(View v) {
 			mainScroll.requestDisallowInterceptTouchEvent(true);
 			v.setOnTouchListener(this);
-			v.bringToFront();
+			parent.bringToFront();
 			return false;
 		}
 
@@ -277,6 +277,7 @@ public class DayView extends BaseView{
 				v.setOnTouchListener(null);
 				lastY=-100000;
 				mainScroll.requestDisallowInterceptTouchEvent(false);
+				reloadEventLittleView(parent);
 				//TODO enregistrer nouvelle heure de debut
 			}
 			return true;

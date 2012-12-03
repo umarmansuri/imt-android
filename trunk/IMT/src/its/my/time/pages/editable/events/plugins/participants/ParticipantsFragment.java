@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.event.participants;
+package its.my.time.pages.editable.events.plugins.participants;
 
 import its.my.time.R;
 import android.os.Bundle;

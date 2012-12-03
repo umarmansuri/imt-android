@@ -4,7 +4,7 @@ import java.util.GregorianCalendar;
 
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.editable.compte.CompteActivity;
-import its.my.time.pages.editable.event.EventActivity;
+import its.my.time.pages.editable.events.event.EventActivity;
 import android.content.Context;
 import android.content.Intent;
 

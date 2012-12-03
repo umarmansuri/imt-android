@@ -88,8 +88,5 @@ public class EventLittleView extends FrameLayout{
 		
 		mTitle.setText(DateUtil.getHourLabel(event.gethDeb(), event.gethFin()));
 		
-	}
-	
-	
-	
+	}	
 }
