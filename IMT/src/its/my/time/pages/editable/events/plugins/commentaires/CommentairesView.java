@@ -1,7 +1,7 @@
 package its.my.time.pages.editable.events.plugins.commentaires;
 
 import its.my.time.R;
-import its.my.time.data.bdd.event.comment.CommentBean;
+import its.my.time.data.bdd.events.plugins.comment.CommentBean;
 import its.my.time.util.DateUtil;
 import android.content.Context;
 import android.graphics.Color;

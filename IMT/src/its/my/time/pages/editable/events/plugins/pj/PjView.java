@@ -1,7 +1,7 @@
 package its.my.time.pages.editable.events.plugins.pj;
 
 import its.my.time.R;
-import its.my.time.data.bdd.event.pj.PjBean;
+import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;

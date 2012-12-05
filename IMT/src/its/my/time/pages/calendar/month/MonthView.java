@@ -2,8 +2,9 @@ package its.my.time.pages.calendar.month;
 
 import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.calendar.base.BaseView;
+import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.IdUtil;
 
@@ -66,19 +67,11 @@ public class MonthView extends BaseView {
 		GregorianCalendar calDeb = new GregorianCalendar(helper.getYear(), helper.getMonth(), 1, 0, 0, 0);
 		GregorianCalendar calFin = new GregorianCalendar(helper.getYear(), helper.getMonth(), helper.getNumberOfDaysInMonth() , 0, 0, 0);
 		calFin.add(Calendar.DAY_OF_MONTH, 1);
-		List<EventBean> listEventsFinal = new ArrayList<EventBean>();
+		List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
 
-		/*TODO
-		 List<Long> listeCompteShowed = new ArrayList<Long>();
-		  for (CompteBean compte : DataUtil.getInstance().getListeCompte().values()) {
 
-			if(compte.isShowed()) {
-				listeCompteShowed.add(compte.getId());
-			}
-
-		}
-		listEventsFinal = DataUtil.getInstance().getEventRepo().GetListEvent(listeCompteShowed, calDeb, calFin);
-		 */
+		listEventsFinal = DatabaseUtil.Events.getEventRepository(getContext()).getAllEvents(calDeb, calFin);
+		
 		LinearLayout tabJour = (LinearLayout)view.findViewById(R.id.llTabJour);
 		LinearLayout ligne;
 		TextView txtVw;

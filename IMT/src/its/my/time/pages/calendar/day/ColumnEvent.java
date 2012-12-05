@@ -1,6 +1,6 @@
 package its.my.time.pages.calendar.day;
 
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.util.EventUtil;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 public class ColumnEvent extends RelativeLayout{
 
-	private ArrayList<EventBean> events = new ArrayList<EventBean>();
+	private ArrayList<EventBaseBean> events = new ArrayList<EventBaseBean>();
 	private ArrayList<EventLittleView> eventViews = new ArrayList<EventLittleView>();
 
 	public ColumnEvent(Context context) {
@@ -29,8 +29,8 @@ public class ColumnEvent extends RelativeLayout{
 	 * Tente d'ajouter l'evenement à la vue
 	 * @return la vue de l'event si l'évènment a été placé, sinon (si la place est deja pise), return null
 	 */
-	public EventLittleView addEvent(EventBean newEv, Calendar day) {
-		for (EventBean event : events) {
+	public EventLittleView addEvent(EventBaseBean newEv, Calendar day) {
+		for (EventBaseBean event : events) {
 			if(EventUtil.isAtSameTime(newEv, event)) {
 				return null;
 			}
@@ -43,7 +43,7 @@ public class ColumnEvent extends RelativeLayout{
 	}
 
 	public EventLittleView addEvent(EventLittleView view) {
-		for (EventBean event : events) {
+		for (EventBaseBean event : events) {
 			if(EventUtil.isAtSameTime(view.getEvent(), event)) {
 				return null;
 			}

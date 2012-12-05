@@ -1,10 +1,10 @@
 package its.my.time.data.bdd;
 
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.event.EventRepository;
-import its.my.time.data.bdd.event.comment.CommentRepository;
-import its.my.time.data.bdd.event.participant.ParticipantRepository;
-import its.my.time.data.bdd.event.pj.PjRepository;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
+import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
+import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import android.content.Context;
 import android.database.SQLException;
@@ -47,7 +47,7 @@ public class DatabaseHandler {
 			Log.d("DbAdapter","passe dans onCreate!");
 			db.execSQL(UtilisateurRepository.CREATE_TABLE);
 			db.execSQL(CompteRepository.CREATE_TABLE);
-			db.execSQL(EventRepository.CREATE_TABLE);   
+			db.execSQL(EventBaseRepository.CREATE_TABLE);   
 			db.execSQL(CommentRepository.CREATE_TABLE); 
 			db.execSQL(ParticipantRepository.CREATE_TABLE);    
 			db.execSQL(PjRepository.CREATE_TABLE);

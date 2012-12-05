@@ -1,4 +1,4 @@
-package its.my.time.data.bdd.event.comment;
+package its.my.time.data.bdd.events.plugins.comment;
 
 import java.util.Calendar;
 

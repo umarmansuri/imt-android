@@ -11,17 +11,6 @@ import android.database.Cursor;
 
 public class UtilisateurRepository extends DatabaseHandler{
 
-	public static final String KEY_ID = "id";
-	public static final String KEY_NOM = "nom";
-	public static final String KEY_PRENOM = "prenom";
-	public static final String KEY_TEL= "tel";
-	public static final String KEY_MAIL = "mail";
-	public static final String KEY_ADRESSE = "adresse";
-	public static final String KEY_CODE_POSTAL= "code_postal";
-	public static final String KEY_VILLE = "ville";
-	public static final String KEY_PAYS = "pays";
-
-
 	public static final int KEY_INDEX_ID = 0;
 	public static final int KEY_INDEX_NOM = 1;
 	public static final int KEY_INDEX_PRENOM = 2;
@@ -31,6 +20,16 @@ public class UtilisateurRepository extends DatabaseHandler{
 	public static final int KEY_INDEX_CODE_POSTAL= 6;
 	public static final int KEY_INDEX_VILLE = 7;
 	public static final int KEY_INDEX_PAYS = 8;
+	
+	public static final String KEY_ID = "KEY_ID";
+	public static final String KEY_NOM = "KEY_NOM";
+	public static final String KEY_PRENOM = "KEY_PRENOM";
+	public static final String KEY_TEL = "KEY_TEL";
+	public static final String KEY_MAIL = "KEY_MAIL";
+	public static final String KEY_ADRESSE = "KEY_ADRESSE";
+	public static final String KEY_CODE_POSTAL = "KEY_CODE_POSTAL";
+	public static final String KEY_VILLE = "KEY_VILLE";
+	public static final String KEY_PAYS = "KEY_PAYS";
 
 
 	public static final String DATABASE_TABLE = "utilisateur";

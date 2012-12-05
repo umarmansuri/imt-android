@@ -1,9 +1,9 @@
-package its.my.time.data.bdd.event;
+package its.my.time.data.bdd.events.eventBase;
 
 import java.util.Calendar;
 
 
-public class EventBean {
+public class EventBaseBean {
 	
 	private String details;
 	private Calendar hDeb;
@@ -11,21 +11,11 @@ public class EventBean {
 	private int id;
 	private String title;
 	private int cid;
+	private int typeId;
+	private int detailsId;
 	
 	
-	
-	public EventBean(String details, Calendar hDeb, Calendar hFin, int id,
-			String title, int cid) {
-		super();
-		this.details = details;
-		this.hDeb = hDeb;
-		this.hFin = hFin;
-		this.id = id;
-		this.title = title;
-		this.cid = cid;
-	}
-	
-	public EventBean() {
+	public EventBaseBean() {
 		super();
 		this.details = "";
 		this.hDeb = null;
@@ -33,6 +23,8 @@ public class EventBean {
 		this.id = -1;
 		this.title = "";
 		this.cid = -1;
+		this.typeId = -1;
+		this.detailsId = -1;
 	}
 	
 	
@@ -72,6 +64,16 @@ public class EventBean {
 	public void setCid(int cid) {
 		this.cid = cid;
 	}
-	
-
+	public int getTypeId() {
+		return typeId;
+	}
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
+	public int getDetailsId() {
+		return detailsId;
+	}
+	public void setDetailsId(int detailsId) {
+		this.detailsId = detailsId;
+	}
 }

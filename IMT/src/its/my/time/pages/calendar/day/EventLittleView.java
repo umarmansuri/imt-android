@@ -1,7 +1,8 @@
 package its.my.time.pages.calendar.day;
 
 import its.my.time.R;
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.anim.DraggedAnim;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 
@@ -16,16 +17,17 @@ import android.widget.TextView;
 
 public class EventLittleView extends FrameLayout{
 
-	private EventBean event;
+	private EventBaseBean event;
 	private View mainView;
 	private View mBottom;
 	private float ligneHeight;
 	private TextView mTitle;
 	private TextView mContent;
+	private int height;
 
-	public EventLittleView(Context context, EventBean event, Calendar day) {
+	public EventLittleView(Context context, EventBaseBean event, Calendar day) {
 		super(context);
-		this.event = event;	
+		this.event = event;
 		
 		mainView = inflate(getContext(), R.layout.activity_calendar_day_event_little, null);
 		addView(mainView);
@@ -44,7 +46,7 @@ public class EventLittleView extends FrameLayout{
 		});
 
 		ligneHeight =  getResources().getDimension(R.dimen.view_day_height_ligne_heure);
-		int height = (int) (DateUtil.getNbHeure(event.gethDeb(), event.gethFin(), day) * ligneHeight) ;
+		height = (int) (DateUtil.getNbHeure(event.gethDeb(), event.gethFin(), day) * ligneHeight) ;
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
 		if(DateUtil.isInDay(event.gethDeb(), day)) {
 			params.topMargin = ((int) (event.gethDeb().get(GregorianCalendar.HOUR_OF_DAY)  * ligneHeight + (((float)event.gethDeb().get(GregorianCalendar.MINUTE)/ 60) * ligneHeight)));
@@ -52,11 +54,11 @@ public class EventLittleView extends FrameLayout{
 		setLayoutParams(params);
 	}
 
-	public EventBean getEvent() {
+	public EventBaseBean getEvent() {
 		return event;
 	}
 
-	public void setEvent(EventBean event) {
+	public void setEvent(EventBaseBean event) {
 		this.event = event;
 	}
 
@@ -64,9 +66,20 @@ public class EventLittleView extends FrameLayout{
 		return mBottom;
 	}
 
-	protected boolean onSetAlpha(int alpha) {
-		mainView.getBackground().setAlpha(alpha);
-	    return true;
+	public void changeDragged(boolean dragged) {
+		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+		if(dragged) {
+			mainView.getBackground().setAlpha(100);
+			DraggedAnim anim = new DraggedAnim(this, -10);
+			anim.setDuration(100);
+			startAnimation(anim);
+		} else {
+			mainView.getBackground().setAlpha(255);
+			DraggedAnim anim = new DraggedAnim(this, 0);
+			anim.setDuration(100);
+			startAnimation(anim);
+		}
+		setLayoutParams(params);
 	}
 
 	public void updateFromLayout(RelativeLayout.LayoutParams layout) {

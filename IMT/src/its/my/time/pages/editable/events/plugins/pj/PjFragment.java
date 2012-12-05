@@ -1,7 +1,7 @@
 package its.my.time.pages.editable.events.plugins.pj;
 
 import its.my.time.R;
-import its.my.time.data.bdd.event.pj.PjBean;
+import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.util.DatabaseUtil;
 
 import java.util.Calendar;
@@ -31,7 +31,6 @@ public class PjFragment extends SherlockFragment {
 	private static final int PICK_FILE_RESULT_CODE = 1;
 
 	public PjFragment(int eventId) {
-		super();
 		this.eventId = eventId;
 	}
 
@@ -89,7 +88,7 @@ public class PjFragment extends SherlockFragment {
 				//TODO utilisateur désactivé
 				//pj.setUid(PreferencesUtil.getCurrentUid(getActivity()));
 				pj.setUid(1);
-				long res = DatabaseUtil.getPjRepository(getActivity())
+				long res = DatabaseUtil.Plugins.getPjRepository(getActivity())
 						.insertpj(pj);
 				if (res < 0) {
 					Toast.makeText(getActivity(),

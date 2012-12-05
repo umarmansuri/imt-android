@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.events.plugins.pj;
 
-import its.my.time.data.bdd.event.pj.PjBean;
+import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class PjAdapter implements ListAdapter{
 			pjs = new ArrayList<PjBean>();
 		}
 
-		pjs = DatabaseUtil.getPjRepository(context).getAllByEid(idEvent);
+		pjs = DatabaseUtil.Plugins.getPjRepository(context).getAllByEid(idEvent);
 	}
 
 	@Override

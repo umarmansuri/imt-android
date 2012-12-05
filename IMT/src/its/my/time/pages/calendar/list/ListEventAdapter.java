@@ -1,6 +1,8 @@
 package its.my.time.pages.calendar.list;
 
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.DatabaseHandler;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class ListEventAdapter implements ListAdapter{
 	private static final int NB_EVENT_LOADED = 10;
 
 	private Context context;
-	private List<EventBean> events;
+	private List<EventBaseBean> events;
 	private int indexEvent;
 
 	public ListEventAdapter(Context context) {
@@ -26,19 +28,7 @@ public class ListEventAdapter implements ListAdapter{
 	}
 
 	private void loadNextEvents() {
-		if(events == null) {
-			events = new ArrayList<EventBean>();
-		}
-
-		//TODO supprimer et recuperer les events de la bdd
-		EventBean eventBean;
-		for(int i = 0; i < NB_EVENT_LOADED; i++){
-			eventBean = new EventBean();
-			eventBean.setId(indexEvent + i);
-			eventBean.setTitle("Titre event " + (indexEvent + i) );
-			eventBean.setDetails("Détails de -l'évènement " + (indexEvent + i) + ": Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie, leo eget viverra luctus, massa sem lacinia est, at bibendum ipsum tellus eu tortor. Donec quis interdum leo. Curabitur in magna magna. Aliquam a odio sem, eu tempus lorem. Praesent consectetur odio nec massa dignissim a luctus purus rhoncus. Donec vitae risus non arcu cursus sodales et nec enim. Nam.");
-			events.add(eventBean);
-		}
+		events = DatabaseUtil.Events.getEventRepository(context).getAllNextFromNow();
 		indexEvent+=NB_EVENT_LOADED;
 	}
 
