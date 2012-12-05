@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.events.plugins.commentaires;
 
-import its.my.time.data.bdd.event.comment.CommentBean;
+import its.my.time.data.bdd.events.plugins.comment.CommentBean;
 import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class CommentairesAdapter implements ListAdapter{
 			comments = new ArrayList<CommentBean>();
 		}
 
-		comments = DatabaseUtil.getCommentRepository(context).getAllByEid(idEvent);
+		comments = DatabaseUtil.Plugins.getCommentRepository(context).getAllByEid(idEvent);
 	}
 
 	@Override

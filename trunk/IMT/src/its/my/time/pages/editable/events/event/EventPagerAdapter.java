@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.events.event;
 
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.editable.events.event.details.DetailsFragment;
 import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
 import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
@@ -11,10 +11,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class EventPagerAdapter extends FragmentStatePagerAdapter {
 	
-	private EventBean event;
+	private EventBaseBean event;
 
 
-	public EventPagerAdapter(FragmentManager fm, EventBean event) {
+	public EventPagerAdapter(FragmentManager fm, EventBaseBean event) {
 		super(fm);
 		this.event = event;
 	}

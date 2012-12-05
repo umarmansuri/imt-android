@@ -1,4 +1,4 @@
-package its.my.time.data.bdd.event.participant;
+package its.my.time.data.bdd.events.plugins.participant;
 
 import its.my.time.data.bdd.DatabaseHandler;
 
@@ -11,13 +11,13 @@ import android.database.Cursor;
 
 public class ParticipantRepository extends DatabaseHandler{
 
-	public static final String KEY_ID = "id";
-	public static final String KEY_UID = "uid";
-	public static final String KEY_EID = "eid";
-
 	public static final int KEY_INDEX_ID = 0;
 	public static final int KEY_INDEX_UID = 1;
 	public static final int KEY_INDEX_EID = 2;
+
+	public static final String KEY_ID = "KEY_ID";
+	public static final String KEY_UID = "KEY_UID";
+	public static final String KEY_EID = "KEY_EID";
 
 
 	public static final String DATABASE_TABLE = "participant";
@@ -27,7 +27,10 @@ public class ParticipantRepository extends DatabaseHandler{
 			+ KEY_UID + " INTEGER not null,"
 			+ KEY_EID + " INTEGER not null);";
 
-	private String[] allAttr = new String[]{KEY_ID, KEY_UID, KEY_EID};
+	private String[] allAttr = new String[]{
+			KEY_ID, 
+			KEY_UID, 
+			KEY_EID};
 
 	public ParticipantRepository(Context context) {
 		super(context);
@@ -96,7 +99,7 @@ public class ParticipantRepository extends DatabaseHandler{
 		ParticipantBean res = convertCursorToOneObject(c);
 		return res;
 	}
-	
+
 	public List<ParticipantBean> getAllByEid(int eid) {
 		open();
 		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_EID + "=?", new String[] { "" + eid }, null, null, null);

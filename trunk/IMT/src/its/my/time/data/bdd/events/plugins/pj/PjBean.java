@@ -1,4 +1,4 @@
-package its.my.time.data.bdd.event.pj;
+package its.my.time.data.bdd.events.plugins.pj;
 
 import java.util.Calendar;
 

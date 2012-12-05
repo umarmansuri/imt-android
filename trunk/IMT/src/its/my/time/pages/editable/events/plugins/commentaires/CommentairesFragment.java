@@ -1,7 +1,7 @@
 package its.my.time.pages.editable.events.plugins.commentaires;
 
 import its.my.time.R;
-import its.my.time.data.bdd.event.comment.CommentBean;
+import its.my.time.data.bdd.events.plugins.comment.CommentBean;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 
@@ -52,7 +52,7 @@ public class CommentairesFragment extends SherlockFragment {
 				commentaire.setDate(Calendar.getInstance());
 				commentaire.setEid(eventId);
 				commentaire.setUid(PreferencesUtil.getCurrentUid(getActivity()));
-				long res = DatabaseUtil.getCommentRepository(getActivity()).insertComment(commentaire);
+				long res = DatabaseUtil.Plugins.getCommentRepository(getActivity()).insertComment(commentaire);
 				if(res < 0) {
 					Toast.makeText(getActivity(), "Votre commentaire n'a pu être envoyé.", Toast.LENGTH_SHORT).show();
 				}

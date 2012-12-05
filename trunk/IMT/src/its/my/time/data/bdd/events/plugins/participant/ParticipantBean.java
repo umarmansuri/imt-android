@@ -1,4 +1,4 @@
-package its.my.time.data.bdd.event.participant;
+package its.my.time.data.bdd.events.plugins.participant;
 
 
 

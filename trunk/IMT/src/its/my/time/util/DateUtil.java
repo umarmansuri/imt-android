@@ -1,6 +1,6 @@
 package its.my.time.util;
 
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -125,7 +125,7 @@ public class DateUtil {
 	}
 
 
-	public static String FORMAT_DATE_ISO="yyyy-MM-dd' 'HH:mm:ssZ";
+	public static String FORMAT_DATE_ISO="yyyy-MM-dd HH:mm:ss";
 
 
 	public static String getTimeInIso(Calendar cal, String format, TimeZone tz)
@@ -162,7 +162,7 @@ public class DateUtil {
 	 * @param calDay Le jour
 	 * @return true si l'evenement est dans le jour, sinon false
 	 */
-	public static boolean isInDay(EventBean event, Calendar calDay) {
+	public static boolean isInDay(EventBaseBean event, Calendar calDay) {
 		GregorianCalendar calDayDeb = new GregorianCalendar(
 				calDay.get(Calendar.YEAR),
 				calDay.get(Calendar.MONTH),

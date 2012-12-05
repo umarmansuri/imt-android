@@ -3,11 +3,14 @@ package its.my.time.pages.editable.compte;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.DatabaseUtil;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,20 +18,17 @@ import android.widget.TextView;
 public class CompteLittleView extends LinearLayout {
 
 
-	public CompteLittleView(Context context, int indexCompte) {
+	private CompteBean compte;
+
+	public CompteLittleView(Context context, CompteBean cpt) {
 		super(context);
-		final int position = indexCompte;
 		
-		//TODO
-		final CompteBean compte = new CompteBean();
-		compte.setTitle("TEST");
-		
-		//TODO implementer
-		/*if(!compte.isShowed()) {
+		this.compte = cpt;
+		if(!compte.isShowed()) {
 			Animation anim = new TranslateAnimation(0, -75, 0, 0);
 			anim.setFillAfter(true);
 			startAnimation(anim);
-		}*/
+		}
 		
 		ImageButton butAffCompte = new ImageButton(getContext());
 		butAffCompte.setBackgroundResource(R.drawable.border_backgrnd_enable);
@@ -37,18 +37,17 @@ public class CompteLittleView extends LinearLayout {
 		butAffCompte.setColorFilter(compte.getColor(), Mode.MULTIPLY);
 		butAffCompte.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				//TODO implementer
-				/*Animation anim;
+				Animation anim;
 				if(compte.isShowed()) { 	
 					anim = new TranslateAnimation(0, -75, 0, 0);
 				} else {
 					anim = new TranslateAnimation(-75, 0, 0, 0);
 				}
-				//TODO
-				//DataUtil.getInstance().getListeCompte().get(position).setShowed(!compte.isShowed());
 				anim.setDuration(200);
 				anim.setFillAfter(true);
-				startAnimation(anim);*/
+				startAnimation(anim);
+				compte.setShowed(compte.isShowed());
+				DatabaseUtil.getCompteRepository(getContext()).update(compte);
 			} 
 		});
 		LayoutParams params = new LayoutParams(100, 60);

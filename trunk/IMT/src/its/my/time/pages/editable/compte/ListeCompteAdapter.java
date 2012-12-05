@@ -5,7 +5,7 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 
-import java.util.Collection;
+import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +20,11 @@ import android.widget.RelativeLayout;
 
 public class ListeCompteAdapter implements ListAdapter {
 
-	private Collection<CompteBean> listeCompte;
+	private List<CompteBean> listeCompte;
 	private Context context;
 
 	public ListeCompteAdapter(Context context) {
 		this.context = context;
-		//TODO
 		listeCompte = DatabaseUtil.getCompteRepository(context).getAllCompteByUid(PreferencesUtil.getCurrentUid(context));
 	}
 
@@ -47,7 +46,7 @@ public class ListeCompteAdapter implements ListAdapter {
 
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		if(position < listeCompte.size()) {
-			return new CompteLittleView(parent.getContext(), position);
+			return new CompteLittleView(parent.getContext(), listeCompte.get(position));
 		} else {
 			RelativeLayout rl = new RelativeLayout(parent.getContext());
 			rl.setBackgroundResource(R.drawable.border_backgrnd_enable);

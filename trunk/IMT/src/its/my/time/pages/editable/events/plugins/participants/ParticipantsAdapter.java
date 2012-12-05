@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.events.plugins.participants;
 
-import its.my.time.data.bdd.event.participant.ParticipantBean;
+import its.my.time.data.bdd.events.plugins.participant.ParticipantBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.util.DatabaseUtil;
 
@@ -30,7 +30,7 @@ public class ParticipantsAdapter implements ListAdapter{
 
 	private void loadNextParticipants() {
 
-		participants = DatabaseUtil.getParticipantRepository(context).getAllByEid(idEvent);
+		participants = DatabaseUtil.Plugins.getParticipantRepository(context).getAllByEid(idEvent);
 		if(participants == null) {
 			participants = new ArrayList<ParticipantBean>();
 		}

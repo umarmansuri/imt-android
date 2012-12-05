@@ -2,7 +2,7 @@ package its.my.time.pages.editable.events.event.details;
 
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 public class DetailsView extends FrameLayout{
 
-	private EventBean event;
+	private EventBaseBean event;
 
 	private TextView mTextDateDeb;
 	private TextView mTextDateFin;
@@ -32,7 +32,7 @@ public class DetailsView extends FrameLayout{
 
 	private List<CompteBean> mListCompte;
 
-	public DetailsView(Context context, EventBean event) {
+	public DetailsView(Context context, EventBaseBean event) {
 		super(context);
 		addView(inflate(context, R.layout.activity_event_details, null));
 		setBackgroundColor(Color.WHITE);

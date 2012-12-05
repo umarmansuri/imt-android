@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.events.event;
 
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DatabaseUtil;
@@ -27,7 +27,7 @@ public class EventActivity extends BaseActivity{
 	private Tab newTabPj;
 
 	//for start from Extra
-	private EventBean event;
+	private EventBaseBean event;
 
 	@Override
 	protected void onCreate(Bundle savedInstance) {
@@ -35,10 +35,11 @@ public class EventActivity extends BaseActivity{
 		
 		Bundle bundle = getIntent().getExtras();
 		if(bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			event = DatabaseUtil.getEventRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID)); 
+			
+			event = DatabaseUtil.Events.getEventRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID)); 
 		} 
 		if(event == null){
-			event = new EventBean();
+			event = new EventBaseBean();
 			event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
 		}
 		

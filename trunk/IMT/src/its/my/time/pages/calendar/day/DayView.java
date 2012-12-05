@@ -1,13 +1,14 @@
 package its.my.time.pages.calendar.day;
 
 import its.my.time.R;
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.calendar.base.BaseView;
+import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import android.content.Context;
 import android.view.MotionEvent;
@@ -19,21 +20,15 @@ import android.widget.ScrollView;
 
 public class DayView extends BaseView{
 
-	private GregorianCalendar cal;
-
-	private ArrayList<EventBean> events;
-
-	private LinearLayout llEvent;
-
 	private Calendar firstCal;
 
+	private GregorianCalendar cal;
+	private List<EventBaseBean> events;
+	private LinearLayout llEvent;
 
 	protected boolean isFinished;
-
 	private LinearLayout view;
-
 	private float topMainScroll;
-
 	private ScrollView mainScroll;
 
 	private float ligneHeight;
@@ -41,6 +36,7 @@ public class DayView extends BaseView{
 	public DayView(Context context, Calendar cal) {
 		super(context);
 		this.cal = new GregorianCalendar(cal.get(GregorianCalendar.YEAR), cal.get(GregorianCalendar.MONTH), cal.get(GregorianCalendar.DAY_OF_MONTH), 0, 0, 0);
+		firstCal = new GregorianCalendar(0,0,0,8,0);
 	}
 
 	@Override
@@ -58,7 +54,6 @@ public class DayView extends BaseView{
 
 			@Override
 			public void onGlobalLayout() {
-
 				firstCal.add(Calendar.MINUTE, -30);
 				int scroll = ((int) (firstCal.get(GregorianCalendar.HOUR_OF_DAY)  * ligneHeight + (((float)firstCal.get(GregorianCalendar.MINUTE)/ 60) * ligneHeight)));
 			}
@@ -74,52 +69,16 @@ public class DayView extends BaseView{
 	}
 
 	private void createTabHeure() {
-		events = new ArrayList<EventBean>();
-		/*TODO
-		for (CompteBean compte : DataUtil.getInstance().getListeCompte().values()) {
-			if(compte.isShowed()) {
-				listeCompteShowed.add(compte.getId());
-			}
-		}					
-		listEventsTmp = DataUtil.getInstance().getEventRepo().GetListEvent(listeCompteShowed, calDeb, calFin);
-		events.addAll(listEventsTmp);
-		 */
-		EventBean bean;
-		GregorianCalendar calDeb2;
-		GregorianCalendar calFin2;
-		bean = new EventBean();
-		bean.setId(0);
-		calDeb2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),5,0);
-		bean.sethDeb(calDeb2);
-		calFin2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),7,0);
-		bean.sethFin(calFin2);
-		events.add(bean);
+		Calendar calDeb = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
+		calDeb.set(Calendar.HOUR_OF_DAY,0);
+		calDeb.set(Calendar.MINUTE,0);
+		calDeb.set(Calendar.SECOND,0);
+		Calendar calFin = new GregorianCalendar(calDeb.get(Calendar.YEAR), calDeb.get(Calendar.MONTH), calDeb.get(Calendar.DAY_OF_MONTH), calDeb.get(Calendar.HOUR_OF_DAY), calDeb.get(Calendar.MINUTE), calDeb.get(Calendar.SECOND));		
+		calFin.add(Calendar.DAY_OF_MONTH,1);
+		events = DatabaseUtil.Events.getEventRepository(getContext()).getAllEvents(calDeb, calFin);
 
-		bean = new EventBean();
-		bean.setId(1);
-		calDeb2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),8,0);
-		bean.sethDeb(calDeb2);
-		calFin2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),9,0);
-		bean.sethFin(calFin2);
-		events.add(bean);
 
-		bean = new EventBean();
-		bean.setId(2);
-		calDeb2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),8,0);
-		bean.sethDeb(calDeb2);
-		calFin2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),9,30);
-		bean.sethFin(calFin2);
-		events.add(bean);
-
-		bean = new EventBean();
-		bean.setId(3);
-		calDeb2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),9,0);
-		bean.sethDeb(calDeb2);
-		calFin2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),cal.get(GregorianCalendar.MONTH),cal.get(GregorianCalendar.DAY_OF_MONTH),11,0);
-		bean.sethFin(calFin2);
-		events.add(bean);
-
-		for (EventBean event : events) {
+		for (EventBaseBean event : events) {
 			if(firstCal == null || event.gethDeb().before(firstCal)) {
 				firstCal = event.gethDeb();
 			}
@@ -127,7 +86,7 @@ public class DayView extends BaseView{
 		}
 	}
 
-	private EventLittleView addEventView(EventBean event) {
+	private EventLittleView addEventView(EventBaseBean event) {
 		ColumnEvent column;
 		for (int i = 0; i < llEvent.getChildCount(); i++) {
 			column = (ColumnEvent) llEvent.getChildAt(i);
@@ -174,7 +133,8 @@ public class DayView extends BaseView{
 
 	private void reloadEventLittleView(EventLittleView eventView) {
 		ColumnEvent column;
-		EventBean event = eventView.getEvent();
+		EventBaseBean event = eventView.getEvent();
+		DatabaseUtil.Events.getEventRepository(getContext()).updateEvent(event);
 		for (int i = 0; i < llEvent.getChildCount(); i++) {
 			column = (ColumnEvent) llEvent.getChildAt(i);
 			if(column.unload(eventView)) {
@@ -188,12 +148,13 @@ public class DayView extends BaseView{
 
 
 		private int lastY=-100000;
+		private int lastLigne = -1;
 		private EventLittleView draggedView;
 
 		@Override
 		public boolean onLongClick(View v) {
 			draggedView = (EventLittleView)v;
-			draggedView.onSetAlpha(100);
+			draggedView.changeDragged(true);
 			mainScroll.requestDisallowInterceptTouchEvent(true);
 			draggedView.setOnTouchListener(this);
 			draggedView.bringToFront();
@@ -205,29 +166,37 @@ public class DayView extends BaseView{
 			RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) v.getLayoutParams();
 			if (event.getAction()==MotionEvent.ACTION_MOVE) {
 				if(lastY!=-100000) {
-					layout.topMargin = (int) (layout.topMargin + event.getRawY() - lastY);
-					//layout.topMargin = (Math.round((layout.topMargin * 4)/100)) * 100 / 4;
-					if(layout.topMargin < 0) {
-						layout.topMargin = 0;
+					float topMargin = layout.topMargin + event.getRawY() - lastY;
+					int nextLigne = Math.round(topMargin / ( (float)(ligneHeight / 2) ));
+					if(lastLigne != nextLigne) {
+						lastLigne = nextLigne;
+
+						layout.topMargin = (int) (lastLigne * (ligneHeight / 2));
+						if(layout.topMargin < 0) {
+							layout.topMargin = 0;
+						}
+						if(layout.topMargin + layout.height > mainScroll.getChildAt(0).getMeasuredHeight()) {
+							layout.topMargin = mainScroll.getChildAt(0).getMeasuredHeight() - layout.height - 30;
+						}
+						if(layout.topMargin + layout.height > mainScroll.getScrollY() + mainScroll.getMeasuredHeight() + 10) {
+							mainScroll.smoothScrollTo(0, (int) (layout.topMargin - mainScroll.getMeasuredHeight() + layout.height + 10));
+							layout.topMargin += 30;
+						}
+						if(layout.topMargin < mainScroll.getScrollY() -10) {
+							mainScroll.smoothScrollTo(0, (int) (layout.topMargin) - 10);
+							layout.topMargin -= 30;
+						}
+						draggedView.updateFromLayout(layout);
+						lastY = (int)event.getRawY();
 					}
-					if(layout.topMargin + layout.height > mainScroll.getChildAt(0).getMeasuredHeight()) {
-						layout.topMargin = mainScroll.getChildAt(0).getMeasuredHeight() - layout.height - 30;
-					}
-					if(layout.topMargin + layout.height > mainScroll.getScrollY() + mainScroll.getMeasuredHeight() + 10) {
-						mainScroll.smoothScrollTo(0, (int) (layout.topMargin - mainScroll.getMeasuredHeight() + layout.height + 10));
-						layout.topMargin += 30;
-					}
-					if(layout.topMargin < mainScroll.getScrollY() -10) {
-						mainScroll.smoothScrollTo(0, (int) (layout.topMargin) - 10);
-						layout.topMargin -= 30;
-					}
-					draggedView.updateFromLayout(layout);
+				} else {
+					lastY = (int)event.getRawY();
 				}
-				lastY = (int)event.getRawY();
 			} else if (event.getAction()==MotionEvent.ACTION_UP) {
-				draggedView.onSetAlpha(255);
+				draggedView.changeDragged(false);
 				draggedView.setOnTouchListener(null);
 				lastY=-100000;
+				lastLigne = -1;
 				mainScroll.requestDisallowInterceptTouchEvent(false);
 				reloadEventLittleView(draggedView);
 			}
@@ -242,6 +211,7 @@ public class DayView extends BaseView{
 
 
 		private int lastY=-100000;
+		private int lastLigne=-1;
 		private EventLittleView parent;
 		private Context context;
 
@@ -264,21 +234,38 @@ public class DayView extends BaseView{
 			RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) parent.getLayoutParams();
 			if (event.getAction()==MotionEvent.ACTION_MOVE) {
 				if(lastY!=-100000) {
-					layout.height = (int) (layout.height + event.getRawY() - lastY);
-					//layout.height = (Math.round((layout.height * 4)/100)) * 100 / 4;
-					if(layout.height < ligneHeight) {
-						layout.height = (int) ligneHeight;
+					float height = layout.height + event.getRawY() - lastY;
+					int nextLigne = Math.round((layout.topMargin + height)/ ( (float)(ligneHeight / 2) ));
+					if(lastLigne != nextLigne) {
+						lastLigne = nextLigne;
+						layout.height = (int) (lastLigne * (ligneHeight / 2) - layout.topMargin);
+						if(layout.topMargin + layout.height > mainScroll.getChildAt(0).getMeasuredHeight()) {
+							layout.height = mainScroll.getChildAt(0).getMeasuredHeight() - layout.topMargin - 30;
+						}
+						if(layout.topMargin + layout.height > mainScroll.getScrollY() + mainScroll.getMeasuredHeight() + 10) {
+							mainScroll.smoothScrollTo(0, (int) (layout.topMargin - mainScroll.getMeasuredHeight() + layout.height + 10));
+							layout.height += 30;
+						}
+						if(layout.topMargin + layout.height< mainScroll.getScrollY() -10) {
+							mainScroll.smoothScrollTo(0, (int) (layout.topMargin + layout.height) - 10);
+							layout.height -= 30;
+						}
+						if(layout.height < ligneHeight / 2) {
+							layout.height = (int) (ligneHeight / 2);
+						}
+						lastY = (int)event.getRawY();
+						parent.updateFromLayout(layout);
 					}
+				} else {
+					lastY = (int)event.getRawY();
 				}
-				lastY = (int)event.getRawY();
-				parent.updateFromLayout(layout);
 			}
 			if (event.getAction()==MotionEvent.ACTION_UP) {
 				v.setOnTouchListener(null);
 				lastY=-100000;
+				lastLigne = -1;
 				mainScroll.requestDisallowInterceptTouchEvent(false);
 				reloadEventLittleView(parent);
-				//TODO enregistrer nouvelle heure de debut
 			}
 			return true;
 		}

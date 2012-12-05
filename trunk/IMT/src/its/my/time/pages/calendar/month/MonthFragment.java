@@ -1,6 +1,7 @@
 package its.my.time.pages.calendar.month;
 
 import its.my.time.pages.calendar.CalendarActivity;
+import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 
 import java.util.Calendar;
@@ -39,7 +40,7 @@ public class MonthFragment extends SherlockFragment {
 	private MonthView.OnDayClickListener dayListener = new MonthView.OnDayClickListener() {
 
 		public void onDayLongClickListener(GregorianCalendar day) {
-			
+			ActivityUtil.startEventActivity(getSherlockActivity(), day);
 		}
 
 		public void onDayClickListener(GregorianCalendar day) {

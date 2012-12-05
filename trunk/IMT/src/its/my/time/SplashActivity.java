@@ -1,9 +1,12 @@
 package its.my.time;
 
 import its.my.time.data.bdd.DatabaseHandler;
-import its.my.time.data.bdd.event.EventBean;
-import its.my.time.data.bdd.event.EventRepository;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.util.ActivityUtil;
+
+import java.util.GregorianCalendar;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,10 +27,6 @@ public class SplashActivity extends Activity {
 		setContentView(R.layout.activity_splash);
 
 		startClockAnimation();
-
-		//TODO enlever
-		//deleteDatabase(DatabaseHandler.DATABASE_NAME);
-		
 		new LoadMainActivity().execute();
 	}
 
@@ -43,50 +42,52 @@ public class SplashActivity extends Activity {
 	private class LoadMainActivity extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			
-			//TODO enlever
-			//deleteDatabase(DatabaseHandler.DATABASE_NAME);
-			
-			EventRepository adapter = new EventRepository(SplashActivity.this);
-			for(int i = 0; i < 15; i++) {
-				EventBean event = new EventBean();
-				event.setCid(0);
-				event.setDetails("Détails de l'event " + i);
-				event.setId(i);
-				event.setTitle("Titre de l'event 1");
-				adapter.insertEvent(event);
 
-			}
+			//TODO enlever
+			deleteDatabase(DatabaseHandler.DATABASE_NAME);
+			EventBaseRepository adapter = new EventBaseRepository(SplashActivity.this);
+			EventBaseBean bean;
+			GregorianCalendar calDeb2;
+			GregorianCalendar calFin2;
+			
+			bean = new EventBaseBean(); 
+			bean.setId(2);
+			bean.setTitle("Titre 2");
+			calDeb2 = new GregorianCalendar(2012,11,4,8,0);
+			bean.sethDeb(calDeb2);
+			calFin2 = new GregorianCalendar(2012,11,4,9,30);
+			bean.sethFin(calFin2);
+			adapter.insertEvent(bean);
 			return null;
 		}
 
-			@Override
-			protected void onPostExecute(Void result) {
+		@Override
+		protected void onPostExecute(Void result) {
 
-				Animation anim = new AlphaAnimation(1, 0);
-				anim.setDuration(500);
-				anim.setFillAfter(true);
-				findViewById(R.id.splash_fliper_chgt).startAnimation(anim);
+			Animation anim = new AlphaAnimation(1, 0);
+			anim.setDuration(500);
+			anim.setFillAfter(true);
+			findViewById(R.id.splash_fliper_chgt).startAnimation(anim);
 
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_top);
-						anim.setDuration(2000);
-						anim.setFillAfter(true);
-						findViewById(R.id.splash_main).startAnimation(anim);
-					}
-				}, 1000);
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_top);
+					anim.setDuration(2000);
+					anim.setFillAfter(true);
+					findViewById(R.id.splash_main).startAnimation(anim);
+				}
+			}, 1000);
 
-				new Handler().postDelayed(new Runnable() {
+			new Handler().postDelayed(new Runnable() {
 
-					@Override
-					public void run() {
-						findViewById(R.id.splash_main).setVisibility(View.INVISIBLE);
-						ActivityUtil.startCalendarActivity(SplashActivity.this);
-						finish();
-					}
-				}, 2000);
-			}
+				@Override
+				public void run() {
+					findViewById(R.id.splash_main).setVisibility(View.INVISIBLE);
+					ActivityUtil.startCalendarActivity(SplashActivity.this);
+					finish();
+				}
+			}, 2000);
 		}
 	}
+}

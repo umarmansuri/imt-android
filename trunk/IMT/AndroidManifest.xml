@@ -30,7 +30,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".pages.editable.event.events.EventActivity"
+            android:name=".pages.editable.events.event.EventActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

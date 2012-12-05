@@ -18,7 +18,6 @@ public class PreferenceConnector{
 
 	public static void writeInteger(Context context, String key, int value) {
 		getEditor(context).putInt(key, value).commit();
-
 	}
 
 	public static int readInteger(Context context, String key, int defValue) {

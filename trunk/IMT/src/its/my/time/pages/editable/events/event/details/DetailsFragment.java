@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.events.event.details;
 
-import its.my.time.data.bdd.event.EventBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +11,9 @@ import com.actionbarsherlock.app.SherlockFragment;
 public class DetailsFragment extends SherlockFragment {
 
 	private DetailsView mDetailsView;
-	private EventBean event;
+	private EventBaseBean event;
 
-	public DetailsFragment(EventBean event) {
+	public DetailsFragment(EventBaseBean event) {
 		this.event = event;
 	}
 
