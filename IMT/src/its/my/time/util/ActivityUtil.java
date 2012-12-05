@@ -1,10 +1,11 @@
 package its.my.time.util;
 
-import java.util.GregorianCalendar;
-
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.editable.compte.CompteActivity;
 import its.my.time.pages.editable.events.event.EventActivity;
+
+import java.util.Calendar;
+
 import android.content.Context;
 import android.content.Intent;
 
@@ -30,7 +31,7 @@ public class ActivityUtil {
 		context.startActivity(intent);
 	}
 
-	public static void startEventActivity(Context context, GregorianCalendar calHeure) {
+	public static void startEventActivity(Context context, Calendar calHeure) {
 		Intent intent = new Intent(context, EventActivity.class);
 		intent.putExtra(KEY_EXTRA_ISO_TIME, DateUtil.getTimeInIso(calHeure));
 		context.startActivity(intent);

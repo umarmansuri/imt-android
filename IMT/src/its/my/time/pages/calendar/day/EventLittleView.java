@@ -35,13 +35,13 @@ public class EventLittleView extends FrameLayout{
 		mTitle = (TextView)findViewById(R.id.activity_calendar_day_event_little_hour);
 		mTitle.setText(DateUtil.getHourLabel(event.gethDeb(), event.gethFin()));
 		mContent = (TextView)findViewById(R.id.activity_calendar_day_event_little_content);
-		mContent.setText("Titre");
+		mContent.setText(this.event.getTitle());
 		mBottom = findViewById(R.id.activity_calendar_day_event_little_bottom);
 		
 		setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ActivityUtil.startEventActivity(getContext(), 1);
+				ActivityUtil.startEventActivity(getContext(), EventLittleView.this.event.getId());
 			}
 		});
 

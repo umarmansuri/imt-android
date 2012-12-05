@@ -31,7 +31,7 @@ public class CompteLittleView extends LinearLayout {
 		}
 		
 		ImageButton butAffCompte = new ImageButton(getContext());
-		butAffCompte.setBackgroundResource(R.drawable.border_backgrnd_enable);
+		butAffCompte.setBackgroundResource(R.drawable.background_month_day);
 		butAffCompte.getBackground().setColorFilter(compte.getColor(), Mode.MULTIPLY);
 		butAffCompte.setImageResource(android.R.drawable.ic_menu_edit);
 		butAffCompte.setColorFilter(compte.getColor(), Mode.MULTIPLY);

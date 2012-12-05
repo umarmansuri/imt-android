@@ -6,17 +6,15 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Ligne extends RelativeLayout{
 
-	private String lib;
+	private int heure;
 
 	public Ligne(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
 
 		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.Ligne);
 
@@ -25,39 +23,27 @@ public class Ligne extends RelativeLayout{
 		{
 			int attr = a.getIndex(i);
 			if(attr == R.styleable.Ligne_libelle) {
-				this.lib = a.getString(attr);
+				this.heure = a.getInt(attr, -1);
 			}
 		}
 		a.recycle();
 		setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, getContext().getResources().getDimensionPixelOffset(R.dimen.view_day_height_ligne_heure)));
 		setBackgroundResource(R.drawable.background_day_ligne_normal);
 
-		TextView mlibilleHeure = new TextView(getContext());
-		if(lib != null) {
-			mlibilleHeure.setText(lib);
+		TextView mheureilleHeure = new TextView(getContext());
+		if(heure != -1) {
+			mheureilleHeure.setText("" + heure);
 		}
-		mlibilleHeure.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-		mlibilleHeure.setBackgroundColor(Color.WHITE);
+		mheureilleHeure.setGravity(Gravity.CENTER | Gravity.BOTTOM);
+		mheureilleHeure.setBackgroundColor(Color.WHITE);
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				getResources().getDimensionPixelOffset(R.dimen.view_day_height_ligne_heure_half), 
 				getResources().getDimensionPixelOffset(R.dimen.view_day_height_ligne_heure));
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		addView(mlibilleHeure, params);
+		addView(mheureilleHeure, params);
+	}
 
-		
-		setOnClickListener(new OnClickListener() {
-			private boolean isClicked = false;
-			
-			@Override
-			public void onClick(View v) {
-				if(isClicked) {
-					//TODO creer nouvel evenement
-				} else {
-					setBackgroundResource(R.drawable.background_day_ligne_pressed);
-				}
-				
-				isClicked = !isClicked;
-			}
-		});
+	public int getHeure() {
+		return heure;
 	}
 }

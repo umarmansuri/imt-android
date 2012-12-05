@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
+
             <its.my.time.pages.calendar.day.Ligne
                 android:id="@+id/activity_day_ligne1"
                 android:layout_width="match_parent"
@@ -193,14 +194,15 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/activity_day_ligne23"
                 custom:libelle="00" />
-
+            
+            
             <LinearLayout
                 android:id="@+id/activity_calendar_day_layout_event"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_alignBottom="@+id/activity_calendar_day_h24"
-                android:layout_alignTop="@+id/activity_calendar_day_h01"
-                android:layout_toRightOf="@+id/activity_calendar_day_labelh01" >
+                android:layout_alignBottom="@+id/activity_day_ligne24"
+                android:layout_alignTop="@+id/activity_day_ligne1"
+                android:paddingLeft="@dimen/view_day_height_ligne_heure_half">
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
