@@ -35,9 +35,8 @@ public class EventActivity extends BaseActivity{
 		
 		Bundle bundle = getIntent().getExtras();
 		if(bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			
 			event = DatabaseUtil.Events.getEventRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID)); 
-		} 
+		}
 		if(event == null){
 			event = new EventBaseBean();
 			event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));

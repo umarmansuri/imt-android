@@ -33,168 +33,168 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_day_height_ligne_heure"
-                    android:background="@drawable/border_backgrnd_enable"
+                    android:background="@drawable/background_month_day"
                     android:gravity="top|left"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>

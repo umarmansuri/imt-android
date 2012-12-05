@@ -49,7 +49,7 @@ public class ListeCompteAdapter implements ListAdapter {
 			return new CompteLittleView(parent.getContext(), listeCompte.get(position));
 		} else {
 			RelativeLayout rl = new RelativeLayout(parent.getContext());
-			rl.setBackgroundResource(R.drawable.border_backgrnd_enable);
+			rl.setBackgroundResource(R.drawable.background_month_day);
 			rl.setLayoutParams(new AbsListView.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, 60));
 
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);

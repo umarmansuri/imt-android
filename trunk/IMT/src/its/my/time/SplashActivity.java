@@ -53,11 +53,13 @@ public class SplashActivity extends Activity {
 			bean = new EventBaseBean(); 
 			bean.setId(2);
 			bean.setTitle("Titre 2");
-			calDeb2 = new GregorianCalendar(2012,11,4,8,0);
+			calDeb2 = new GregorianCalendar(2012,11,5,8,0);
 			bean.sethDeb(calDeb2);
-			calFin2 = new GregorianCalendar(2012,11,4,9,30);
+			calFin2 = new GregorianCalendar(2012,11,5,9,30);
 			bean.sethFin(calFin2);
-			adapter.insertEvent(bean);
+			bean.setTypeId(0);
+			bean.setDetailsId(0);
+			long res = adapter.insertEvent(bean);
 			return null;
 		}
 
