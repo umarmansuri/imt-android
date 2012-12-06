@@ -166,7 +166,7 @@ public class EventBaseRepository extends DatabaseHandler{
 
 	public List<EventBaseBean> getAllNextFromNow() {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_HDEB + " >= Datetime('now')", null, null, null, null);
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_HFIN + " >= Datetime('now')", null, null, null, null);
 		List<EventBaseBean> res = convertCursorToListObject(c);
 		close();
 		return res;

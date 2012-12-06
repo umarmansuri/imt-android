@@ -75,10 +75,8 @@ public class DayView extends BaseView {
 			}
 		}
 
-		llEvent = (LinearLayout) view
-				.findViewById(R.id.activity_calendar_day_layout_event);
-		mainScroll = (ScrollView) view
-				.findViewById(R.id.activity_calendar_day_mainscroll);
+		llEvent = (LinearLayout) view.findViewById(R.id.activity_calendar_day_layout_event);
+		mainScroll = (ScrollView) view.findViewById(R.id.activity_calendar_day_mainscroll);
 
 		createTabHeure();
 

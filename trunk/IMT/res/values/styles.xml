@@ -13,4 +13,5 @@
         <item name="android:indeterminateDrawable">@drawable/progress_small_holo</item>
     </style>
 
+
 </resources>

@@ -1,6 +1,5 @@
 package its.my.time.pages.calendar.month;
 
-import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.calendar.base.BaseView;
@@ -51,13 +50,6 @@ public class MonthView extends BaseView {
 	private void addStyleToday(TextView view) {
 		view.setTextColor(Color.RED);
 	}
-
-	private void addStyleOutOfMonth(TextView view) {
-		view.setTextColor(Color.GRAY);
-		view.setEnabled(false);
-	}
-
-
 	private void createTabDay(LinearLayout view) {
 
 		boolean isInMois = false;
@@ -103,9 +95,8 @@ public class MonthView extends BaseView {
 				txtVw = (TextView) ligne.getChildAt(j);
 				txtVw.setId(IdUtil.getDayId(helper.getYear(), helper.getMonth(), helper.getDayAt(i, j - 1)));
 				txtVw.setEnabled(isInMois);
-				if (!isInMois) {
-					addStyleOutOfMonth(txtVw);
-				} else {
+				if (isInMois) {
+					txtVw.setBackgroundResource(R.drawable.border_gray);
 					txtVw.setText(String.valueOf(helper.getDayAt(i, j - 1)));
 				}
 

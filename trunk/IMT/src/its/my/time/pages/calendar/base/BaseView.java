@@ -1,6 +1,5 @@
 package its.my.time.pages.calendar.base;
 
-import its.my.time.R;
 import its.my.time.pages.calendar.CalendarActivity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 public abstract class BaseView extends FrameLayout{
 
@@ -45,7 +43,6 @@ public abstract class BaseView extends FrameLayout{
 		@Override
 		protected View doInBackground(Void... params) {
 			View view = createView();
-			((TextView)view.findViewById(R.id.topbar)).setText(getTopBarText());
 			view.setVisibility(INVISIBLE);
 			return view;
 		}
