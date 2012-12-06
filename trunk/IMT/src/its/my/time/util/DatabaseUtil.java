@@ -6,6 +6,7 @@ import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
+import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
@@ -29,6 +30,7 @@ public final class DatabaseUtil {
 		private static CommentRepository commentRepo;
 		private static PjRepository pjRepo;
 		private static ParticipantRepository participantRepo;
+		private static OdjRepository odjRepo;
 
 		public static CommentRepository getCommentRepository(Context context) {
 			if(commentRepo == null) {
@@ -51,6 +53,12 @@ public final class DatabaseUtil {
 			return participantRepo;
 		}
 		
+		public static OdjRepository getOdjRepository(Context context) {
+			if(odjRepo == null) {
+				odjRepo = new OdjRepository(context);
+			}
+			return odjRepo;
+		}
 	}
 	
 	private static CompteRepository compteRepo;

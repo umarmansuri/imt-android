@@ -3,6 +3,7 @@ package its.my.time.data.bdd;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
+import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
@@ -51,6 +52,7 @@ public class DatabaseHandler {
 			db.execSQL(CommentRepository.CREATE_TABLE); 
 			db.execSQL(ParticipantRepository.CREATE_TABLE);    
 			db.execSQL(PjRepository.CREATE_TABLE);
+			db.execSQL(OdjRepository.CREATE_TABLE);
 		}
 	
 		@Override
