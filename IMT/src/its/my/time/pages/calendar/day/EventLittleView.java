@@ -3,6 +3,7 @@ package its.my.time.pages.calendar.day;
 import its.my.time.R;
 import its.my.time.anim.DraggedAnim;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 
@@ -25,15 +26,15 @@ public class EventLittleView extends FrameLayout{
 	private TextView mContent;
 	private int height;
 
-	public EventLittleView(Context context, EventBaseBean event, Calendar day) {
+	public EventLittleView(Context context, EventBaseBean ev, Calendar day) {
 		super(context);
-		this.event = event;
+		this.event = ev;
 		
 		mainView = inflate(getContext(), R.layout.activity_calendar_day_event_little, null);
 		addView(mainView);
 		
 		mTitle = (TextView)findViewById(R.id.activity_calendar_day_event_little_hour);
-		mTitle.setText(DateUtil.getHourLabel(event.gethDeb(), event.gethFin()));
+		mTitle.setText(DateUtil.getHourLabel(ev.gethDeb(), ev.gethFin()));
 		mContent = (TextView)findViewById(R.id.activity_calendar_day_event_little_content);
 		mContent.setText(this.event.getTitle());
 		mBottom = findViewById(R.id.activity_calendar_day_event_little_bottom);
@@ -41,15 +42,15 @@ public class EventLittleView extends FrameLayout{
 		setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ActivityUtil.startEventActivity(getContext(), EventLittleView.this.event.getId());
+				ActivityUtil.startEventActivity(getContext(), event.getId(),event.getTypeId());
 			}
 		});
 
 		ligneHeight =  getResources().getDimension(R.dimen.view_day_height_ligne_heure);
-		height = (int) (DateUtil.getNbHeure(event.gethDeb(), event.gethFin(), day) * ligneHeight) ;
+		height = (int) (DateUtil.getNbHeure(ev.gethDeb(), ev.gethFin(), day) * ligneHeight) ;
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
-		if(DateUtil.isInDay(event.gethDeb(), day)) {
-			params.topMargin = ((int) (event.gethDeb().get(GregorianCalendar.HOUR_OF_DAY)  * ligneHeight + (((float)event.gethDeb().get(GregorianCalendar.MINUTE)/ 60) * ligneHeight)));
+		if(DateUtil.isInDay(ev.gethDeb(), day)) {
+			params.topMargin = ((int) (ev.gethDeb().get(GregorianCalendar.HOUR_OF_DAY)  * ligneHeight + (((float)ev.gethDeb().get(GregorianCalendar.MINUTE)/ 60) * ligneHeight)));
 		}
 		setLayoutParams(params);
 	}
