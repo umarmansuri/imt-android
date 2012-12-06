@@ -3,134 +3,243 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent" >
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent" >
 
             <RelativeLayout
                 android:id="@+id/layout_conteneur"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
-                <EditText
-                    android:id="@+id/editNom"
+                <RelativeLayout
+                    android:id="@+id/activity_profil_icone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/event_pj_icone"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_lastname"
-                    android:inputType="textPersonName"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_margin="4dp" >
 
-                <EditText
-                    android:id="@+id/editPrenom"
+                    <ImageView
+                        android:id="@+id/activity_profil_icone_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/descriptionPicureProfil"
+                        android:src="@drawable/ic_action_profil_black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:layout_toRightOf="@+id/activity_profil_icone_value"
+                        android:text="Modifier l&apos;image de profil"
+                        android:textSize="@dimen/text_size_small" />
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_nom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editNom"
-                    android:layout_below="@+id/editNom"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_firstname"
-                    android:inputType="textPersonName"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_icone"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editIdentifiantInscription"
+                    <EditText
+                        android:id="@+id/activity_profil_nom_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_lastname"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" >
+
+                        <requestFocus />
+                    </EditText>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_prenom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editPrenom"
-                    android:layout_below="@+id/editPrenom"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_identifiant"
-                    android:inputType="textPersonName"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_nom"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editMdpInscription"
+                    <EditText
+                        android:id="@+id/activity_profil_prenom_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_firstname"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_identifiant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editIdentifiantInscription"
-                    android:layout_below="@+id/editIdentifiantInscription"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_password"
-                    android:inputType="textPassword"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_prenom"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editMdpInscriptionConf"
+                    <EditText
+                        android:id="@+id/activity_profil_identifiant_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_identifiant"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editMdpInscription"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_password_again"
-                    android:inputType="textPassword"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_identifiant"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editDateNaissance"
+                    <EditText
+                        android:id="@+id/activity_profil_password_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_password"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_password_again"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editMdpInscriptionConf"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_birthday"
-                    android:inputType="date"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_password"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editTel"
+                    <EditText
+                        android:id="@+id/activity_profil_password_again_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_password_again"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editDateNaissance"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_phone"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_password_again"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editAdresse"
+                    <EditText
+                        android:id="@+id/activity_profil_birthday_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_birthday"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTel"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_adresse"
-                    android:inputType="text"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_birthday"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editVille"
+                    <EditText
+                        android:id="@+id/activity_profil_phone_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_phone"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_adresse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editAdresse"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_city"
-                    android:inputType="text"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_phone"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <EditText
-                    android:id="@+id/editCDP"
+                    <EditText
+                        android:id="@+id/activity_profil_adresse_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_adresse"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_code_postal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editVille"
-                    android:ellipsize="end"
-                    android:hint="@string/view_profil_code_postal"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_below="@+id/activity_profil_adresse"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
 
-                <ImageView
-                    android:id="@+id/event_pj_icone"
-                    android:layout_width="140dp"
+                    <EditText
+                        android:id="@+id/activity_profil_code_postal_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_code_postal"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_city"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_below="@+id/editCDP"
-                    android:contentDescription="@string/descriptionPicureProfil"
-                    android:src="@drawable/ic_action_profil_black" />
+                    android:layout_below="@+id/activity_profil_code_postal"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
+
+                    <EditText
+                        android:id="@+id/activity_profil_city_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_city"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
