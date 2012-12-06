@@ -31,10 +31,9 @@ public class SplashActivity extends Activity {
 	}
 
 	public void startClockAnimation() {
-		Animation anim = new RotateAnimation(0f, 360f,Animation.RELATIVE_TO_SELF, 0.5f,Animation.RELATIVE_TO_SELF, 0.5f);
-		anim.setRepeatMode(Animation.INFINITE);
-		anim.setRepeatCount(Animation.INFINITE);
-		anim.setDuration(3500);
+		Animation anim = new RotateAnimation(-20f, 0f,Animation.RELATIVE_TO_SELF, 0.5f,Animation.RELATIVE_TO_SELF, 0.5f);
+		anim.setDuration(3000);
+		anim.setFillAfter(true);
 		findViewById(R.id.splash_foreground).setAnimation(anim);
 		findViewById(R.id.splash_foreground).getAnimation().start();
 	}
@@ -66,26 +65,9 @@ public class SplashActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 
-			Animation anim = new AlphaAnimation(1, 0);
-			anim.setDuration(500);
-			anim.setFillAfter(true);
-			findViewById(R.id.splash_fliper_chgt).startAnimation(anim);
-
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_top);
-					anim.setDuration(2000);
-					anim.setFillAfter(true);
-					findViewById(R.id.splash_main).startAnimation(anim);
-				}
-			}, 1000);
-
-			new Handler().postDelayed(new Runnable() {
-
-				@Override
-				public void run() {
-					findViewById(R.id.splash_main).setVisibility(View.INVISIBLE);
 					ActivityUtil.startCalendarActivity(SplashActivity.this);
 					finish();
 				}
