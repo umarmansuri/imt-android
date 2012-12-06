@@ -71,12 +71,12 @@ public class EventLittleView extends FrameLayout{
 		if(dragged) {
 			mainView.getBackground().setAlpha(100);
 			DraggedAnim anim = new DraggedAnim(this, -10);
-			anim.setDuration(100);
+			anim.setDuration(50);
 			startAnimation(anim);
 		} else {
 			mainView.getBackground().setAlpha(255);
-			DraggedAnim anim = new DraggedAnim(this, 0);
-			anim.setDuration(100);
+			DraggedAnim anim = new DraggedAnim(this, 10);
+			anim.setDuration(50);
 			startAnimation(anim);
 		}
 		setLayoutParams(params);

@@ -18,7 +18,6 @@ public class DraggedAnim extends Animation {
     protected void applyTransformation(float interpolatedTime, Transformation t) {
     	RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)view.getLayoutParams();
         params.width = (int) (view.getMeasuredWidth() + paddingWidth * interpolatedTime);
-        params.leftMargin = (int) (-paddingWidth * interpolatedTime)/2;
         view.setLayoutParams(params);
     }
 

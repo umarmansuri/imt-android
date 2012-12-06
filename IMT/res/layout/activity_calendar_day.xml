@@ -6,16 +6,6 @@
     android:background="#ffffff"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/view_day_height_ligne_heure_half"
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:text="Octobre 2012"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/white" />
-
     <ScrollView
         android:id="@+id/activity_calendar_day_mainscroll"
         android:layout_width="fill_parent"

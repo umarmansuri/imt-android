@@ -1,5 +1,6 @@
 package its.my.time.pages.calendar;
 
+import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
@@ -10,28 +11,21 @@ import its.my.time.pages.editable.profil.ProfilActivity;
 
 import java.util.Calendar;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Shader.TileMode;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -39,10 +33,8 @@ import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 
-public class CalendarActivity extends SherlockFragmentActivity implements OnNavigationListener {
+public class CalendarActivity extends SherlockFragmentActivity implements OnNavigationListener, OnClickListener {
 
 	private ArrayAdapter<CharSequence> listMenu;
 
@@ -66,8 +58,9 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 
 	private FrameLayout mainFramePager;
 
-	public static Calendar curentCal;
+	public static TextView mTextTitle;
 
+	public static Calendar curentCal;
 
 	private static boolean isFirstMenuSelectedOk;
 	private static boolean isWaitingEnd;
@@ -86,13 +79,14 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		mainFramePager = (FrameLayout)findViewById(R.id.main_frame_pager);
 		((ListView)findViewById(R.id.main_liste_compte)).setAdapter(new ListeCompteAdapter(this));
 
-		curentCal = Calendar.getInstance();
-		new ChangePageTask().execute(INDEX_PAGER_MONTH);
+		if(curentCal == null) {
+			curentCal = Calendar.getInstance();
+			new ChangePageTask().execute(INDEX_PAGER_MONTH);
+		}
 	}
 
 	private void initialiseActionBar() {
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setHomeButtonEnabled(false);
 		mActionBar.setDisplayShowHomeEnabled(false);
@@ -104,11 +98,13 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		listMenu.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 		mActionBar.setListNavigationCallbacks(listMenu, this);
 		mActionBar.setSelectedNavigationItem(INDEX_NAVIGATION_MONTH);
-		BitmapDrawable dr = (BitmapDrawable)getResources().getDrawable(R.drawable.background_header_drawable);
-		dr.setTileModeX(TileMode.REPEAT);
-		mActionBar.setBackgroundDrawable(dr);
-		setSupportProgressBarIndeterminate(true);
-		setSupportProgressBarIndeterminateVisibility(true);
+		
+		mActionBar.setDisplayShowCustomEnabled(true);
+		mTextTitle = new TextView(this);
+		mTextTitle.setGravity(Gravity.CENTER);
+		mTextTitle.setTextSize(14);
+		mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		mActionBar.setCustomView(mTextTitle);
 	}
 
 	@Override
@@ -116,57 +112,20 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.activity_calendar, menu);
 		
-		int today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		Bitmap bm = drawTextToBitmap(this, R.drawable.ic_menu_today, String.valueOf(today));
-		Drawable dr = new BitmapDrawable(getResources(), bm);
-		menu.findItem(R.id.menu_today).setIcon(dr);
+		
+		MooncakeIcone icone = new MooncakeIcone(this, MooncakeIcone.icon_calendar);
+		icone.setId(R.id.menu_today);
+		icone.setOnClickListener(this);
+		menu.findItem(R.id.menu_today).setActionView(icone);
+
+		icone = new MooncakeIcone(this, MooncakeIcone.icon_user);
+		icone.setId(R.id.menu_profil);
+		icone.setOnClickListener(this);
+		menu.findItem(R.id.menu_profil).setActionView(icone);
 		
 		return super.onCreateOptionsMenu(menu);
 	}
-
-	public Bitmap drawTextToBitmap(Context gContext, 
-			int gResId, 
-			String gText) {
-		Resources resources = gContext.getResources();
-		float scale = resources.getDisplayMetrics().density;
-		Bitmap bitmap = 
-				BitmapFactory.decodeResource(resources, gResId);
-
-		android.graphics.Bitmap.Config bitmapConfig =
-				bitmap.getConfig();
-		// set default bitmap config if none
-		if(bitmapConfig == null) {
-			bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
-		}
-		// resource bitmaps are imutable, 
-		// so we need to convert it to mutable one
-		bitmap = bitmap.copy(bitmapConfig, true);
-
-		Canvas canvas = new Canvas(bitmap);
-		// new antialised Paint
-		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		// text color - #3D3D3D
-		paint.setColor(Color.WHITE);//rgb(61, 61, 61));
-		// text size in pixels
-		paint.setTextSize((int) (15 * scale));
-		// text shadow
-		paint.setShadowLayer(1f, 0f, 1f, Color.rgb(64, 64, 64));
-
-		// draw text to the Canvas center
-		Rect bounds = new Rect();
-		paint.getTextBounds(gText, 0, gText.length(), bounds);
-		int x = (bitmap.getWidth() - bounds.width())/2;
-		int y = (bitmap.getHeight() + bounds.height()/2)/2;
-
-		canvas.drawText(gText, x * scale, y * scale, paint);
-
-		return bitmap;
-	}
-
-	public void showProgressBar(boolean show) {
-		setSupportProgressBarIndeterminateVisibility(show);
-	}
-
+	
 	public void showDays(Calendar cal) {
 		curentCal = cal;
 		getSupportActionBar().setSelectedNavigationItem(INDEX_NAVIGATION_DAY);
@@ -179,36 +138,6 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	public void showMonths(Calendar cal) {
 		curentCal = cal;
 		getSupportActionBar().setSelectedNavigationItem(INDEX_NAVIGATION_MONTH);
-	}
-
-	public Calendar getCurrentCalendar() {
-		return curentCal;
-	}
-
-	public void setCurrentCalendar(Calendar cal) {
-		curentCal = cal;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId() == R.id.menu_profil) {
-		} else if(item.getItemId() == R.id.menu_profil) {
-			Intent intent = new Intent(this, ProfilActivity.class);
-			startActivity(intent);
-			return true;
-		}
-
-		switch (item.getItemId()) {
-		case R.id.menu_profil:
-			Intent intent = new Intent(this, ProfilActivity.class);
-			startActivity(intent);
-			return true;
-		case R.id.menu_today:
-			gotoDate(Calendar.getInstance());
-			return true;
-		default:
-			return false;
-		}
 	}
 
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -225,7 +154,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 			if(indexCurrentPager == INDEX_PAGER_MONTH) {
 				Toast.makeText(this, "Vous êtes déjà en vue mois!", Toast.LENGTH_SHORT).show();
 			} else {
-				new ChangePageTask().execute(INDEX_PAGER_DAY);
+				new ChangePageTask().execute(INDEX_PAGER_MONTH);
 			}
 			return true;
 		case INDEX_NAVIGATION_LISTE:
@@ -250,7 +179,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		if(keyCode == KeyEvent.KEYCODE_BACK) {
 			switch (indexCurrentPager) {
 			case INDEX_PAGER_DAY:
-				showMonths(((BasePagerAdapter)((ViewPager)mainFramePager.getChildAt(0)).getAdapter()).getCurrentCalendar());
+				showMonths(curentCal);
 				return true;
 			case INDEX_PAGER_MONTH:
 				if(isWaitingEnd) {
@@ -267,7 +196,6 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 						}
 					}).start();
 				}
-
 			}
 		}
 		return false;
@@ -319,5 +247,19 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 			anim.setDuration(ANIM_DURATION);
 			mainFramePager.startAnimation(anim);
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.menu_profil:
+			Intent intent = new Intent(this, ProfilActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.menu_today:
+			gotoDate(Calendar.getInstance());
+			break;
+		}
+	
 	}
 }

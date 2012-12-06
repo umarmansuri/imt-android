@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,7 +23,7 @@ public class ColumnEvent extends RelativeLayout{
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		params.weight = 1;
 		setLayoutParams(params);
-
+		setGravity(Gravity.CENTER_HORIZONTAL);
 	}
 
 	/**
