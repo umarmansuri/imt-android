@@ -14,6 +14,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.util.MonthDisplayHelper;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -42,13 +43,9 @@ public class MonthView extends BaseView {
 	protected String getTopBarText() {
 		return DateUtil.getMonth(helper.getYear(), helper.getMonth());
 	}
-	
-	private void addStyleEvent(TextView view) {
-		
-	}
 
 	private void addStyleToday(TextView view) {
-		view.setTextColor(Color.RED);
+		view.getBackground().setColorFilter(Color.parseColor("#FFFFCC"), Mode.MULTIPLY);
 	}
 	private void createTabDay(LinearLayout view) {
 
@@ -95,9 +92,9 @@ public class MonthView extends BaseView {
 				txtVw = (TextView) ligne.getChildAt(j);
 				txtVw.setId(IdUtil.getDayId(helper.getYear(), helper.getMonth(), helper.getDayAt(i, j - 1)));
 				txtVw.setEnabled(isInMois);
-				if (isInMois) {
-					txtVw.setBackgroundResource(R.drawable.border_gray);
-					txtVw.setText(String.valueOf(helper.getDayAt(i, j - 1)));
+				txtVw.setText(String.valueOf(helper.getDayAt(i, j - 1)));
+				if (!isInMois) {
+					txtVw.setTextColor(getResources().getColor(R.color.background_other));
 				}
 
 				GregorianCalendar today = new GregorianCalendar();
@@ -115,7 +112,7 @@ public class MonthView extends BaseView {
 				while (hasEvent == false && indexEv < listEventsFinal.size()) {
 					if(DateUtil.isInDay(listEventsFinal.get(indexEv), calDay)) {
 						hasEvent = true;
-						addStyleEvent(txtVw);
+						//TODO afficher les events
 					}	
 					indexEv++;
 				}
@@ -134,7 +131,6 @@ public class MonthView extends BaseView {
 						}
 					});
 				}
-				
 			}
 		}
 	}

@@ -67,7 +67,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {		
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -105,6 +105,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		mTextTitle.setGravity(Gravity.CENTER);
 		mTextTitle.setTextSize(14);
 		mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		mTextTitle.setTextColor(getResources().getColor(R.color.background_other));
 		mActionBar.setCustomView(mTextTitle);
 	}
 
@@ -117,11 +118,13 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		MooncakeIcone icone = new MooncakeIcone(this, MooncakeIcone.icon_calendar);
 		icone.setId(R.id.menu_today);
 		icone.setOnClickListener(this);
+		icone.setTextColor(getResources().getColor(R.color.background_other));
 		menu.findItem(R.id.menu_today).setActionView(icone);
 
 		icone = new MooncakeIcone(this, MooncakeIcone.icon_user);
 		icone.setId(R.id.menu_profil);
 		icone.setOnClickListener(this);
+		icone.setTextColor(getResources().getColor(R.color.background_other));
 		menu.findItem(R.id.menu_profil).setActionView(icone);
 		
 		return super.onCreateOptionsMenu(menu);

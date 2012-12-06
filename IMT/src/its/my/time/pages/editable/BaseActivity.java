@@ -1,5 +1,6 @@
 package its.my.time.pages.editable;
 
+import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
 import android.os.Bundle;
 
@@ -43,7 +44,23 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.activity_editable, menu);
 		this.menu = menu;
+		
+		MooncakeIcone icone = new MooncakeIcone(this, MooncakeIcone.icon_edit);
+		icone.setId(R.id.menu_today);
+		icone.setTextColor(getResources().getColor(R.color.background_other));
 		menu.getItem(INDEX_MENU_EDIT).setVisible(true);
+		menu.getItem(INDEX_MENU_EDIT).setActionView(icone);
+
+		icone = new MooncakeIcone(this, MooncakeIcone.icon_install);
+		icone.setId(R.id.menu_today);
+		icone.setTextColor(getResources().getColor(R.color.background_other));
+		menu.getItem(INDEX_MENU_SAVE).setActionView(icone);
+		
+		icone = new MooncakeIcone(this, MooncakeIcone.icon_remove_circle);
+		icone.setId(R.id.menu_today);
+		icone.setTextColor(getResources().getColor(R.color.background_other));
+		menu.getItem(INDEX_MENU_CANCEL).setActionView(icone);
+		
 		return true;
 	}
 

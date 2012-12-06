@@ -14,7 +14,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_week"
             android:textColor="@color/background_other"
             android:textSize="10sp" />
@@ -23,7 +24,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_mon"
             android:textColor="@color/page_month_day_text_color"
             android:textSize="10sp" />
@@ -32,7 +34,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_tue"
             android:textColor="@color/page_month_day_text_color"
             android:textSize="10sp" />
@@ -41,7 +44,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_wen"
             android:textColor="@color/page_month_day_text_color"
             android:textSize="10sp" />
@@ -50,7 +54,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_thu"
             android:textColor="@color/page_month_day_text_color"
             android:textSize="10sp" />
@@ -59,7 +64,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_fri"
             android:textColor="@color/page_month_day_text_color"
             android:textSize="10sp" />
@@ -68,7 +74,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_sat"
             android:textColor="@color/page_month_day_text_color"
             android:textSize="10sp" />
@@ -77,7 +84,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center|bottom"
+            android:background="@drawable/border_gray"
+            android:gravity="center"
             android:text="@string/view_month_sun"
             android:textColor="@color/page_month_day_text_color"
             android:textSize="10sp" />
@@ -99,56 +107,80 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border_gray"
                 android:gravity="center"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/background_other" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
         </LinearLayout>
 
@@ -162,56 +194,80 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border_gray"
                 android:gravity="center"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/background_other" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
         </LinearLayout>
 
@@ -225,56 +281,80 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border_gray"
                 android:gravity="center"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/background_other" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
         </LinearLayout>
 
@@ -288,56 +368,80 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border_gray"
                 android:gravity="center"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/background_other" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
         </LinearLayout>
 
@@ -351,56 +455,80 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border_gray"
                 android:gravity="center"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/background_other" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:background="@drawable/border_gray"
+                android:gravity="top|right"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:textColor="@color/page_month_day_text_color" />
         </LinearLayout>
     </LinearLayout>
