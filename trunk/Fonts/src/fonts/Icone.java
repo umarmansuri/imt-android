@@ -12,14 +12,19 @@ public abstract class Icone extends TextView {
 	}
 	
 	public Icone(Context context, int iconeReference) {
-		this(context, iconeReference, 12);
+		this(context, iconeReference, 18);
 	}
 	
 	public Icone(Context context, int iconeReference, int size) {
 		super(context);
 		initialiseTypeFace();
 		changeIcone(iconeReference);
+		
+	    float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
 		setTextSize(size);
+		
+		int padding = (int) (10 * scaledDensity);
+		setPadding(padding,padding,padding,padding);
 	}
 
 	public int getmIconeReference() {
