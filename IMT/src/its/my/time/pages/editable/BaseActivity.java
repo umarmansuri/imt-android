@@ -35,6 +35,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setDisplayShowHomeEnabled(true);
 		mActionBar.setLogo(android.R.drawable.ic_menu_today);
+		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 	}
 
 	@Override

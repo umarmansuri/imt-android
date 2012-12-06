@@ -88,6 +88,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	private void initialiseActionBar() {
 
 		ActionBar mActionBar = getSupportActionBar();
+		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 		mActionBar.setHomeButtonEnabled(false);
 		mActionBar.setDisplayShowHomeEnabled(false);
 		mActionBar.setDisplayShowTitleEnabled(false);

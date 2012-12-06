@@ -1,10 +1,10 @@
 <resources>
 
-    <color name="topbar_text">#ffffff</color>
+    <color name="topbar_text">#949596</color>
     <color name="page_month_day_text_color">#000000</color>
     
     <color name="background_other">#b3b3b3</color>
-
+    
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 </resources>
