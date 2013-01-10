@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import android.util.Log;
+
 public class DateUtil {
 
 	public static final int ALTERNATIVEDATESELECTOR_ID = 1;

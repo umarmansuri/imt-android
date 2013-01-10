@@ -1,5 +1,7 @@
 package its.my.time.pages.editable.events.event;
 
+import java.util.Calendar;
+
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.util.ActivityUtil;
@@ -40,6 +42,9 @@ public class EventActivity extends BaseActivity{
 		if(event == null){
 			event = new EventBaseBean();
 			event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
+			Calendar calFin = DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME));
+			calFin.add(Calendar.HOUR, 1);
+			event.sethFin(calFin);
 		}
 		
 		mPager = (ViewPager) findViewById(R.id.event_pager);
