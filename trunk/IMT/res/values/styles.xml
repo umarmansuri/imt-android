@@ -1,4 +1,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
-
+	
+	<style name="bouton">
+	    <item name="android:background">#896652</item>
+	    
+	</style>
 </resources>
