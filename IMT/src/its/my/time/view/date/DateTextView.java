@@ -43,7 +43,7 @@ public class DateTextView extends TextView implements OnDateSetListener, OnClick
 			date = Calendar.getInstance();
 		}
 		setOnClickListener(this);
-		setText(DateUtil.getDay(date));
+		setText(DateUtil.getDate(date));
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class DateTextView extends TextView implements OnDateSetListener, OnClick
 		date.set(Calendar.YEAR,year);
 		date.set(Calendar.MONTH,month);
 		date.set(Calendar.DAY_OF_MONTH,day);
-		setText(DateUtil.getDay(date));
+		setText(DateUtil.getDate(date));
 	}
 
 	@Override
