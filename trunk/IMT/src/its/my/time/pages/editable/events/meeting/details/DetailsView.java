@@ -43,10 +43,10 @@ public class DetailsView extends FrameLayout{
 	}
 
 	private void initialiseValues() {
-		mTextDateDeb = (TextView)findViewById(R.id.event_details_text_hdeb);
+		mTextDateDeb = (TextView)findViewById(R.id.activity_event_details_text_ddeb);
 		mTextDateDeb.setText(DateUtil.getDayHour(event.gethDeb()));
 
-		mTextDateFin = (TextView)findViewById(R.id.event_details_text_hfin);
+		mTextDateFin = (TextView)findViewById(R.id.activity_event_details_text_dfin);
 
 		if(event.gethFin() != null) {
 			mTextDateFin.setText(DateUtil.getDayHour(event.gethFin()));
@@ -59,7 +59,7 @@ public class DetailsView extends FrameLayout{
 			mListCompteLabels.add(compte.getTitle());
 		}
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, mListCompteLabels);
-		mSpinnerCompte = (Spinner)findViewById(R.id.event_details_spinner_compte);
+		mSpinnerCompte = (Spinner)findViewById(R.id.activity_event_details_spinner_compte);
 		mSpinnerCompte.setAdapter(adapter);
 		mSpinnerCompte.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -75,7 +75,7 @@ public class DetailsView extends FrameLayout{
 		});
 
 
-		mTextDetails = (TextView)findViewById(R.id.event_details_text_details);
+		mTextDetails = (TextView)findViewById(R.id.activity_event_details_text_details);
 		mTextDetails.setText(event.getDetails());
 	}
 }
