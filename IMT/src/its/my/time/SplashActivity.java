@@ -11,10 +11,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 
 public class SplashActivity extends Activity {
@@ -59,6 +56,7 @@ public class SplashActivity extends Activity {
 			bean.setTypeId(2);
 			bean.setDetailsId(0);
 			long res = adapter.insertEvent(bean);
+			
 			return null;
 		}
 
