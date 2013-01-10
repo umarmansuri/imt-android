@@ -37,7 +37,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="@string/view_event_detail_day_debut"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small" 
+                        style="@style/btn_default"/>
 
                     <its.my.time.view.date.TimeTextView
                         android:id="@+id/activity_event_details_text_hdeb"
