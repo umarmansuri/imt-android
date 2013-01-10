@@ -31,16 +31,15 @@
                      android:layout_margin="10dp"
                     android:background="@color/white" >
 
-                    <TextView
+                    <its.my.time.view.date.DateTextView
                         android:id="@+id/activity_event_details_text_ddeb"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="@string/view_event_detail_day_debut"
-                        android:textSize="@dimen/text_size_small" >
-                    </TextView>
+                        android:textSize="@dimen/text_size_small" />
 
-                    <TextView
+                    <its.my.time.view.date.TimeTextView
                         android:id="@+id/activity_event_details_text_hdeb"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -57,16 +56,15 @@
                       android:layout_below="@+id/activity_event_details_deb"
                       android:background="@color/white" >
 
-                      <TextView
+                      <its.my.time.view.date.DateTextView
                           android:id="@+id/activity_event_details_text_dfin"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_weight="1"
                           android:hint="@string/view_event_detail_day_fin"
-                          android:textSize="@dimen/text_size_small" >
-                      </TextView>
+                          android:textSize="@dimen/text_size_small" />
 
-                      <TextView
+                      <its.my.time.view.date.TimeTextView
                           android:id="@+id/activity_event_details_text_hfin"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
