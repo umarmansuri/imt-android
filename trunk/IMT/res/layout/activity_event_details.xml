@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent" >
+
+            <RelativeLayout
+                android:id="@+id/layout_conteneur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/activity_event_details_deb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                     android:layout_margin="10dp"
+                    android:background="@color/white" >
+
+                    <TextView
+                        android:id="@+id/activity_event_details_text_ddeb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/view_event_detail_day_debut"
+                        android:textSize="@dimen/text_size_small" >
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/activity_event_details_text_hdeb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="@string/view_event_detail_heure_debut" />
+
+                    </LinearLayout>
+                    
+                  <LinearLayout
+                      android:id="@+id/activity_event_details_fin"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_margin="10dp"
+                      android:layout_below="@+id/activity_event_details_deb"
+                      android:background="@color/white" >
+
+                      <TextView
+                          android:id="@+id/activity_event_details_text_dfin"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1"
+                          android:hint="@string/view_event_detail_day_fin"
+                          android:textSize="@dimen/text_size_small" >
+                      </TextView>
+
+                      <TextView
+                          android:id="@+id/activity_event_details_text_hfin"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="2"
+                          android:hint="@string/view_event_detail_heure_fin" />
+                  </LinearLayout>
+
+
+
+                <FrameLayout
+                    android:id="@+id/activity_event_details_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_event_details_fin"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
+
+                    <EditText
+                        android:id="@+id/activity_event_details_text_details"
+                        style="@style/bouton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:gravity="top"
+                        android:hint="@string/view_event_detail_details"
+                        android:inputType="textMultiLine"
+                        android:minLines="4"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_event_details_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_event_details_details"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
+
+                    <Spinner
+                        android:id="@+id/activity_event_details_spinner_compte"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/view_event_detail_compte" />
+                </FrameLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</LinearLayout>
