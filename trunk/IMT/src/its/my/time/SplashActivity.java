@@ -39,6 +39,7 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
+			/*
 			//TODO enlever
 			deleteDatabase(DatabaseHandler.DATABASE_NAME);
 			EventBaseRepository adapter = new EventBaseRepository(SplashActivity.this);
@@ -46,17 +47,18 @@ public class SplashActivity extends Activity {
 			GregorianCalendar calDeb2;
 			GregorianCalendar calFin2;
 			
+			
 			bean = new EventBaseBean(); 
 			bean.setId(2);
 			bean.setTitle("Titre 2");
-			calDeb2 = new GregorianCalendar(2012,11,5,8,0);
+			calDeb2 = new GregorianCalendar(2013,9,9,12,0);
 			bean.sethDeb(calDeb2);
-			calFin2 = new GregorianCalendar(2012,11,5,9,30);
+			calFin2 = new GregorianCalendar(2013,9,9,13,0);
 			bean.sethFin(calFin2);
-			bean.setTypeId(2);
+			bean.setTypeId(EventBaseRepository.Types.TYPE_MEETING);
 			bean.setDetailsId(0);
 			long res = adapter.insertEvent(bean);
-			
+			*/
 			return null;
 		}
 
