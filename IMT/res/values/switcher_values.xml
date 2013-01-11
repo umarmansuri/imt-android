@@ -1,0 +1,31 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ATTENTION: quand modif de ces valeur, changer la valeur de la transition dans Switcher.java--> 
+    <dimen name="switcher_showed_width">65dp</dimen>
+    <dimen name="switcher_total_width">100dp</dimen>
+    <dimen name="switcher_item_width">50dp</dimen>
+    <dimen name="switcher_item_half_width">30dp</dimen>
+
+    <color name="switcher_border">#888888</color>
+    <color name="switcher_grabber_background">#F2F2F2</color>
+    <color name="switcher_on_background">#9FC46A</color>
+    <color name="switcher_on_text">#60783F</color>
+    <color name="switcher_off_background">#DD7D6C</color>
+    <color name="switcher_off_text">#8F5247</color>
+
+    <style name="switcher_grabber">
+        <item name="android:background">@drawable/switcher_grabber</item>
+        <item name="android:textColor">@color/switcher_border</item>
+    </style>
+
+    <style name="switcher_item_on">
+        <item name="android:background">@drawable/switcher_on</item>
+        <item name="android:textColor">@color/switcher_on_text</item>
+    </style>
+
+    <style name="switcher_item_off">
+        <item name="android:background">@drawable/switcher_off</item>
+        <item name="android:textColor">@color/switcher_off_text</item>
+    </style>
+
+</resources>

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-
-    <com.mobeta.android.dslv.DragSortListView
+    <ListView
         android:id="@+id/event_odj_liste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/event_layout_new_odj"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:drawSelectorOnTop="false"/>
 
     <LinearLayout
         android:id="@+id/event_layout_new_odj"
@@ -27,6 +27,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/send" />
+
+        <its.my.time.view.Switcher
+            android:id="@+id/switcher1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </its.my.time.view.Switcher>
 
         <EditText
             android:id="@+id/event_odj_editOdj"

@@ -22,14 +22,13 @@ public class OdjAdapter implements ListAdapter{
 	public OdjAdapter(Context context, int id) {
 		this.context = context;
 		this.idEvent = id;
-		loadNextEvents();
+		loadNext();
 	}
 
-	private void loadNextEvents() {
+	private void loadNext() {
 		if(odj == null) {
 			odj = new ArrayList<OdjBean>();
 		}
-
 		odj = DatabaseUtil.Plugins.getOdjRepository(context).getAllByEid(idEvent);
 	}
 
@@ -43,7 +42,7 @@ public class OdjAdapter implements ListAdapter{
 	}
 
 	@Override
-	public Object getItem(int position) {return null;}
+	public OdjBean getItem(int position) {return null;}
 
 	@Override
 	public long getItemId(int position) {return odj.get(position).getId();}
@@ -83,6 +82,11 @@ public class OdjAdapter implements ListAdapter{
 	@Override
 	public boolean isEnabled(int position) {return false;}
 
+	public void remove(OdjBean item) {
+		odj.remove(item);
+	}
 
-
+	public void insert(OdjBean item, int to) {
+		odj.add(to, item);
+	}
 }
