@@ -4,7 +4,6 @@ import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.util.DatabaseUtil;
-import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.date.DateTextView;
 import its.my.time.view.date.TimeTextView;
@@ -14,10 +13,14 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,12 +33,14 @@ public class DetailsView extends FrameLayout {
 	private TimeTextView mTextHeureFin;
 	private DateTextView mTextJourDeb;
 	private DateTextView mTextJourFin;
+	private CheckBox mCheckAllDay;
 	private ArrayList<String> mListCompteLabels;
 	private Spinner mSpinnerCompte;
 	private TextView mTextDetails;
+	private TextView btnValider;
 
 	private List<CompteBean> mListCompte;
-	
+
 	public DetailsView(Context context, EventBaseBean event) {
 		super(context);
 		addView(inflate(context, R.layout.activity_event_details, null));
@@ -86,7 +91,34 @@ public class DetailsView extends FrameLayout {
 
 		mTextDetails = (TextView) findViewById(R.id.activity_event_details_text_details);
 		mTextDetails.setText(event.getDetails());
+		
+		mCheckAllDay = (CheckBox) findViewById(R.id.activity_event_details_allDay);
+		mCheckAllDay.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// TODO Auto-generated method stub
+				if (buttonView.isChecked()) {
+					mTextJourDeb.setEnabled(false);
+					mTextJourFin.setEnabled(false);
+					mTextHeureDeb.setEnabled(false);
+					mTextHeureFin.setEnabled(false);
+					
+					mTextJourFin.setText(mTextJourDeb.getText());
+					mTextHeureDeb.setText("00:00");
+					mTextHeureFin.setText("23:59");
+
+				} else {
+					mTextJourDeb.setEnabled(true);
+					mTextJourFin.setEnabled(true);
+					mTextHeureDeb.setEnabled(true);
+					mTextHeureFin.setEnabled(true);
+				}
+			}
+		});
+		
+		btnValider = (TextView) findViewById(R.id.activity_event_details_btn_valider);
+		
+
 	}
-
-
 }
