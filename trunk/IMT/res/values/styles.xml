@@ -1,11 +1,5 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 	
-	<style name="bouton">
-	    <item name="android:background">#896652</item>
-	    
-	</style>
-	
-	
 	<style name="btn">
 	    <item name="android:gravity">center</item>
 	    <item name="android:padding">6dp</item>
@@ -16,5 +10,13 @@
 	
 	<style name="btn_default" parent="@style/btn">
 	    <item name="android:background">@drawable/btn_default</item>
+	</style>
+	
+	<style name="btn_valider" parent="@style/btn">
+	    <item name="android:background">@drawable/btn_valider</item>
+	</style>
+	
+	<style name="btn_effacer" parent="@style/btn">
+	    <item name="android:background">@drawable/btn_effacer</item>
 	</style>
 </resources>
