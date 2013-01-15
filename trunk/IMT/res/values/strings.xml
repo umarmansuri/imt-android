@@ -3,7 +3,8 @@
     <string name="app_name">IMT</string>	
 	
     <string name="btn_valider">Valider</string>
-     <string name="btn_effacer">Effacer</string>
+    <string name="btn_effacer">Supprimer</string>
+    <string name="btn_modifier">Modifier</string>
      
 	<string name="view_compte_color">Couleur</string>
 	<string name="view_compte_name">Intitulé</string>

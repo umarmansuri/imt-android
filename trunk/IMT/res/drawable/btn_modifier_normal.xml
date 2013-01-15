@@ -4,14 +4,14 @@
     <item >
         <shape >
             <corners android:radius="4dp"/>
-            <solid android:color="#BFBFBF"/>
+            <solid android:color="#C17512"/>
         </shape>
     </item>
     <item android:top="1dp" android:bottom="1dp" android:left="1dp" android:right="1dp">
         <shape >
             <corners android:radius="4dp"/>
-            <solid android:color="#E6E6E6"/>
+            <gradient android:startColor="#FFB432" android:endColor="#ED9700" android:angle="270"/>
         </shape>
-    </item>
+    </item>_
 
 </layer-list>

@@ -5,6 +5,8 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.view.Switcher;
+import its.my.time.view.Switcher.OnStateChangedListener;
 import its.my.time.view.date.DateTextView;
 import its.my.time.view.date.TimeTextView;
 
@@ -13,6 +15,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,11 +36,15 @@ public class DetailsView extends FrameLayout {
 	private TimeTextView mTextHeureFin;
 	private DateTextView mTextJourDeb;
 	private DateTextView mTextJourFin;
-	private CheckBox mCheckAllDay;
+	private Switcher mSwitchAllDay;
 	private ArrayList<String> mListCompteLabels;
 	private Spinner mSpinnerCompte;
+	private Spinner mSpinnerRecurrence;
 	private TextView mTextDetails;
 	private TextView btnValider;
+	private TextView btnModifier;
+	private TextView btnSupprimer;
+	private boolean first = false; //premier stateChange du Switcher
 
 	private List<CompteBean> mListCompte;
 
@@ -52,6 +59,10 @@ public class DetailsView extends FrameLayout {
 	}
 
 	private void initialiseValues() {
+		
+		btnValider = (TextView) findViewById(R.id.activity_event_details_btn_valider);
+		btnModifier = (TextView) findViewById(R.id.activity_event_details_btn_modifier);
+		btnSupprimer = (TextView) findViewById(R.id.activity_event_details_btn_effacer);
 		mTextJourDeb = (DateTextView) findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourDeb.setDate(event.gethDeb());
 		mTextHeureDeb = (TimeTextView) findViewById(R.id.activity_event_details_text_hdeb);
@@ -59,6 +70,12 @@ public class DetailsView extends FrameLayout {
 
 		mTextHeureFin = (TimeTextView) findViewById(R.id.activity_event_details_text_hfin);
 		mTextJourFin = (DateTextView) findViewById(R.id.activity_event_details_text_dfin);
+		
+		if(event.getId() == -1)
+			modeCreation();
+		else
+			modeEdition();
+		
 
 		if (event.gethFin() != null) {
 			mTextHeureFin.setDate(event.gethFin());
@@ -88,37 +105,52 @@ public class DetailsView extends FrameLayout {
 				event.setCid(-1);
 			}
 		});
+		
+		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,R.array.array_recurrence);
+		Spinner mSpinnerRecurrence = (Spinner) findViewById(R.id.activity_event_details_spinner_recurrence);
+		mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
 		mTextDetails = (TextView) findViewById(R.id.activity_event_details_text_details);
 		mTextDetails.setText(event.getDetails());
-		
-		mCheckAllDay = (CheckBox) findViewById(R.id.activity_event_details_allDay);
-		mCheckAllDay.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			public void onCheckedChanged(CompoundButton buttonView,
+		mSwitchAllDay = (Switcher) findViewById(R.id.activity_event_details_switcher_allDay);
+		mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
+			public void onStateCHangedListener(Switcher switcher,
 					boolean isChecked) {
-				// TODO Auto-generated method stub
-				if (buttonView.isChecked()) {
+				if (isChecked == true && first != false) {
 					mTextJourDeb.setEnabled(false);
 					mTextJourFin.setEnabled(false);
 					mTextHeureDeb.setEnabled(false);
 					mTextHeureFin.setEnabled(false);
-					
+
 					mTextJourFin.setText(mTextJourDeb.getText());
 					mTextHeureDeb.setText("00:00");
 					mTextHeureFin.setText("23:59");
-
 				} else {
 					mTextJourDeb.setEnabled(true);
-					mTextJourFin.setEnabled(true);
 					mTextHeureDeb.setEnabled(true);
+					mTextJourFin.setEnabled(true);
 					mTextHeureFin.setEnabled(true);
+					first = true;
 				}
 			}
 		});
-		
-		btnValider = (TextView) findViewById(R.id.activity_event_details_btn_valider);
+
 		
 
+	};
+	
+	private void modeEdition() {
+		btnValider.setVisibility(GONE);
+		btnModifier.setVisibility(VISIBLE);
+	}
+	
+	private void modeCreation() {
+		btnSupprimer.setText("Effacer");
+		event.setTitle("title");
+	}
+	
+	private void eventSet() {
+		
 	}
 }
