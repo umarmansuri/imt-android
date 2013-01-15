@@ -4,11 +4,8 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/btn_default_hover" />
+        android:drawable="@drawable/btn_modifier_hover" />
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/btn_default_normal" />
-        <item
-        android:state_enabled="false"
-        android:drawable="@drawable/btn_default_disable" />
+        android:drawable="@drawable/btn_modifier_normal" />
 </selector>

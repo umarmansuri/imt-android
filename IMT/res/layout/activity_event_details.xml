@@ -23,8 +23,8 @@
                 android:id="@+id/activity_event_details_deb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
-                
-                 <TextView
+
+                <TextView
                     android:id="@+id/activity_event_details_lib_ddeb"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
@@ -76,30 +76,58 @@
             <LinearLayout
                 android:id="@+id/activity_event_details_options"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" >
 
-
-                <CheckBox
-                    android:id="@+id/activity_event_details_allDay"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/activity_event_details_lib_allDay"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="3"
-                    android:checked="false" 
-                    android:text="Journée: "/>
-                
+                    android:text="Journée : " />
+
+                <its.my.time.view.Switcher
+                    android:id="@+id/activity_event_details_switcher_allDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/activity_event_details_lib_recurrence"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="4"
                     android:text="Récurrence : " />
-                
+
                 <Spinner
                     android:id="@+id/activity_event_details_spinner_recurrence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="1 semaine" />
+                    android:layout_weight="3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_event_details_titre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/activity_event_details_lib_titre"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Titre : " />
+
+                <EditText
+                    android:id="@+id/activity_event_details_text_titre"
+                    style="@style/champs_texte"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:inputType="textShortMessage"
+                    android:hint="@string/view_event_detail_details" />
             </LinearLayout>
 
             <FrameLayout
@@ -111,31 +139,53 @@
 
                 <EditText
                     android:id="@+id/activity_event_details_text_details"
+                    style="@style/champs_texte"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="#F5F5F5"
                     android:ellipsize="end"
-                    android:gravity="top"
                     android:hint="@string/view_event_detail_details"
                     android:inputType="textMultiLine"
-                    android:minLines="4"
-                    android:textSize="@dimen/text_size_small" />
+                    android:minLines="4" />
             </FrameLayout>
+            
+             <LinearLayout
+                android:id="@+id/activity_event_details_typeEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <FrameLayout
+                <TextView
+                    android:id="@+id/activity_event_details_lib_typeEvent"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Type Evénement : " />
+
+                <Spinner
+                    android:id="@+id/activity_event_details_spinner_typeEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/activity_event_details_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:background="@color/white" >
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/activity_event_details_lib_compte"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Compte : " />
 
                 <Spinner
                     android:id="@+id/activity_event_details_spinner_compte"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:hint="@string/view_event_detail_compte" />
-            </FrameLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/activity_event_details_btn"
@@ -150,6 +200,16 @@
                     android:layout_weight="2"
                     android:text="@string/btn_valider"
                     android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/activity_event_details_btn_modifier"
+                    style="@style/btn_modifier"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_modifier"
+                    android:textColor="#FFFFFF"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/activity_event_details_btn_effacer"

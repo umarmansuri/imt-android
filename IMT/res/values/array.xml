@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources >
+<resources>
+
     <string-array name="array_menu">
-        <item >Jour</item>
-        <item >Mois</item>
-        <item >Liste</item>
-        
+        <item>Jour</item>
+        <item>Mois</item>
+        <item>Liste</item>
     </string-array>
-    
+    <string-array name="array_recurrence">
+        <item>Semaines</item>
+        <item>Mois</item>
+        <item>Années</item>
+    </string-array>
+
 </resources>
