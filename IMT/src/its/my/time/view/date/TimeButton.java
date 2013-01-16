@@ -10,27 +10,25 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.TimePicker;
 
-public class TimeTextView extends TextView implements OnTimeSetListener, OnClickListener {
+public class TimeButton extends Button implements OnTimeSetListener, OnClickListener {
 
 	private TimePickerDialog dialog;
 	private Calendar date;
 	
-	
-	
-	public TimeTextView(Context context, AttributeSet attrs, int defStyle) {
+	public TimeButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(null);
 	}
 
-	public TimeTextView(Context context, AttributeSet attrs) {
+	public TimeButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(null);
 	}
 
-	public TimeTextView(Context context) {
+	public TimeButton(Context context) {
 		super(context);
 		init(null);
 	}

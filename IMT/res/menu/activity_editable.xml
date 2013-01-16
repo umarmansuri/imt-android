@@ -4,16 +4,19 @@
         android:id="@+id/menu_edit"
         android:icon="@android:drawable/ic_menu_edit"
         android:showAsAction="always"
-        android:visible="true"/>
+        android:visible="true"
+        android:title="@string/menu_edit"/>
     <item
         android:id="@+id/menu_save"
         android:icon="@android:drawable/ic_menu_save"
         android:showAsAction="always"
-        android:visible="false"/>
+        android:visible="false"
+        android:title="@string/menu_save"/>
     <item
         android:id="@+id/menu_cancel"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:showAsAction="always"
-        android:visible="false"/>
+        android:visible="false"
+        android:title="@string/menu_cancel"/>
 
 </menu>

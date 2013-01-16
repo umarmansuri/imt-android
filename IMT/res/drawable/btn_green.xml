@@ -4,8 +4,8 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/btn_effacer_hover" />
+        android:drawable="@drawable/btn_green_hover" />
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/btn_effacer_normal" />
+        android:drawable="@drawable/btn_green_normal" />
 </selector>

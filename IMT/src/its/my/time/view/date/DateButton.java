@@ -10,10 +10,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
-public class DateTextView extends TextView implements OnDateSetListener, OnClickListener {
+public class DateButton extends Button implements OnDateSetListener, OnClickListener {
 
 	private DatePickerDialog dialog;
 	private Calendar date;
@@ -21,17 +21,17 @@ public class DateTextView extends TextView implements OnDateSetListener, OnClick
 	
 	
 	
-	public DateTextView(Context context, AttributeSet attrs, int defStyle) {
+	public DateButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(null);
 	}
 
-	public DateTextView(Context context, AttributeSet attrs) {
+	public DateButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(null);
 	}
 
-	public DateTextView(Context context) {
+	public DateButton(Context context) {
 		super(context);
 		init(null);
 	}

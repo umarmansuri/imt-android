@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources >
+<string name="view_compte_color">Couleur</string>
+	<string name="view_compte_name">Intitulé</string>
+	<string name="view_compte_type">Type</string>
+</resources>

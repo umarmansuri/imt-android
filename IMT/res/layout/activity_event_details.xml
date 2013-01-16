@@ -31,19 +31,19 @@
                     android:layout_weight="1"
                     android:text="Début : " />
 
-                <its.my.time.view.date.DateTextView
+                <its.my.time.view.date.DateButton
                     android:id="@+id/activity_event_details_text_ddeb"
-                    style="@style/btn_default"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3" />
+                    android:layout_weight="3"
+                    android:layout_margin="5dp" />
 
-                <its.my.time.view.date.TimeTextView
+                <its.my.time.view.date.TimeButton
                     android:id="@+id/activity_event_details_text_hdeb"
-                    style="@style/btn_default"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+                    android:layout_margin="5dp"  />
             </LinearLayout>
 
             <LinearLayout
@@ -58,19 +58,19 @@
                     android:layout_weight="1"
                     android:text="Fin : " />
 
-                <its.my.time.view.date.DateTextView
+                <its.my.time.view.date.DateButton
                     android:id="@+id/activity_event_details_text_dfin"
-                    style="@style/btn_default"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3" />
+                    android:layout_weight="3"
+                    android:layout_margin="5dp"  />
 
-                <its.my.time.view.date.TimeTextView
+                <its.my.time.view.date.TimeButton
                     android:id="@+id/activity_event_details_text_hfin"
-                    style="@style/btn_default"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2" />
+                    android:layout_weight="2" 
+                    android:layout_margin="5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -122,12 +122,11 @@
 
                 <EditText
                     android:id="@+id/activity_event_details_text_titre"
-                    style="@style/champs_texte"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:inputType="textShortMessage"
-                    android:hint="@string/view_event_detail_details" />
+                    android:hint="@string/view_event_detail_details"
+                    android:inputType="textShortMessage" />
             </LinearLayout>
 
             <FrameLayout
@@ -139,7 +138,6 @@
 
                 <EditText
                     android:id="@+id/activity_event_details_text_details"
-                    style="@style/champs_texte"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -147,25 +145,6 @@
                     android:inputType="textMultiLine"
                     android:minLines="4" />
             </FrameLayout>
-            
-             <LinearLayout
-                android:id="@+id/activity_event_details_typeEvent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/activity_event_details_lib_typeEvent"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Type Evénement : " />
-
-                <Spinner
-                    android:id="@+id/activity_event_details_spinner_typeEvent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/activity_event_details_spinner"
@@ -194,31 +173,28 @@
 
                 <Button
                     android:id="@+id/activity_event_details_btn_valider"
-                    style="@style/btn_valider"
+                    style="@style/Btn.Green"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="@string/btn_valider"
-                    android:textColor="#FFFFFF" />
+                    android:text="@string/btn_valider" />
 
                 <Button
                     android:id="@+id/activity_event_details_btn_modifier"
-                    style="@style/btn_modifier"
+                    style="@style/Btn.Yellow"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/btn_modifier"
-                    android:textColor="#FFFFFF"
                     android:visibility="gone" />
 
                 <Button
                     android:id="@+id/activity_event_details_btn_effacer"
-                    style="@style/btn_effacer"
+                    style="@style/Btn.Red"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/btn_effacer"
-                    android:textColor="#FFFFFF" />
+                    android:text="@string/btn_effacer" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

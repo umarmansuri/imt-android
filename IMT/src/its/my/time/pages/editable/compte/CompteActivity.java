@@ -32,4 +32,22 @@ public class CompteActivity extends BaseActivity {
 		return "Compte";
 	}
 
+	@Override
+	protected void showEdit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void showSave() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void showCancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

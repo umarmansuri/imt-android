@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+	<string name="view_month_week">Sem.</string>
+	<string name="view_month_mon">Lun.</string>
+	<string name="view_month_tue">Mar.</string>
+	<string name="view_month_wen">Mer.</string>
+	<string name="view_month_thu">Jeu.</string>
+	<string name="view_month_fri">Ven.</string>
+	<string name="view_month_sat">Sam.</string>
+	<string name="view_month_sun">Dim.</string>
+
+</resources>

@@ -64,7 +64,7 @@ public class OdjFragment extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_odj, null);
+		RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_odjs, null);
 		mListOdj = (DragSortListView)mView.findViewById(R.id.event_odj_liste);
 		mListOdj.setAdapter(new OdjAdapter(getActivity(), eventId));
 		mListOdj.setDropListener(onDrop);

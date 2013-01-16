@@ -3,7 +3,12 @@
     <style name="Theme.AppTheme" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/Theme.AppTheme.ActionBarStyle</item>
         <item name="actionBarStyle">@style/Theme.AppTheme.ActionBarStyle</item>
-    </style> 
+	    <item name="android:windowBackground">@android:color/white</item>
+	    <item name="android:colorBackground">@android:color/white</item>
+	    
+	    <item name="android:buttonStyle">@style/Btn.Default</item>
+	    <item name="android:editTextStyle">@style/champs_texte</item>
+    </style>
 
     <style name="Theme.AppTheme.ActionBarStyle" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="android:titleTextStyle">@style/Theme.AppTheme.ActionBar.TitleTextStyle</item>
@@ -14,10 +19,8 @@
         <item name="android:textColor">@color/background_other</item>
     </style>
 
-    
     <style name="StyledActionBarTabText" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/background_other</item>
-        <item name="android:textSize">18sp</item>
         <item name="android:paddingLeft">14dp</item>
         <item name="android:paddingRight">14dp</item>
         <item name="android:paddingTop">10dp</item>

@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.events.event;
+package its.my.time.pages.editable.events.call;
 
 import its.my.time.pages.editable.events.BaseEventActivity;
 import android.os.Bundle;
@@ -7,32 +7,29 @@ import android.widget.ArrayAdapter;
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.app.ActionBar;
 
-public class EventActivity extends BaseEventActivity {
+public class CallActivity extends BaseEventActivity {
+
 
 	@Override
 	protected void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
-		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager(),
+		mPager.setAdapter(new CallPagerAdapter(getSupportFragmentManager(),
 				event));
 	}
 
 	@Override
 	protected CharSequence getActionBarTitle() {
-		return "Nouvel évènement";
+		return "Nouvel appel";
 	}
 
 	@Override
 	protected void initialiseActionBar() {
 
 		super.initialiseActionBar();
-
 		ActionBar mActionBar = getSupportActionBar();
-
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		String[] items = new String[] { EventPagerAdapter.TITLE_PAGE_DETAILS,
-				EventPagerAdapter.TITLE_PAGE_PARTICIPANTS,
-				EventPagerAdapter.TITLE_PAGE_COMMENTAIRES,
-				EventPagerAdapter.TITLE_PAGE_PJ };
+		String[] items = new String[] { CallPagerAdapter.TITLE_PAGE_DETAILS,
+				CallPagerAdapter.TITLE_PAGE_COMMENTAIRES };
 		mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
 				R.layout.navigation_spinner_item, items), navigationListener);
 	}
@@ -54,5 +51,6 @@ public class EventActivity extends BaseEventActivity {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

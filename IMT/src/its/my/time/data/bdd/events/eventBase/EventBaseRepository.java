@@ -10,7 +10,6 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 public class EventBaseRepository extends DatabaseHandler{
 
@@ -36,6 +35,7 @@ public class EventBaseRepository extends DatabaseHandler{
 		public static final int  TYPE_BASE = 0;
 		public static final int  TYPE_TASK = 1;
 		public static final int  TYPE_MEETING = 2;	
+		public static final int  TYPE_CALL = 3;	
 	}
 	
 	private static final String DATABASE_TABLE = "event";

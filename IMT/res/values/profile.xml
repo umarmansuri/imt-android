@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+	<string name="descriptionPicureProfil">Image Profil</string>
+	<string name="view_profil_firstname">Prénom</string>
+	<string name="view_profil_lastname">Nom</string>
+	<string name="view_profil_adresse">Adresse</string>
+	<string name="view_profil_birthday">Date de naissance</string>
+	<string name="view_profil_code_postal">Code postal</string>
+	<string name="view_profil_city">Ville</string>
+	<string name="view_profil_identifiant">Identifiant</string> 
+	<string name="view_profil_password">Mot de passe</string>
+	<string name="view_profil_password_again">Confirmation de mot de passe</string>
+	<string name="view_profil_phone">Téléphone</string>
+	<string name="view_profil_mail">Mail</string>
+</resources>

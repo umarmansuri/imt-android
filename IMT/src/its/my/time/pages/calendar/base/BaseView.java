@@ -15,8 +15,6 @@ public abstract class BaseView extends FrameLayout{
 	
 	public BaseView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		//setVisibility(INVISIBLE);
-
 		((CalendarActivity)getContext()).setSupportProgressBarVisibility(true);
 		new LoadView().execute();
 	}

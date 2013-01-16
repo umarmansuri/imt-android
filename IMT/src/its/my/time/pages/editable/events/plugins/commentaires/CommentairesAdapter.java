@@ -29,7 +29,6 @@ public class CommentairesAdapter implements ListAdapter{
 		if(comments == null) {
 			comments = new ArrayList<CommentBean>();
 		}
-
 		comments = DatabaseUtil.Plugins.getCommentRepository(context).getAllByEid(idEvent);
 	}
 
