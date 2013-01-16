@@ -1,44 +1,29 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <FrameLayout
-        android:id="@+id/main_frame_pager"
+    <RelativeLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/handler_size" >
-    </FrameLayout>
+        android:layout_height="match_parent" >
 
-    <SlidingDrawer
-        android:id="@+id/main_sliding_compte"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:content="@+id/main_liste_compte"
-        android:handle="@+id/main_handle" >
+        <ScrollView
+            android:id="@+id/main_menu"
+            android:layout_width="0px"
+            android:layout_height="400px"
+            android:background="#db5353" 
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true">
+        </ScrollView>
 
         <FrameLayout
-            android:id="@+id/main_handle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/handler_size"
-            android:background="@color/page_month_day_text_color" >
-
-            <ImageView
-                android:id="@+id/main_handle_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:rotation="180"
-                android:src="@android:drawable/ic_menu_more" />
-        </FrameLayout>
-
-        <ListView
-            android:id="@+id/main_liste_compte"
+            android:id="@+id/main_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white" >
-        </ListView>
-    </SlidingDrawer>
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/main_menu">
+        </FrameLayout>
+    </RelativeLayout>
 
-</RelativeLayout>
+</FrameLayout>
