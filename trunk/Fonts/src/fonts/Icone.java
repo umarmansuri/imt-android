@@ -1,6 +1,7 @@
 package fonts;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.Html;
 import android.widget.TextView;
 
@@ -10,35 +11,33 @@ public abstract class Icone extends TextView {
 	public Icone(Context context) {
 		this(context, 0);
 	}
-	
+
 	public Icone(Context context, int iconeReference) {
 		this(context, iconeReference, 18);
 	}
-	
+
 	public Icone(Context context, int iconeReference, int size) {
 		super(context);
 		initialiseTypeFace();
 		changeIcone(iconeReference);
-		
-	    float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+
+		float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+
 		setTextSize(size);
-		
+
 		int padding = (int) (10 * scaledDensity);
 		setPadding(padding,padding,padding,padding);
+		setDrawingCacheEnabled(true);
 	}
 
-	public int getmIconeReference() {
-		return mIconeReference;
-	}
-
-	public void setmIconeReference(int mIconeReference) {
-		this.mIconeReference = mIconeReference;
-	}
-	
-	public void changeIcone(int iconeReference) {
+	private void changeIcone(int iconeReference) {
 		mIconeReference = iconeReference;
 		setText(Html.fromHtml(Character.toString((char)mIconeReference)));
 	}
-	
-	public abstract void initialiseTypeFace();
+
+	public BitmapDrawable getIconeDrawable() {
+		return new BitmapDrawable(getDrawingCache());
+	}
+
+	protected abstract void initialiseTypeFace();
 }

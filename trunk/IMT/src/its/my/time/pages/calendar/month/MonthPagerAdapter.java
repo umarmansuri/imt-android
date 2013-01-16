@@ -22,8 +22,8 @@ public class MonthPagerAdapter extends BasePagerAdapter {
 	}
 
 	@Override
-	protected String getTitle(Calendar cal, int incrementation) {
-		Calendar displayedDay = (Calendar) cal.clone();
+	protected String getCustomTitle(int incrementation) {
+		Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
 		displayedDay.add(Calendar.MONTH, incrementation);
 		return DateUtil.getMonth(displayedDay.get(Calendar.YEAR), displayedDay.get(Calendar.MONTH));
 	}

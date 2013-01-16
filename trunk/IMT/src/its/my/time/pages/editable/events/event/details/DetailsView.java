@@ -7,8 +7,8 @@ import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.Switcher;
 import its.my.time.view.Switcher.OnStateChangedListener;
-import its.my.time.view.date.DateTextView;
-import its.my.time.view.date.TimeTextView;
+import its.my.time.view.date.DateButton;
+import its.my.time.view.date.TimeButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +32,10 @@ public class DetailsView extends FrameLayout {
 
 	private EventBaseBean event;
 
-	private TimeTextView mTextHeureDeb;
-	private TimeTextView mTextHeureFin;
-	private DateTextView mTextJourDeb;
-	private DateTextView mTextJourFin;
+	private TimeButton mTextHeureDeb;
+	private TimeButton mTextHeureFin;
+	private DateButton mTextJourDeb;
+	private DateButton mTextJourFin;
 	private Switcher mSwitchAllDay;
 	private ArrayList<String> mListCompteLabels;
 	private Spinner mSpinnerCompte;
@@ -63,13 +63,13 @@ public class DetailsView extends FrameLayout {
 		btnValider = (TextView) findViewById(R.id.activity_event_details_btn_valider);
 		btnModifier = (TextView) findViewById(R.id.activity_event_details_btn_modifier);
 		btnSupprimer = (TextView) findViewById(R.id.activity_event_details_btn_effacer);
-		mTextJourDeb = (DateTextView) findViewById(R.id.activity_event_details_text_ddeb);
+		mTextJourDeb = (DateButton) findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourDeb.setDate(event.gethDeb());
-		mTextHeureDeb = (TimeTextView) findViewById(R.id.activity_event_details_text_hdeb);
+		mTextHeureDeb = (TimeButton) findViewById(R.id.activity_event_details_text_hdeb);
 		mTextHeureDeb.setDate(event.gethDeb());
 
-		mTextHeureFin = (TimeTextView) findViewById(R.id.activity_event_details_text_hfin);
-		mTextJourFin = (DateTextView) findViewById(R.id.activity_event_details_text_dfin);
+		mTextHeureFin = (TimeButton) findViewById(R.id.activity_event_details_text_hfin);
+		mTextJourFin = (DateButton) findViewById(R.id.activity_event_details_text_dfin);
 		
 		if(event.getId() == -1)
 			modeCreation();

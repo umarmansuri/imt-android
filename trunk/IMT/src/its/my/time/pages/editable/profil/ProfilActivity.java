@@ -35,4 +35,22 @@ public class ProfilActivity extends BaseActivity {
 		return "Profil";
 	}
 
+	@Override
+	protected void showEdit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void showSave() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void showCancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

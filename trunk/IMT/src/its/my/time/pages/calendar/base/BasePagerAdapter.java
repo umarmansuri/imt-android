@@ -14,7 +14,6 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 	public static final int NB_PAGE = 1000;
 	
 	private Calendar cal;
-	private int currentIndex = 0;
 
 	public BasePagerAdapter(FragmentManager fm, Calendar cal) {
 		super(fm);
@@ -23,14 +22,7 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		int incrementation = position - NB_PAGE / 2;
-		if(incrementation < currentIndex) {
-			CalendarActivity.mTextTitle.setText(getTitle(getCurrentCalendar(), incrementation + 1));
-			currentIndex += 1;
-		} else {
-			CalendarActivity.mTextTitle.setText(getTitle(getCurrentCalendar(), incrementation - 1));
-			currentIndex -= 1;
-		}
+		int incrementation = getIncrementation(position);
 		Fragment fr = getView(incrementation);
 		return fr;
 	}
@@ -38,9 +30,19 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 	@Override
 	public int getCount() {return NB_PAGE;}
 
-	protected abstract Fragment getView(int incrementation);
-	protected abstract String getTitle(Calendar cal, int incrementation);
+	public String getTitle(int position) {
+		int incrementation = getIncrementation(position);
+		return getCustomTitle(incrementation);
+	}
 
+	private int getIncrementation(int position) {
+		return position - NB_PAGE / 2;
+	}
+
+	protected abstract String getCustomTitle(int incrementation);
+
+	protected abstract Fragment getView(int incrementation);
+	
 	public Calendar getCurrentCalendar() {
 		cal = CalendarActivity.curentCal;
 		return cal;

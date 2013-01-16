@@ -306,7 +306,7 @@ public class MooncakeIcone extends Icone {
 
 
 	@Override
-	public void initialiseTypeFace() {
+	protected void initialiseTypeFace() {
 		try {
 			setTypeface(MooncakeUtil.getFont(getContext()));
 		} catch(Exception e){

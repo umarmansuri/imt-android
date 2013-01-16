@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string name="label_event_base">Evènement</string>
+    <string name="label_event_meeting">Réunion</string>
+    <string name="label_event_task">Tâche</string>
+    <string name="label_event_call">Appel</string>
+    
+    <string name="view_event_date_from">De</string>
+    <string name="view_event_date_to">à</string>
+    <string name="view_event_account">Compte</string>
+    <string name="view_event_account_change_warning">Attention: vous ne pourrez plus modifier ce paramètre une fois l\'évènement créé.</string>
+    <string name="view_event_detail_heure_debut">Heure de début</string>
+    <string name="view_event_detail_day_debut">Jour de début</string>
+    <string name="view_event_detail_heure_fin">Heure de fin</string>
+    <string name="view_event_detail_day_fin">Jour de fin</string>
+    <string name="view_event_detail_details">Détails de l\'événement</string>
+    <string name="view_event_detail_compte">Compte</string>
+
+</resources>

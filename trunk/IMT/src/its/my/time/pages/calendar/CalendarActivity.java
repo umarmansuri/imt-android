@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,7 +35,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class CalendarActivity extends SherlockFragmentActivity implements OnNavigationListener, OnClickListener {
+public class CalendarActivity extends SherlockFragmentActivity implements OnNavigationListener, OnClickListener, OnPageChangeListener {
 
 	private ArrayAdapter<CharSequence> listMenu;
 
@@ -57,8 +58,9 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	private int indexCurrentPager = -1;
 
 	private FrameLayout mainFramePager;
-
-	public static TextView mTextTitle;
+	private ViewPager mViewPager;
+	
+	private TextView mTextTitle;
 
 	public static Calendar curentCal;
 
@@ -88,11 +90,13 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	private void initialiseActionBar() {
 
 		ActionBar mActionBar = getSupportActionBar();
+		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 		mActionBar.setHomeButtonEnabled(false);
 		mActionBar.setDisplayShowHomeEnabled(false);
 		mActionBar.setDisplayShowTitleEnabled(false);
 
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
 		listMenu = ArrayAdapter.createFromResource(this, R.array.array_menu, R.layout.navigation_spinner_item);
 		listMenu.setDropDownViewResource(R.layout.navigation_spinner_item);
 		mActionBar.setListNavigationCallbacks(listMenu, this);
@@ -101,7 +105,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		mActionBar.setDisplayShowCustomEnabled(true);
 		mTextTitle = new TextView(this);
 		mTextTitle.setGravity(Gravity.CENTER);
-		mTextTitle.setTextSize(14);
+		mTextTitle.setTextSize(20);
 		mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
 		mTextTitle.setTextColor(getResources().getColor(R.color.background_other));
 		mActionBar.setCustomView(mTextTitle);
@@ -203,54 +207,6 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 		return false;
 	}
 
-	private class ChangePageTask extends AsyncTask<Integer, Void, View> {
-
-		private int nextIndexMenu;
-		@Override
-		protected void onPreExecute() {
-			Animation anim = new AlphaAnimation(1, 0);
-			anim.setFillAfter(true);
-			anim.setDuration(ANIM_DURATION);
-			mainFramePager.startAnimation(anim);
-		}
-
-		@Override
-		protected View doInBackground(Integer... params) {
-			int indexNextPage = params[0];
-			ViewPager v = new ViewPager(getApplicationContext());
-			v.setId(ID_PAGER);
-			switch (indexNextPage) {
-			case INDEX_PAGER_DAY:
-				v.setAdapter(new DayPagerAdapter(getSupportFragmentManager(), curentCal));
-				indexCurrentPager = INDEX_PAGER_DAY;
-				nextIndexMenu = 1;
-				break;
-			case INDEX_PAGER_MONTH:
-				v.setAdapter(new MonthPagerAdapter(getSupportFragmentManager(), (Calendar) curentCal));
-				v.getAdapter().notifyDataSetChanged();
-				indexCurrentPager = INDEX_PAGER_MONTH;
-				break;
-			case INDEX_PAGER_LISTE:
-				ListView mListView = new ListView(getApplicationContext());
-				mListView.setAdapter(new ListEventAdapter(CalendarActivity.this));
-				indexCurrentPager = INDEX_PAGER_LISTE;
-				return mListView;
-			}
-			v.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
-			return v;
-		}
-
-		@Override
-		protected void onPostExecute(View result) {
-			mainFramePager.removeAllViews();
-			mainFramePager.addView(result);
-			Animation anim = new AlphaAnimation(0, 1);
-			anim.setFillAfter(true);
-			anim.setDuration(ANIM_DURATION);
-			mainFramePager.startAnimation(anim);
-		}
-	}
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -263,5 +219,68 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 			break;
 		}
 	
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {}
+
+	@Override
+	public void onPageSelected(final int position) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mTextTitle.setText(((BasePagerAdapter)mViewPager.getAdapter()).getTitle(position));	
+			}
+		});
+	}
+
+	private class ChangePageTask extends AsyncTask<Integer, Void, View> {
+
+		@Override
+		protected void onPreExecute() {
+			Animation anim = new AlphaAnimation(1, 0);
+			anim.setFillAfter(true);
+			anim.setDuration(ANIM_DURATION);
+			mainFramePager.startAnimation(anim);
+		}
+
+		@Override
+		protected View doInBackground(Integer... params) {
+			int indexNextPage = params[0];
+			mViewPager = new ViewPager(getApplicationContext());
+			mViewPager.setId(ID_PAGER);
+			switch (indexNextPage) {
+			case INDEX_PAGER_DAY:
+				mViewPager.setAdapter(new DayPagerAdapter(getSupportFragmentManager(), curentCal));
+				indexCurrentPager = INDEX_PAGER_DAY;
+				break;
+			case INDEX_PAGER_MONTH:
+				mViewPager.setAdapter(new MonthPagerAdapter(getSupportFragmentManager(), (Calendar) curentCal));
+				mViewPager.getAdapter().notifyDataSetChanged();
+				indexCurrentPager = INDEX_PAGER_MONTH;
+				break;
+			case INDEX_PAGER_LISTE:
+				ListView mListView = new ListView(getApplicationContext());
+				mListView.setAdapter(new ListEventAdapter(CalendarActivity.this));
+				indexCurrentPager = INDEX_PAGER_LISTE;
+				return mListView;
+			}
+			mViewPager.setOnPageChangeListener(CalendarActivity.this);
+			mViewPager.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+			return mViewPager;
+		}
+
+		@Override
+		protected void onPostExecute(View result) {
+			mainFramePager.removeAllViews();
+			mainFramePager.addView(result);
+			Animation anim = new AlphaAnimation(0, 1);
+			anim.setFillAfter(true);
+			anim.setDuration(ANIM_DURATION);
+			mainFramePager.startAnimation(anim);
+		}
 	}
 }

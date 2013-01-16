@@ -1,6 +1,12 @@
 package its.my.time;
 
+import its.my.time.data.bdd.DatabaseHandler;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.util.ActivityUtil;
+
+import java.util.GregorianCalendar;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,9 +50,9 @@ public class SplashActivity extends Activity {
 			bean = new EventBaseBean(); 
 			bean.setId(2);
 			bean.setTitle("Titre 2");
-			calDeb2 = new GregorianCalendar(2013,1,12,12,0);
+			calDeb2 = new GregorianCalendar(2013,1,20,12,0);
 			bean.sethDeb(calDeb2);
-			calFin2 = new GregorianCalendar(2013,1,12,13,0);
+			calFin2 = new GregorianCalendar(2013,1,20,13,0);
 			bean.sethFin(calFin2);
 			bean.setTypeId(EventBaseRepository.Types.TYPE_MEETING);
 			bean.setDetailsId(0);

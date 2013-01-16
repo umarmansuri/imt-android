@@ -38,11 +38,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="#FFF"
-        android:paddingTop="10dp" >
+        android:layout_margin="10dp" >
 
         <Button
             android:id="@+id/event_odj_save"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/Btn.Green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/send" />

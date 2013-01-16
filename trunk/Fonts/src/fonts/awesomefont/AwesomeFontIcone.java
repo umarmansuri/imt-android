@@ -308,7 +308,7 @@ public class AwesomeFontIcone extends Icone {
 	}
 
 	@Override
-	public void initialiseTypeFace() {
+	protected void initialiseTypeFace() {
 		try {
 			setTypeface(AwesomeFontUtil.getFont(getContext()));
 		} catch(Exception e){
