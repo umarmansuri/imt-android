@@ -16,7 +16,7 @@ public class CallPagerAdapter extends FragmentStatePagerAdapter {
 		this.event = event;
 	}
 
-	public static final String TITLE_PAGE_DETAILS = "Evènement";
+	public static final String TITLE_PAGE_DETAILS = "Evénement";
 	public static final String TITLE_PAGE_COMMENTAIRES = "Commentaires";
 	
 	public static final int INDEX_PAGE_EVENT = 0;

@@ -15,15 +15,10 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,9 +36,7 @@ public class DetailsView extends FrameLayout {
 	private Spinner mSpinnerCompte;
 	private Spinner mSpinnerRecurrence;
 	private TextView mTextDetails;
-	private TextView btnValider;
-	private TextView btnModifier;
-	private TextView btnSupprimer;
+	
 	private boolean first = false; //premier stateChange du Switcher
 
 	private List<CompteBean> mListCompte;
@@ -59,10 +52,6 @@ public class DetailsView extends FrameLayout {
 	}
 
 	private void initialiseValues() {
-		
-		btnValider = (TextView) findViewById(R.id.activity_event_details_btn_valider);
-		btnModifier = (TextView) findViewById(R.id.activity_event_details_btn_modifier);
-		btnSupprimer = (TextView) findViewById(R.id.activity_event_details_btn_effacer);
 		mTextJourDeb = (DateButton) findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourDeb.setDate(event.gethDeb());
 		mTextHeureDeb = (TimeButton) findViewById(R.id.activity_event_details_text_hdeb);
@@ -70,11 +59,6 @@ public class DetailsView extends FrameLayout {
 
 		mTextHeureFin = (TimeButton) findViewById(R.id.activity_event_details_text_hfin);
 		mTextJourFin = (DateButton) findViewById(R.id.activity_event_details_text_dfin);
-		
-		if(event.getId() == -1)
-			modeCreation();
-		else
-			modeEdition();
 		
 
 		if (event.gethFin() != null) {
@@ -106,7 +90,10 @@ public class DetailsView extends FrameLayout {
 			}
 		});
 		
-		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,R.array.array_recurrence);
+		String[] array_recurrence;
+		array_recurrence = getResources().getStringArray(R.array.array_recurrence);
+		
+		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,array_recurrence);
 		Spinner mSpinnerRecurrence = (Spinner) findViewById(R.id.activity_event_details_spinner_recurrence);
 		mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
@@ -139,18 +126,4 @@ public class DetailsView extends FrameLayout {
 		
 
 	};
-	
-	private void modeEdition() {
-		btnValider.setVisibility(GONE);
-		btnModifier.setVisibility(VISIBLE);
-	}
-	
-	private void modeCreation() {
-		btnSupprimer.setText("Effacer");
-		event.setTitle("title");
-	}
-	
-	private void eventSet() {
-		
-	}
 }
