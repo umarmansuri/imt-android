@@ -14,10 +14,12 @@ public class OdjRepository extends DatabaseHandler{
 
 	public static final int KEY_INDEX_ID = 0;
 	public static final int KEY_INDEX_VALUE = 1;
-	public static final int KEY_INDEX_EID = 2;
+	public static final int KEY_INDEX_ORDER = 2;
+	public static final int KEY_INDEX_EID = 3;
 
 	public static final String KEY_ID = "KEY_ID";
 	public static final String KEY_VALUE = "KEY_VALUE";
+	public static final String KEY_ORDER = "KEY_ORDER";
 	public static final String KEY_EID = "KEY_EID";
 
 
@@ -26,11 +28,13 @@ public class OdjRepository extends DatabaseHandler{
 	public static final String CREATE_TABLE =  "create table " + DATABASE_TABLE + " ("
 			+ KEY_ID + " integer primary key autoincrement,"
 			+ KEY_VALUE + " text not null,"
+			+ KEY_ORDER + " integer not null,"
 			+ KEY_EID + " INTEGER not null);";
 
 	private String[] allAttr = new String[]{
 			KEY_ID, 
-			KEY_VALUE, 
+			KEY_VALUE,
+			KEY_ORDER, 
 			KEY_EID};
 
 	public OdjRepository(Context context) {
@@ -53,6 +57,7 @@ public class OdjRepository extends DatabaseHandler{
 		OdjBean odj = new OdjBean();
 		odj.setId(c.getInt(KEY_INDEX_ID));
 		odj.setValue(c.getString(KEY_INDEX_VALUE));
+		odj.setOrder(c.getInt(KEY_INDEX_ORDER));
 		odj.setEid(c.getInt(KEY_INDEX_EID));
 		return odj;
 	}
@@ -70,6 +75,7 @@ public class OdjRepository extends DatabaseHandler{
 	public long insertOdj(OdjBean odj){
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_VALUE, odj.getValue());
+		initialValues.put(KEY_ORDER, odj.getOrder());
 		initialValues.put(KEY_EID, odj.getEid());
 		open();
 		long res = this.db.insert(DATABASE_TABLE, null, initialValues);
@@ -102,7 +108,7 @@ public class OdjRepository extends DatabaseHandler{
 
 	public List<OdjBean> getAllByEid(int eid) {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_EID + "=?", new String[] { "" + eid }, null, null, null);
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_EID + "=?", new String[] { "" + eid }, null, null, KEY_ORDER);
 		List<OdjBean> res = convertCursorToListObject(c);
 		close();
 		return res;

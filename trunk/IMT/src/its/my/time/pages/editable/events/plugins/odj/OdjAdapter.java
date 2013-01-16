@@ -10,9 +10,9 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.ArrayAdapter;
 
-public class OdjAdapter implements ListAdapter{
+public class OdjAdapter extends ArrayAdapter<OdjBean>{
 
 	private Context context;
 	private List<OdjBean> odj;
@@ -20,6 +20,7 @@ public class OdjAdapter implements ListAdapter{
 	private int idEvent;
 
 	public OdjAdapter(Context context, int id) {
+		super(context, 0);
 		this.context = context;
 		this.idEvent = id;
 		loadNext();
@@ -34,7 +35,6 @@ public class OdjAdapter implements ListAdapter{
 
 	@Override
 	public int getCount() {
-		 
 		if(odj != null) {
 			return odj.size();
 		}
@@ -42,7 +42,7 @@ public class OdjAdapter implements ListAdapter{
 	}
 
 	@Override
-	public OdjBean getItem(int position) {return null;}
+	public OdjBean getItem(int position) {return odj.get(position);}
 
 	@Override
 	public long getItemId(int position) {return odj.get(position).getId();}

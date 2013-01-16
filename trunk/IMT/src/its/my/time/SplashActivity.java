@@ -1,12 +1,6 @@
 package its.my.time;
 
-import its.my.time.data.bdd.DatabaseHandler;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.util.ActivityUtil;
-
-import java.util.GregorianCalendar;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,10 +32,9 @@ public class SplashActivity extends Activity {
 	private class LoadMainActivity extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-
-			/*
+			
 			//TODO enlever
-			deleteDatabase(DatabaseHandler.DATABASE_NAME);
+			/*deleteDatabase(DatabaseHandler.DATABASE_NAME);
 			EventBaseRepository adapter = new EventBaseRepository(SplashActivity.this);
 			EventBaseBean bean;
 			GregorianCalendar calDeb2;

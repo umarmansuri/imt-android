@@ -88,15 +88,13 @@ public class CalendarActivity extends SherlockFragmentActivity implements OnNavi
 	private void initialiseActionBar() {
 
 		ActionBar mActionBar = getSupportActionBar();
-		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 		mActionBar.setHomeButtonEnabled(false);
 		mActionBar.setDisplayShowHomeEnabled(false);
 		mActionBar.setDisplayShowTitleEnabled(false);
 
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
-		listMenu = ArrayAdapter.createFromResource(this, R.array.array_menu, R.layout.sherlock_spinner_dropdown_item);
-		listMenu.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+		listMenu = ArrayAdapter.createFromResource(this, R.array.array_menu, R.layout.navigation_spinner_item);
+		listMenu.setDropDownViewResource(R.layout.navigation_spinner_item);
 		mActionBar.setListNavigationCallbacks(listMenu, this);
 		mActionBar.setSelectedNavigationItem(INDEX_NAVIGATION_MONTH);
 		
