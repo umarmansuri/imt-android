@@ -79,7 +79,7 @@ public class ActivityUtil {
 		};
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle("Evènement à créer");
+		builder.setTitle("Evénement à créer");
 		builder.setItems(labels, new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int item) {
 		    	startEventActivity(context, calHeure, types[item]);

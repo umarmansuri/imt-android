@@ -19,7 +19,7 @@ public class TaskPagerAdapter extends FragmentStatePagerAdapter {
 		this.event = event;
 	}
 
-	public static final String TITLE_PAGE_DETAILS = "Evènement";
+	public static final String TITLE_PAGE_DETAILS = "Evénement";
 	public static final String TITLE_PAGE_PARTICIPANTS = "Participants";
 	public static final String TITLE_PAGE_COMMENTAIRES = "Commentaires";
 	public static final String TITLE_PAGE_PJ= "Pièces jointes";
