@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dslv="http://schemas.android.com/apk/res/its.my.time"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ListView
+    <com.mobeta.android.dslv.DragSortListView
         android:id="@+id/event_odj_liste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/event_layout_new_odj"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:drawSelectorOnTop="false"/>
+        android:layout_margin="10dp"
+        android:dividerHeight="5dp"
+        android:drawSelectorOnTop="false"
+        android:paddingBottom="0dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        dslv:drag_enabled="true"
+        dslv:drag_handle_id="@+id/grabber"
+        dslv:drag_scroll_start="0.33"
+        dslv:drag_start_mode="onDown"
+        dslv:float_alpha="0.6"
+        dslv:max_drag_scroll_speed="2"
+        dslv:remove_enabled="true"
+        dslv:remove_mode="flingLeft"
+        dslv:slide_shuffle_speed="0.3"
+        dslv:sort_enabled="true"
+        dslv:track_drag_sort="false"
+        dslv:use_default_controller="true" />
 
     <LinearLayout
         android:id="@+id/event_layout_new_odj"
@@ -19,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:background="#FFF"
         android:paddingTop="10dp" >
 
         <Button
@@ -27,12 +46,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/send" />
-
-        <its.my.time.view.Switcher
-            android:id="@+id/switcher1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </its.my.time.view.Switcher>
 
         <EditText
             android:id="@+id/event_odj_editOdj"
