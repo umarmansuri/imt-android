@@ -27,7 +27,7 @@ public class MenuGroupe{
 	public MenuGroupe(String nom, int iconeId) {
 		super();
 		this.nom = nom;
-		this.menuObjets = menuObjets;
+		this.menuObjets = new ArrayList<MenuObjet>();
 		this.iconeId = iconeId;
 	}
 
