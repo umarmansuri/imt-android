@@ -1,29 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_pager"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <RelativeLayout
-        android:id="@+id/main_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ScrollView
-            android:id="@+id/main_menu"
-            android:layout_width="0px"
-            android:layout_height="400px"
-            android:background="#db5353" 
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true">
-        </ScrollView>
-
-        <FrameLayout
-            android:id="@+id/main_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/main_menu">
-        </FrameLayout>
-    </RelativeLayout>
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true" >
 
 </FrameLayout>

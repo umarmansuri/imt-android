@@ -14,7 +14,7 @@
             android:id="@+id/calendar_liste_event_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background_other"
+            android:background="@color/light_grey"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/black" >
         </TextView>

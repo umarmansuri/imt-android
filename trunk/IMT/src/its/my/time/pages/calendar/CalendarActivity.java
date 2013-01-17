@@ -2,43 +2,42 @@ package its.my.time.pages.calendar;
 
 import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
+import its.my.time.pages.MenuActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
 import its.my.time.pages.calendar.list.ListEventAdapter;
 import its.my.time.pages.calendar.month.MonthPagerAdapter;
-import its.my.time.pages.editable.profil.ProfilActivity;
+import its.my.time.util.ActivityUtil;
+import its.my.time.view.menu.MenuGroupe;
+import its.my.time.view.menu.MenuObjet;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class CalendarActivity extends SherlockFragmentActivity implements
-		OnClickListener, OnPageChangeListener {
-
-	private ArrayAdapter<CharSequence> listMenu;
+public class CalendarActivity extends MenuActivity implements
+		OnPageChangeListener {
 
 	public static final int INDEX_PAGER_DAY = 0;
 	public static final int INDEX_PAGER_MONTH = 1;
@@ -49,22 +48,17 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 	public static final int INDEX_NAVIGATION_MONTH = 1;
 	public static final int INDEX_NAVIGATION_LISTE = 2;
 
-	public static final int INDEX_MENU_SYNC = 0;
-	public static final int INDEX_MENY_TODAY = 1;
-	public static final int INDEX_MENU_PROFIL = 2;
-
 	private static final int ID_PAGER = 888889;
 	private static final int DURATION_WAITING_END = 300;
+
+	private static final int ID_MENU_TODAY = 0;
+
 	private int indexCurrentPager = -1;
 
-	private FrameLayout mainFramePager;
+	private FrameLayout mMainFramePager;
 	private ViewPager mViewPager;
 
 	private TextView mTextTitle;
-
-	private boolean isMenuShowed = false;
-
-	private View mMainFrameLayout;
 
 	public static Calendar curentCal;
 
@@ -75,16 +69,12 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		overridePendingTransition(android.R.anim.fade_in,
-				android.R.anim.fade_out);
 		isWaitingEnd = false;
 		isFirstMenuSelectedOk = false;
 		initialiseActionBar();
 		setContentView(R.layout.activity_calendar);
 
-		mMainFrameLayout = findViewById(R.id.main_layout);
-		mainFramePager = (FrameLayout) findViewById(R.id.main_pager);
-		setMainMenuShowed(false, false);
+		mMainFramePager = (FrameLayout) findViewById(R.id.main_pager);
 
 		if (curentCal == null) {
 			curentCal = Calendar.getInstance();
@@ -92,7 +82,8 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 		}
 	}
 
-	private void initialiseActionBar() {
+	protected void initialiseActionBar() {
+		super.initialiseActionBar();
 
 		ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setBackgroundDrawable(getResources().getDrawable(
@@ -101,80 +92,123 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 		mActionBar.setDisplayShowHomeEnabled(true);
 		mActionBar.setDisplayShowTitleEnabled(false);
 
-		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
 		mActionBar.setDisplayShowCustomEnabled(true);
 		mTextTitle = new TextView(this);
 		mTextTitle.setGravity(Gravity.CENTER);
 		mTextTitle.setTextSize(20);
-		mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT));
-		mTextTitle.setTextColor(getResources().getColor(
-				R.color.background_other));
+		mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		mTextTitle.setTextColor(getResources().getColor(R.color.light_grey));
 		mActionBar.setCustomView(mTextTitle);
 	}
 
+	private static final int INDEX_MENU_PROFIL = 0;
+
+	private static final int INDEX_MENU_AGENDA = 1;
+	private static final int INDEX_MENU_AGENDA_TODAY = 0;
+	private static final int INDEX_MENU_AGENDA_MONTH = 1;
+	private static final int INDEX_MENU_AGENDA_DAY = 2;
+	private static final int INDEX_MENU_AGENDA_LIST = 3;
+
+	private static final int INDEX_MENU_COMPTE = 2;
+	private static final int INDEX_MENU_GROUP_LIBELLE = 3;
+	private static final int INDEX_MENU_GROUP_PARAMETRES = 4;
+
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			if (isMenuShowed == false) {
-				setMainMenuShowed(true, true);
-			} else {
-				setMainMenuShowed(false, true);
-			}
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	protected ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes) {
+		MenuGroupe menuGroupe = new MenuGroupe("Profil",MooncakeIcone.icon_user);
+		menuGroupes.add(menuGroupe);
+
+		menuGroupe = new MenuGroupe("Agenda",MooncakeIcone.icon_planet);
+		ArrayList<MenuObjet> donnees = new ArrayList<MenuObjet>();
+		donnees.add(new MenuObjet(menuGroupe, "Aujourd'hui", MooncakeIcone.icon_calendar));
+		donnees.add(new MenuObjet(menuGroupe, "Mois", MooncakeIcone.icon_calendar_month));
+		donnees.add(new MenuObjet(menuGroupe, "Jour", MooncakeIcone.icon_calendar));
+		donnees.add(new MenuObjet(menuGroupe, "Tâche",MooncakeIcone.icon_list_2));
+		menuGroupe.setObjets(donnees);
+		menuGroupes.add(menuGroupe);
+
+		menuGroupe = new MenuGroupe("Comptes",MooncakeIcone.icon_adjust);
+		donnees = new ArrayList<MenuObjet>();
+		donnees.add(new MenuObjet(menuGroupe, "Compte 1",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 2",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 3",MooncakeIcone.icon_archive));
+		menuGroupe.setObjets(donnees);
+		menuGroupes.add(menuGroupe);
+
+		menuGroupe = new MenuGroupe("Libellés",MooncakeIcone.icon_file_pdf);
+		donnees = new ArrayList<MenuObjet>();
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 1",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 2",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 3",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 4",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 5",MooncakeIcone.icon_archive));
+		menuGroupe.setObjets(donnees);
+		menuGroupes.add(menuGroupe);
+
+		menuGroupe = new MenuGroupe("Paramètre", MooncakeIcone.icon_settings);
+		menuGroupes.add(menuGroupe);
+		return menuGroupes;
 	}
 
-	private void setMainMenuShowed(boolean showed, boolean withAnimation) {
-		Animation anim;
-		if (showed) {
-			anim = new TranslateAnimation(-400, 0, 0, 0);
-		} else {
-			anim = new TranslateAnimation(0, -400, 0, 0);
+	@Override
+	protected void onMenuChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		switch (groupPosition) {
+		case INDEX_MENU_AGENDA:
+			switch (childPosition) {
+			case INDEX_MENU_AGENDA_TODAY:
+				gotoDate(Calendar.getInstance());
+				break;
+			case INDEX_MENU_AGENDA_DAY:
+				new ChangePageTask().execute(INDEX_PAGER_DAY);
+				break;
+			case INDEX_MENU_AGENDA_MONTH:
+				new ChangePageTask().execute(INDEX_PAGER_MONTH);
+				break;
+			case INDEX_MENU_AGENDA_LIST:
+				new ChangePageTask().execute(INDEX_PAGER_LISTE);
+				break;
+			}
+			changeMainMenuVisibility(false, true);
+			break;
+		default:
+			break;
 		}
-		anim.setFillAfter(true);
-		if (withAnimation) {
-			anim.setDuration(200);
+	}
+
+	@Override
+	protected void onMenuGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		switch (groupPosition) {
+		case INDEX_MENU_PROFIL:
+			ActivityUtil.startProfilActivity(this);
+			break;
+		default:
+			break;
 		}
-		mMainFrameLayout.startAnimation(anim);
-		isMenuShowed = showed;
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.activity_calendar, menu);
-
 		MooncakeIcone icone = new MooncakeIcone(this,
 				MooncakeIcone.icon_calendar);
-		icone.setId(R.id.menu_today);
+		icone.setId(ID_MENU_TODAY);
 		icone.setOnClickListener(this);
-		icone.setTextColor(getResources().getColor(R.color.background_other));
-		menu.findItem(R.id.menu_today).setActionView(icone);
-
-		icone = new MooncakeIcone(this, MooncakeIcone.icon_user);
-		icone.setId(R.id.menu_profil);
-		icone.setOnClickListener(this);
-		icone.setTextColor(getResources().getColor(R.color.background_other));
-		menu.findItem(R.id.menu_profil).setActionView(icone);
+		icone.setTextColor(getResources().getColor(R.color.light_grey));
+		menu.add(Menu.NONE, ID_MENU_TODAY, Menu.NONE, "").setActionView(icone);
 
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	public void showDays(Calendar cal) {
 		curentCal = cal;
-		getSupportActionBar().setSelectedNavigationItem(INDEX_NAVIGATION_DAY);
 	}
 
 	public void showListe() {
-		getSupportActionBar().setSelectedNavigationItem(INDEX_PAGER_LISTE);
 	}
 
 	public void showMonths(Calendar cal) {
 		curentCal = cal;
-		getSupportActionBar().setSelectedNavigationItem(INDEX_NAVIGATION_MONTH);
 	}
 
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -213,9 +247,9 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 	}
 
 	private void gotoDate(Calendar cal) {
-		((BasePagerAdapter) ((ViewPager) mainFramePager.getChildAt(0))
+		((BasePagerAdapter) ((ViewPager) mMainFramePager.getChildAt(0))
 				.getAdapter()).setCurrentCalendar(cal);
-		((ViewPager) mainFramePager.getChildAt(0))
+		((ViewPager) mMainFramePager.getChildAt(0))
 				.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 	}
 
@@ -252,15 +286,11 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.menu_profil:
-			Intent intent = new Intent(this, ProfilActivity.class);
-			startActivity(intent);
-			break;
-		case R.id.menu_today:
+		case ID_MENU_TODAY:
 			gotoDate(Calendar.getInstance());
-			break;
+			return;
 		}
-
+		super.onClick(v);
 	}
 
 	@Override
@@ -289,7 +319,7 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 			Animation anim = new AlphaAnimation(1, 0);
 			anim.setFillAfter(true);
 			anim.setDuration(ANIM_DURATION);
-			mainFramePager.startAnimation(anim);
+			mMainFramePager.startAnimation(anim);
 		}
 
 		@Override
@@ -318,17 +348,28 @@ public class CalendarActivity extends SherlockFragmentActivity implements
 			}
 			mViewPager.setOnPageChangeListener(CalendarActivity.this);
 			mViewPager.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+
+			
+			
+			mViewPager.setOnTouchListener(new OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					Log.d("CalendarActivity", "pager is touched!!");
+					return false;
+				}
+			});
+			
 			return mViewPager;
 		}
 
 		@Override
 		protected void onPostExecute(View result) {
-			mainFramePager.removeAllViews();
-			mainFramePager.addView(result);
+			mMainFramePager.removeAllViews();
+			mMainFramePager.addView(result);
 			Animation anim = new AlphaAnimation(0, 1);
 			anim.setFillAfter(true);
 			anim.setDuration(ANIM_DURATION);
-			mainFramePager.startAnimation(anim);
+			mMainFramePager.startAnimation(anim);
 		}
 	}
 }

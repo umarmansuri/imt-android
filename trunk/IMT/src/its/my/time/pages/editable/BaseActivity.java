@@ -64,19 +64,19 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 		getSupportMenuInflater().inflate(R.menu.activity_editable, menu);
 
 		MooncakeIcone icone = new MooncakeIcone(this, MooncakeIcone.icon_edit);
-		icone.setTextColor(getResources().getColor(R.color.background_other));
+		icone.setTextColor(getResources().getColor(R.color.light_grey));
 		icone.setId(R.id.menu_edit);
 		icone.setOnClickListener(mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_EDIT).setActionView(icone);
 
 		icone = new MooncakeIcone(this, MooncakeIcone.icon_install);
-		icone.setTextColor(getResources().getColor(R.color.background_other));
+		icone.setTextColor(getResources().getColor(R.color.light_grey));
 		icone.setId(R.id.menu_save);
 		icone.setOnClickListener(mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_SAVE).setActionView(icone);
 
 		icone = new MooncakeIcone(this, MooncakeIcone.icon_remove_circle);
-		icone.setTextColor(getResources().getColor(R.color.background_other));
+		icone.setTextColor(getResources().getColor(R.color.light_grey));
 		icone.setId(R.id.menu_cancel);
 		icone.setOnClickListener(mOnIconeClickLIstener );
 		menu.getItem(INDEX_MENU_CANCEL).setActionView(icone);

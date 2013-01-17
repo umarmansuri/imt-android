@@ -9,7 +9,7 @@
         android:id="@+id/event_pj_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_other"
+        android:background="@color/light_grey"
         android:text="Titre de la prochaine Pièce Jointe"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/black" >
