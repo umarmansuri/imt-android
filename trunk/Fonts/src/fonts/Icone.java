@@ -1,6 +1,8 @@
 package fonts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.Html;
 import android.widget.TextView;
@@ -30,13 +32,19 @@ public abstract class Icone extends TextView {
 		setDrawingCacheEnabled(true);
 	}
 
-	private void changeIcone(int iconeReference) {
+	public void changeIcone(int iconeReference) {
 		mIconeReference = iconeReference;
 		setText(Html.fromHtml(Character.toString((char)mIconeReference)));
 	}
 
 	public BitmapDrawable getIconeDrawable() {
-		return new BitmapDrawable(getDrawingCache());
+		int size = (int) getTextSize();
+		Bitmap b = Bitmap.createBitmap( size, size, Bitmap.Config.ARGB_8888);                
+		Canvas c = new Canvas(b);
+		measure(size, size); //Change from original post
+		layout(0, 0, size, size);
+		draw(c);
+		return new BitmapDrawable(b);
 	}
 
 	protected abstract void initialiseTypeFace();
