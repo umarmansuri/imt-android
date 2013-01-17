@@ -94,7 +94,7 @@ public class MonthView extends BaseView {
 				txtVw.setEnabled(isInMois);
 				txtVw.setText(String.valueOf(helper.getDayAt(i, j - 1)));
 				if (!isInMois) {
-					txtVw.setTextColor(getResources().getColor(R.color.background_other));
+					txtVw.setTextColor(getResources().getColor(R.color.light_grey));
 				}
 
 				GregorianCalendar today = new GregorianCalendar();

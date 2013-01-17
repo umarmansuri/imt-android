@@ -8,6 +8,7 @@ import its.my.time.pages.editable.events.call.CallActivity;
 import its.my.time.pages.editable.events.event.EventActivity;
 import its.my.time.pages.editable.events.meeting.MeetingActivity;
 import its.my.time.pages.editable.events.task.TaskActivity;
+import its.my.time.pages.editable.profil.ProfilActivity;
 
 import java.util.Calendar;
 
@@ -21,6 +22,11 @@ public class ActivityUtil {
 	public static final String KEY_EXTRA_ID = "KEY_ID";
 	public static final String KEY_EXTRA_ISO_TIME = "KEY_EXTRA_ISO_TIME";
 	
+	public static void startProfilActivity(Context context) {
+		Intent intent = new Intent(context, ProfilActivity.class);
+		context.startActivity(intent);
+	}
+
 	public static void startCalendarActivity(Context context) {
 		Intent intent = new Intent(context, CalendarActivity.class);
 		context.startActivity(intent);
