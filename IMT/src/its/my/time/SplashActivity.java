@@ -66,6 +66,33 @@ public class SplashActivity extends Activity {
 			bean.setId(2);
 			res = adapter.insertEvent(bean);
 			
+			
+			
+			bean = new EventBaseBean();
+			bean.setId(3);
+			bean.setTitle("Voicin un évènement");
+			calDeb2 = Calendar.getInstance();
+			calDeb2.add(Calendar.DAY_OF_MONTH, -10);
+			bean.sethDeb(calDeb2);
+			calFin2 = (Calendar) calDeb2.clone();
+			calFin2.add(Calendar.HOUR, 2);
+			bean.sethFin(calFin2);
+			bean.setTypeId(EventBaseRepository.Types.TYPE_CALL);
+			bean.setDetailsId(0);
+			res = adapter.insertEvent(bean);
+			bean.setTitle("Deuxième");
+			bean.setId(4);
+			res = adapter.insertEvent(bean);
+			bean.setTitle("Troisieme..."); 
+			bean.setId(5);
+			res = adapter.insertEvent(bean);
+			bean.setTitle("Un autre");
+			bean.setId(6);
+			res = adapter.insertEvent(bean);
+			bean.setTitle("Et le dernier!!!!!!!!!!");
+			bean.setId(7);
+			res = adapter.insertEvent(bean);
+			
 			return null;
 		}
 
