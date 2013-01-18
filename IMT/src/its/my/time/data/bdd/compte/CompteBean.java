@@ -10,6 +10,9 @@ public class CompteBean {
 	private int type;
 	private boolean isShowed;
 	private int uid;
+	
+	
+	
 	public int getId() {
 		return id;
 	}

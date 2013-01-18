@@ -7,6 +7,7 @@ public class MenuGroupe{
 	private ArrayList<MenuObjet> menuObjets;
 	private int iconeRes;
 	private boolean isSwitcher;
+	private int switcherOnColor = -1;
 	
 	public String getNom() {
 		return nom;
@@ -38,12 +39,25 @@ public class MenuGroupe{
 	public MenuGroupe(String nom, boolean isSwitcher) {
 		this(nom, -1, isSwitcher);
 	}
+	public int getSwitcherOnColor() {
+		return switcherOnColor;
+	}
+	public void setSwitcherOnColor(int switcherOnColor) {
+		this.switcherOnColor = switcherOnColor;
+	}
+	public void setSwitcher(boolean isSwitcher) {
+		this.isSwitcher = isSwitcher;
+	}
 	public MenuGroupe(String nom, int iconeRes, boolean isSwitcher) {
+		this(nom, iconeRes, isSwitcher, -1);
+	}
+	public MenuGroupe(String nom, int iconeRes, boolean isSwitcher, int switcherOnColor) {
 		super();
 		this.nom = nom;
 		this.iconeRes = iconeRes;
 		this.isSwitcher = isSwitcher;
 		this.menuObjets = new ArrayList<MenuObjet>();
+		this.switcherOnColor = switcherOnColor;
 	}
 	
 	
