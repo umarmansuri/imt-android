@@ -17,13 +17,11 @@ import com.fonts.mooncake.MooncakeIcone;
 
 public class ELVAdapter extends BaseExpandableListAdapter {
 
-	private Context context;
 	private ArrayList<MenuGroupe> menuGroupes;
 	private OnItemSwitchedListener onItemSwitchedListener;
 	private LayoutInflater inflater;
 
 	public ELVAdapter(Context context, ArrayList<MenuGroupe> menuGroupes) {
-		this.context = context;
 		this.menuGroupes = menuGroupes;
 		inflater = LayoutInflater.from(context);
 	}

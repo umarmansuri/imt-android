@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -138,7 +139,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 			}
 		}
 	};
-	
+
 	public void initialiseMenu() {
 		menuGroupes = new ArrayList<MenuGroupe>();
 
@@ -230,11 +231,21 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		mMainContent.removeAllViews();
 		View view = getLayoutInflater().inflate(layoutResId, null);
 		setContentView(view);
-	}
+	} 
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		mMainContent.removeAllViews();
 		mMainContent.addView(view, params);
+	}
+
+	protected abstract boolean onBackButtonPressed();
+	@Override
+	public void onBackPressed() {
+		if(isMenuShowed) {
+			changeMainMenuVisibility(false, true);
+			return;
+		}
+		onBackButtonPressed();
 	}
 }

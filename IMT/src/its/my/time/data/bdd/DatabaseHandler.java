@@ -45,7 +45,6 @@ public class DatabaseHandler {
 	
 		@Override
 		public void onCreate(SQLiteDatabase db){
-			Log.d("DbAdapter","passe dans onCreate!");
 			db.execSQL(UtilisateurRepository.CREATE_TABLE);
 			db.execSQL(CompteRepository.CREATE_TABLE);
 			db.execSQL(EventBaseRepository.CREATE_TABLE);   

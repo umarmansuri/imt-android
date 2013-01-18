@@ -17,12 +17,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -55,7 +51,6 @@ OnPageChangeListener {
 
 	public static Calendar curentCal;
 
-	private static boolean isFirstMenuSelectedOk;
 	private static boolean isWaitingEnd;
 
 	@Override
@@ -63,7 +58,6 @@ OnPageChangeListener {
 		super.onCreate(savedInstanceState);
 
 		isWaitingEnd = false;
-		isFirstMenuSelectedOk = false;
 		initialiseActionBar();
 		setContentView(R.layout.activity_calendar);
 
@@ -237,32 +231,32 @@ OnPageChangeListener {
 		.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 	}
 
+	
 	@Override
-	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			switch (indexCurrentPager) {
-			case INDEX_MENU_AGENDA_DAY:
-				showMonths(curentCal);
-				return true;
-			case INDEX_MENU_AGENDA_MONTH:
-				if (isWaitingEnd) {
-					finish();
-				} else {
-					isWaitingEnd = true;
-					Toast.makeText(this,
-							"Appuyer une nouvelle fois pour quitter",
-							DURATION_WAITING_END).show();
-					new Thread(new Runnable() {
-						public void run() {
-							try {
-								Thread.sleep(DURATION_WAITING_END * 10);
-							} catch (Exception e) {
-							}
-							isWaitingEnd = false;
+	protected boolean onBackButtonPressed() {
+		switch (indexCurrentPager) {
+		case INDEX_MENU_AGENDA_DAY:
+			showMonths(curentCal);
+			return true;
+		case INDEX_MENU_AGENDA_MONTH:
+			if (isWaitingEnd) {
+				finish();
+			} else {
+				isWaitingEnd = true;
+				Toast.makeText(this,
+						"Appuyer une nouvelle fois pour quitter",
+						DURATION_WAITING_END).show();
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							Thread.sleep(DURATION_WAITING_END * 10);
+						} catch (Exception e) {
 						}
-					}).start();
-				}
+						isWaitingEnd = false;
+					}
+				}).start();
 			}
+			return true;
 		}
 		return false;
 	}
@@ -334,14 +328,6 @@ OnPageChangeListener {
 			}
 			mViewPager.setOnPageChangeListener(CalendarActivity.this);
 			mViewPager.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
-
-			mViewPager.setOnTouchListener(new OnTouchListener() {
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					Log.d("CalendarActivity", "pager is touched!!");
-					return false;
-				}
-			});
 
 			return mViewPager;
 		}
