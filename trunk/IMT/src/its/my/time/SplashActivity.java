@@ -5,6 +5,7 @@ import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.util.ActivityUtil;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
@@ -38,25 +39,32 @@ public class SplashActivity extends Activity {
 	private class LoadMainActivity extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			
+			 
 			//TODO enlever
-			/*deleteDatabase(DatabaseHandler.DATABASE_NAME);
+			deleteDatabase(DatabaseHandler.DATABASE_NAME);
 			EventBaseRepository adapter = new EventBaseRepository(SplashActivity.this);
 			EventBaseBean bean;
-			GregorianCalendar calDeb2;
-			GregorianCalendar calFin2;
+			Calendar calDeb2;
+			Calendar calFin2;
 			
 			
-			bean = new EventBaseBean(); 
-			bean.setId(2);
-			bean.setTitle("Titre 2");
-			calDeb2 = new GregorianCalendar(2013,1,20,12,0);
+			bean = new EventBaseBean();
+			bean.setId(0);
+			bean.setTitle("Voicin un évènement");
+			calDeb2 = Calendar.getInstance();
 			bean.sethDeb(calDeb2);
-			calFin2 = new GregorianCalendar(2013,1,20,13,0);
+			calFin2 = Calendar.getInstance();
+			calFin2.add(Calendar.HOUR, 2);
 			bean.sethFin(calFin2);
 			bean.setTypeId(EventBaseRepository.Types.TYPE_MEETING);
 			bean.setDetailsId(0);
-			long res = adapter.insertEvent(bean);*/
+			long res = adapter.insertEvent(bean);
+			bean.setTitle("Deuxième");
+			bean.setId(1);
+			res = adapter.insertEvent(bean);
+			bean.setTitle("Et un petit dernier...");
+			bean.setId(2);
+			res = adapter.insertEvent(bean);
 			
 			return null;
 		}
