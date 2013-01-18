@@ -2,12 +2,11 @@ package its.my.time.view.menu;
 
 import java.util.ArrayList;
 
-import android.view.View;
-
 public class MenuGroupe{
 	private String nom;
 	private ArrayList<MenuObjet> menuObjets;
 	private int iconeRes;
+	private boolean isSwitcher;
 	
 	public String getNom() {
 		return nom;
@@ -27,11 +26,25 @@ public class MenuGroupe{
 	public void setIconeRes(int iconeRes) {
 		this.iconeRes = iconeRes;
 	}
+	public boolean isSwitcher() {
+		return isSwitcher;
+	}
+	public void setIsSwitcher(boolean isSwitcher) {
+		this.isSwitcher = isSwitcher;
+	}
 	public MenuGroupe(String nom, int iconeRes) {
+		this(nom, iconeRes, false);
+	}
+	public MenuGroupe(String nom, boolean isSwitcher) {
+		this(nom, -1, isSwitcher);
+	}
+	public MenuGroupe(String nom, int iconeRes, boolean isSwitcher) {
 		super();
 		this.nom = nom;
-		this.menuObjets = new ArrayList<MenuObjet>();
 		this.iconeRes = iconeRes;
+		this.isSwitcher = isSwitcher;
+		this.menuObjets = new ArrayList<MenuObjet>();
 	}
+	
 	
 }

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft" >
+    android:paddingLeft="20dp" >
 
     <com.fonts.mooncake.MooncakeIcone
         android:id="@+id/menu_child_icone"
@@ -19,11 +19,24 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/menu_child_switcher"
         android:layout_toRightOf="@+id/menu_child_icone"
         android:ellipsize="end"
+        android:singleLine="true"
         android:gravity="center_vertical"
         android:paddingLeft="5dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/grey" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/grey"/>
+
+    <its.my.time.view.Switcher
+        android:id="@+id/menu_child_switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"/>
 
 </RelativeLayout>
