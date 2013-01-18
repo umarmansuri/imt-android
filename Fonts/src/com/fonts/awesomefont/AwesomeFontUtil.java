@@ -1,4 +1,4 @@
-package fonts.awesomefont;
+package com.fonts.awesomefont;
 
 import android.content.Context;
 import android.graphics.Typeface;

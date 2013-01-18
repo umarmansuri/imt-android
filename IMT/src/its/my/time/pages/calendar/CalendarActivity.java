@@ -1,6 +1,5 @@
 package its.my.time.pages.calendar;
 
-import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
 import its.my.time.pages.MenuActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
@@ -35,6 +34,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
+import com.fonts.mooncake.MooncakeIcone;
 
 public class CalendarActivity extends MenuActivity implements
 		OnPageChangeListener {
@@ -97,7 +97,7 @@ public class CalendarActivity extends MenuActivity implements
 		mTextTitle.setGravity(Gravity.CENTER);
 		mTextTitle.setTextSize(20);
 		mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-		mTextTitle.setTextColor(getResources().getColor(R.color.light_grey));
+		mTextTitle.setTextColor(getResources().getColor(R.color.grey));
 		mActionBar.setCustomView(mTextTitle);
 	}
 
@@ -115,37 +115,45 @@ public class CalendarActivity extends MenuActivity implements
 
 	@Override
 	protected ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes) {
-		MenuGroupe menuGroupe = new MenuGroupe("Profil",MooncakeIcone.icon_user);
+		int iconeColor = getResources().getColor(R.color.grey);
+		int iconeSize = 30;
+		
+		MenuGroupe menuGroupe = new MenuGroupe("Profil", MooncakeIcone.icon_user);
 		menuGroupes.add(menuGroupe);
 
-		menuGroupe = new MenuGroupe("Agenda",MooncakeIcone.icon_planet);
+		menuGroupe = new MenuGroupe("Agenda", MooncakeIcone.icon_table);
 		ArrayList<MenuObjet> donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Aujourd'hui", MooncakeIcone.icon_calendar));
-		donnees.add(new MenuObjet(menuGroupe, "Mois", MooncakeIcone.icon_calendar_month));
-		donnees.add(new MenuObjet(menuGroupe, "Jour", MooncakeIcone.icon_calendar));
-		donnees.add(new MenuObjet(menuGroupe, "Tâche",MooncakeIcone.icon_list_2));
+		TextView textView = new TextView(CalendarActivity.this);
+		textView.setText(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)));
+		textView.setTextColor(iconeColor);
+		textView.setTextSize(iconeSize);
+		textView.setGravity(Gravity.CENTER);
+		donnees.add(new MenuObjet(menuGroupe, "Aujourd'hui", MooncakeIcone.icon_time));
+		donnees.add(new MenuObjet(menuGroupe, "Mois",  MooncakeIcone.icon_calendar_month));
+		donnees.add(new MenuObjet(menuGroupe, "Jour",  MooncakeIcone.icon_calendar));
+		donnees.add(new MenuObjet(menuGroupe, "Liste", MooncakeIcone.icon_list_2));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
-		menuGroupe = new MenuGroupe("Comptes",MooncakeIcone.icon_adjust);
+		menuGroupe = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Compte 1",MooncakeIcone.icon_archive));
-		donnees.add(new MenuObjet(menuGroupe, "Compte 2",MooncakeIcone.icon_archive));
-		donnees.add(new MenuObjet(menuGroupe, "Compte 3",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 1", MooncakeIcone.icon_business_card));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 2", MooncakeIcone.icon_business_card));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 3", MooncakeIcone.icon_business_card));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
-		menuGroupe = new MenuGroupe("Libellés",MooncakeIcone.icon_file_pdf);
+		menuGroupe = new MenuGroupe("Libellés", MooncakeIcone.icon_tags);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 1",MooncakeIcone.icon_archive));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 2",MooncakeIcone.icon_archive));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 3",MooncakeIcone.icon_archive));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 4",MooncakeIcone.icon_archive));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 5",MooncakeIcone.icon_archive));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 1", MooncakeIcone.icon_tag));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 3", MooncakeIcone.icon_tag));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 4", MooncakeIcone.icon_tag));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 5", MooncakeIcone.icon_tag));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
-		menuGroupe = new MenuGroupe("Paramètre", MooncakeIcone.icon_settings);
+		menuGroupe = new MenuGroupe("Paramètre",  MooncakeIcone.icon_settings);
 		menuGroupes.add(menuGroupe);
 		return menuGroupes;
 	}
@@ -190,11 +198,13 @@ public class CalendarActivity extends MenuActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MooncakeIcone icone = new MooncakeIcone(this,
-				MooncakeIcone.icon_calendar);
+		MooncakeIcone icone = new MooncakeIcone(this);
+		icone.setTextSize(18);
+		icone.setIconeRes(MooncakeIcone.icon_calendar);
+		
 		icone.setId(ID_MENU_TODAY);
 		icone.setOnClickListener(this);
-		icone.setTextColor(getResources().getColor(R.color.light_grey));
+		icone.setTextColor(getResources().getColor(R.color.grey));
 		menu.add(Menu.NONE, ID_MENU_TODAY, Menu.NONE, "").setActionView(icone);
 
 		return super.onCreateOptionsMenu(menu);
@@ -202,13 +212,16 @@ public class CalendarActivity extends MenuActivity implements
 
 	public void showDays(Calendar cal) {
 		curentCal = cal;
+		new ChangePageTask().execute(INDEX_NAVIGATION_DAY);
 	}
 
 	public void showListe() {
+		new ChangePageTask().execute(INDEX_NAVIGATION_LISTE);
 	}
 
 	public void showMonths(Calendar cal) {
 		curentCal = cal;
+		new ChangePageTask().execute(INDEX_NAVIGATION_MONTH);
 	}
 
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -314,6 +327,8 @@ public class CalendarActivity extends MenuActivity implements
 
 	private class ChangePageTask extends AsyncTask<Integer, Void, View> {
 
+		private Integer indexNextPage;
+
 		@Override
 		protected void onPreExecute() {
 			Animation anim = new AlphaAnimation(1, 0);
@@ -324,7 +339,7 @@ public class CalendarActivity extends MenuActivity implements
 
 		@Override
 		protected View doInBackground(Integer... params) {
-			int indexNextPage = params[0];
+			indexNextPage = params[0];
 			mViewPager = new ViewPager(getApplicationContext());
 			mViewPager.setId(ID_PAGER);
 			switch (indexNextPage) {

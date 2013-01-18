@@ -1,10 +1,12 @@
 package its.my.time.view.menu;
 
+import android.view.View;
+
 public class MenuObjet{
 
 	private MenuGroupe menuGroupe;
 	private String nom;
-	private int iconeId;
+	private int iconeRes;
 	
 	public MenuGroupe getMenuGroupe() {
 		return menuGroupe;
@@ -18,19 +20,16 @@ public class MenuObjet{
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public int getIconeId() {
-		return iconeId;
+	public int getIconeRes() {
+		return iconeRes;
 	}
-	public void setIconeId(int iconeId) {
-		this.iconeId = iconeId;
+	public void setIconeRes(int iconeRes) {
+		this.iconeRes = iconeRes;
 	}
-	public MenuObjet(MenuGroupe menuGroupe, String nom, int iconeId) {
+	public MenuObjet(MenuGroupe menuGroupe, String nom, int iconeRes) {
 		super();
 		this.menuGroupe = menuGroupe;
 		this.nom = nom;
-		this.iconeId = iconeId;
+		this.iconeRes = iconeRes;
 	}
-
-	
-
 }

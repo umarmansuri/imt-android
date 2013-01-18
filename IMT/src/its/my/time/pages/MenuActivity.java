@@ -1,12 +1,12 @@
 package its.my.time.pages;
 
-import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
 import its.my.time.view.menu.ELVAdapter;
 import its.my.time.view.menu.MenuGroupe;
 
 import java.util.ArrayList;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Display;
@@ -20,11 +20,11 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.fonts.mooncake.MooncakeIcone;
 
 public abstract class MenuActivity extends SherlockFragmentActivity implements OnClickListener{
 
@@ -97,17 +97,31 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 
 	protected abstract ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes);
 
+	/**
+	 * 
+	 * @param groupPosition le groupe actif
+	 * @param itemPosition l'item actif, <b>OU -1 !! </b>
+	 */
+	public void setCurrentItemMenu(int groupPosition, int childPosition) {
+		if(childPosition ==-1) {
+			mMainMenu.setSelectedGroup(groupPosition);	
+		} else {
+			mMainMenu.setSelectedChild(groupPosition, childPosition, true);
+		}
+	}
+
 	protected void initialiseActionBar() {
 		ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.background_header));
 		mActionBar.setHomeButtonEnabled(true);
 		mActionBar.setDisplayShowHomeEnabled(true);
-		MooncakeIcone icone = new MooncakeIcone(MenuActivity.this, MooncakeIcone.icon_list, 100);
-		icone.setTextColor(getResources().getColor(R.color.light_grey));
+		MooncakeIcone icone = new MooncakeIcone(MenuActivity.this);
+		icone.setTextSize(50);
+		icone.setIconeRes(MooncakeIcone.icon_list);
+		icone.setTextColor(getResources().getColor(R.color.grey));
 		mActionBar.setLogo(icone.getIconeDrawable());
 	}
-	
 
 	private AnimationListener menuAnimationListener = new AnimationListener() {
 		@Override public void onAnimationStart(Animation animation) {

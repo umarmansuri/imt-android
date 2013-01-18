@@ -17,7 +17,7 @@
             android:background="@drawable/border_gray"
             android:gravity="center"
             android:text="@string/view_month_week"
-            android:textColor="@color/light_grey"
+            android:textColor="@color/grey"
             android:textSize="10sp" />
 
         <TextView
@@ -111,7 +111,7 @@
                 android:gravity="center"
                 android:paddingRight="2dp"
                 android:paddingTop="2dp"
-                android:textColor="@color/light_grey" />
+                android:textColor="@color/grey" />
 
             <TextView
                 android:layout_width="0dp"
@@ -198,7 +198,7 @@
                 android:gravity="center"
                 android:paddingRight="2dp"
                 android:paddingTop="2dp"
-                android:textColor="@color/light_grey" />
+                android:textColor="@color/grey" />
 
             <TextView
                 android:layout_width="0dp"
@@ -285,7 +285,7 @@
                 android:gravity="center"
                 android:paddingRight="2dp"
                 android:paddingTop="2dp"
-                android:textColor="@color/light_grey" />
+                android:textColor="@color/grey" />
 
             <TextView
                 android:layout_width="0dp"
@@ -372,7 +372,7 @@
                 android:gravity="center"
                 android:paddingRight="2dp"
                 android:paddingTop="2dp"
-                android:textColor="@color/light_grey" />
+                android:textColor="@color/grey" />
 
             <TextView
                 android:layout_width="0dp"
@@ -459,7 +459,7 @@
                 android:gravity="center"
                 android:paddingRight="2dp"
                 android:paddingTop="2dp"
-                android:textColor="@color/light_grey" />
+                android:textColor="@color/grey" />
 
             <TextView
                 android:layout_width="0dp"

@@ -1,42 +1,41 @@
-package fonts;
+package com.fonts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.Html;
+import android.util.AttributeSet;
 import android.widget.TextView;
 
 public abstract class Icone extends TextView {
 	private int mIconeReference;
 
 	public Icone(Context context) {
-		this(context, 0);
+		this(context, null);
 	}
 
-	public Icone(Context context, int iconeReference) {
-		this(context, iconeReference, 18);
+	public Icone(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
 	}
 
-	public Icone(Context context, int iconeReference, int size) {
-		super(context);
+	public Icone(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+
 		initialiseTypeFace();
-		changeIcone(iconeReference);
-
+		
 		float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
-
-		setTextSize(size);
-
-		int padding = (int) (10 * scaledDensity);
-		setPadding(padding,padding,padding,padding);
+	
+		//int padding = (int) (10 * scaledDensity);
+		//setPadding(padding,padding,padding,padding);
 		setDrawingCacheEnabled(true);
 	}
 
-	public void changeIcone(int iconeReference) {
+	public void setIconeRes(int iconeReference) {
 		mIconeReference = iconeReference;
 		setText(Html.fromHtml(Character.toString((char)mIconeReference)));
 	}
-
+	
 	public BitmapDrawable getIconeDrawable() {
 		int size = (int) getTextSize();
 		Bitmap b = Bitmap.createBitmap( size, size, Bitmap.Config.ARGB_8888);                

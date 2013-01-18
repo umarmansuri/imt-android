@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IMT</string>
+    <string name="app_name">My Time</string>
     
     <string name="menu_edit">Modifier</string>
     <string name="menu_save">Enregistrer</string>

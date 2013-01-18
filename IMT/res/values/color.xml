@@ -4,7 +4,8 @@
     <color name="page_month_day_text_color">#000000</color>
     
     <color name="dark_grey">#4a4a4a</color>
-    <color name="light_grey">#b3b3b3</color>
+    <color name="grey">#aaaaaa</color>
+    <color name="light_grey">#dcdcdc</color>
     
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
