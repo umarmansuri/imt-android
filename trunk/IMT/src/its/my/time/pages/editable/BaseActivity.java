@@ -1,6 +1,5 @@
 package its.my.time.pages.editable;
 
-import fonts.mooncake.MooncakeIcone;
 import its.my.time.R;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.view.View.OnClickListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.fonts.mooncake.MooncakeIcone;
 
 public abstract class BaseActivity extends SherlockFragmentActivity {
 
@@ -63,20 +63,26 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_editable, menu);
 
-		MooncakeIcone icone = new MooncakeIcone(this, MooncakeIcone.icon_edit);
-		icone.setTextColor(getResources().getColor(R.color.light_grey));
+		MooncakeIcone icone = new MooncakeIcone(this);
+		icone.setTextSize(18);
+		icone.setIconeRes(MooncakeIcone.icon_edit);
+		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_edit);
 		icone.setOnClickListener(mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_EDIT).setActionView(icone);
 
-		icone = new MooncakeIcone(this, MooncakeIcone.icon_install);
-		icone.setTextColor(getResources().getColor(R.color.light_grey));
+		icone = new MooncakeIcone(this);
+		icone.setTextSize(18);
+		icone.setIconeRes(MooncakeIcone.icon_install);
+		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_save);
 		icone.setOnClickListener(mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_SAVE).setActionView(icone);
 
-		icone = new MooncakeIcone(this, MooncakeIcone.icon_remove_circle);
-		icone.setTextColor(getResources().getColor(R.color.light_grey));
+		icone = new MooncakeIcone(this);
+		icone.setTextSize(18);
+		icone.setIconeRes(MooncakeIcone.icon_remove_circle);
+		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_cancel);
 		icone.setOnClickListener(mOnIconeClickLIstener );
 		menu.getItem(INDEX_MENU_CANCEL).setActionView(icone);

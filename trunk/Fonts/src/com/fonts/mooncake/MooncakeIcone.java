@@ -1,8 +1,10 @@
-package fonts.mooncake;
+package com.fonts.mooncake;
+import com.fonts.Icone;
+
 import android.app.Activity;
 import android.content.Context;
+import android.util.AttributeSet;
 import android.widget.Toast;
-import fonts.Icone;
 
 
 public class MooncakeIcone extends Icone {
@@ -291,19 +293,17 @@ public class MooncakeIcone extends Icone {
 	public static final int icon_zoom_in = 0xe010;
 	public static final int icon_zoom_out = 0xe00f;
 
+	public MooncakeIcone(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+	}
+
+	public MooncakeIcone(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+
 	public MooncakeIcone(Context context) {
 		super(context);
 	}
-
-	public MooncakeIcone(Context context, int iconeReference) {
-		super(context, iconeReference);
-	}
-
-
-	public MooncakeIcone(Context context, int iconeReference, int size) {
-		super(context, iconeReference, size);
-	}
-
 
 	@Override
 	protected void initialiseTypeFace() {

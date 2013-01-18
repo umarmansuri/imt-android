@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft" >
 
-    <TextView
-        android:id="@+id/menu_item_icone"
+    <com.fonts.mooncake.MooncakeIcone
+        android:id="@+id/menu_child_icone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textColor="@color/light_grey" />
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:textColor="@color/grey"
+        android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/menu_item_title"
+        android:id="@+id/menu_child_title"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/menu_child_icone"
         android:ellipsize="end"
         android:gravity="center_vertical"
+        android:paddingLeft="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/light_grey" />
+        android:textColor="@color/grey" />
 
-</LinearLayout>
+</RelativeLayout>

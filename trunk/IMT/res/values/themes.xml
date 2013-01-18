@@ -9,7 +9,7 @@
     </style>
 
     <style name="StyledActionBarTabText" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="android:paddingLeft">14dp</item>
         <item name="android:paddingRight">14dp</item>
         <item name="android:paddingTop">10dp</item>

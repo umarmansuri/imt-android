@@ -1,4 +1,4 @@
-package fonts.mooncake;
+package com.fonts.mooncake;
 
 import android.content.Context;
 import android.graphics.Typeface;
