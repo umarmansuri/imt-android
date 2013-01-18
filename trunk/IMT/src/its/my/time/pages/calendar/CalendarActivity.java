@@ -37,16 +37,9 @@ import com.actionbarsherlock.view.Menu;
 import com.fonts.mooncake.MooncakeIcone;
 
 public class CalendarActivity extends MenuActivity implements
-		OnPageChangeListener {
+OnPageChangeListener {
 
-	public static final int INDEX_PAGER_DAY = 0;
-	public static final int INDEX_PAGER_MONTH = 1;
-	public static final int INDEX_PAGER_LISTE = 2;
 	public static final long ANIM_DURATION = 500;
-
-	public static final int INDEX_NAVIGATION_DAY = 0;
-	public static final int INDEX_NAVIGATION_MONTH = 1;
-	public static final int INDEX_NAVIGATION_LISTE = 2;
 
 	private static final int ID_PAGER = 888889;
 	private static final int DURATION_WAITING_END = 300;
@@ -78,7 +71,7 @@ public class CalendarActivity extends MenuActivity implements
 
 		if (curentCal == null) {
 			curentCal = Calendar.getInstance();
-			new ChangePageTask().execute(INDEX_PAGER_MONTH);
+			new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
 		}
 	}
 
@@ -107,7 +100,7 @@ public class CalendarActivity extends MenuActivity implements
 	private static final int INDEX_MENU_AGENDA_TODAY = 0;
 	private static final int INDEX_MENU_AGENDA_MONTH = 1;
 	private static final int INDEX_MENU_AGENDA_DAY = 2;
-	private static final int INDEX_MENU_AGENDA_LIST = 3;
+	private static final int INDEX_MENU_AGENDA_LISTE = 3;
 
 	private static final int INDEX_MENU_COMPTE = 2;
 	private static final int INDEX_MENU_GROUP_LIBELLE = 3;
@@ -117,7 +110,7 @@ public class CalendarActivity extends MenuActivity implements
 	protected ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes) {
 		int iconeColor = getResources().getColor(R.color.grey);
 		int iconeSize = 30;
-		
+
 		MenuGroupe menuGroupe = new MenuGroupe("Profil", MooncakeIcone.icon_user);
 		menuGroupes.add(menuGroupe);
 
@@ -137,19 +130,19 @@ public class CalendarActivity extends MenuActivity implements
 
 		menuGroupe = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Compte 1", MooncakeIcone.icon_business_card));
-		donnees.add(new MenuObjet(menuGroupe, "Compte 2", MooncakeIcone.icon_business_card));
-		donnees.add(new MenuObjet(menuGroupe, "Compte 3", MooncakeIcone.icon_business_card));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 1", MooncakeIcone.icon_business_card, true));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 2", MooncakeIcone.icon_business_card, true));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 3", MooncakeIcone.icon_business_card, true));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
 		menuGroupe = new MenuGroupe("Libellés", MooncakeIcone.icon_tags);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 1", MooncakeIcone.icon_tag));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 3", MooncakeIcone.icon_tag));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 4", MooncakeIcone.icon_tag));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 5", MooncakeIcone.icon_tag));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 1", MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 3", MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 4", MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 5", MooncakeIcone.icon_tag, true));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
@@ -159,27 +152,41 @@ public class CalendarActivity extends MenuActivity implements
 	}
 
 	@Override
-	protected void onMenuChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
+	protected void onMenuChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
 		switch (groupPosition) {
 		case INDEX_MENU_AGENDA:
 			switch (childPosition) {
-			case INDEX_MENU_AGENDA_TODAY:
-				gotoDate(Calendar.getInstance());
-				break;
 			case INDEX_MENU_AGENDA_DAY:
-				new ChangePageTask().execute(INDEX_PAGER_DAY);
+				if (indexCurrentPager == INDEX_MENU_AGENDA_DAY) {
+					Toast.makeText(this, "Vous êtes déjà en vue jour!",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					new ChangePageTask().execute(INDEX_MENU_AGENDA_DAY);
+				}
 				break;
 			case INDEX_MENU_AGENDA_MONTH:
-				new ChangePageTask().execute(INDEX_PAGER_MONTH);
+				if (indexCurrentPager == INDEX_MENU_AGENDA_MONTH) {
+					Toast.makeText(this, "Vous êtes déjà en vue mois!",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
+				}
 				break;
-			case INDEX_MENU_AGENDA_LIST:
-				new ChangePageTask().execute(INDEX_PAGER_LISTE);
+			case INDEX_MENU_AGENDA_LISTE:
+				if (indexCurrentPager == INDEX_MENU_AGENDA_LISTE) {
+					Toast.makeText(this, "Vous êtes déjà en vue liste!",Toast.LENGTH_SHORT).show();
+				} else {
+					new ChangePageTask().execute(INDEX_MENU_AGENDA_LISTE);
+				}
+				break;
+			case INDEX_MENU_AGENDA_TODAY:
+				if (indexCurrentPager == INDEX_MENU_AGENDA_LISTE) {
+					Toast.makeText(this, "Vous ne pouvez pas faire cette opération en vue liste!",Toast.LENGTH_SHORT).show();
+				} else {
+					gotoDate(Calendar.getInstance());
+				}
 				break;
 			}
-			changeMainMenuVisibility(false, true);
-			break;
-		default:
 			break;
 		}
 	}
@@ -201,7 +208,7 @@ public class CalendarActivity extends MenuActivity implements
 		MooncakeIcone icone = new MooncakeIcone(this);
 		icone.setTextSize(18);
 		icone.setIconeRes(MooncakeIcone.icon_calendar);
-		
+
 		icone.setId(ID_MENU_TODAY);
 		icone.setOnClickListener(this);
 		icone.setTextColor(getResources().getColor(R.color.grey));
@@ -212,68 +219,32 @@ public class CalendarActivity extends MenuActivity implements
 
 	public void showDays(Calendar cal) {
 		curentCal = cal;
-		new ChangePageTask().execute(INDEX_NAVIGATION_DAY);
+		new ChangePageTask().execute(INDEX_MENU_AGENDA_DAY);
 	}
 
 	public void showListe() {
-		new ChangePageTask().execute(INDEX_NAVIGATION_LISTE);
+		new ChangePageTask().execute(INDEX_MENU_AGENDA_LISTE);
 	}
 
 	public void showMonths(Calendar cal) {
 		curentCal = cal;
-		new ChangePageTask().execute(INDEX_NAVIGATION_MONTH);
-	}
-
-	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		if (isFirstMenuSelectedOk == false) {
-			isFirstMenuSelectedOk = true;
-			return true;
-		}
-		switch (itemPosition) {
-		case INDEX_NAVIGATION_DAY:
-			if (indexCurrentPager == INDEX_PAGER_DAY) {
-				Toast.makeText(this, "Vous êtes déjà en vue jour!",
-						Toast.LENGTH_SHORT).show();
-			} else {
-				new ChangePageTask().execute(INDEX_PAGER_DAY);
-			}
-			return true;
-		case INDEX_NAVIGATION_MONTH:
-			if (indexCurrentPager == INDEX_PAGER_MONTH) {
-				Toast.makeText(this, "Vous êtes déjà en vue mois!",
-						Toast.LENGTH_SHORT).show();
-			} else {
-				new ChangePageTask().execute(INDEX_PAGER_MONTH);
-			}
-			return true;
-		case INDEX_NAVIGATION_LISTE:
-			if (indexCurrentPager == INDEX_PAGER_LISTE) {
-				Toast.makeText(this, "Vous êtes déjà en vue liste!",
-						Toast.LENGTH_SHORT).show();
-			} else {
-				new ChangePageTask().execute(INDEX_PAGER_LISTE);
-			}
-			return true;
-		}
-
-		return false;
+		new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
 	}
 
 	private void gotoDate(Calendar cal) {
-		((BasePagerAdapter) ((ViewPager) mMainFramePager.getChildAt(0))
-				.getAdapter()).setCurrentCalendar(cal);
+		((BasePagerAdapter) ((ViewPager) mMainFramePager.getChildAt(0)).getAdapter()).setCurrentCalendar(cal);
 		((ViewPager) mMainFramePager.getChildAt(0))
-				.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+		.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 	}
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			switch (indexCurrentPager) {
-			case INDEX_PAGER_DAY:
+			case INDEX_MENU_AGENDA_DAY:
 				showMonths(curentCal);
 				return true;
-			case INDEX_PAGER_MONTH:
+			case INDEX_MENU_AGENDA_MONTH:
 				if (isWaitingEnd) {
 					finish();
 				} else {
@@ -343,29 +314,27 @@ public class CalendarActivity extends MenuActivity implements
 			mViewPager = new ViewPager(getApplicationContext());
 			mViewPager.setId(ID_PAGER);
 			switch (indexNextPage) {
-			case INDEX_PAGER_DAY:
+			case INDEX_MENU_AGENDA_DAY:
 				mViewPager.setAdapter(new DayPagerAdapter(
 						getSupportFragmentManager(), curentCal));
-				indexCurrentPager = INDEX_PAGER_DAY;
+				indexCurrentPager = INDEX_MENU_AGENDA_DAY;
 				break;
-			case INDEX_PAGER_MONTH:
+			case INDEX_MENU_AGENDA_MONTH:
 				mViewPager.setAdapter(new MonthPagerAdapter(
 						getSupportFragmentManager(), (Calendar) curentCal));
 				mViewPager.getAdapter().notifyDataSetChanged();
-				indexCurrentPager = INDEX_PAGER_MONTH;
+				indexCurrentPager = INDEX_MENU_AGENDA_MONTH;
 				break;
-			case INDEX_PAGER_LISTE:
+			case INDEX_MENU_AGENDA_LISTE:
 				ListView mListView = new ListView(getApplicationContext());
 				mListView
-						.setAdapter(new ListEventAdapter(CalendarActivity.this));
-				indexCurrentPager = INDEX_PAGER_LISTE;
+				.setAdapter(new ListEventAdapter(CalendarActivity.this));
+				indexCurrentPager = INDEX_MENU_AGENDA_LISTE;
 				return mListView;
 			}
 			mViewPager.setOnPageChangeListener(CalendarActivity.this);
 			mViewPager.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 
-			
-			
 			mViewPager.setOnTouchListener(new OnTouchListener() {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
@@ -373,7 +342,7 @@ public class CalendarActivity extends MenuActivity implements
 					return false;
 				}
 			});
-			
+
 			return mViewPager;
 		}
 

@@ -44,25 +44,24 @@ public class Switcher extends FrameLayout implements OnClickListener {
 		mMainView = findViewById(R.id.switcher_main); 
 		mOnView = findViewById(R.id.switcher_text_on);
 		mOffView = findViewById(R.id.switcher_text_off);
-		setOnClickListener(this);
 
 		Resources r = getResources();
 		itemHalfWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, r.getDisplayMetrics());
 		
 		animOn = new TranslateAnimation(-itemHalfWidth, 0, 0, 0);
 		animOff = new TranslateAnimation(0, -itemHalfWidth, 0, 0); 
+
 		animOn.setAnimationListener(animListener);
 		animOff.setAnimationListener(animListener);
-		
-		refreshValue(false);
+		refreshValue(false, false);
+		setOnClickListener(this);
 	}
 
 	public OnStateChangedListener getOnStateChangedListener() {
 		return onStateChangedListener;
 	}
 
-	public void setOnStateChangedListener(
-			OnStateChangedListener onStateChangedListener) {
+	public void setOnStateChangedListener(OnStateChangedListener onStateChangedListener) {
 		this.onStateChangedListener = onStateChangedListener;
 	}
 
@@ -72,10 +71,16 @@ public class Switcher extends FrameLayout implements OnClickListener {
 	
 	public void changeState(boolean isChecked, boolean withAnim) {
 		this.isChecked = isChecked;
-		refreshValue(withAnim);
+		refreshValue(withAnim, true);
+	}
+	
+
+	public void toggleState(boolean withAnim) {
+		changeState(!isChecked, withAnim);
 	}
 
-	private void refreshValue(boolean withAnim) {
+	private void refreshValue(boolean withAnim, boolean launchListener) {
+		animListener.setLaunchListener(launchListener);
 		if (isChecked)
 			animToOn(withAnim);
 		else
@@ -104,7 +109,25 @@ public class Switcher extends FrameLayout implements OnClickListener {
 	}
 
 
-	private AnimationListener animListener = new AnimationListener() {
+	@Override
+	public void onClick(View v) {
+		isChecked = !isChecked;
+		refreshValue(true, true);
+	}
+	
+	private SwitcherAnimationListener animListener = new SwitcherAnimationListener();
+
+	public class SwitcherAnimationListener implements AnimationListener {
+		private boolean launchListener = true;
+		
+		public boolean isLaunchListener() {
+			return launchListener;
+		}
+
+		public void setLaunchListener(boolean launchListener) {
+			this.launchListener = launchListener;
+		}
+
 		@Override
 		public void onAnimationStart(Animation animation) {
 			if(animation == animOff) {
@@ -125,20 +148,15 @@ public class Switcher extends FrameLayout implements OnClickListener {
 				mOffView.setVisibility(View.INVISIBLE);
 			}
 			mMainView.invalidate();
-			if (onStateChangedListener != null) {
+			if (onStateChangedListener != null && launchListener) {
 				onStateChangedListener.onStateCHangedListener(Switcher.this, isChecked);
 			}
 		}
-	};
-	
-	@Override
-	public void onClick(View v) {
-		isChecked = !isChecked;
-		refreshValue(true);
 	}
 
 	public interface OnStateChangedListener {
 		public void onStateCHangedListener(Switcher switcher, boolean isChecked);
 	}
+
 
 }
