@@ -63,14 +63,17 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 		}
 		if(!menuObjet.isSwitcher()) {
 			menuChildViewHolder.childSwitcher.setVisibility(View.GONE);
-		} else if(onItemSwitchedListener != null) {
-			menuChildViewHolder.childSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
-				@Override
-				public void onStateCHangedListener(Switcher switcher, boolean isChecked) {
-					onItemSwitchedListener.onObjetSwitched(menuChildViewHolder.childSwitcher, groupPosition, childPosition, isChecked);
-				}
-			});
+		} else {
+			if(onItemSwitchedListener != null) {
+				menuChildViewHolder.childSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
+					@Override
+					public void onStateCHangedListener(Switcher switcher, boolean isChecked) {
+						onItemSwitchedListener.onObjetSwitched(menuChildViewHolder.childSwitcher, groupPosition, childPosition, isChecked);
+					}
+				});
+			}
 		}
+
 		return convertView;
 	}
 

@@ -2,9 +2,9 @@ package its.my.time.pages;
 
 import its.my.time.R;
 import its.my.time.view.menu.ELVAdapter;
+import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.ELVAdapter.MenuChildViewHolder;
 import its.my.time.view.menu.ELVAdapter.OnItemSwitchedListener;
-import its.my.time.view.menu.MenuGroupe;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
 import android.view.Display;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -24,7 +23,6 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -88,7 +86,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 					public void run() {
 						onMenuChildClick(parent, v, groupPosition, childPosition, id);	
 					}
-				}, (long) (ANIMATION_DURATION*1.5));			
+				}, (long) (ANIMATION_DURATION*1.5));
 			} else {
 				((MenuChildViewHolder)v.getTag()).childSwitcher.toggleState(true);
 			}
@@ -137,24 +135,31 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 			} else {
 				mMainContent.bringToFront();
 			}
+			if(hasSwitcherValueChanged) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						reload();
+					}
+				}, (long) (ANIMATION_DURATION*1.5));
+				hasSwitcherValueChanged = false;
+			}
 		}
 	};
-
+	
 	public void initialiseMenu() {
 		menuGroupes = new ArrayList<MenuGroupe>();
-
 		menuGroupes = onMainMenuCreated(menuGroupes);
-
 		ELVAdapter adapter = new ELVAdapter(this, menuGroupes);
 		adapter.setOnItemSwitchedListener(new OnItemSwitchedListener() {
 			@Override
 			public void onObjetSwitched(View v, int positionGroup, int positionObjet, boolean isChecked) {
-				Toast.makeText(MenuActivity.this, menuGroupes.get(positionGroup).getObjets().get(positionObjet).getNom(), Toast.LENGTH_SHORT).show();  
+				hasSwitcherValueChanged = true;
 			}
 
 			@Override
 			public void onGroupSwitched(View v, int positionGroup, boolean isChecked) {
-				Toast.makeText(MenuActivity.this, menuGroupes.get(positionGroup).getNom(), Toast.LENGTH_SHORT).show();
+				hasSwitcherValueChanged = true;
 			}
 		});
 		mMainMenu.setAdapter(adapter);
@@ -196,11 +201,11 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	}
 
 	protected abstract void onMenuGroupClick(ExpandableListView parent, View v, int groupPosition, long id);
-
 	protected abstract void onMenuChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id);
-
 	protected abstract ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes);
 
+	private boolean hasSwitcherValueChanged;
+	public abstract void reload();
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

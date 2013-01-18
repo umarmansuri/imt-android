@@ -13,6 +13,7 @@ import its.my.time.view.menu.MenuObjet;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -97,8 +98,8 @@ OnPageChangeListener {
 	private static final int INDEX_MENU_AGENDA_LISTE = 3;
 
 	private static final int INDEX_MENU_COMPTE = 2;
-	private static final int INDEX_MENU_GROUP_LIBELLE = 3;
-	private static final int INDEX_MENU_GROUP_PARAMETRES = 4;
+	private static final int INDEX_MENU_LIBELLE = 3;
+	private static final int INDEX_MENU_PARAMETRES = 4;
 
 	@Override
 	protected ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes) {
@@ -124,9 +125,7 @@ OnPageChangeListener {
 
 		menuGroupe = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Compte 1", MooncakeIcone.icon_business_card, true));
-		donnees.add(new MenuObjet(menuGroupe, "Compte 2", MooncakeIcone.icon_business_card, true));
-		donnees.add(new MenuObjet(menuGroupe, "Compte 3", MooncakeIcone.icon_business_card, true));
+		donnees.add(new MenuObjet(menuGroupe, "Compte 1", MooncakeIcone.icon_business_card, true, Color.RED));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
@@ -209,6 +208,11 @@ OnPageChangeListener {
 		menu.add(Menu.NONE, ID_MENU_TODAY, Menu.NONE, "").setActionView(icone);
 
 		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public void reload() {
+		new ChangePageTask().execute(indexCurrentPager);
 	}
 
 	public void showDays(Calendar cal) {
