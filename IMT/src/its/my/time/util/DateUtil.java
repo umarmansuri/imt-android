@@ -22,11 +22,10 @@ public class DateUtil {
 
 	public static final int TIMESELECTOR_ID = 4;
 
-	public static Calendar addMonth(Calendar date, int numMonth){
+	public static Calendar addMonth(Calendar date, int numMonth) {
 		date.add(Calendar.MONTH, numMonth);
 		return date;
 	}
-
 
 	public static String getDay(Calendar cal) {
 
@@ -39,23 +38,24 @@ public class DateUtil {
 		return new String(chars);
 	}
 
-
 	/**
 	 * 
-	 * @param day de type Entier (utiliser Calendar.Monday ...
+	 * @param day
+	 *            de type Entier (utiliser Calendar.Monday ...
 	 * @return Retourne, le jour sous la forme 'JJJ' (ex: "Lun", "Mar")
 	 * 
 	 */
-	public static String getDay(int day){
+	public static String getDay(int day) {
 		GregorianCalendar leJour = new GregorianCalendar();
-		leJour.set(Calendar.DAY_OF_WEEK,day);
+		leJour.set(Calendar.DAY_OF_WEEK, day);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
 		return dateFormat.format(leJour.getTime());
 	}
 
 	/**
 	 * 
-	 * @param cal La date a retourner
+	 * @param cal
+	 *            La date a retourner
 	 * @return Un string sous la forme "3.4.2012 12h30"
 	 */
 	public static String getDayHour(Calendar cal) {
@@ -65,30 +65,38 @@ public class DateUtil {
 
 	/**
 	 * 
-	 * @param cal La date a retourner
+	 * @param cal
+	 *            La date a retourner
 	 * @return Un string sous la forme "Mar. 3 Avril 2012"
 	 */
 	public static String getLongDate(Calendar cal) {
 		String leJour = getDay(cal.get(Calendar.DAY_OF_WEEK));
-		leJour = Character.toUpperCase(leJour.charAt(0)) + leJour.substring(1, leJour.length());
-		String leMois = getMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
-		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " " + leMois;
+		leJour = Character.toUpperCase(leJour.charAt(0))
+				+ leJour.substring(1, leJour.length());
+		String leMois = getMonth(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH));
+		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " "
+				+ leMois;
 		return res;
 	}
 
 	/**
 	 * 
-	 * @param cal La date a retourner
+	 * @param cal
+	 *            La date a retourner
 	 * @return Un string sous la forme "Mar. 3 Avril 2012"
 	 */
 	public static String getLongDateTime(Calendar cal) {
 		String leJour = getDay(cal.get(Calendar.DAY_OF_WEEK));
-		leJour = Character.toUpperCase(leJour.charAt(0)) + leJour.substring(1, leJour.length());
-		String leMois = getMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
-		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " " + leMois + " à " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+		leJour = Character.toUpperCase(leJour.charAt(0))
+				+ leJour.substring(1, leJour.length());
+		String leMois = getMonth(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH));
+		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " "
+				+ leMois + " à " + cal.get(Calendar.HOUR_OF_DAY) + ":"
+				+ cal.get(Calendar.MINUTE);
 		return res;
 	}
-
 
 	/**
 	 * 
@@ -96,14 +104,14 @@ public class DateUtil {
 	 * @param numMonth
 	 * @return Renvoi le mois sous la forme Mois Anne (ex: "Mars 2012")
 	 */
-	public static String getMonth(int numYear, int numMonth){
+	public static String getMonth(int numYear, int numMonth) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
-		String res = dateFormat.format(new GregorianCalendar(numYear, numMonth, 1).getTime());
+		String res = dateFormat.format(new GregorianCalendar(numYear, numMonth,
+				1).getTime());
 		char[] chars = res.toCharArray();
 		chars[0] = Character.toUpperCase(chars[0]);
 		return new String(chars);
 	}
-
 
 	public static String getTime(Calendar cal) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -115,7 +123,6 @@ public class DateUtil {
 		return dateFormat.format(cal.getTime());
 	}
 
-
 	public static CharSequence getLittleDate(GregorianCalendar cal) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
 		return dateFormat.format(cal.getTime());
@@ -126,88 +133,82 @@ public class DateUtil {
 		return dateFormat.format(cal.getTime());
 	}
 
+	public static String FORMAT_DATE_ISO = "yyyy-MM-dd HH:mm:ss";
 
-	public static String FORMAT_DATE_ISO="yyyy-MM-dd HH:mm:ss";
-
-
-	public static String getTimeInIso(Calendar cal, String format, TimeZone tz)
-	{
-		if( format == null ) format = FORMAT_DATE_ISO;
-		if( tz == null ) tz = TimeZone.getDefault();
+	public static String getTimeInIso(Calendar cal, String format, TimeZone tz) {
+		if (format == null)
+			format = FORMAT_DATE_ISO;
+		if (tz == null)
+			tz = TimeZone.getDefault();
 		DateFormat f = new SimpleDateFormat(format);
 		f.setTimeZone(tz);
 		return f.format(cal.getTime());
 	}
 
-	public static String getTimeInIso(Calendar cal){ 
-		if(cal == null) {
+	public static String getTimeInIso(Calendar cal) {
+		if (cal == null) {
 			return "";
 		} else {
-			return getTimeInIso(cal,FORMAT_DATE_ISO,TimeZone.getDefault());
+			return getTimeInIso(cal, FORMAT_DATE_ISO, TimeZone.getDefault());
 		}
 	}
-
 
 	public static GregorianCalendar getDateFromISO(String strDate) {
 		DateFormat f = new SimpleDateFormat(FORMAT_DATE_ISO);
 		GregorianCalendar res = new GregorianCalendar();
 		try {
 			res.setTime(f.parse(strDate));
-		} catch (ParseException e) {}
-		return res;	
+		} catch (ParseException e) {
+		}
+		return res;
 	}
 
+	public static String getDayHourFrench(Calendar cal) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		return dateFormat.format(cal.getTime());
+	}
 
 	/**
 	 * Regarde si l'evenement est dans le jour
-	 * @param event l'evenement en question
-	 * @param calDay Le jour
+	 * 
+	 * @param event
+	 *            l'evenement en question
+	 * @param calDay
+	 *            Le jour
 	 * @return true si l'evenement est dans le jour, sinon false
 	 */
 	public static boolean isInDay(EventBaseBean event, Calendar calDay) {
 		GregorianCalendar calDayDeb = new GregorianCalendar(
-				calDay.get(Calendar.YEAR),
-				calDay.get(Calendar.MONTH),
-				calDay.get(Calendar.DAY_OF_MONTH),
-				0,
-				0,
-				0);
+				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
+				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		GregorianCalendar calDayFin = new GregorianCalendar(
-				calDay.get(Calendar.YEAR),
-				calDay.get(Calendar.MONTH),
-				calDay.get(Calendar.DAY_OF_MONTH),
-				0,
-				0,
-				0);
+				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
+				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		calDayFin.add(Calendar.DAY_OF_MONTH, 1);
-		return (event.gethDeb().before(calDayFin) && event.gethFin().after(calDayDeb));
+		return (event.gethDeb().before(calDayFin) && event.gethFin().after(
+				calDayDeb));
 	}
-
 
 	public static float getNbHeure(Calendar hDeb, Calendar hFin, Calendar day) {
 		long millisecondsDeb;
 		long millisecondsFin;
 
-
 		GregorianCalendar dayDeb = new GregorianCalendar(
-				day.get(Calendar.YEAR),
-				day.get(Calendar.MONTH),
+				day.get(Calendar.YEAR), day.get(Calendar.MONTH),
 				day.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 
-
 		GregorianCalendar dayFin = new GregorianCalendar(
-				day.get(Calendar.YEAR),
-				day.get(Calendar.MONTH),
+				day.get(Calendar.YEAR), day.get(Calendar.MONTH),
 				day.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		dayFin.add(Calendar.DAY_OF_MONTH, 1);
 
-		if(hDeb.before(dayDeb) && hFin.after(dayFin)) {
+		if (hDeb.before(dayDeb) && hFin.after(dayFin)) {
 			return 24;
-		} 
-		if(hDeb.before(dayDeb)) {
+		}
+		if (hDeb.before(dayDeb)) {
 			millisecondsDeb = dayDeb.getTimeInMillis();
 			millisecondsFin = hFin.getTimeInMillis();
-		} else if(hFin.after(dayFin)) {
+		} else if (hFin.after(dayFin)) {
 			millisecondsDeb = hDeb.getTimeInMillis();
 			millisecondsFin = dayFin.getTimeInMillis();
 		} else {
@@ -218,27 +219,23 @@ public class DateUtil {
 		return (float) diff / (60 * 60 * 1000);
 	}
 
-
-	public static boolean isInDay(Calendar gethDeb,
-			Calendar cal) {
+	public static boolean isInDay(Calendar gethDeb, Calendar cal) {
 		GregorianCalendar calBef = new GregorianCalendar(
-				cal.get(Calendar.YEAR),
-				cal.get(Calendar.MONTH),
+				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		GregorianCalendar calAft = new GregorianCalendar(
-				cal.get(Calendar.YEAR),
-				cal.get(Calendar.MONTH),
+				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-		calAft.add(Calendar.DAY_OF_MONTH,1);
+		calAft.add(Calendar.DAY_OF_MONTH, 1);
 		return calBef.before(gethDeb) && calAft.after(gethDeb);
 	}
-
 
 	public static CharSequence getHourLabel(Calendar start, Calendar end) {
 		StringBuilder hourLabel = new StringBuilder();
 		hourLabel.append(DateUtil.getHourLabel(start));
-		if(end != null) {hourLabel.append(" - " + DateUtil.getHourLabel(end));}
+		if (end != null) {
+			hourLabel.append(" - " + DateUtil.getHourLabel(end));
+		}
 		return hourLabel.toString();
 	}
 }
-

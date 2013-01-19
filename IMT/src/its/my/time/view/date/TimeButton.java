@@ -45,14 +45,14 @@ public class TimeButton extends Button implements OnTimeSetListener, OnClickList
 
 	@Override
 	public void onTimeSet(TimePicker arg0, int hour, int minute) {
-		date.set(Calendar.HOUR,hour);
+		date.set(Calendar.HOUR_OF_DAY,hour);
 		date.set(Calendar.MINUTE,minute);
 		setText(DateUtil.getTime(date));
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		dialog = new TimePickerDialog(getContext(), this, date.get(Calendar.HOUR), date.get(Calendar.MINUTE), true);
+		dialog = new TimePickerDialog(getContext(), this, date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), true);
 		dialog.show();
 	}
 
