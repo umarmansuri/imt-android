@@ -39,23 +39,18 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 		return cPosition;
 	}
 
-	public View getChildView(final int groupPosition, final int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convert, ViewGroup parent) {
 		final MenuObjet menuObjet = (MenuObjet) getChild(groupPosition,
 				childPosition);
 
 		final MenuChildViewHolder menuChildViewHolder;
-
-		if (convertView == null) {
-			menuChildViewHolder = new MenuChildViewHolder();
-			convertView = inflater.inflate(R.layout.menu_child, null);
-			menuChildViewHolder.childTitle = (TextView) convertView.findViewById(R.id.menu_child_title);
-			menuChildViewHolder.childIcone = (MooncakeIcone) convertView.findViewById(R.id.menu_child_icone);
-			menuChildViewHolder.childSwitcher = (Switcher) convertView.findViewById(R.id.menu_child_switcher);
-			convertView.setTag(menuChildViewHolder);
-		} else {
-			menuChildViewHolder = (MenuChildViewHolder) convertView.getTag();
-		}
+		
+		menuChildViewHolder = new MenuChildViewHolder();
+		View result = inflater.inflate(R.layout.menu_child, null);
+		menuChildViewHolder.childTitle = (TextView) result.findViewById(R.id.menu_child_title);
+		menuChildViewHolder.childIcone = (MooncakeIcone) result.findViewById(R.id.menu_child_icone);
+		menuChildViewHolder.childSwitcher = (Switcher) result.findViewById(R.id.menu_child_switcher);
+		result.setTag(menuChildViewHolder);
 		menuChildViewHolder.childTitle.setText(menuObjet.getNom());
 
 		if(menuObjet.getIconeRes()>=0) {
@@ -64,6 +59,9 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 		if(!menuObjet.isSwitcher()) {
 			menuChildViewHolder.childSwitcher.setVisibility(View.GONE);
 		} else {
+			if(menuObjet.getSwitcherOnColor() != -1) {
+				menuChildViewHolder.childSwitcher.changeOnColor(menuObjet.getSwitcherOnColor());
+			}
 			if(onItemSwitchedListener != null) {
 				menuChildViewHolder.childSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
 					@Override
@@ -74,7 +72,7 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 			}
 		}
 
-		return convertView;
+		return result;
 	}
 
 	public int getChildrenCount(int gPosition) {
@@ -96,29 +94,30 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 		final MenuGroupe objet = (MenuGroupe) getGroup(groupPosition);
 		final MenuGroupViewHolder menuGroupViewHolder;
-		if (convertView == null) {
-			menuGroupViewHolder = new MenuGroupViewHolder();
-			convertView = inflater.inflate(R.layout.menu_row, null);
-			menuGroupViewHolder.groupTitle = (TextView) convertView.findViewById(R.id.menu_group_title);
-			menuGroupViewHolder.groupIcone = (MooncakeIcone) convertView.findViewById(R.id.menu_group_icone);
-			menuGroupViewHolder.groupSwitcher = (Switcher) convertView.findViewById(R.id.menu_group_switcher);
-			convertView.setTag(menuGroupViewHolder);
-		} else {
-			menuGroupViewHolder = (MenuGroupViewHolder) convertView.getTag();
-		}
+		menuGroupViewHolder = new MenuGroupViewHolder();
+		convertView = inflater.inflate(R.layout.menu_row, null);
+		menuGroupViewHolder.groupTitle = (TextView) convertView.findViewById(R.id.menu_group_title);
+		menuGroupViewHolder.groupIcone = (MooncakeIcone) convertView.findViewById(R.id.menu_group_icone);
+		menuGroupViewHolder.groupSwitcher = (Switcher) convertView.findViewById(R.id.menu_group_switcher);
+		convertView.setTag(menuGroupViewHolder);
 		menuGroupViewHolder.groupTitle.setText(objet.getNom());
 		if(objet.getIconeRes()>=0) {
 			menuGroupViewHolder.groupIcone.setIconeRes(objet.getIconeRes());
 		}
 		if(!objet.isSwitcher()) {
 			menuGroupViewHolder.groupSwitcher.setVisibility(View.GONE);
-		} else if(onItemSwitchedListener != null) {
-			menuGroupViewHolder.groupSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
-				@Override
-				public void onStateCHangedListener(Switcher switcher, boolean isChecked) {
-					onItemSwitchedListener.onGroupSwitched(menuGroupViewHolder.groupSwitcher, groupPosition, isChecked);
-				}
-			});
+		} else {
+			if(objet.getSwitcherOnColor() != -1) {
+				//menuGroupViewHolder.groupSwitcher.changeOnColor(objet.getSwitcherOnColor());
+			}
+			if(onItemSwitchedListener != null) {
+				menuGroupViewHolder.groupSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
+					@Override
+					public void onStateCHangedListener(Switcher switcher, boolean isChecked) {
+						onItemSwitchedListener.onGroupSwitched(menuGroupViewHolder.groupSwitcher, groupPosition, isChecked);
+					}
+				});
+			}
 		}
 		return convertView;
 	}

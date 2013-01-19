@@ -15,8 +15,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
-import android.graphics.Rect;
-import android.util.Log;
+import android.graphics.drawable.Drawable;
 import android.util.MonthDisplayHelper;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,10 @@ public class MonthView extends BaseView {
 	}
 
 	private void addStyleToday(View view) {
-		view.getBackground().setColorFilter(Color.parseColor("#FFFFCC"), Mode.MULTIPLY);
+		Drawable dr = view.getBackground();
+		dr = dr.mutate();
+		dr.setColorFilter(Color.parseColor("#FFFFCC"), Mode.MULTIPLY);
+		view.setBackgroundDrawable(dr);
 	}
 
 	private void createTabDay(LinearLayout view) {

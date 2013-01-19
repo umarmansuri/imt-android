@@ -126,16 +126,16 @@ OnPageChangeListener {
 		menuGroupe = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
 		donnees.add(new MenuObjet(menuGroupe, "Compte 1", MooncakeIcone.icon_business_card, true, Color.RED));
+		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
 		menuGroupe = new MenuGroupe("Libellés", MooncakeIcone.icon_tags);
 		donnees = new ArrayList<MenuObjet>();
 		donnees.add(new MenuObjet(menuGroupe, "Libellé 1", MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag, true, Color.BLUE));
 		donnees.add(new MenuObjet(menuGroupe, "Libellé 3", MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 4", MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 5", MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 

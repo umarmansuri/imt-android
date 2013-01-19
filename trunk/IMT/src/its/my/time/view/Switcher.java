@@ -1,29 +1,34 @@
 package its.my.time.view;
 
 import its.my.time.R;
+import its.my.time.util.ColorUtil;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 public class Switcher extends FrameLayout implements OnClickListener {
 
 	private OnStateChangedListener onStateChangedListener;
 	private boolean isChecked = false;
-	private View mOnView;
-	private View mOffView;
+
 	private View mMainView;
+
+	private TextView mOnView;
+	private TextView mOffView;
 
 	private Animation animOn;
 	private Animation animOff;
 	private float itemHalfWidth;
-	
+
 	public Switcher(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
@@ -41,19 +46,20 @@ public class Switcher extends FrameLayout implements OnClickListener {
 
 	private void init() {
 		inflate(getContext(), R.layout.switcher, this);
-		mMainView = findViewById(R.id.switcher_main); 
-		mOnView = findViewById(R.id.switcher_text_on);
-		mOffView = findViewById(R.id.switcher_text_off);
+
+		mMainView = findViewById(R.id.switcher_main);
+		mOnView = (TextView) findViewById(R.id.switcher_text_on);
+		mOffView = (TextView) findViewById(R.id.switcher_text_off);
 
 		Resources r = getResources();
 		itemHalfWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, r.getDisplayMetrics());
-		
+
 		animOn = new TranslateAnimation(-itemHalfWidth, 0, 0, 0);
 		animOff = new TranslateAnimation(0, -itemHalfWidth, 0, 0); 
 
 		animOn.setAnimationListener(animListener);
 		animOff.setAnimationListener(animListener);
-		refreshValue(false, false);
+		refreshValue(true, false);
 		setOnClickListener(this);
 	}
 
@@ -68,12 +74,12 @@ public class Switcher extends FrameLayout implements OnClickListener {
 	public boolean isChecked() {
 		return isChecked;
 	}
-	
+
 	public void changeState(boolean isChecked, boolean withAnim) {
 		this.isChecked = isChecked;
 		refreshValue(withAnim, true);
 	}
-	
+
 
 	public void toggleState(boolean withAnim) {
 		changeState(!isChecked, withAnim);
@@ -114,12 +120,28 @@ public class Switcher extends FrameLayout implements OnClickListener {
 		isChecked = !isChecked;
 		refreshValue(true, true);
 	}
-	
+
+	public void changeOnColor(int color) {
+		GradientDrawable dr = (GradientDrawable)mOnView.getBackground().getConstantState().newDrawable();
+		dr = (GradientDrawable) dr.mutate();
+		dr.setColor(color);
+		mOnView.setBackgroundDrawable(dr);
+		mOnView.setTextColor(ColorUtil.getInversColor(color));
+
+		dr = (GradientDrawable)mOffView.getBackground().getConstantState().newDrawable();
+		dr = (GradientDrawable) dr.mutate();
+		dr.setColor(getResources().getColor(R.color.grey));
+		mOffView.setBackgroundDrawable(dr);
+		mOffView.setTextColor(ColorUtil.getInversColor(getResources().getColor(R.color.grey)));
+	}
+
+
+
 	private SwitcherAnimationListener animListener = new SwitcherAnimationListener();
 
 	public class SwitcherAnimationListener implements AnimationListener {
 		private boolean launchListener = true;
-		
+
 		public boolean isLaunchListener() {
 			return launchListener;
 		}
@@ -136,10 +158,10 @@ public class Switcher extends FrameLayout implements OnClickListener {
 				mOnView.setVisibility(View.VISIBLE);	
 			}
 		}
-		
+
 		@Override
 		public void onAnimationRepeat(Animation animation) {}
-		
+
 		@Override
 		public void onAnimationEnd(Animation animation) {
 			if(animation == animOff) {
