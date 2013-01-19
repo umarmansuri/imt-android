@@ -61,8 +61,7 @@ public class DayView extends BaseView {
 								.get(Calendar.MONTH), cal
 								.get(Calendar.DAY_OF_MONTH), ligne
 								.getHeure(), 0, 0);
-						ActivityUtil.startEventActivity(
-								getContext(), hour);
+						ActivityUtil.startEventActivity(getContext(), hour, false);
 						return false;
 					}
 				});

@@ -36,8 +36,6 @@ public class DetailsView extends FrameLayout {
 	private Spinner mSpinnerCompte;
 	private Spinner mSpinnerRecurrence;
 	private TextView mTextDetails;
-	
-	private boolean first = false; //premier stateChange du Switcher
 
 	private List<CompteBean> mListCompte;
 
@@ -59,7 +57,7 @@ public class DetailsView extends FrameLayout {
 
 		mTextHeureFin = (TimeButton) findViewById(R.id.activity_event_details_text_hfin);
 		mTextJourFin = (DateButton) findViewById(R.id.activity_event_details_text_dfin);
-		
+
 
 		if (event.gethFin() != null) {
 			mTextHeureFin.setDate(event.gethFin());
@@ -89,10 +87,10 @@ public class DetailsView extends FrameLayout {
 				event.setCid(-1);
 			}
 		});
-		
+
 		String[] array_recurrence;
 		array_recurrence = getResources().getStringArray(R.array.array_recurrence);
-		
+
 		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,array_recurrence);
 		Spinner mSpinnerRecurrence = (Spinner) findViewById(R.id.activity_event_details_spinner_recurrence);
 		mSpinnerRecurrence.setAdapter(adapter_recurrence);
@@ -104,7 +102,7 @@ public class DetailsView extends FrameLayout {
 		mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
 			public void onStateCHangedListener(Switcher switcher,
 					boolean isChecked) {
-				if (isChecked == true && first != false) {
+				if (isChecked == true) {
 					mTextJourDeb.setEnabled(false);
 					mTextJourFin.setEnabled(false);
 					mTextHeureDeb.setEnabled(false);
@@ -118,12 +116,13 @@ public class DetailsView extends FrameLayout {
 					mTextHeureDeb.setEnabled(true);
 					mTextJourFin.setEnabled(true);
 					mTextHeureFin.setEnabled(true);
-					first = true;
 				}
 			}
 		});
+		if(event.isAllDay()) {
+			mSwitchAllDay.changeState(event.isAllDay(), true);
+		}
 
-		
 
 	};
 }

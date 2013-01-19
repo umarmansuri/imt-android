@@ -38,7 +38,7 @@ public class MonthFragment extends SherlockFragment {
 	private MonthView.OnDayClickListener dayListener = new MonthView.OnDayClickListener() {
 
 		public void onDayLongClickListener(GregorianCalendar day) {
-			ActivityUtil.startEventActivity(getSherlockActivity(), day);
+			ActivityUtil.startEventActivity(getSherlockActivity(), day, true);
 		}
 
 		public void onDayClickListener(GregorianCalendar day) {

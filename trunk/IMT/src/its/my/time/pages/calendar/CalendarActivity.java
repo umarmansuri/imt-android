@@ -139,7 +139,11 @@ OnPageChangeListener {
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
-		menuGroupe = new MenuGroupe("Paramètre",  MooncakeIcone.icon_settings);
+		menuGroupe = new MenuGroupe("ParamètreS",  MooncakeIcone.icon_settings);
+		menuGroupes.add(menuGroupe);
+		
+
+		menuGroupe = new MenuGroupe("Déconnexion",  MooncakeIcone.icon_off);
 		menuGroupes.add(menuGroupe);
 		return menuGroupes;
 	}
