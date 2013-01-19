@@ -8,6 +8,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class CompteRepository extends DatabaseHandler{
 
@@ -67,7 +68,7 @@ public class CompteRepository extends DatabaseHandler{
 		compte.setType(c.getInt(KEY_INDEX_TYPE));
 		compte.setColor(c.getInt(KEY_INDEX_COLOR));
 		compte.setUid(c.getInt(KEY_INDEX_UID));
-		compte.setShowed(c.getInt(KEY_INDEX_SHOWED) == 0);
+		compte.setShowed(c.getInt(KEY_INDEX_SHOWED) == 1);
 		return compte;
 	}
 
@@ -87,11 +88,7 @@ public class CompteRepository extends DatabaseHandler{
 		initialValues.put(KEY_COLOR, compte.getColor());
 		initialValues.put(KEY_TYPE, compte.getType());
 		initialValues.put(KEY_UID, compte.getUid());
-		if(compte.isShowed()) {
-			initialValues.put(KEY_SHOWED, 1);
-		} else {
-			initialValues.put(KEY_SHOWED, 0);
-		}
+		initialValues.put(KEY_SHOWED, true);
 		open();
 		long res = this.db.insert(DATABASE_TABLE, null, initialValues);
 		close();
@@ -107,7 +104,15 @@ public class CompteRepository extends DatabaseHandler{
 
 	public List<CompteBean> getAllCompteByUid(long uid) {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_INDEX_UID + "=?", new String[] { "" + uid }, null, null, null);
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_UID + "=?", new String[] { "" + uid }, null, null, null);
+		List<CompteBean> res = convertCursorToListObject(c);
+		close();
+		return res;
+	}
+
+	public List<CompteBean> getVisibleCompteByUid(long uid) {
+		open();
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_UID + "=? AND " + KEY_SHOWED + " =?", new String[] { "" + uid, String.valueOf(1)}, null, null, null);
 		List<CompteBean> res = convertCursorToListObject(c);
 		close();
 		return res;
@@ -115,23 +120,10 @@ public class CompteRepository extends DatabaseHandler{
 
 	public CompteBean getById(long id) {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_INDEX_ID + "=?", new String[] { "" + id }, null, null, null);
-		close();
+		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_ID + "=?", new String[] { "" + id }, null, null, null);
 		CompteBean res = convertCursorToOneObject(c);
+		close();
 		return res;
-	}
-
-	private List<CompteBean> listeShowedIds;
-
-	public List<CompteBean> getAllShowed() {
-		if(listeShowedIds == null) {
-			open();
-			Cursor c = this.db.query(DATABASE_TABLE,new String[] {KEY_ID}, KEY_INDEX_SHOWED + "=1", null, null, null, null);
-			close();
-			listeShowedIds = convertCursorToListObject(c);
-		}
-
-		return listeShowedIds;
 	}
 
 	public int update(CompteBean compte) {

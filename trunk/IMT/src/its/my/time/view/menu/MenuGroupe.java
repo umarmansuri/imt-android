@@ -8,6 +8,7 @@ public class MenuGroupe{
 	private int iconeRes;
 	private boolean isSwitcher;
 	private int switcherOnColor = -1;
+	private boolean firstState;
 	
 	public String getNom() {
 		return nom;
@@ -48,16 +49,23 @@ public class MenuGroupe{
 	public void setSwitcher(boolean isSwitcher) {
 		this.isSwitcher = isSwitcher;
 	}
-	public MenuGroupe(String nom, int iconeRes, boolean isSwitcher) {
-		this(nom, iconeRes, isSwitcher, -1);
+	public boolean getFirstState() {
+		return firstState;
 	}
-	public MenuGroupe(String nom, int iconeRes, boolean isSwitcher, int switcherOnColor) {
+	public void setFirstState(boolean firstState) {
+		this.firstState = firstState;
+	}
+	public MenuGroupe(String nom, int iconeRes, boolean isSwitcher) {
+		this(nom, iconeRes, isSwitcher, false, -1);
+	}
+	public MenuGroupe(String nom, int iconeRes, boolean isSwitcher, boolean firstState, int switcherOnColor) {
 		super();
 		this.nom = nom;
 		this.iconeRes = iconeRes;
 		this.isSwitcher = isSwitcher;
 		this.menuObjets = new ArrayList<MenuObjet>();
 		this.switcherOnColor = switcherOnColor;
+		this.firstState = firstState;
 	}
 	
 	

@@ -19,7 +19,7 @@ public class DatabaseHandler {
 
 	public static final int DATABASE_VERSION = 1;
 
-	private final Context context; 
+	protected final Context context; 
 	private DatabaseHelper DBHelper;
 	protected SQLiteDatabase db;
 

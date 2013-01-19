@@ -62,6 +62,9 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 			if(menuObjet.getSwitcherOnColor() != -1) {
 				menuChildViewHolder.childSwitcher.changeOnColor(menuObjet.getSwitcherOnColor());
 			}
+			if(menuObjet.getFirstState()) {
+				menuChildViewHolder.childSwitcher.changeState(menuObjet.getFirstState(), true, true);
+			}
 			if(onItemSwitchedListener != null) {
 				menuChildViewHolder.childSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
 					@Override
@@ -108,8 +111,11 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 			menuGroupViewHolder.groupSwitcher.setVisibility(View.GONE);
 		} else {
 			if(objet.getSwitcherOnColor() != -1) {
-				//menuGroupViewHolder.groupSwitcher.changeOnColor(objet.getSwitcherOnColor());
+				menuGroupViewHolder.groupSwitcher.changeOnColor(objet.getSwitcherOnColor());
 			}
+			if(objet.getFirstState()) {
+				menuGroupViewHolder.groupSwitcher.changeState(objet.getFirstState(), true, true);
+			} 
 			if(onItemSwitchedListener != null) {
 				menuGroupViewHolder.groupSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
 					@Override

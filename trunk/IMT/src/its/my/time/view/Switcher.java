@@ -1,7 +1,6 @@
 package its.my.time.view;
 
 import its.my.time.R;
-import its.my.time.util.ColorUtil;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
@@ -75,6 +74,11 @@ public class Switcher extends FrameLayout implements OnClickListener {
 		return isChecked;
 	}
 
+	public void changeState(boolean isChecked, boolean withAnim, boolean isInit) {
+		this.isChecked = isChecked;
+		refreshValue(withAnim, !isInit);
+	}
+	
 	public void changeState(boolean isChecked, boolean withAnim) {
 		this.isChecked = isChecked;
 		refreshValue(withAnim, true);
@@ -126,13 +130,13 @@ public class Switcher extends FrameLayout implements OnClickListener {
 		dr = (GradientDrawable) dr.mutate();
 		dr.setColor(color);
 		mOnView.setBackgroundDrawable(dr);
-		mOnView.setTextColor(ColorUtil.getInversColor(color));
+		mOnView.setText(null);
 
 		dr = (GradientDrawable)mOffView.getBackground().getConstantState().newDrawable();
 		dr = (GradientDrawable) dr.mutate();
 		dr.setColor(getResources().getColor(R.color.grey));
 		mOffView.setBackgroundDrawable(dr);
-		mOffView.setTextColor(ColorUtil.getInversColor(getResources().getColor(R.color.grey)));
+		mOffView.setText(null);
 	}
 
 

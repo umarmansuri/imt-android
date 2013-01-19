@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.compte;
+package its.my.time.pages.editable.comptes.compte;
 
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.pages.editable.BaseActivity;
@@ -17,8 +17,8 @@ public class CompteActivity extends BaseActivity {
 		setContentView(R.layout.activity_compte);
 
 		Bundle bundle = getIntent().getExtras();
-		if(bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			compte = DatabaseUtil.getCompteRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID)); 
+		if(bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
+			compte = DatabaseUtil.getCompteRepository(this).getById(bundle.getLong(ActivityUtil.KEY_EXTRA_ID)); 
 		} 
 		if(compte == null) {
 			compte = new CompteBean();

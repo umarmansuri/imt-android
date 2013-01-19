@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.compte;
+package its.my.time.pages.editable.comptes.compte;
 
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;

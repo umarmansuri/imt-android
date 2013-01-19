@@ -9,7 +9,7 @@ public class CompteBean {
 	private int color;
 	private int type;
 	private boolean isShowed;
-	private int uid;
+	private long uid;
 	
 	
 	
@@ -43,10 +43,10 @@ public class CompteBean {
 	public void setShowed(boolean isShowed) {
 		this.isShowed = isShowed;
 	}
-	public int getUid() {
+	public long getUid() {
 		return uid;
 	}
-	public void setUid(int uid) {
+	public void setUid(long uid) {
 		this.uid = uid;
 	}
 	

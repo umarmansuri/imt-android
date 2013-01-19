@@ -1,10 +1,11 @@
 package its.my.time.pages;
 
 import its.my.time.R;
+import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.ELVAdapter;
-import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.ELVAdapter.MenuChildViewHolder;
 import its.my.time.view.menu.ELVAdapter.OnItemSwitchedListener;
+import its.my.time.view.menu.MenuGroupe;
 
 import java.util.ArrayList;
 
@@ -12,8 +13,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -42,6 +47,9 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		super.setContentView(R.layout.activity_base);
+
+
+		initialiseActionBar();
 
 		mMainContent = (FrameLayout) findViewById(R.id.content);
 
@@ -132,7 +140,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		@Override
 		public void onAnimationEnd(Animation animation) {
 			if(isMenuShowed) {
-				mMainMenu.bringToFront();	
+				mMainMenu.bringToFront();
 			} else {
 				mMainContent.bringToFront();
 			}
@@ -147,7 +155,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 			}
 		}
 	};
-	
+
 	public void initialiseMenu() {
 		menuGroupes = new ArrayList<MenuGroupe>();
 		menuGroupes = onMainMenuCreated(menuGroupes);
@@ -156,11 +164,13 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 			@Override
 			public void onObjetSwitched(View v, int positionGroup, int positionObjet, boolean isChecked) {
 				hasSwitcherValueChanged = true;
+				onMenuItemSwitch(v, positionGroup, positionObjet, isChecked);
 			}
 
 			@Override
 			public void onGroupSwitched(View v, int positionGroup, boolean isChecked) {
 				hasSwitcherValueChanged = true;
+				onMenuGroupSwitch(v, positionGroup, isChecked);
 			}
 		});
 		mMainMenu.setAdapter(adapter);
@@ -188,8 +198,10 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		Animation animMainMenu;
 		if (showed) {
 			animMainMenu = new TranslateAnimation(0, mMainMenuWidth, 0, 0);
+			enableDisableViewGroup(mMainContent, false);
 		} else {
 			animMainMenu = new TranslateAnimation(mMainMenuWidth, 0, 0, 0);
+			enableDisableViewGroup(mMainContent, true);
 		}
 		animMainMenu.setFillAfter(true);
 		if (withAnimation) {
@@ -201,6 +213,37 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		mMainContent.startAnimation(animMainMenu);
 	}
 
+	OnTouchListener onMenuShowedTouchListener = new OnTouchListener() {
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if(event.getAction() == MotionEvent.ACTION_UP) {
+				changeMainMenuVisibility(false, true);
+				return true;
+			}
+			return true;
+		}
+	};
+	
+	public void enableDisableViewGroup(ViewGroup viewGroup, boolean enabled) {
+		int childCount = viewGroup.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			View view = viewGroup.getChildAt(i);
+			if (view instanceof ViewGroup) {
+				enableDisableViewGroup((ViewGroup) view, enabled);
+			}
+			if (view instanceof ControledViewPager) {
+				((ControledViewPager)view).setPagingEnabled(enabled);
+			}
+			if(enabled) {
+				view.setOnTouchListener(null);
+			} else {
+				view.setOnTouchListener(onMenuShowedTouchListener);	
+			}
+		}
+	}
+	
+	protected abstract void onMenuGroupSwitch(View v, int positionGroup,boolean isChecked);
+	protected abstract void onMenuItemSwitch(View v, int positionGroup,int positionObjet, boolean isChecked);
 	protected abstract void onMenuGroupClick(ExpandableListView parent, View v, int groupPosition, long id);
 	protected abstract void onMenuChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id);
 	protected abstract ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes);
@@ -247,11 +290,14 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 
 	protected abstract boolean onBackButtonPressed();
 	@Override
-	public void onBackPressed() {
-		if(isMenuShowed) {
-			changeMainMenuVisibility(false, true);
-			return;
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK) {
+			if(isMenuShowed) {
+				changeMainMenuVisibility(false, true);
+				return true;
+			}
+			return onBackButtonPressed();
 		}
-		onBackButtonPressed();
+		return super.onKeyUp(keyCode, event);
 	}
 }

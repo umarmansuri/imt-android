@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/grabber"
@@ -22,7 +21,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@+id/event_odj_grabber"
+        android:layout_toLeftOf="@+id/grabber"
         android:ellipsize="end"
         android:maxLines="3"
         android:textSize="@dimen/text_size_small" />

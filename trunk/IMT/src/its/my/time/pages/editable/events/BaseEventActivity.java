@@ -32,9 +32,9 @@ public abstract class BaseEventActivity extends BaseActivity {
 		setContentView(R.layout.activity_event);
 
 		Bundle bundle = getIntent().getExtras();
-		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
+		if (bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
 			event = DatabaseUtil.Events.getEventRepository(this).getById(
-					bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
+					bundle.getLong(ActivityUtil.KEY_EXTRA_ID));
 		}
 		if (event == null) {
 			event = new EventBaseBean();

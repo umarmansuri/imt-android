@@ -1,6 +1,7 @@
 package its.my.time.pages.calendar.month;
 
 import its.my.time.R;
+import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.calendar.base.BaseView;
 import its.my.time.util.DatabaseUtil;
@@ -117,13 +118,13 @@ public class MonthView extends BaseView {
 				listEventsFinal = DatabaseUtil.Events.getEventRepository(getContext()).getAllEvents(calDeb, calFin);
 				LinearLayout layoutListe = (LinearLayout)layoutDay.findViewById(R.id.activity_calendar_month_day_liste);
 				ViewGroup eventLayout;
-				TextView textEvent;
+				TextView textEvent; 
 				int nbEventShowed = 0;
 				for (int nbEvents = 0; nbEvents < listEventsFinal.size() && nbEventShowed <2; nbEvents++) {
 						EventBaseBean eventBaseBean = listEventsFinal.get(nbEvents);
 						eventLayout = (ViewGroup) inflate(getContext(), R.layout.activity_calendar_month_day_event, null);
 						//TODO mettre bonne couleur
-						eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(Color.RED);
+						eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(new CompteRepository(getContext()).getById(eventBaseBean.getCid()).getColor());
 						textEvent = (TextView) eventLayout.findViewById(R.id.activity_calendar_month_day_event_text);
 						textEvent.setText(eventBaseBean.getTitle());
 						if(isToday) {
