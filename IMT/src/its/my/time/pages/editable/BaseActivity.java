@@ -29,11 +29,9 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 	protected void initialiseActionBar() {
 		ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setTitle(getActionBarTitle());
-		mActionBar.setDisplayHomeAsUpEnabled(true);
-		mActionBar.setDisplayShowHomeEnabled(true);
-		mActionBar.setLogo(android.R.drawable.ic_menu_today);
-		mActionBar.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.background_header));
+		mActionBar.setDisplayHomeAsUpEnabled(false);
+		mActionBar.setDisplayShowHomeEnabled(false);
+		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 	}
 
 	protected abstract CharSequence getActionBarTitle();
@@ -64,31 +62,36 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 		getSupportMenuInflater().inflate(R.menu.activity_editable, menu);
 
 		MooncakeIcone icone = new MooncakeIcone(this);
-		icone.setTextSize(18);
+		icone.setTextSize(30);
 		icone.setIconeRes(MooncakeIcone.icon_edit);
 		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_edit);
+		icone.setPadding(20, 0, 20, 0);
 		icone.setOnClickListener(mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_EDIT).setActionView(icone);
 
 		icone = new MooncakeIcone(this);
-		icone.setTextSize(18);
+		icone.setTextSize(30);
 		icone.setIconeRes(MooncakeIcone.icon_install);
 		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_save);
+		icone.setPadding(20, 0, 20, 0);
 		icone.setOnClickListener(mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_SAVE).setActionView(icone);
 
 		icone = new MooncakeIcone(this);
-		icone.setTextSize(18);
+		icone.setTextSize(30);
 		icone.setIconeRes(MooncakeIcone.icon_remove_circle);
 		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_cancel);
+		icone.setPadding(20, 0, 20, 0);
 		icone.setOnClickListener(mOnIconeClickLIstener );
 		menu.getItem(INDEX_MENU_CANCEL).setActionView(icone);
 
 		this.menu = menu;
-		return super.onCreateOptionsMenu(menu);
+		boolean res = super.onCreateOptionsMenu(menu);
+		onViewCreated();
+		return res;
 	}
 
 	private void launchEdit() {
@@ -112,9 +115,12 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 		showCancel();
 	}
 
+	public void launchEditMode() {
+		launchEdit();
+	}
+	
 	protected abstract void showEdit();
-
 	protected abstract void showSave();
-
 	protected abstract void showCancel();
+	protected abstract void onViewCreated();
 }

@@ -97,7 +97,7 @@ public class CompteRepository extends DatabaseHandler{
 
 	public boolean deleteCompte(long rowId) {
 		open();
-		boolean res = this.db.delete(DATABASE_TABLE, KEY_INDEX_ID + "=" + rowId, null) > 0;
+		boolean res = this.db.delete(DATABASE_TABLE, KEY_ID + "=" + rowId, null) > 0;
 		close();
 		return res;
 	}

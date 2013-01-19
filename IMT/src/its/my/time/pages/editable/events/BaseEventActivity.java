@@ -51,6 +51,12 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 		super.onCreate(bundle);
 	}
+	
+	@Override
+	protected void initialiseActionBar() {
+		super.initialiseActionBar();
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+	}
 
 	protected OnPageChangeListener pageListener = new ViewPager.OnPageChangeListener() {
 

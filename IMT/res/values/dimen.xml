@@ -5,8 +5,12 @@
 <dimen name="view_day_height_ligne_heure_half">30dp</dimen>
 
 <dimen name="text_size_small">16sp</dimen>
-<dimen name="text_size_medium">18sp</dimen>
-<dimen name="text_size_large">20sp</dimen>
+<dimen name="text_size_medium">22sp</dimen>
+<dimen name="text_size_large">40sp</dimen>
+
+<dimen name="list_height_small">48dip</dimen>
+<dimen name="list_height_medium">64dip</dimen>
+<dimen name="list_height_large">80dip</dimen>
 
 <dimen name="day_event_little_radius">2dp</dimen>
 <dimen name="day_event_little_title_height">20dp</dimen>

@@ -30,6 +30,10 @@ public class ProfilActivity extends BaseActivity {
 	
 		super.onCreate(bundle);
 	}
+
+	@Override
+	protected void onViewCreated() {
+	}
 	
 	@Override
 	protected CharSequence getActionBarTitle() {
