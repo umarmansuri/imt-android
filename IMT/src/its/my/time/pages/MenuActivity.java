@@ -40,8 +40,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		overridePendingTransition(android.R.anim.fade_in,
-				android.R.anim.fade_out);
+		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		super.setContentView(R.layout.activity_base);
 
 		mMainContent = (FrameLayout) findViewById(R.id.content);
@@ -80,6 +79,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		@Override
 		public boolean onChildClick(final ExpandableListView parent, final View v, final int groupPosition, final int childPosition, final long id) {
 			if(!menuGroupes.get(groupPosition).getObjets().get(childPosition).isSwitcher()) {
+				hasSwitcherValueChanged = false;
 				changeMainMenuVisibility(false, true);
 				new Handler().postDelayed(new Runnable() {
 					@Override
@@ -97,6 +97,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		@Override
 		public boolean onGroupClick(final ExpandableListView parent, final View v, final int groupPosition, final long id) {
 			if(menuGroupes.get(groupPosition).getObjets().size() <= 0) {
+				hasSwitcherValueChanged = false;
 				changeMainMenuVisibility(false, true);
 				new Handler().postDelayed(new Runnable() {
 					@Override

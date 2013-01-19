@@ -15,6 +15,7 @@ public class ProfilActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstance) {
+			overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		setContentView(R.layout.activity_profile);
 
 		Bundle bundle = getIntent().getExtras();
