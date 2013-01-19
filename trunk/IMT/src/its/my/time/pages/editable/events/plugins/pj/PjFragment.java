@@ -2,6 +2,7 @@ package its.my.time.pages.editable.events.plugins.pj;
 
 import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
+import its.my.time.pages.editable.events.plugins.BaseFragment;
 import its.my.time.util.DatabaseUtil;
 
 import java.util.Calendar;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class PjFragment extends SherlockFragment {
+public class PjFragment extends BaseFragment {
 
 	private int eventId;
 	private Button mButtonSend;
@@ -99,5 +100,23 @@ public class PjFragment extends SherlockFragment {
 			}
 		};
 		break;
-	}}}
+	}}
+
+	@Override
+	public void launchEdit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchSave() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchCancel() {
+		// TODO Auto-generated method stub
+		
+	}}
 

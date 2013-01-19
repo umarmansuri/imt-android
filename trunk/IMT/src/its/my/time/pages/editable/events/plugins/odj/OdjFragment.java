@@ -2,6 +2,7 @@ package its.my.time.pages.editable.events.plugins.odj;
 
 import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.odj.OdjBean;
+import its.my.time.pages.editable.events.plugins.BaseFragment;
 import its.my.time.util.DatabaseUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,10 +14,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.mobeta.android.dslv.DragSortListView;
 
-public class OdjFragment extends SherlockFragment {
+public class OdjFragment extends BaseFragment {
 
 	private int eventId;
 	private Button mButtonSend;
@@ -94,6 +94,24 @@ public class OdjFragment extends SherlockFragment {
 	
 	private OdjAdapter getOdjAdapter() {
 		return (OdjAdapter)mListOdj.getInputAdapter();
+	}
+
+	@Override
+	public void launchEdit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchSave() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchCancel() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

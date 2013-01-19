@@ -2,6 +2,7 @@ package its.my.time.pages.editable.events.plugins.commentaires;
 
 import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.comment.CommentBean;
+import its.my.time.pages.editable.events.plugins.BaseFragment;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 
@@ -18,9 +19,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
-public class CommentairesFragment extends SherlockFragment {
+public class CommentairesFragment extends BaseFragment {
 
 	private int eventId;
 	private Button mButtonSend;
@@ -63,5 +62,23 @@ public class CommentairesFragment extends SherlockFragment {
 		
 		
 		return mView;
+	}
+
+	@Override
+	public void launchEdit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchSave() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchCancel() {
+		// TODO Auto-generated method stub
+		
 	}
 }

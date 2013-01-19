@@ -1,6 +1,7 @@
 package its.my.time.pages.editable.events.plugins.participants;
 
 import its.my.time.R;
+import its.my.time.pages.editable.events.plugins.BaseFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
-public class ParticipantsFragment extends SherlockFragment {
+public class ParticipantsFragment extends BaseFragment {
 
 	private int eventId;
 
@@ -32,5 +31,23 @@ public class ParticipantsFragment extends SherlockFragment {
 		mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(), eventId));
 		
 		return mView;
+	}
+
+	@Override
+	public void launchEdit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchSave() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchCancel() {
+		// TODO Auto-generated method stub
+		
 	}
 }

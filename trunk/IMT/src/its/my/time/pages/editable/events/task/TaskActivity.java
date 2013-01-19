@@ -1,9 +1,14 @@
 package its.my.time.pages.editable.events.task;
 
+import java.util.ArrayList;
+
 import its.my.time.pages.editable.events.BaseEventActivity;
+import its.my.time.view.menu.MenuGroupe;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.app.ActionBar;
@@ -12,7 +17,7 @@ public class TaskActivity extends BaseEventActivity {
 
 	private ViewPager mPager;
 	@Override
-	protected void onCreate(Bundle savedInstance) {
+	public void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
 		mPager.setAdapter(new TaskPagerAdapter(getSupportFragmentManager(),
 				event));
@@ -40,24 +45,56 @@ public class TaskActivity extends BaseEventActivity {
 				TaskPagerAdapter.TITLE_PAGE_PJ };
 		mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
 				R.layout.navigation_spinner_item, items), navigationListener);
-
 	}
+	
+	
+	
+	
 
 	@Override
-	protected void onEdit() {
+	protected void onMenuGroupSwitch(View v, int positionGroup,
+			boolean isChecked) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void onSave() {
+	protected void onMenuItemSwitch(View v, int positionGroup,
+			int positionObjet, boolean isChecked) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void onCancel() {
+	protected void onMenuGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected void onMenuChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected ArrayList<MenuGroupe> onMainMenuCreated(
+			ArrayList<MenuGroupe> menuGroupes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void reload() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean onBackButtonPressed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -1,25 +1,24 @@
 package its.my.time.pages.editable.events;
 
-import java.util.Calendar;
-
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.BaseActivity;
+import its.my.time.pages.editable.events.plugins.BaseFragment;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.view.ControledViewPager;
+
+import java.util.Calendar;
+
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.Toast;
 
 import com.actionbarsherlock.R;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 
 public abstract class BaseEventActivity extends BaseActivity {
 
@@ -28,10 +27,12 @@ public abstract class BaseEventActivity extends BaseActivity {
 	protected EventBaseBean event;
 
 	@Override
-	protected void onCreate(Bundle savedInstance) {
+	public void onCreate(Bundle savedInstance) {
+		Bundle bundle = getIntent().getExtras();
+		super.onCreate(bundle);
+
 		setContentView(R.layout.activity_event);
 
-		Bundle bundle = getIntent().getExtras();
 		if (bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
 			event = DatabaseUtil.Events.getEventRepository(this).getById(
 					bundle.getLong(ActivityUtil.KEY_EXTRA_ID));
@@ -49,9 +50,8 @@ public abstract class BaseEventActivity extends BaseActivity {
 		mPager = (ControledViewPager) findViewById(R.id.event_pager);
 		mPager.setOnPageChangeListener(pageListener);
 
-		super.onCreate(bundle);
 	}
-	
+
 	@Override
 	protected void initialiseActionBar() {
 		super.initialiseActionBar();
@@ -85,26 +85,39 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 	};
 
+	public BaseFragment getActiveFragment() {
+		if(mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
+			FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) mPager.getAdapter();
+			return (BaseFragment) a.instantiateItem(mPager, mPager.getCurrentItem());	
+		} else {
+			String name = makeFragmentName(mPager.getId(), mPager.getCurrentItem());
+			return  (BaseFragment) getSupportFragmentManager().findFragmentByTag(name);	
+		}
+
+
+	}
+
+	private static String makeFragmentName(int viewId, int index) {
+		return "android:switcher:" + viewId + ":" + index;
+	}
+
+
 	@Override
 	protected void showEdit() {
 		mPager.setPagingEnabled(false);
-		onEdit();
+		getActiveFragment().launchEdit();
 	}
 
 	@Override
 	protected void showCancel() {
 		mPager.setPagingEnabled(true);
-		onCancel();
+		getActiveFragment().launchCancel();
 	}
 
 	@Override
 	protected void showSave() {
 		mPager.setPagingEnabled(true);
-		onSave();
+		getActiveFragment().launchSave();
 	}
-
-	protected abstract void onEdit();
-	protected abstract void onSave();
-	protected abstract void onCancel();
 
 }

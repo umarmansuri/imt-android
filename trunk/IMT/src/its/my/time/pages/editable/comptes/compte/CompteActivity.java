@@ -1,11 +1,14 @@
 package its.my.time.pages.editable.comptes.compte;
 
+import java.util.ArrayList;
+
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.view.menu.MenuGroupe;
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 import net.margaritov.preference.colorpicker.ColorPickerDialog.OnColorChangedListener;
 import android.graphics.Color;
@@ -19,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
@@ -37,7 +41,7 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 	private ImageButton mFieldColorButton;
 
 	@Override
-	protected void onCreate(Bundle savedInstance) {
+	public void onCreate(Bundle savedInstance) {
 		setContentView(R.layout.activity_compte);
 
 		Bundle bundle = getIntent().getExtras();
@@ -179,5 +183,60 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 	public void onColorChanged(int color) {
 		compte.setColor(color);
 		updateColorButton();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Override
+	protected void onMenuGroupSwitch(View v, int positionGroup,
+			boolean isChecked) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onMenuItemSwitch(View v, int positionGroup,
+			int positionObjet, boolean isChecked) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onMenuGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onMenuChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected ArrayList<MenuGroupe> onMainMenuCreated(
+			ArrayList<MenuGroupe> menuGroupes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void reload() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean onBackButtonPressed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.events.event.details;
+package its.my.time.pages.editable.events.plugins.details;
 
 import its.my.time.util.DateUtil;
 
