@@ -163,6 +163,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	public void initialiseMenu() {
 		menuGroupes = new ArrayList<MenuGroupe>();
 		menuGroupes = onMainMenuCreated(menuGroupes);
+		if(menuGroupes == null) {menuGroupes = new ArrayList<MenuGroupe>();}
 		ELVAdapter adapter = new ELVAdapter(this, menuGroupes);
 		adapter.setOnItemSwitchedListener(new OnItemSwitchedListener() {
 			@Override

@@ -1,6 +1,7 @@
 package its.my.time.pages.editable;
 
 import its.my.time.R;
+import its.my.time.pages.MenuActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,7 +11,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.fonts.mooncake.MooncakeIcone;
 
-public abstract class BaseActivity extends SherlockFragmentActivity {
+public abstract class BaseActivity extends MenuActivity {
 
 	private Menu menu;
 
@@ -19,19 +20,11 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 	public static final int INDEX_MENU_CANCEL = 2;
 
 	@Override
-	protected void onCreate(Bundle bundle) {
+	public void onCreate(Bundle bundle) {
 		initialiseActionBar();
 		super.onCreate(bundle);
 		overridePendingTransition(android.R.anim.fade_in,
 				android.R.anim.fade_out);
-	}
-
-	protected void initialiseActionBar() {
-		ActionBar mActionBar = getSupportActionBar();
-		mActionBar.setTitle(getActionBarTitle());
-		mActionBar.setDisplayHomeAsUpEnabled(false);
-		mActionBar.setDisplayShowHomeEnabled(false);
-		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 	}
 
 	protected abstract CharSequence getActionBarTitle();
