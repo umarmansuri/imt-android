@@ -7,6 +7,7 @@
         <item>Liste</item>
     </string-array>
     <string-array name="array_recurrence">
+        <item>Récurrence</item>
         <item>Semaines</item>
         <item>Mois</item>
         <item>Années</item>

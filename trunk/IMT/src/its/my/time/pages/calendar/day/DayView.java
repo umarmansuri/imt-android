@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +106,7 @@ public class DayView extends BaseView {
 		calDeb.set(Calendar.HOUR_OF_DAY, 0);
 		calDeb.set(Calendar.MINUTE, 0);
 		calDeb.set(Calendar.SECOND, 0);
+		
 		Calendar calFin = new GregorianCalendar(calDeb.get(Calendar.YEAR),
 				calDeb.get(Calendar.MONTH), calDeb.get(Calendar.DAY_OF_MONTH),
 				calDeb.get(Calendar.HOUR_OF_DAY), calDeb.get(Calendar.MINUTE),

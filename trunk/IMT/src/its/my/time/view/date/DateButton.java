@@ -43,7 +43,7 @@ public class DateButton extends Button implements OnDateSetListener, OnClickList
 			date = Calendar.getInstance();
 		}
 		setOnClickListener(this);
-		setText(DateUtil.getDate(date));
+		setText(DateUtil.getDayHourFrench(date));
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class DateButton extends Button implements OnDateSetListener, OnClickList
 		date.set(Calendar.YEAR,year);
 		date.set(Calendar.MONTH,month);
 		date.set(Calendar.DAY_OF_MONTH,day);
-		setText(DateUtil.getDate(date));
+		setText(DateUtil.getDayHourFrench(date));
 	}
 
 	@Override

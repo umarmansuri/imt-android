@@ -15,6 +15,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -36,6 +37,7 @@ public class DetailsView extends FrameLayout {
 	private Spinner mSpinnerCompte;
 	private Spinner mSpinnerRecurrence;
 	private TextView mTextDetails;
+	private String[] array_recurrence;
 
 	private List<CompteBean> mListCompte;
 
@@ -52,6 +54,7 @@ public class DetailsView extends FrameLayout {
 	private void initialiseValues() {
 		mTextJourDeb = (DateButton) findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourDeb.setDate(event.gethDeb());
+		
 		mTextHeureDeb = (TimeButton) findViewById(R.id.activity_event_details_text_hdeb);
 		mTextHeureDeb.setDate(event.gethDeb());
 
@@ -88,7 +91,6 @@ public class DetailsView extends FrameLayout {
 			}
 		});
 
-		String[] array_recurrence;
 		array_recurrence = getResources().getStringArray(R.array.array_recurrence);
 
 		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,array_recurrence);
