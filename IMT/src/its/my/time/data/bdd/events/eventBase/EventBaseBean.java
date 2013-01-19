@@ -13,7 +13,7 @@ public class EventBaseBean {
 	private int cid;
 	private int typeId;
 	private int detailsId;
-	
+	private boolean isAllDay;
 	
 	public EventBaseBean() {
 		super();
@@ -25,9 +25,16 @@ public class EventBaseBean {
 		this.cid = -1;
 		this.typeId = -1;
 		this.detailsId = -1;
+		this.isAllDay = false;
 	}
 	
 	
+	public boolean isAllDay() {
+		return isAllDay;
+	}
+	public void setAllDay(boolean isAllDay) {
+		this.isAllDay = isAllDay;
+	}
 	public String getDetails() {
 		return details;
 	}

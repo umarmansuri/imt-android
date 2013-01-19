@@ -11,6 +11,9 @@ import its.my.time.pages.editable.events.task.TaskActivity;
 import its.my.time.pages.editable.profil.ProfilActivity;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,6 +24,7 @@ public class ActivityUtil {
 
 	public static final String KEY_EXTRA_ID = "KEY_ID";
 	public static final String KEY_EXTRA_ISO_TIME = "KEY_EXTRA_ISO_TIME";
+	public static final String KEY_EXTRA_ALL_DAY = "KEY_EXTRA_ALL_DAY";
 	
 	public static void startProfilActivity(Context context) {
 		Intent intent = new Intent(context, ProfilActivity.class);
@@ -64,13 +68,15 @@ public class ActivityUtil {
 		context.startActivity(intent);
 	}
 
-	private static void startEventActivity(Context context, Calendar calHeure, int typeEvent) {
+	private static void startEventActivity(Context context, Calendar calHeure, int typeEvent, boolean isAllDay) {
 		Intent intent = getEventIntentFromType(context, typeEvent);
+		intent.putExtra(KEY_EXTRA_ID, -1);
 		intent.putExtra(KEY_EXTRA_ISO_TIME, DateUtil.getTimeInIso(calHeure));
+		intent.putExtra(KEY_EXTRA_ALL_DAY, isAllDay);
 		context.startActivity(intent);
 	}
 
-	public static void startEventActivity(final Context context, final Calendar calHeure) {
+	public static void startEventActivity(final Context context, final Calendar calHeure, final boolean isAllDay) {
 		String[] labels = new String[]{
 				context.getResources().getString(R.string.label_event_base),
 				context.getResources().getString(R.string.label_event_meeting),
@@ -88,7 +94,7 @@ public class ActivityUtil {
 		builder.setTitle("Evénement à créer");
 		builder.setItems(labels, new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int item) {
-		    	startEventActivity(context, calHeure, types[item]);
+		    	startEventActivity(context, calHeure, types[item], isAllDay);
 		    }
 		});
 		AlertDialog alert = builder.create();

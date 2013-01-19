@@ -141,6 +141,8 @@ public class MonthView extends BaseView {
 
 				if(listener != null) {
 					final GregorianCalendar calListener = (GregorianCalendar) calDeb.clone();
+					calListener.set(Calendar.HOUR_OF_DAY, 8);
+					calListener.set(Calendar.HOUR_OF_DAY, 10);
 					layoutDay.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							listener.onDayClickListener(calListener);
