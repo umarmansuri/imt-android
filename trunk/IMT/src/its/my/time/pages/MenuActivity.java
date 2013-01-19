@@ -63,8 +63,12 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		mMainMenuWidth = (int) (display.getWidth() * weight);
 		mMainMenu.getLayoutParams().width = mMainMenuWidth;
 		mMainMenu.invalidate();
-
+	}
+	
+	@Override
+	protected void onResume() {
 		initialiseMenu();
+		super.onResume();
 	}
 
 	protected void initialiseActionBar() {
@@ -223,7 +227,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 			return true;
 		}
 	};
-	
+
 	public void enableDisableViewGroup(ViewGroup viewGroup, boolean enabled) {
 		int childCount = viewGroup.getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -241,7 +245,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 			}
 		}
 	}
-	
+
 	protected abstract void onMenuGroupSwitch(View v, int positionGroup,boolean isChecked);
 	protected abstract void onMenuItemSwitch(View v, int positionGroup,int positionObjet, boolean isChecked);
 	protected abstract void onMenuGroupClick(ExpandableListView parent, View v, int groupPosition, long id);
@@ -291,12 +295,16 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	protected abstract boolean onBackButtonPressed();
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		if(keyCode == KeyEvent.KEYCODE_BACK) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
 			if(isMenuShowed) {
 				changeMainMenuVisibility(false, true);
 				return true;
 			}
 			return onBackButtonPressed();
+		case KeyEvent.KEYCODE_MENU:
+			changeMainMenuVisibility(!isMenuShowed, true);
+			return true;
 		}
 		return super.onKeyUp(keyCode, event);
 	}

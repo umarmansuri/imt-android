@@ -19,6 +19,9 @@ public class TaskActivity extends BaseEventActivity {
 	}
 
 	@Override
+	protected void onViewCreated() {
+	}
+	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvelle tâche";
 	}

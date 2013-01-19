@@ -18,6 +18,9 @@ public class CallActivity extends BaseEventActivity {
 	}
 
 	@Override
+	protected void onViewCreated() {
+	}
+	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvel appel";
 	}

@@ -18,6 +18,9 @@ public class MeetingActivity extends BaseEventActivity {
 	}
 
 	@Override
+	protected void onViewCreated() {
+	}
+	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvelle réunion";
 	}
