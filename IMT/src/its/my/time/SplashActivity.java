@@ -1,13 +1,6 @@
 package its.my.time;
 
-import its.my.time.data.bdd.DatabaseHandler;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.util.ActivityUtil;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,8 +16,7 @@ public class SplashActivity extends Activity {
 		setTheme(android.R.style.Theme_Black_NoTitleBar);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-
-		startClockAnimation();
+		startClockAnimation(); 
 		new LoadMainActivity().execute();
 	}
 
@@ -41,15 +33,47 @@ public class SplashActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			 
 			//TODO enlever
+			/*
 			deleteDatabase(DatabaseHandler.DATABASE_NAME);
+			
+			UtilisateurRepository userRepo = new UtilisateurRepository(SplashActivity.this);
+			UtilisateurBean user = new UtilisateurBean();
+			user.setAdresse("42 rue du charpenet");
+			user.setCodePostal(69890);
+			user.setMail("ad.hugon@gmail.com");
+			user.setNom("Hugon");
+			user.setPays("France");
+			user.setPrenom("Adrien");
+			user.setTel("0617454462");
+			user.setVille("La Tour de salvagny");
+			long resUser = userRepo.insertUtilisateur(user);
+			PreferencesUtil.setCurrentUid(SplashActivity.this, resUser);	
+			
+			CompteRepository repoCompte = new CompteRepository(SplashActivity.this);
+			CompteBean compte = new CompteBean();
+			compte.setColor(Color.RED);
+			compte.setShowed(true);
+			compte.setTitle("Titre compte 1");
+			compte.setType(0);
+			compte.setUid(resUser);
+			long resCompte1 = repoCompte.insertCompte(compte);
+			
+			compte = new CompteBean();
+			compte.setColor(Color.BLUE);
+			compte.setShowed(true);
+			compte.setTitle("Compte 2");
+			compte.setType(0);
+			compte.setUid(resUser);
+			long resCompte2 = repoCompte.insertCompte(compte);
+			
+			
+			
 			EventBaseRepository adapter = new EventBaseRepository(SplashActivity.this);
 			EventBaseBean bean;
 			Calendar calDeb2;
 			Calendar calFin2;
-			
-			
 			bean = new EventBaseBean();
-			bean.setId(0);
+			bean.setCid(resCompte1);
 			bean.setTitle("Voicin un évènement");
 			calDeb2 = Calendar.getInstance();
 			bean.sethDeb(calDeb2);
@@ -59,16 +83,18 @@ public class SplashActivity extends Activity {
 			bean.setTypeId(EventBaseRepository.Types.TYPE_MEETING);
 			bean.setDetailsId(0);
 			long res = adapter.insertEvent(bean);
+			
 			bean.setTitle("Deuxième");
 			bean.setId(1);
 			res = adapter.insertEvent(bean);
+			
 			bean.setTitle("Et un petit dernier...");
 			bean.setId(2);
 			res = adapter.insertEvent(bean);
 			
 			
 			
-			bean = new EventBaseBean();
+			bean.setCid(resCompte2);
 			bean.setId(3);
 			bean.setTitle("Voicin un évènement");
 			calDeb2 = Calendar.getInstance();
@@ -80,6 +106,7 @@ public class SplashActivity extends Activity {
 			bean.setTypeId(EventBaseRepository.Types.TYPE_CALL);
 			bean.setDetailsId(0);
 			res = adapter.insertEvent(bean);
+			
 			bean.setTitle("Deuxième");
 			bean.setId(4);
 			res = adapter.insertEvent(bean);
@@ -92,7 +119,7 @@ public class SplashActivity extends Activity {
 			bean.setTitle("Et le dernier!!!!!!!!!!");
 			bean.setId(7);
 			res = adapter.insertEvent(bean);
-			
+			*/
 			return null;
 		}
 

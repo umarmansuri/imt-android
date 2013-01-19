@@ -1,17 +1,22 @@
 package its.my.time.pages.calendar;
 
 import its.my.time.R;
+import its.my.time.data.bdd.compte.CompteBean;
+import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.MenuActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
 import its.my.time.pages.calendar.list.ListEventAdapter;
 import its.my.time.pages.calendar.month.MonthPagerAdapter;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.PreferencesUtil;
+import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -46,9 +51,11 @@ OnPageChangeListener {
 	private int indexCurrentPager = -1;
 
 	private FrameLayout mMainFramePager;
-	private ViewPager mViewPager;
+	private ControledViewPager mViewPager;
 
 	private TextView mTextTitle;
+
+	private List<CompteBean> comptes;
 
 	public static Calendar curentCal;
 
@@ -59,7 +66,6 @@ OnPageChangeListener {
 		super.onCreate(savedInstanceState);
 
 		isWaitingEnd = false;
-		initialiseActionBar();
 		setContentView(R.layout.activity_calendar);
 
 		mMainFramePager = (FrameLayout) findViewById(R.id.main_pager);
@@ -98,6 +104,7 @@ OnPageChangeListener {
 	private static final int INDEX_MENU_AGENDA_LISTE = 3;
 
 	private static final int INDEX_MENU_COMPTE = 2;
+	private static int INDEX_MENU_COMPTE_GERER = 0;
 	private static final int INDEX_MENU_LIBELLE = 3;
 	private static final int INDEX_MENU_PARAMETRES = 4;
 
@@ -125,7 +132,12 @@ OnPageChangeListener {
 
 		menuGroupe = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Compte 1", MooncakeIcone.icon_business_card, true, Color.RED));
+		CompteRepository compteRepo = new CompteRepository(this);
+		comptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
+		for (CompteBean compteBean : comptes) {
+			donnees.add(new MenuObjet(menuGroupe, compteBean.getTitle(), MooncakeIcone.icon_business_card, true, compteBean.isShowed(), compteBean.getColor()));
+			INDEX_MENU_COMPTE_GERER++;
+		}
 		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
@@ -133,15 +145,15 @@ OnPageChangeListener {
 		menuGroupe = new MenuGroupe("Libellés", MooncakeIcone.icon_tags);
 		donnees = new ArrayList<MenuObjet>();
 		donnees.add(new MenuObjet(menuGroupe, "Libellé 1", MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag, true, Color.BLUE));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag, true, false, Color.BLUE));
 		donnees.add(new MenuObjet(menuGroupe, "Libellé 3", MooncakeIcone.icon_tag, true));
 		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
-		menuGroupe = new MenuGroupe("ParamètreS",  MooncakeIcone.icon_settings);
+		menuGroupe = new MenuGroupe("Réglages",  MooncakeIcone.icon_settings);
 		menuGroupes.add(menuGroupe);
-		
+
 
 		menuGroupe = new MenuGroupe("Déconnexion",  MooncakeIcone.icon_off);
 		menuGroupes.add(menuGroupe);
@@ -185,6 +197,11 @@ OnPageChangeListener {
 				break;
 			}
 			break;
+		case INDEX_MENU_COMPTE:
+			if(childPosition == INDEX_MENU_COMPTE_GERER) {
+				ActivityUtil.startComptesActivity(this);
+			}
+			break;
 		}
 	}
 
@@ -201,6 +218,21 @@ OnPageChangeListener {
 	}
 
 	@Override
+	protected void onMenuGroupSwitch(View v, int positionGroup,boolean isChecked) {}
+	@Override
+	protected void onMenuItemSwitch(View v, int positionGroup, int positionObjet, boolean isChecked) {
+		switch (positionGroup) {
+		case INDEX_MENU_COMPTE:
+			comptes.get(positionObjet).setShowed(!comptes.get(positionObjet).isShowed());
+			new CompteRepository(this).update(comptes.get(positionObjet));
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MooncakeIcone icone = new MooncakeIcone(this);
 		icone.setTextSize(18);
@@ -213,7 +245,7 @@ OnPageChangeListener {
 
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public void reload() {
 		new ChangePageTask().execute(indexCurrentPager);
@@ -239,7 +271,7 @@ OnPageChangeListener {
 		.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 	}
 
-	
+
 	@Override
 	protected boolean onBackButtonPressed() {
 		switch (indexCurrentPager) {
@@ -289,11 +321,14 @@ OnPageChangeListener {
 
 	@Override
 	public void onPageSelected(final int position) {
+		changeTitle(((BasePagerAdapter) mViewPager.getAdapter()).getTitle(position));
+	}
+
+	private void changeTitle(final String title) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				mTextTitle.setText(((BasePagerAdapter) mViewPager.getAdapter())
-						.getTitle(position));
+				mTextTitle.setText(title);
 			}
 		});
 	}
@@ -313,7 +348,7 @@ OnPageChangeListener {
 		@Override
 		protected View doInBackground(Integer... params) {
 			indexNextPage = params[0];
-			mViewPager = new ViewPager(getApplicationContext());
+			mViewPager = new ControledViewPager(getApplicationContext());
 			mViewPager.setId(ID_PAGER);
 			switch (indexNextPage) {
 			case INDEX_MENU_AGENDA_DAY:
@@ -332,6 +367,7 @@ OnPageChangeListener {
 				mListView
 				.setAdapter(new ListEventAdapter(CalendarActivity.this));
 				indexCurrentPager = INDEX_MENU_AGENDA_LISTE;
+				changeTitle("Liste");
 				return mListView;
 			}
 			mViewPager.setOnPageChangeListener(CalendarActivity.this);

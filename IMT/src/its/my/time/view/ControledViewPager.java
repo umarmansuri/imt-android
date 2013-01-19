@@ -14,7 +14,12 @@ public class ControledViewPager extends ViewPager {
         this.pagingEnabled = true;
     }
 
-    @Override
+    public ControledViewPager(Context context) {
+    	super(context);
+        this.pagingEnabled = true;
+	}
+
+	@Override
     public boolean onTouchEvent(MotionEvent event) {
         if (this.pagingEnabled) {
             return super.onTouchEvent(event);

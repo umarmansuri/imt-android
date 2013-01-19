@@ -3,7 +3,8 @@ package its.my.time.util;
 import its.my.time.R;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.calendar.CalendarActivity;
-import its.my.time.pages.editable.compte.CompteActivity;
+import its.my.time.pages.editable.comptes.ComptesActivity;
+import its.my.time.pages.editable.comptes.compte.CompteActivity;
 import its.my.time.pages.editable.events.call.CallActivity;
 import its.my.time.pages.editable.events.event.EventActivity;
 import its.my.time.pages.editable.events.meeting.MeetingActivity;
@@ -11,9 +12,6 @@ import its.my.time.pages.editable.events.task.TaskActivity;
 import its.my.time.pages.editable.profil.ProfilActivity;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -36,7 +34,12 @@ public class ActivityUtil {
 		context.startActivity(intent);
 	}
 	
-	public static void startCompteActivity(Context context, int id) {
+	public static void startComptesActivity(Context context) {
+		Intent intent = new Intent(context, ComptesActivity.class);
+		context.startActivity(intent);
+	}
+
+	public static void startCompteActivity(Context context, long id) {
 		Intent intent = new Intent(context, CompteActivity.class);
 		intent.putExtra(KEY_EXTRA_ID, id);
 		context.startActivity(intent);
@@ -62,7 +65,7 @@ public class ActivityUtil {
 		return intent;
 	}
 
-	public static void startEventActivity(Context context, int id, int typeEvent) {
+	public static void startEventActivity(Context context, long id, int typeEvent) {
 		Intent intent = getEventIntentFromType(context, typeEvent);
 		intent.putExtra(KEY_EXTRA_ID, id);
 		context.startActivity(intent);

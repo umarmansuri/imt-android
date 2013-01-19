@@ -10,7 +10,7 @@ public class EventBaseBean {
 	private Calendar hFin;
 	private int id;
 	private String title;
-	private int cid;
+	private long cid;
 	private int typeId;
 	private int detailsId;
 	private boolean isAllDay;
@@ -65,10 +65,10 @@ public class EventBaseBean {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getCid() {
+	public long getCid() {
 		return cid;
 	}
-	public void setCid(int cid) {
+	public void setCid(long cid) {
 		this.cid = cid;
 	}
 	public int getTypeId() {
