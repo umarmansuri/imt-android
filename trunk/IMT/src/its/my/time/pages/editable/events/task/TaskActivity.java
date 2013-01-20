@@ -1,9 +1,10 @@
 package its.my.time.pages.editable.events.task;
 
-import java.util.ArrayList;
-
 import its.my.time.pages.editable.events.BaseEventActivity;
 import its.my.time.view.menu.MenuGroupe;
+
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;

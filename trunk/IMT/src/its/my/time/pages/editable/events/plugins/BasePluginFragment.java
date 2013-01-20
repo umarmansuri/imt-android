@@ -4,7 +4,7 @@ import its.my.time.pages.editable.BaseActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public abstract class BaseFragment extends SherlockFragment{
+public abstract class BasePluginFragment extends SherlockFragment{
 
 	private BaseActivity parentActivity;
 	@Override

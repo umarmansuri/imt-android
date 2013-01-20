@@ -1,7 +1,5 @@
 package its.my.time.pages.editable.comptes.compte;
 
-import java.util.ArrayList;
-
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.editable.BaseActivity;
@@ -9,6 +7,9 @@ import its.my.time.util.ActivityUtil;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.menu.MenuGroupe;
+
+import java.util.ArrayList;
+
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 import net.margaritov.preference.colorpicker.ColorPickerDialog.OnColorChangedListener;
 import android.graphics.Color;

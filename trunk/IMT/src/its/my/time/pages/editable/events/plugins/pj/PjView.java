@@ -3,6 +3,7 @@ package its.my.time.pages.editable.events.plugins.pj;
 import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
+import its.my.time.pages.editable.events.plugins.EditableLittleView;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 
@@ -12,31 +13,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class PjView extends FrameLayout{
+public class PjView extends EditableLittleView{
 
 	private PjBean pj;
 
-	public PjView(Context context) {
-		super(context);
-	}
-
-	public PjView(Context context, PjBean pj) {
-		super(context);
+	public PjView(Context context, PjBean pj, boolean isInEditMode) {
+		super(context, isInEditMode);
 		inflate(context, R.layout.activity_event_piecejointe_little, this);
 		setBackgroundColor(Color.WHITE);
 		this.pj = pj;
-
 		initialiseDetails();
 	}
 
 	private void initialiseDetails() {
+		super.initialiseValues();
+		
 		UtilisateurBean user = new UtilisateurBean();
 		user = DatabaseUtil.getUtilisateurRepository(getContext()).getById(pj.getUid());
 

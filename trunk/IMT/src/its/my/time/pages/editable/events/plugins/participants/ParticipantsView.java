@@ -2,25 +2,21 @@ package its.my.time.pages.editable.events.plugins.participants;
 
 import its.my.time.R;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
+import its.my.time.pages.editable.events.plugins.EditableLittleView;
 import android.content.Context;
 import android.graphics.Color;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class ParticipantsView extends FrameLayout{
+public class ParticipantsView extends EditableLittleView{
 
 	private UtilisateurBean utilisateur;
 	
-	public ParticipantsView(Context context) {
-		super(context);
-	}
 	
-	public ParticipantsView(Context context, UtilisateurBean utilisateur) {
-		super(context);
+	public ParticipantsView(Context context, UtilisateurBean utilisateur, boolean isInEditMode) {
+		super(context, isInEditMode);
 		inflate(context, R.layout.activity_event_participant_little, this);
 		setBackgroundColor(Color.WHITE);
 		this.utilisateur = utilisateur;
-		
 		initialiseDetails();
 	}
 

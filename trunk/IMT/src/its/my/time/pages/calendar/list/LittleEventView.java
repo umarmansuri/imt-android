@@ -2,7 +2,6 @@ package its.my.time.pages.calendar.list;
 
 import its.my.time.R;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.util.ActivityUtil;
 import android.content.Context;
 import android.view.View;

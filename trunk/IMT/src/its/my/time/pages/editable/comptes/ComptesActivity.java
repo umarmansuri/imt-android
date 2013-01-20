@@ -171,7 +171,7 @@ public class ComptesActivity extends MenuActivity {
 			dr.setColor(getItem(position).getColor());
 			v.findViewById(R.id.activity_comptes_compte_color).setBackgroundDrawable(dr);
 			MooncakeIcone icone = (MooncakeIcone)v.findViewById(R.id.delete);
-			icone.setIconeRes(MooncakeIcone.icon_trash);
+			icone.setIconeRes(MooncakeIcone.icon_minus_sign);
 			if(removable){
 				icone.setVisibility(View.VISIBLE);
 				icone.setEnabled(true);

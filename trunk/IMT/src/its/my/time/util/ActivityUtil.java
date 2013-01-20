@@ -3,7 +3,6 @@ package its.my.time.util;
 import its.my.time.R;
 import its.my.time.SplashActivity;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
-import its.my.time.pages.MenuActivity;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.editable.comptes.ComptesActivity;
 import its.my.time.pages.editable.comptes.compte.CompteActivity;

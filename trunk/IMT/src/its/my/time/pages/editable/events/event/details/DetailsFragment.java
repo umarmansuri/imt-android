@@ -1,8 +1,9 @@
-package its.my.time.pages.editable.events.plugins.details;
+package its.my.time.pages.editable.events.event.details;
 
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.Switcher;
@@ -15,16 +16,17 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class DetailsView extends FrameLayout {
+public class DetailsFragment extends BasePluginFragment {
 
 	private EventBaseBean event;
 
@@ -41,25 +43,33 @@ public class DetailsView extends FrameLayout {
 
 	private List<CompteBean> mListCompte;
 
-	public DetailsView(Context context, EventBaseBean event) {
-		super(context);
-		addView(inflate(context, R.layout.activity_event_details, null));
-		setBackgroundColor(Color.WHITE);
+	private Context context;
 
+	private View view;
+
+	public DetailsFragment(EventBaseBean event) {
 		this.event = event;
+	}
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		view = inflater.inflate(R.layout.activity_event_details, null);
+		view.setBackgroundColor(Color.WHITE);
 		initialiseValues();
+		
+		return view ;
 	}
 
 	private void initialiseValues() {
-		mTextJourDeb = (DateButton) findViewById(R.id.activity_event_details_text_ddeb);
+		mTextJourDeb = (DateButton) view.findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourDeb.setDate(event.gethDeb());
 		
-		mTextHeureDeb = (TimeButton) findViewById(R.id.activity_event_details_text_hdeb);
+		mTextHeureDeb = (TimeButton) view.findViewById(R.id.activity_event_details_text_hdeb);
 		mTextHeureDeb.setDate(event.gethDeb());
 
-		mTextHeureFin = (TimeButton) findViewById(R.id.activity_event_details_text_hfin);
-		mTextJourFin = (DateButton) findViewById(R.id.activity_event_details_text_dfin);
+		mTextHeureFin = (TimeButton) view.findViewById(R.id.activity_event_details_text_hfin);
+		mTextJourFin = (DateButton) view.findViewById(R.id.activity_event_details_text_dfin);
 
 
 		if (event.gethFin() != null) {
@@ -67,15 +77,15 @@ public class DetailsView extends FrameLayout {
 			mTextJourFin.setDate(event.gethFin());
 		}
 
-		mListCompte = DatabaseUtil.getCompteRepository(getContext())
-				.getAllCompteByUid(PreferencesUtil.getCurrentUid(getContext()));
+		mListCompte = DatabaseUtil.getCompteRepository(getActivity())
+				.getAllCompteByUid(PreferencesUtil.getCurrentUid(getActivity()));
 		mListCompteLabels = new ArrayList<String>();
 		for (CompteBean compte : mListCompte) {
 			mListCompteLabels.add(compte.getTitle());
 		}
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_spinner_item, mListCompteLabels);
-		mSpinnerCompte = (Spinner) findViewById(R.id.activity_event_details_spinner_compte);
+		mSpinnerCompte = (Spinner) view.findViewById(R.id.activity_event_details_spinner_compte);
 		mSpinnerCompte.setAdapter(adapter);
 		mSpinnerCompte.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -93,14 +103,14 @@ public class DetailsView extends FrameLayout {
 
 		array_recurrence = getResources().getStringArray(R.array.array_recurrence);
 
-		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,array_recurrence);
-		Spinner mSpinnerRecurrence = (Spinner) findViewById(R.id.activity_event_details_spinner_recurrence);
+		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,array_recurrence);
+		Spinner mSpinnerRecurrence = (Spinner) view.findViewById(R.id.activity_event_details_spinner_recurrence);
 		mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
-		mTextDetails = (TextView) findViewById(R.id.activity_event_details_text_details);
+		mTextDetails = (TextView) view.findViewById(R.id.activity_event_details_text_details);
 		mTextDetails.setText(event.getDetails());
 
-		mSwitchAllDay = (Switcher) findViewById(R.id.activity_event_details_switcher_allDay);
+		mSwitchAllDay = (Switcher) view.findViewById(R.id.activity_event_details_switcher_allDay);
 		mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
 			public void onStateCHangedListener(Switcher switcher,
 					boolean isChecked) {
@@ -127,4 +137,31 @@ public class DetailsView extends FrameLayout {
 
 
 	};
+	@Override
+	public void launchEdit() {
+	}
+
+	@Override
+	public void launchSave() {
+	}
+
+	@Override
+	public void launchCancel() {
+	}
+	
+
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
+
+	@Override
+	public boolean isCancelable() {
+		return true;
+	}
+
+	@Override
+	public boolean isSavable() {
+		return true;
+	}
 }
