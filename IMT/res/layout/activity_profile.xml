@@ -161,7 +161,7 @@
                         android:layout_margin="10dp"
                         android:ellipsize="end"
                         android:hint="@string/view_profil_birthday"
-                        android:inputType="textPersonName"
+                        android:inputType="datetime"
                         android:textSize="@dimen/text_size_small" />
                 </FrameLayout>
 

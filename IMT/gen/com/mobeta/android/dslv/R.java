@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.actionbarsherlock;
+package com.mobeta.android.dslv;
 
 public final class R {
     public static final class anim {

@@ -8,9 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/black" >
+        android:background="@color/grey" >
 
         <TextView
             android:id="@+id/event_comment_owner"
@@ -18,7 +16,9 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="left"
-            android:hint="Pseudo" >
+            android:hint="Pseudo"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColorHint="@color/black" >
         </TextView>
     </LinearLayout>
 
@@ -31,8 +31,10 @@
             android:id="@+id/event_coment_icone"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:contentDescription="Image Profil"
-            android:layout_centerVertical="true"
             android:src="@drawable/ic_action_profil_black" />
 
         <RelativeLayout
