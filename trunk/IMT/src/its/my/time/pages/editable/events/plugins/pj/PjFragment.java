@@ -1,7 +1,6 @@
 package its.my.time.pages.editable.events.plugins.pj;
 
 import its.my.time.R;
-import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
@@ -34,8 +33,8 @@ public class PjFragment extends BasePluginFragment {
 
 	private static final int PICK_FILE_RESULT_CODE = 1;
 
-	public PjFragment(int eventId) {
-		this.eventId = eventId;
+	public PjFragment(int l) {
+		this.eventId = l;
 	}
 
 	@Override

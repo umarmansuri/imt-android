@@ -18,8 +18,8 @@ public class EventActivity extends BaseEventActivity {
 	@Override
 	public  void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
-		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager(),
-				event));
+		
+		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager(),event));
 	}
 
 	@Override

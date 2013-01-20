@@ -32,8 +32,8 @@ public class CommentairesFragment extends BasePluginFragment {
 	private EditText mTextCommentaire;
 	private ListView mListComment;
 	
-	public CommentairesFragment(int eventId) {
-		this.eventId = eventId;
+	public CommentairesFragment(int l) {
+		this.eventId = l;
 	}
 	
 	@Override
