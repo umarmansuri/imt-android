@@ -8,9 +8,9 @@ import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragme
 import its.my.time.pages.editable.events.plugins.pj.PjFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
-public class MeetingPagerAdapter extends FragmentStatePagerAdapter {
+public class MeetingPagerAdapter extends FragmentPagerAdapter {
 	
 	private EventBaseBean event;
 

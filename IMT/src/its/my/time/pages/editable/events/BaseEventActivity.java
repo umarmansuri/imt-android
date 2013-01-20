@@ -33,9 +33,8 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_event);
 
-		if (bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			event = DatabaseUtil.Events.getEventRepository(this).getById(
-					bundle.getLong(ActivityUtil.KEY_EXTRA_ID));
+		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
+			event = DatabaseUtil.Events.getEventRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
 		}
 		if (event == null) {
 			event = new EventBaseBean();
@@ -51,7 +50,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		mPager.setOnPageChangeListener(pageListener);
 
 	}
-
+	
 	@Override
 	protected void initialiseActionBar() {
 		super.initialiseActionBar();
@@ -93,8 +92,6 @@ public abstract class BaseEventActivity extends BaseActivity {
 			String name = makeFragmentName(mPager.getId(), mPager.getCurrentItem());
 			return  (BasePluginFragment) getSupportFragmentManager().findFragmentByTag(name);	
 		}
-
-
 	}
 
 	private static String makeFragmentName(int viewId, int index) {

@@ -81,17 +81,9 @@ public class ActivityUtil {
 		return intent;
 	}
 
-	public static void startEventActivity(Context context, long id, int typeEvent) {
+	public static void startEventActivity(Context context, int id, int typeEvent) {
 		Intent intent = getEventIntentFromType(context, typeEvent);
 		intent.putExtra(KEY_EXTRA_ID, id);
-		context.startActivity(intent);
-	}
-
-	private static void startEventActivity(Context context, Calendar calHeure, int typeEvent, boolean isAllDay) {
-		Intent intent = getEventIntentFromType(context, typeEvent);
-		intent.putExtra(KEY_EXTRA_ID, -1);
-		intent.putExtra(KEY_EXTRA_ISO_TIME, DateUtil.getTimeInIso(calHeure));
-		intent.putExtra(KEY_EXTRA_ALL_DAY, isAllDay);
 		context.startActivity(intent);
 	}
 
@@ -118,6 +110,14 @@ public class ActivityUtil {
 		});
 		AlertDialog alert = builder.create();
 		alert.show();
+	}
+
+	private static void startEventActivity(Context context, Calendar calHeure, int typeEvent, boolean isAllDay) {
+		Intent intent = getEventIntentFromType(context, typeEvent);
+		intent.putExtra(KEY_EXTRA_ID, -1);
+		intent.putExtra(KEY_EXTRA_ISO_TIME, DateUtil.getTimeInIso(calHeure));
+		intent.putExtra(KEY_EXTRA_ALL_DAY, isAllDay);
+		context.startActivity(intent);
 	}
 }
 

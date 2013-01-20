@@ -58,8 +58,8 @@ public class OdjFragment extends BasePluginFragment {
 		}
 	};
 
-	public OdjFragment(int eventId) {
-		this.eventId = eventId;
+	public OdjFragment(int l) {
+		this.eventId = l;
 	}
 
 	@Override

@@ -50,7 +50,6 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		registerReceiver(LOGOUT_Receiver, new IntentFilter(ActivityUtil.ACTION_FINISH));
 
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		super.setContentView(R.layout.activity_base);
@@ -75,9 +74,16 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	@Override
 	protected void onResume() {
 		initialiseMenu();
+		registerReceiver(LOGOUT_Receiver, new IntentFilter(ActivityUtil.ACTION_FINISH));
 		super.onResume();
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		unregisterReceiver(LOGOUT_Receiver);
+		super.onSaveInstanceState(outState);
+	}
+	
 	protected void initialiseActionBar() {
 		ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setBackgroundDrawable(getResources().getDrawable(

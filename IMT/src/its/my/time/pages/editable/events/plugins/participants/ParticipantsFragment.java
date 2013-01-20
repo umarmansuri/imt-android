@@ -30,8 +30,8 @@ public class ParticipantsFragment extends BasePluginFragment {
 		this(-1);
 	}
 	
-	public ParticipantsFragment(int eventId) {
-		this.eventId = eventId;
+	public ParticipantsFragment(int l) {
+		this.eventId = l;
 	}
 	
 	@Override

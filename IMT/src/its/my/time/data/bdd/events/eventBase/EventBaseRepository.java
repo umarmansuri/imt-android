@@ -134,7 +134,7 @@ public class EventBaseRepository extends DatabaseHandler{
 				initialValues.put(KEY_DETAILS_ID, event.getDetailsId());
 				initialValues.put(KEY_TYPE_ID, event.getTypeId());
 				initialValues.put(KEY_ALL_DAY, event.isAllDay());
-				int id = event.getId();
+				long id = event.getId();
 				open();
 				long res = this.db.update(DATABASE_TABLE, initialValues, KEY_ID + "=?", new String[] { "" + id});
 				close();

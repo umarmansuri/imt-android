@@ -1,11 +1,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.AppTheme" parent="Theme.Sherlock.Light.DarkActionBar">
-	    <item name="android:windowBackground">@android:color/white</item>
-	    <item name="android:colorBackground">@android:color/white</item>
-	    
-	    <item name="android:buttonStyle">@style/Btn.Default</item>
-	    <item name="android:editTextStyle">@style/champs_texte</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="actionBarSize">48dip</item>
+        <item name="android:actionBarSize">48dip</item>
+        <item name="android:buttonStyle">@style/Btn.Default</item>
+        <item name="android:editTextStyle">@style/champs_texte</item>
     </style>
 
     <style name="StyledActionBarTabText" parent="@android:style/TextAppearance.Medium">

@@ -37,10 +37,8 @@ public class CallActivity extends BaseEventActivity {
 		super.initialiseActionBar();
 		ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		String[] items = new String[] { CallPagerAdapter.TITLE_PAGE_DETAILS,
-				CallPagerAdapter.TITLE_PAGE_COMMENTAIRES };
-		mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
-				R.layout.navigation_spinner_item, items), navigationListener);
+		String[] items = new String[] { CallPagerAdapter.TITLE_PAGE_DETAILS,CallPagerAdapter.TITLE_PAGE_COMMENTAIRES };
+		mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,R.layout.navigation_spinner_item, items), navigationListener);
 	}
 
 	
