@@ -1,7 +1,9 @@
 package its.my.time.util;
 
 import its.my.time.R;
+import its.my.time.SplashActivity;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.pages.MenuActivity;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.editable.comptes.ComptesActivity;
 import its.my.time.pages.editable.comptes.compte.CompteActivity;
@@ -23,6 +25,21 @@ public class ActivityUtil {
 	public static final String KEY_EXTRA_ID = "KEY_ID";
 	public static final String KEY_EXTRA_ISO_TIME = "KEY_EXTRA_ISO_TIME";
 	public static final String KEY_EXTRA_ALL_DAY = "KEY_EXTRA_ALL_DAY";
+	
+	public static final String ACTION_FINISH = "ACTION_FINISH";
+	
+	public static void logout(Context context) {
+		PreferencesUtil.setCurrentUid(context, -1);
+		Intent i=new Intent(ACTION_FINISH);
+        i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
+        context.sendBroadcast(i);
+		startSplashActivity(context);
+	}
+
+	public static void startSplashActivity(Context context) {
+		Intent intent = new Intent(context, SplashActivity.class);
+		context.startActivity(intent);
+	}
 	
 	public static void startProfilActivity(Context context) {
 		Intent intent = new Intent(context, ProfilActivity.class);
