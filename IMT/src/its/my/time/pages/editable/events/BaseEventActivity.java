@@ -3,7 +3,7 @@ package its.my.time.pages.editable.events;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.BaseActivity;
-import its.my.time.pages.editable.events.plugins.BaseFragment;
+import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
@@ -85,13 +85,13 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 	};
 
-	public BaseFragment getActiveFragment() {
+	public BasePluginFragment getActiveFragment() {
 		if(mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
 			FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) mPager.getAdapter();
-			return (BaseFragment) a.instantiateItem(mPager, mPager.getCurrentItem());	
+			return (BasePluginFragment) a.instantiateItem(mPager, mPager.getCurrentItem());	
 		} else {
 			String name = makeFragmentName(mPager.getId(), mPager.getCurrentItem());
-			return  (BaseFragment) getSupportFragmentManager().findFragmentByTag(name);	
+			return  (BasePluginFragment) getSupportFragmentManager().findFragmentByTag(name);	
 		}
 
 

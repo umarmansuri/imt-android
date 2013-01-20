@@ -1,29 +1,32 @@
 package its.my.time.pages.editable.events.plugins.pj;
 
 import its.my.time.R;
+import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
-import its.my.time.pages.editable.events.plugins.BaseFragment;
+import its.my.time.data.bdd.events.plugins.pj.PjRepository;
+import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DatabaseUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
-public class PjFragment extends BaseFragment {
+public class PjFragment extends BasePluginFragment {
 
 	private int eventId;
 	private Button mButtonSend;
@@ -42,7 +45,7 @@ public class PjFragment extends BaseFragment {
 		RelativeLayout mView = (RelativeLayout) inflater.inflate(
 				R.layout.activity_event_piecejointe, null);
 		mListPj = (ListView) mView.findViewById(R.id.event_pj_liste);
-		mListPj.setAdapter(new PjAdapter(getActivity(), eventId));
+		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
 
 		mButtonSend = (Button) mView.findViewById(R.id.event_pj_Btenvoi);
 
@@ -96,7 +99,7 @@ public class PjFragment extends BaseFragment {
 							"Votre pièce jointe n'a pu être envoyée.",
 							Toast.LENGTH_SHORT).show();
 				}
-				mListPj.setAdapter(new PjAdapter(getActivity(), eventId));
+				mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
 			}
 		};
 		break;
@@ -104,20 +107,17 @@ public class PjFragment extends BaseFragment {
 
 	@Override
 	public void launchEdit() {
-		// TODO Auto-generated method stub
-
+		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, true));
 	}
 
 	@Override
 	public void launchSave() {
-		// TODO Auto-generated method stub
-
+		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
 	}
 
 	@Override
 	public void launchCancel() {
-		// TODO Auto-generated method stub
-
+		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
 	}
 
 	@Override
@@ -133,6 +133,56 @@ public class PjFragment extends BaseFragment {
 	@Override
 	public boolean isSavable() {
 		return true;
+	}
+	
+	private class PjAdapter implements ListAdapter{
+
+		private List<PjBean> pjs;
+		private boolean isInEditMode;
+
+		public PjAdapter(Context context, int id, boolean isInEditMode) {
+			this.isInEditMode = isInEditMode;
+			loadNextEvents();
+		}
+
+		private void loadNextEvents() {
+			if(pjs == null) {
+				pjs = new ArrayList<PjBean>();
+			}
+			pjs = DatabaseUtil.Plugins.getPjRepository(getActivity()).getAllByEid(eventId);
+		}
+
+		@Override
+		public int getCount() {
+			if(pjs != null) {
+				return pjs.size();
+			}
+			return 0;
+		}
+
+		@Override
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			PjView view = new PjView(getActivity(), pjs.get(position), isInEditMode);
+			view.setOnDeleteClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					new PjRepository(getActivity()).deletepj(pjs.get(position).getId());
+					mListPj.setAdapter(new PjAdapter(getActivity(), eventId, true));	
+				}
+			});
+			return view;
+		}
+
+		@Override public int getViewTypeCount() {return 1;}
+		@Override public boolean hasStableIds() {return true;}
+		@Override public boolean isEmpty() {if(pjs == null | pjs.size() == 0) {return true;} else {return false;}}
+		@Override public Object getItem(int position) {return null;}
+		@Override public long getItemId(int position) {return pjs.get(position).getId();}
+		@Override public int getItemViewType(int position) {return 0;}
+		@Override public void registerDataSetObserver(DataSetObserver observer) {	}
+		@Override public void unregisterDataSetObserver(DataSetObserver observer) {}
+		@Override public boolean areAllItemsEnabled() {return false;}
+		@Override public boolean isEnabled(int position) {return false;}
 	}
 }
 

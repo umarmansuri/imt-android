@@ -1,8 +1,8 @@
 package its.my.time.pages.editable.events.meeting;
 
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.pages.editable.events.event.details.DetailsFragment;
 import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
-import its.my.time.pages.editable.events.plugins.details.DetailsFragment;
 import its.my.time.pages.editable.events.plugins.odj.OdjFragment;
 import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
 import its.my.time.pages.editable.events.plugins.pj.PjFragment;

@@ -1,7 +1,6 @@
 package its.my.time.data.bdd.events.plugins.odj;
 
 import its.my.time.data.bdd.DatabaseHandler;
-import its.my.time.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;

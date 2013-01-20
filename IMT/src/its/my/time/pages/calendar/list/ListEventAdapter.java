@@ -1,10 +1,8 @@
 package its.my.time.pages.calendar.list;
 
-import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.util.DatabaseUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
