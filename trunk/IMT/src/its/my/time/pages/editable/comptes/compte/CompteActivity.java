@@ -42,7 +42,6 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
-		setContentView(R.layout.activity_compte);
 
 		Bundle bundle = getIntent().getExtras();
 		if(bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
@@ -55,6 +54,8 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 		}
 
 		super.onCreate(bundle);
+
+		setContentView(R.layout.activity_compte);
 	}
 
 	@Override

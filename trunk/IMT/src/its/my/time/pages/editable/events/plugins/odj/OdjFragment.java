@@ -113,5 +113,21 @@ public class OdjFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		
 	}
+	
+
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
+
+	@Override
+	public boolean isCancelable() {
+		return true;
+	}
+
+	@Override
+	public boolean isSavable() {
+		return true;
+	}
 
 }

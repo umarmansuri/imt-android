@@ -64,7 +64,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		mMainMenu.getLayoutParams().width = mMainMenuWidth;
 		mMainMenu.invalidate();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		initialiseMenu();
@@ -296,17 +296,23 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	protected abstract boolean onBackButtonPressed();
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		boolean res = false;
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			if(isMenuShowed) {
 				changeMainMenuVisibility(false, true);
 				return true;
 			}
-			return onBackButtonPressed();
+			res = onBackButtonPressed();
+			break;
 		case KeyEvent.KEYCODE_MENU:
 			changeMainMenuVisibility(!isMenuShowed, true);
-			return true;
+			res = true;
+			break;
 		}
-		return super.onKeyUp(keyCode, event);
+		if(res == false) {
+			return super.onKeyUp(keyCode, event);
+		}
+		return true;
 	}
 }

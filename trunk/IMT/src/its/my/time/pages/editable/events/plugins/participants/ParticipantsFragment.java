@@ -50,4 +50,19 @@ public class ParticipantsFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean isEditable() {
+		return false;
+	}
+
+	@Override
+	public boolean isCancelable() {
+		return true;
+	}
+
+	@Override
+	public boolean isSavable() {
+		return true;
+	}
 }
