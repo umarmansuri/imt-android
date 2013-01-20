@@ -154,9 +154,6 @@ OnPageChangeListener {
 		menuGroupe = new MenuGroupe("Réglages",  MooncakeIcone.icon_settings);
 		menuGroupes.add(menuGroupe);
 
-
-		menuGroupe = new MenuGroupe("Déconnexion",  MooncakeIcone.icon_off);
-		menuGroupes.add(menuGroupe);
 		return menuGroupes;
 	}
 

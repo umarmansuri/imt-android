@@ -1,6 +1,7 @@
 package its.my.time.pages;
 
 import its.my.time.R;
+import its.my.time.util.ActivityUtil;
 import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.ELVAdapter;
 import its.my.time.view.menu.ELVAdapter.MenuChildViewHolder;
@@ -9,6 +10,10 @@ import its.my.time.view.menu.MenuGroupe;
 
 import java.util.ArrayList;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -28,6 +33,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -44,6 +50,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		registerReceiver(LOGOUT_Receiver, new IntentFilter(ActivityUtil.ACTION_FINISH));
 
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		super.setContentView(R.layout.activity_base);
@@ -96,7 +103,11 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						onMenuChildClick(parent, v, groupPosition, childPosition, id);	
+						if(groupPosition < menuGroupes.size() - 2) {
+							onMenuChildClick(parent, v, groupPosition, childPosition, id);
+						} else {
+							//TODO si un menu 'constant' contient de enfants 
+						}
 					}
 				}, (long) (ANIMATION_DURATION*1.5));
 			} else {
@@ -114,7 +125,15 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						onMenuGroupClick(parent, v, groupPosition, id);	
+						if(groupPosition < menuGroupes.size() - 2) {
+							onMenuGroupClick(parent, v, groupPosition, id);	
+						} else {
+							if(groupPosition == menuGroupes.size() - 2) {
+								Toast.makeText(MenuActivity.this, "A propos", Toast.LENGTH_SHORT).show();
+							} else if(groupPosition == menuGroupes.size() - 1) {
+								ActivityUtil.logout(MenuActivity.this);
+							} 
+						}
 					}
 				}, (long) (ANIMATION_DURATION*1.5));			
 			} else if(menuGroupes.get(groupPosition).isSwitcher()) {
@@ -164,6 +183,11 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		menuGroupes = new ArrayList<MenuGroupe>();
 		menuGroupes = onMainMenuCreated(menuGroupes);
 		if(menuGroupes == null) {menuGroupes = new ArrayList<MenuGroupe>();}
+		MenuGroupe menuGroupe = new MenuGroupe("A propos",  MooncakeIcone.icon_info_sign);
+		menuGroupes.add(menuGroupe);
+		menuGroupe = new MenuGroupe("Déconnexion",  MooncakeIcone.icon_off);
+		menuGroupes.add(menuGroupe);
+
 		ELVAdapter adapter = new ELVAdapter(this, menuGroupes);
 		adapter.setOnItemSwitchedListener(new OnItemSwitchedListener() {
 			@Override
@@ -315,4 +339,19 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		}
 		return true;
 	}
+
+
+	private BroadcastReceiver LOGOUT_Receiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			String action_finish = arg1.getStringExtra("FINISH");
+
+			if(action_finish.equalsIgnoreCase("ACTION.FINISH.LOGOUT"))
+			{
+				finish();
+				//this line unregister the receiver,so that i run only one time and when next time logout is clicked then again it called
+				unregisterReceiver(LOGOUT_Receiver);
+			}
+		}
+	};
 }
