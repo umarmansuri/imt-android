@@ -51,7 +51,7 @@ public class PjFragment extends BaseFragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType("*/*");
-				
+
 				intent.addCategory(Intent.CATEGORY_OPENABLE);
 				Intent i = Intent.createChooser(intent, "File");
 				try {
@@ -100,23 +100,39 @@ public class PjFragment extends BaseFragment {
 			}
 		};
 		break;
-	}}
+		}}
 
 	@Override
 	public void launchEdit() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void launchSave() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void launchCancel() {
 		// TODO Auto-generated method stub
-		
-	}}
+
+	}
+
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
+
+	@Override
+	public boolean isCancelable() {
+		return true;
+	}
+
+	@Override
+	public boolean isSavable() {
+		return true;
+	}
+}
 

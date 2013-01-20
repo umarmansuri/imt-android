@@ -116,4 +116,16 @@ public abstract class BaseActivity extends MenuActivity {
 	protected abstract void showSave();
 	protected abstract void showCancel();
 	protected abstract void onViewCreated();
+
+	public void setEditVisibility(boolean visible) {
+		menu.getItem(INDEX_MENU_EDIT).setVisible(visible);
+	}
+
+	public void setCancelVisibility(boolean visible) {
+		menu.getItem(INDEX_MENU_CANCEL).setVisible(visible);
+	}
+
+	public void setSaveVisibility(boolean visible) {
+		menu.getItem(INDEX_MENU_SAVE).setVisible(visible);
+	}
 }
