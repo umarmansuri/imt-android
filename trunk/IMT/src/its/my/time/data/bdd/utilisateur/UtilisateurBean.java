@@ -1,17 +1,23 @@
 package its.my.time.data.bdd.utilisateur;
 
+import java.util.Calendar;
+
 
 public class UtilisateurBean {
 	
 	private int id;
 	private String nom;
 	private String prenom;
+	private String pseudo;
+	private Calendar dateAniv;
+	private String mdp;
 	private String tel;
 	private String mail;
 	private String adresse;
 	private int codePostal;
 	private String ville;
 	private String pays;
+	
 	public int getId() {
 		return id;
 	}
@@ -66,7 +72,23 @@ public class UtilisateurBean {
 	public void setPays(String pays) {
 		this.pays = pays;
 	}
+	public String getPseudo() {
+		return pseudo;
+	}
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+	public String getMdp() {
+		return mdp;
+	}
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
+	}
+	public Calendar getDateAniv() {
+		return dateAniv;
+	}
+	public void setDateAniv(Calendar dateAniv) {
+		this.dateAniv = dateAniv;
+	}
 
-	
-	
 }

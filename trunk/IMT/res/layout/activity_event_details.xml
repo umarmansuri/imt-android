@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:text="Début : " />
+                    android:text="@string/view_event_detail_debut" />
 
                 <its.my.time.view.date.DateButton
                     android:id="@+id/activity_event_details_text_ddeb"
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="Fin : " />
+                    android:text="@string/view_event_detail_fin" />
 
                 <its.my.time.view.date.DateButton
                     android:id="@+id/activity_event_details_text_dfin"
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Journée : " />
+                    android:text="@string/view_event_detail_allDay" />
 
                 <its.my.time.view.Switcher
                     android:id="@+id/activity_event_details_switcher_allDay"
