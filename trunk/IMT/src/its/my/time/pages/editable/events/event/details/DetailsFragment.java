@@ -9,6 +9,7 @@ import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DateUtil;
 import its.my.time.util.EventTypes;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.util.ViewUtil;
 import its.my.time.view.Switcher;
 import its.my.time.view.Switcher.OnStateChangedListener;
 import its.my.time.view.date.DateButton;
@@ -75,10 +76,6 @@ public class DetailsFragment extends BasePluginFragment {
 		this.typeEvent = typeEvent;
 	}
 
-	public DetailsFragment() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -87,8 +84,7 @@ public class DetailsFragment extends BasePluginFragment {
 
 		final View customView = getCustomView();
 		if (customView != null) {
-			((FrameLayout) this.view.findViewById(R.id.include))
-					.addView(customView);
+			((FrameLayout) this.view.findViewById(R.id.include)).addView(customView);
 		}
 
 		this.mTextTitle = (EditText) this.view
@@ -118,6 +114,9 @@ public class DetailsFragment extends BasePluginFragment {
 			initialiseValueFromInstance();
 		}
 		initialiseActions();
+
+		ViewUtil.enableAllView(view, false);
+		
 		return this.view;
 	}
 
@@ -166,7 +165,7 @@ public class DetailsFragment extends BasePluginFragment {
 
 	public void initialiseActions() {
 		this.mListCompte = new CompteRepository(getActivity())
-				.getAllCompteByUid(PreferencesUtil.getCurrentUid(getActivity()));
+		.getAllCompteByUid(PreferencesUtil.getCurrentUid(getActivity()));
 		this.mListCompteLabels = new ArrayList<String>();
 		int comptePosition = 0;
 		int i = 0;
@@ -184,20 +183,20 @@ public class DetailsFragment extends BasePluginFragment {
 		this.mSpinnerCompte.setAdapter(adapter);
 		this.mSpinnerCompte.setSelection(comptePosition);
 		this.mSpinnerCompte
-				.setOnItemSelectedListener(new OnItemSelectedListener() {
-					@Override
-					public void onItemSelected(AdapterView<?> container,
-							View view, int position, long id) {
-						DetailsFragment.this.event
-								.setCid(DetailsFragment.this.mListCompte.get(
-										position).getId());
-					}
+		.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> container,
+					View view, int position, long id) {
+				DetailsFragment.this.event
+				.setCid(DetailsFragment.this.mListCompte.get(
+						position).getId());
+			}
 
-					@Override
-					public void onNothingSelected(AdapterView<?> container) {
-						DetailsFragment.this.event.setCid(-1);
-					}
-				});
+			@Override
+			public void onNothingSelected(AdapterView<?> container) {
+				DetailsFragment.this.event.setCid(-1);
+			}
+		});
 
 		this.array_recurrence = getResources().getStringArray(
 				R.array.array_recurrence);
@@ -206,35 +205,35 @@ public class DetailsFragment extends BasePluginFragment {
 				getActivity(), android.R.layout.simple_spinner_item,
 				this.array_recurrence);
 		adapter_recurrence
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
 		this.mSwitchAllDay
-				.setOnStateChangedListener(new OnStateChangedListener() {
-					@Override
-					public void onStateCHangedListener(Switcher switcher,
-							boolean isChecked) {
-						if (isChecked == true) {
-							DetailsFragment.this.mTextJourDeb.setEnabled(false);
-							DetailsFragment.this.mTextJourFin.setEnabled(false);
-							DetailsFragment.this.mTextHeureDeb
-									.setEnabled(false);
-							DetailsFragment.this.mTextHeureFin
-									.setEnabled(false);
+		.setOnStateChangedListener(new OnStateChangedListener() {
+			@Override
+			public void onStateCHangedListener(Switcher switcher,
+					boolean isChecked) {
+				if (isChecked == true) {
+					DetailsFragment.this.mTextJourDeb.setEnabled(false);
+					DetailsFragment.this.mTextJourFin.setEnabled(false);
+					DetailsFragment.this.mTextHeureDeb
+					.setEnabled(false);
+					DetailsFragment.this.mTextHeureFin
+					.setEnabled(false);
 
-							DetailsFragment.this.mTextJourFin
-									.setText(DetailsFragment.this.mTextJourDeb
-											.getText());
-							DetailsFragment.this.mTextHeureDeb.setText("00:00");
-							DetailsFragment.this.mTextHeureFin.setText("23:59");
-						} else {
-							DetailsFragment.this.mTextJourDeb.setEnabled(true);
-							DetailsFragment.this.mTextHeureDeb.setEnabled(true);
-							DetailsFragment.this.mTextJourFin.setEnabled(true);
-							DetailsFragment.this.mTextHeureFin.setEnabled(true);
-						}
-					}
-				});
+					DetailsFragment.this.mTextJourFin
+					.setText(DetailsFragment.this.mTextJourDeb
+							.getText());
+					DetailsFragment.this.mTextHeureDeb.setText("00:00");
+					DetailsFragment.this.mTextHeureFin.setText("23:59");
+				} else {
+					DetailsFragment.this.mTextJourDeb.setEnabled(true);
+					DetailsFragment.this.mTextHeureDeb.setEnabled(true);
+					DetailsFragment.this.mTextJourFin.setEnabled(true);
+					DetailsFragment.this.mTextHeureFin.setEnabled(true);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -291,13 +290,14 @@ public class DetailsFragment extends BasePluginFragment {
 
 	@Override
 	public void launchEdit() {
+		ViewUtil.enableAllView(view, true);
 	}
 
 	@Override
 	public void launchSave() {
+		ViewUtil.enableAllView(view, false);
 		this.event.setAllDay(this.mSwitchAllDay.isChecked());
-		this.event.setCid(this.mListCompte.get(
-				this.mSpinnerCompte.getSelectedItemPosition()).getId());
+		this.event.setCid(this.mListCompte.get(this.mSpinnerCompte.getSelectedItemPosition()).getId());
 		this.event.setDetails(this.mTextDetails.getText().toString());
 
 		Calendar cal = new GregorianCalendar(this.mTextJourDeb.getDate().get(
@@ -316,12 +316,21 @@ public class DetailsFragment extends BasePluginFragment {
 		this.event.sethFin(cal);
 		this.event.setTitle(this.mTextTitle.getText().toString());
 		this.event.setTypeId(this.typeEvent);
-		this.event.setId((int) new EventBaseRepository(getActivity())
-				.insertEvent(this.event));
+		if(this.event.getId() == -1) {
+			this.event.setId((int) new EventBaseRepository(getActivity()).insertEvent(this.event));
+		} else {
+			new EventBaseRepository(getActivity()).updateEvent(this.event);
+		}
 	}
 
 	@Override
 	public void launchCancel() {
+		if(this.event.getId() == -1) {
+			getSherlockActivity().finish();
+		} else {
+			ViewUtil.enableAllView(view, false);
+			initialiseValuesFromEvent();
+		}
 	}
 
 	@Override

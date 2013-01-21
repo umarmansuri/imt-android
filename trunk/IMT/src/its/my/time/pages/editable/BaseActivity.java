@@ -16,13 +16,14 @@ public abstract class BaseActivity extends MenuActivity {
 	public static final int INDEX_MENU_EDIT = 0;
 	public static final int INDEX_MENU_SAVE = 1;
 	public static final int INDEX_MENU_CANCEL = 2;
+	
+	private boolean isNew;
 
 	@Override
 	public void onCreate(Bundle bundle) {
 		initialiseActionBar();
 		super.onCreate(bundle);
-		overridePendingTransition(android.R.anim.fade_in,
-				android.R.anim.fade_out);
+		overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 	}
 
 	protected abstract CharSequence getActionBarTitle();
@@ -85,30 +86,26 @@ public abstract class BaseActivity extends MenuActivity {
 		onViewCreated();
 		return res;
 	}
-
-	private void launchEdit() {
+	
+	protected void launchEdit() {
 		this.menu.getItem(INDEX_MENU_EDIT).setVisible(false);
 		this.menu.getItem(INDEX_MENU_SAVE).setVisible(true);
 		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(true);
 		showEdit();
 	}
 
-	private void launchSave() {
+	protected void launchSave() {
 		this.menu.getItem(INDEX_MENU_EDIT).setVisible(true);
 		this.menu.getItem(INDEX_MENU_SAVE).setVisible(false);
 		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
 		showSave();
 	}
 
-	private void launchCancel() {
+	protected void launchCancel() {
 		this.menu.getItem(INDEX_MENU_EDIT).setVisible(true);
 		this.menu.getItem(INDEX_MENU_SAVE).setVisible(false);
 		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
 		showCancel();
-	}
-
-	public void launchEditMode() {
-		launchEdit();
 	}
 
 	protected abstract void showEdit();
