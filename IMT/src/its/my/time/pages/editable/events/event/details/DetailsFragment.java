@@ -8,6 +8,7 @@ import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.util.EventTypes;
 import its.my.time.view.Switcher;
 import its.my.time.view.Switcher.OnStateChangedListener;
 import its.my.time.view.date.DateButton;
@@ -64,9 +65,19 @@ public class DetailsFragment extends BasePluginFragment {
 	private int typeEvent;
 	private static Bundle state;
 
+
+	public DetailsFragment(EventBaseBean event) {
+		this.event = event;
+		this.typeEvent = EventTypes.TYPE_BASE;
+	}
+	
 	public DetailsFragment(EventBaseBean event, int typeEvent) {
 		this.event = event;
 		this.typeEvent = typeEvent;
+	}
+
+	public DetailsFragment() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -245,6 +256,11 @@ public class DetailsFragment extends BasePluginFragment {
 		this.event = event;
 	}
 
+	@Override
+	public String getTitle() {
+		return "Evénement";
+	}
+	
 	@Override
 	public void launchEdit() {
 	}

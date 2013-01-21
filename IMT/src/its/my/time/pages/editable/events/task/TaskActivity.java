@@ -1,98 +1,35 @@
 package its.my.time.pages.editable.events.task;
 
 import its.my.time.pages.editable.events.BaseEventActivity;
-import its.my.time.view.menu.MenuGroupe;
+import its.my.time.pages.editable.events.plugins.BasePluginFragment;
+import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
+import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
+import its.my.time.pages.editable.events.plugins.pj.PjFragment;
+import its.my.time.pages.editable.events.task.details.TaskDetailsFragment;
 
 import java.util.ArrayList;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
-
-import com.actionbarsherlock.R;
-import com.actionbarsherlock.app.ActionBar;
-
 public class TaskActivity extends BaseEventActivity {
 
-	@Override
-	public void onCreate(Bundle savedInstance) {
-		super.onCreate(savedInstance);
-		mPager.setAdapter(new TaskPagerAdapter(getSupportFragmentManager(),event));
-	}
 
-	@Override
-	protected void onViewCreated() {
-	}
 	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvelle tâche";
 	}
-
-	@Override
-	protected void initialiseActionBar() {
-
-		super.initialiseActionBar();
-
-		ActionBar mActionBar = getSupportActionBar();
-
-		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		String[] items = new String[] { TaskPagerAdapter.TITLE_PAGE_DETAILS,
-				TaskPagerAdapter.TITLE_PAGE_PARTICIPANTS,
-				TaskPagerAdapter.TITLE_PAGE_COMMENTAIRES,
-				TaskPagerAdapter.TITLE_PAGE_PJ };
-		mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
-				R.layout.navigation_spinner_item, items), navigationListener);
-	}
 	
-	
-	
-	
-
 	@Override
-	protected void onMenuGroupSwitch(View v, int positionGroup,
-			boolean isChecked) {
-		// TODO Auto-generated method stub
+	public ArrayList<BasePluginFragment> getPages() {
+		ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
 		
+		BasePluginFragment fragment = new TaskDetailsFragment(event);
+		fragments.add(fragment);
+		fragment = new ParticipantsFragment(event.getId());
+		fragments.add(fragment);
+		fragment = new CommentairesFragment(event.getId());
+		fragments.add(fragment);
+		fragment = new PjFragment(event.getId());
+		fragments.add(fragment);
+		return fragments;
 	}
 
-	@Override
-	protected void onMenuItemSwitch(View v, int positionGroup,
-			int positionObjet, boolean isChecked) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void onMenuGroupClick(ExpandableListView parent, View v,
-			int groupPosition, long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void onMenuChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected ArrayList<MenuGroupe> onMainMenuCreated(
-			ArrayList<MenuGroupe> menuGroupes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void reload() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected boolean onBackButtonPressed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

@@ -64,16 +64,16 @@ public class ActivityUtil {
 	private static Intent getEventIntentFromType(Context context, int typeEvent) {
 		Intent intent;
 		switch (typeEvent) {
-		case EventBaseRepository.Types.TYPE_TASK:
+		case EventTypes.TYPE_TASK:
 			intent = new Intent(context, TaskActivity.class);
 			break;
-		case EventBaseRepository.Types.TYPE_MEETING:
+		case EventTypes.TYPE_MEETING:
 			intent = new Intent(context, MeetingActivity.class);
 			break;
-		case EventBaseRepository.Types.TYPE_CALL:
+		case EventTypes.TYPE_CALL:
 			intent = new Intent(context, CallActivity.class);
 			break;
-		case EventBaseRepository.Types.TYPE_BASE:
+		case EventTypes.TYPE_BASE:
 		default:
 			intent = new Intent(context, EventActivity.class);
 			break;
@@ -95,10 +95,10 @@ public class ActivityUtil {
 				context.getResources().getString(R.string.label_event_call)
 		};
 		final Integer[] types = new Integer[]{
-				EventBaseRepository.Types.TYPE_BASE,
-				EventBaseRepository.Types.TYPE_MEETING,
-				EventBaseRepository.Types.TYPE_TASK,
-				EventBaseRepository.Types.TYPE_CALL
+				EventTypes.TYPE_BASE,
+				EventTypes.TYPE_MEETING,
+				EventTypes.TYPE_TASK,
+				EventTypes.TYPE_CALL
 		};
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
