@@ -8,8 +8,8 @@ import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.util.ActivityUtil;
-import its.my.time.util.PreferenceConnector;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.util.EventTypes;
 
 import java.util.Calendar;
 
@@ -109,7 +109,7 @@ public class SplashActivity extends Activity {
 		  calDeb2 = Calendar.getInstance(); bean.sethDeb(calDeb2); calFin2
 		  = Calendar.getInstance(); calFin2.add(Calendar.HOUR, 2);
 		  bean.sethFin(calFin2);
-		  bean.setTypeId(EventBaseRepository.Types.TYPE_MEETING);
+		  bean.setTypeId(EventTypes.TYPE_MEETING);
 		  bean.setDetailsId(0); 
 		  long res = adapter.insertEvent(bean);
 		  
@@ -126,7 +126,7 @@ public class SplashActivity extends Activity {
 		  Calendar.getInstance(); calDeb2.add(Calendar.DAY_OF_MONTH, -10);
 		  bean.sethDeb(calDeb2); calFin2 = (Calendar) calDeb2.clone();
 		  calFin2.add(Calendar.HOUR, 2); bean.sethFin(calFin2);
-		  bean.setTypeId(EventBaseRepository.Types.TYPE_CALL);
+		  bean.setTypeId(EventTypes.TYPE_CALL);
 		  bean.setDetailsId(0); res = adapter.insertEvent(bean);
 		  
 		  bean.setTitle("Deuxième"); bean.setId(4); res =

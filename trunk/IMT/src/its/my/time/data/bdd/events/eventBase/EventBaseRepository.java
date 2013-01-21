@@ -36,12 +36,6 @@ public class EventBaseRepository extends DatabaseHandler{
 	private static final String KEY_DETAILS_ID = "KEY_DETAILS_ID";
 	private static final String KEY_ALL_DAY = "KEY_ALL_DAY";
 
-	public static final class Types {
-		public static final int  TYPE_BASE = 0;
-		public static final int  TYPE_TASK = 1;
-		public static final int  TYPE_MEETING = 2;	
-		public static final int  TYPE_CALL = 3;	
-	}
 
 	private static final String DATABASE_TABLE = "event";
 

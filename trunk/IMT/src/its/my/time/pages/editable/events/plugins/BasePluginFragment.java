@@ -39,6 +39,8 @@ public abstract class BasePluginFragment extends SherlockFragment{
 	public abstract boolean isCancelable();
 	public abstract boolean isSavable();
 
+	public abstract String getTitle();
+
 
 
 }

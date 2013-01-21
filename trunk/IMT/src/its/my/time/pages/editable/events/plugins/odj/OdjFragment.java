@@ -98,6 +98,11 @@ public class OdjFragment extends BasePluginFragment {
 	}
 
 	@Override
+	public String getTitle() {
+		return "Ordre du jour";
+	}
+	
+	@Override
 	public void launchEdit() {
 		mListOdj.setAdapter(new OdjAdapter(getActivity(), eventId, true));
 	}

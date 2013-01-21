@@ -103,6 +103,11 @@ public class PjFragment extends BasePluginFragment {
 		}}
 
 	@Override
+	public String getTitle() {
+		return "Pièces jointes";
+	}
+	
+	@Override
 	public void launchEdit() {
 		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, true));
 	}

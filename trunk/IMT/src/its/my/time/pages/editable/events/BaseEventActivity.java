@@ -6,23 +6,34 @@ import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
+import its.my.time.util.EventTypes;
 import its.my.time.view.ControledViewPager;
+import its.my.time.view.menu.MenuGroupe;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.R;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 
 public abstract class BaseEventActivity extends BaseActivity {
 
 	protected ControledViewPager mPager;
-
+	private static ArrayList<BasePluginFragment> fragments;
 	protected EventBaseBean event;
 
 	@Override
@@ -37,7 +48,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 		if (event == null) {
 			event = new EventBaseBean();
-			event.setTypeId(EventBaseRepository.Types.TYPE_TASK);
+			event.setTypeId(EventTypes.TYPE_TASK);
 			event.sethDeb(DateUtil.getDateFromISO(bundle
 					.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
 			event.sethFin((Calendar) event.gethDeb().clone());
@@ -45,11 +56,28 @@ public abstract class BaseEventActivity extends BaseActivity {
 			event.setAllDay(bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false));
 		}
 
-		mPager = (ControledViewPager) findViewById(R.id.event_pager);
-		mPager.setOnPageChangeListener(pageListener);
 
+
+		mPager = (ControledViewPager) findViewById(R.id.event_pager);
+		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
+		mPager.setOnPageChangeListener(pageListener);
+		fragments = getPages();
+		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
+		
+		ActionBar mActionBar = getSupportActionBar();
+		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		
+		List<String> titles = new ArrayList<String>();
+		for (BasePluginFragment fragment : fragments) {
+			titles.add(fragment.getTitle());
+		}
+		
+		mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
+				R.layout.navigation_spinner_item, titles.toArray(new String[]{})), navigationListener);
 	}
 	
+	public abstract ArrayList<BasePluginFragment> getPages();
+
 	@Override
 	protected void initialiseActionBar() {
 		super.initialiseActionBar();
@@ -116,4 +144,71 @@ public abstract class BaseEventActivity extends BaseActivity {
 		getActiveFragment().launchSave();
 	}
 
+	@Override
+	protected void onMenuGroupSwitch(View v, int positionGroup,
+			boolean isChecked) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onMenuItemSwitch(View v, int positionGroup,
+			int positionObjet, boolean isChecked) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onMenuGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onMenuChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected ArrayList<MenuGroupe> onMainMenuCreated(
+			ArrayList<MenuGroupe> menuGroupes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void reload() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected boolean onBackButtonPressed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	protected void onViewCreated() {}
+
+
+
+	public class EventPagerAdapter extends FragmentPagerAdapter {
+		public EventPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return fragments.get(position);
+		}
+
+		@Override
+		public int getCount() {
+			return fragments.size();
+		}
+	}
 }

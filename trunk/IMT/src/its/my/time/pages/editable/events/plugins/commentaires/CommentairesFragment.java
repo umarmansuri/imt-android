@@ -69,6 +69,11 @@ public class CommentairesFragment extends BasePluginFragment {
 	}
 
 	@Override
+	public String getTitle() {
+		return "Commentaires";
+	}
+	
+	@Override
 	public void launchEdit() {
 		mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId, true));	
 	}

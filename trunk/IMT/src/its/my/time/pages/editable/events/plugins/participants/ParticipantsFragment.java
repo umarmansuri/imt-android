@@ -47,6 +47,11 @@ public class ParticipantsFragment extends BasePluginFragment {
 	}
 
 	@Override
+	public String getTitle() {
+		return "Participants";
+	}
+	
+	@Override
 	public void launchEdit() {
 		mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(), eventId, true));
 	}
