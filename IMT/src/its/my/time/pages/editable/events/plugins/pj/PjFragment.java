@@ -4,7 +4,6 @@ import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
-import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,8 +90,7 @@ public class PjFragment extends BasePluginFragment {
 				//TODO utilisateur désactivé
 				//pj.setUid(PreferencesUtil.getCurrentUid(getActivity()));
 				pj.setUid(1);
-				long res = DatabaseUtil.Plugins.getPjRepository(getActivity())
-						.insertpj(pj);
+				long res = new PjRepository(getActivity()).insertpj(pj);
 				if (res < 0) {
 					Toast.makeText(getActivity(),
 							"Votre pièce jointe n'a pu être envoyée.",
@@ -148,7 +146,7 @@ public class PjFragment extends BasePluginFragment {
 			if(pjs == null) {
 				pjs = new ArrayList<PjBean>();
 			}
-			pjs = DatabaseUtil.Plugins.getPjRepository(getActivity()).getAllByEid(eventId);
+			pjs = new PjRepository(getActivity()).getAllByEid(eventId);
 		}
 
 		@Override

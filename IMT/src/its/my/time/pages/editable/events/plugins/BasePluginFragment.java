@@ -5,7 +5,13 @@ import its.my.time.pages.editable.BaseActivity;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public abstract class BasePluginFragment extends SherlockFragment{
-
+	
+	@Override
+	public void onResume() {
+		setRetainInstance(true);
+		super.onResume();
+	}
+	
 	private BaseActivity parentActivity;
 	@Override
 	public void setMenuVisibility(boolean menuVisible) {

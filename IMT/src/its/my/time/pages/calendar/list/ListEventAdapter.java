@@ -1,7 +1,7 @@
 package its.my.time.pages.calendar.list;
 
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
-import its.my.time.util.DatabaseUtil;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ListEventAdapter implements ListAdapter{
 	}
 
 	private void loadNextEvents() {
-		events = DatabaseUtil.Events.getEventRepository(context).getAllNextFromNow();
+		events = new EventBaseRepository(context).getAllNextFromNow();
 		indexEvent+=NB_EVENT_LOADED;
 	}
 

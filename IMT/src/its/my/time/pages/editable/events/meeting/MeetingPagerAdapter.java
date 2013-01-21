@@ -2,7 +2,7 @@ package its.my.time.pages.editable.events.meeting;
 
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
-import its.my.time.pages.editable.events.event.details.DetailsFragment;
+import its.my.time.pages.editable.events.meeting.details.MeetingDetailsFragment;
 import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
 import its.my.time.pages.editable.events.plugins.odj.OdjFragment;
 import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
@@ -37,7 +37,7 @@ public class MeetingPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
-		case INDEX_PAGE_MEETING:return new DetailsFragment(event, EventBaseRepository.Types.TYPE_MEETING);
+		case INDEX_PAGE_MEETING:return new MeetingDetailsFragment(event, EventBaseRepository.Types.TYPE_MEETING);
 		case INDEX_PAGE_ODJ:return new OdjFragment(event.getId());
 		case INDEX_PAGE_PARTICIPANTS:return new ParticipantsFragment(event.getId());
 		case INDEX_PAGE_COMMENTAIRES:return new CommentairesFragment(event.getId());

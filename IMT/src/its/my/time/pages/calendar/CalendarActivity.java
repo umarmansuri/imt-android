@@ -76,6 +76,7 @@ OnPageChangeListener {
 		} else {
 			new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
 		}
+		
 		super.onResume();
 	}
 

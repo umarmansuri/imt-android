@@ -3,8 +3,8 @@ package its.my.time.pages.calendar.month;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.calendar.base.BaseView;
-import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.IdUtil;
 
@@ -115,7 +115,7 @@ public class MonthView extends BaseView {
 				GregorianCalendar calFin = new GregorianCalendar(helper.getYear(), helper.getMonth(), helper.getDayAt(i, j - 1), 0, 0, 0);
 				calFin.add(Calendar.DAY_OF_MONTH, 1);
 				List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
-				listEventsFinal = DatabaseUtil.Events.getEventRepository(getContext()).getAllEvents(calDeb, calFin);
+				listEventsFinal = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
 				LinearLayout layoutListe = (LinearLayout)layoutDay.findViewById(R.id.activity_calendar_month_day_liste);
 				ViewGroup eventLayout;
 				TextView textEvent; 

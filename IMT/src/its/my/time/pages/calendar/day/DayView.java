@@ -2,9 +2,9 @@ package its.my.time.pages.calendar.day;
 
 import its.my.time.R;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.calendar.base.BaseView;
 import its.my.time.util.ActivityUtil;
-import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 
 import java.util.Calendar;
@@ -111,8 +111,7 @@ public class DayView extends BaseView {
 				calDeb.get(Calendar.HOUR_OF_DAY), calDeb.get(Calendar.MINUTE),
 				calDeb.get(Calendar.SECOND));
 		calFin.add(Calendar.DAY_OF_MONTH, 1);
-		events = DatabaseUtil.Events.getEventRepository(getContext())
-				.getAllEvents(calDeb, calFin);
+		events = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
 
 		for (EventBaseBean event : events) {
 			if (firstCal == null || event.gethDeb().before(firstCal)) {
@@ -172,7 +171,7 @@ public class DayView extends BaseView {
 	private void reloadEventLittleView(EventLittleView eventView) {
 		ColumnEvent column;
 		EventBaseBean event = eventView.getEvent();
-		DatabaseUtil.Events.getEventRepository(getContext()).updateEvent(event);
+		new EventBaseRepository(getContext()).updateEvent(event);
 		for (int i = 0; i < llEvent.getChildCount(); i++) {
 			column = (ColumnEvent) llEvent.getChildAt(i);
 			if (column.unload(eventView)) {
