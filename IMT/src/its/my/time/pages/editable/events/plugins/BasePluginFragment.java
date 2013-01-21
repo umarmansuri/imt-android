@@ -44,7 +44,6 @@ public abstract class BasePluginFragment extends SherlockFragment {
 	}
 	
 	public BaseEventActivity getParentActivity() {
-		Log.d("Text chgt:"," parentActivity = " + parentActivity);
 		return parentActivity;
 	}
 	
