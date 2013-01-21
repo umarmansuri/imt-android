@@ -15,6 +15,7 @@
         android:theme="@style/Theme.AppTheme" >
         <activity
             android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -23,44 +24,49 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".pages.editable.profil.ProfilActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
-        
         <activity
             android:name=".pages.editable.comptes.ComptesActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".pages.editable.comptes.compte.CompteActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
-        
         <activity
             android:name=".pages.calendar.CalendarActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".pages.editable.events.event.EventActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".pages.editable.events.meeting.MeetingActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".pages.editable.events.task.TaskActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".pages.editable.events.call.CallActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
         </activity>
-        
         <activity
             android:name=".data.ws.test.OAuth.OAuthResponseActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
