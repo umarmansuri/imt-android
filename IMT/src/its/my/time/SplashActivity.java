@@ -105,7 +105,7 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			// TODO enlever
-			//
+			/*
 			  deleteDatabase(DatabaseHandler.DATABASE_NAME);
 			  UtilisateurRepository userRepo = new
 			  UtilisateurRepository(SplashActivity.this); UtilisateurBean user
@@ -167,7 +167,7 @@ public class SplashActivity extends Activity {
 			  adapter.insertEvent(bean);
 			  bean.setTitle("Et le dernier!!!!!!!!!!"); bean.setId(7); res =
 			  adapter.insertEvent(bean);
-			 
+			 */
 			return null;
 		}
 

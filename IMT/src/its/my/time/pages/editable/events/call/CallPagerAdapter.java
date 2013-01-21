@@ -1,6 +1,7 @@
 package its.my.time.pages.editable.events.call;
 
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.events.event.details.DetailsFragment;
 import its.my.time.pages.editable.events.plugins.pj.PjFragment;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,7 @@ public class CallPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
-		case INDEX_PAGE_EVENT:return new DetailsFragment(event);
+		case INDEX_PAGE_EVENT:return new DetailsFragment(event, EventBaseRepository.Types.TYPE_CALL);
 		case INDEX_PAGE_PJ:return new PjFragment(event.getId());
 		}
 		return null;

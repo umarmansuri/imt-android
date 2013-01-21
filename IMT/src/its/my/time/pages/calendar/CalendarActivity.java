@@ -62,9 +62,7 @@ OnPageChangeListener {
 	private static boolean isWaitingEnd;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
+	protected void onResume() {
 		isWaitingEnd = false;
 		setContentView(R.layout.activity_calendar);
 
@@ -72,8 +70,13 @@ OnPageChangeListener {
 
 		if (curentCal == null) {
 			curentCal = Calendar.getInstance();
+		}
+		if(indexCurrentPager != -1) {
+			new ChangePageTask().execute(indexCurrentPager);	
+		} else {
 			new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
 		}
+		super.onResume();
 	}
 
 	protected void initialiseActionBar() {

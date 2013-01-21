@@ -3,6 +3,7 @@ package its.my.time.pages.editable.events.event.details;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
@@ -12,6 +13,8 @@ import its.my.time.view.date.DateButton;
 import its.my.time.view.date.TimeButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.content.Context;
@@ -23,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -47,8 +51,13 @@ public class DetailsFragment extends BasePluginFragment {
 
 	private View view;
 
-	public DetailsFragment(EventBaseBean event) {
+	private EditText mTextTitle;
+
+	private int typeEvent;
+
+	public DetailsFragment(EventBaseBean event, int typeEvent) {
 		this.event = event;
+		this.typeEvent = typeEvent;
 	}
 
 	@Override
@@ -62,6 +71,9 @@ public class DetailsFragment extends BasePluginFragment {
 	}
 
 	private void initialiseValues() {
+		mTextTitle = (EditText)view.findViewById(R.id.activity_event_details_text_title);
+		mTextTitle.setText(event.getTitle());
+		
 		mTextJourDeb = (DateButton) view.findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourDeb.setDate(event.gethDeb());
 		
@@ -85,6 +97,7 @@ public class DetailsFragment extends BasePluginFragment {
 		}
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_spinner_item, mListCompteLabels);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mSpinnerCompte = (Spinner) view.findViewById(R.id.activity_event_details_spinner_compte);
 		mSpinnerCompte.setAdapter(adapter);
 		mSpinnerCompte.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -104,6 +117,7 @@ public class DetailsFragment extends BasePluginFragment {
 		array_recurrence = getResources().getStringArray(R.array.array_recurrence);
 
 		ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,array_recurrence);
+		adapter_recurrence.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner mSpinnerRecurrence = (Spinner) view.findViewById(R.id.activity_event_details_spinner_recurrence);
 		mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
@@ -143,6 +157,27 @@ public class DetailsFragment extends BasePluginFragment {
 
 	@Override
 	public void launchSave() {
+		event.setAllDay(mSwitchAllDay.isChecked());
+		event.setCid(mListCompte.get(mSpinnerCompte.getSelectedItemPosition()).getId());
+		event.setDetails(mTextDetails.getText().toString());
+		
+		Calendar cal = new GregorianCalendar(
+				mTextJourDeb.getDate().get(Calendar.YEAR),
+				mTextJourDeb.getDate().get(Calendar.MONTH),
+				mTextJourDeb.getDate().get(Calendar.DAY_OF_MONTH),
+				mTextHeureDeb.getDate().get(Calendar.HOUR_OF_DAY),
+				mTextHeureDeb.getDate().get(Calendar.MINUTE));
+		event.sethDeb(cal);
+		cal = new GregorianCalendar(
+				mTextJourFin.getDate().get(Calendar.YEAR),
+				mTextJourFin.getDate().get(Calendar.MONTH),
+				mTextJourFin.getDate().get(Calendar.DAY_OF_MONTH),
+				mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
+				mTextHeureFin.getDate().get(Calendar.MINUTE));
+		event.sethFin(cal);
+		event.setTitle(mTextTitle.getText().toString());
+		event.setTypeId(typeEvent);
+		event.setId((int) new EventBaseRepository(getActivity()).insertEvent(event));
 	}
 
 	@Override
