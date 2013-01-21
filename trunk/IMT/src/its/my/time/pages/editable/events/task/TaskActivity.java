@@ -6,7 +6,6 @@ import its.my.time.view.menu.MenuGroupe;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
@@ -16,12 +15,10 @@ import com.actionbarsherlock.app.ActionBar;
 
 public class TaskActivity extends BaseEventActivity {
 
-	private ViewPager mPager;
 	@Override
 	public void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
-		mPager.setAdapter(new TaskPagerAdapter(getSupportFragmentManager(),
-				event));
+		mPager.setAdapter(new TaskPagerAdapter(getSupportFragmentManager(),event));
 	}
 
 	@Override
