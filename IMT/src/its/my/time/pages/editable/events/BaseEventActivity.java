@@ -17,7 +17,6 @@ import java.util.List;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -34,6 +33,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 	protected ControledViewPager mPager;
 	private static ArrayList<BasePluginFragment> fragments;
+	private boolean isNew;
 	protected EventBaseBean event;
 
 	@Override
@@ -42,29 +42,26 @@ public abstract class BaseEventActivity extends BaseActivity {
 		super.onCreate(bundle);
 
 		setContentView(R.layout.activity_event);
-
+		
+		isNew = false;
 		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			this.event = new EventBaseRepository(this).getById(bundle
-					.getInt(ActivityUtil.KEY_EXTRA_ID));
+			this.event = new EventBaseRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
 		}
 		if (this.event == null) {
 			this.event = new EventBaseBean();
 			this.event.setTypeId(EventTypes.TYPE_TASK);
-			this.event.sethDeb(DateUtil.getDateFromISO(bundle
-					.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
+			this.event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
 			this.event.sethFin((Calendar) this.event.gethDeb().clone());
 			this.event.gethFin().add(Calendar.HOUR_OF_DAY, 2);
-			this.event.setAllDay(bundle.getBoolean(
-					ActivityUtil.KEY_EXTRA_ALL_DAY, false));
+			this.event.setAllDay(bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false));
+			isNew = true;
 		}
 
 		this.mPager = (ControledViewPager) findViewById(R.id.event_pager);
-		this.mPager.setAdapter(new EventPagerAdapter(
-				getSupportFragmentManager()));
+		this.mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
 		this.mPager.setOnPageChangeListener(this.pageListener);
 		fragments = getPages();
-		this.mPager.setAdapter(new EventPagerAdapter(
-				getSupportFragmentManager()));
+		this.mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
 
 		final ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
@@ -77,8 +74,8 @@ public abstract class BaseEventActivity extends BaseActivity {
 		mActionBar.setListNavigationCallbacks(
 				new ArrayAdapter<String>(this,
 						R.layout.navigation_spinner_item, titles
-								.toArray(new String[] {})),
-				this.navigationListener);
+						.toArray(new String[] {})),
+						this.navigationListener);
 	}
 
 	public abstract ArrayList<BasePluginFragment> getPages();
@@ -122,7 +119,6 @@ public abstract class BaseEventActivity extends BaseActivity {
 			return true;
 		}
 	};
-
 	public BasePluginFragment getActiveFragment() {
 		if (this.mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
 			final FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) this.mPager
@@ -196,8 +192,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 	@Override
 	public void reload() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -208,9 +203,12 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 	@Override
 	protected void onViewCreated() {
+		if(isNew) {
+			launchEdit();
+		}
 	}
 
-	public class EventPagerAdapter extends FragmentPagerAdapter {
+	public class EventPagerAdapter extends FragmentStatePagerAdapter {
 		public EventPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}

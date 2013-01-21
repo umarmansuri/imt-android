@@ -25,9 +25,11 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
@@ -41,7 +43,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.fonts.mooncake.MooncakeIcone;
 
 public abstract class MenuActivity extends SherlockFragmentActivity implements
-		OnClickListener {
+OnClickListener {
 
 	private static final long ANIMATION_DURATION = 200;
 	private FrameLayout mMainContent;
@@ -51,6 +53,9 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		registerReceiver(this.LOGOUT_Receiver, new IntentFilter(ActivityUtil.ACTION_FINISH));
 
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		super.setContentView(R.layout.activity_base);
@@ -74,15 +79,16 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onResume() {
 		initialiseMenu();
-		registerReceiver(this.LOGOUT_Receiver, new IntentFilter(
-				ActivityUtil.ACTION_FINISH));
 		super.onResume();
 	}
 
+
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		unregisterReceiver(this.LOGOUT_Receiver);
-		super.onSaveInstanceState(outState);
+	protected void onDestroy() {
+		try {
+			unregisterReceiver(this.LOGOUT_Receiver);
+		} catch (Exception e) {}
+		super.onDestroy();
 	}
 
 	protected void initialiseActionBar() {
@@ -124,7 +130,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements
 				}, (long) (ANIMATION_DURATION * 1.5));
 			} else {
 				((MenuChildViewHolder) v.getTag()).childSwitcher
-						.toggleState(true);
+				.toggleState(true);
 			}
 			return false;
 		}
@@ -158,7 +164,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements
 			} else if (MenuActivity.this.menuGroupes.get(groupPosition)
 					.isSwitcher()) {
 				((MenuChildViewHolder) v.getTag()).childSwitcher
-						.toggleState(true);
+				.toggleState(true);
 			}
 			return false;
 		}
@@ -179,6 +185,10 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements
 		public void onAnimationStart(Animation animation) {
 			MenuActivity.this.mMainMenu.setVisibility(View.VISIBLE);
 			MenuActivity.this.mMainContent.bringToFront();
+			if(MenuActivity.this.isMenuShowed) {
+				  InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		          imm.hideSoftInputFromWindow(mMainContent.getApplicationWindowToken(), 0);
+			}
 		}
 
 		@Override

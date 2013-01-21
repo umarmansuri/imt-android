@@ -129,26 +129,19 @@ public class CalendarActivity extends MenuActivity implements
 		textView.setTextColor(iconeColor);
 		textView.setTextSize(iconeSize);
 		textView.setGravity(Gravity.CENTER);
-		donnees.add(new MenuObjet(menuGroupe, "Aujourd'hui",
-				MooncakeIcone.icon_time));
-		donnees.add(new MenuObjet(menuGroupe, "Mois",
-				MooncakeIcone.icon_calendar_month));
-		donnees.add(new MenuObjet(menuGroupe, "Jour",
-				MooncakeIcone.icon_calendar));
-		donnees.add(new MenuObjet(menuGroupe, "Liste",
-				MooncakeIcone.icon_list_2));
+		donnees.add(new MenuObjet(menuGroupe, "Aujourd'hui",MooncakeIcone.icon_time));
+		donnees.add(new MenuObjet(menuGroupe, "Mois",MooncakeIcone.icon_calendar_month));
+		donnees.add(new MenuObjet(menuGroupe, "Jour",MooncakeIcone.icon_calendar));
+		donnees.add(new MenuObjet(menuGroupe, "Liste",MooncakeIcone.icon_list_2));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
 		menuGroupe = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
 		final CompteRepository compteRepo = new CompteRepository(this);
-		this.comptes = compteRepo.getAllCompteByUid(PreferencesUtil
-				.getCurrentUid(this));
+		this.comptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
 		for (final CompteBean compteBean : this.comptes) {
-			donnees.add(new MenuObjet(menuGroupe, compteBean.getTitle(),
-					MooncakeIcone.icon_business_card, true, compteBean
-							.isShowed(), compteBean.getColor()));
+			donnees.add(new MenuObjet(menuGroupe, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), compteBean.getColor()));
 			INDEX_MENU_COMPTE_GERER++;
 		}
 		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
@@ -157,12 +150,9 @@ public class CalendarActivity extends MenuActivity implements
 
 		menuGroupe = new MenuGroupe("Libellés", MooncakeIcone.icon_tags);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 1",
-				MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 2",
-				MooncakeIcone.icon_tag, true, false, Color.BLUE));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 3",
-				MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 1",MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 2",MooncakeIcone.icon_tag, true, false, Color.BLUE));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 3",MooncakeIcone.icon_tag, true));
 		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
@@ -174,8 +164,7 @@ public class CalendarActivity extends MenuActivity implements
 	}
 
 	@Override
-	protected void onMenuChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
+	protected void onMenuChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
 		switch (groupPosition) {
 		case INDEX_MENU_AGENDA:
 			switch (childPosition) {

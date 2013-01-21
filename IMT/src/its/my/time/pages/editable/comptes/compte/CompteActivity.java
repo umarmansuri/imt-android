@@ -91,7 +91,7 @@ public class CompteActivity extends BaseActivity implements
 		updateColorButton();
 
 		if (this.isNew) {
-			launchEditMode();
+			showEdit();
 		} else {
 
 		}
