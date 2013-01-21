@@ -1,6 +1,6 @@
 package its.my.time.pages.editable.events.plugins;
 
-import its.my.time.pages.editable.BaseActivity;
+import its.my.time.pages.editable.events.BaseEventActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -12,7 +12,7 @@ public abstract class BasePluginFragment extends SherlockFragment {
 		super.onResume();
 	}
 
-	private BaseActivity parentActivity;
+	private BaseEventActivity parentActivity;
 
 	@Override
 	public void setMenuVisibility(boolean menuVisible) {
@@ -20,7 +20,7 @@ public abstract class BasePluginFragment extends SherlockFragment {
 		if (menuVisible) {
 			try {
 				if (this.parentActivity == null) {
-					this.parentActivity = (BaseActivity) getActivity();
+					this.parentActivity = (BaseEventActivity) getActivity();
 				}
 
 				this.parentActivity.setEditVisibility(isEditable());
@@ -32,7 +32,7 @@ public abstract class BasePluginFragment extends SherlockFragment {
 		}
 		super.setMenuVisibility(menuVisible);
 	}
-
+	
 	public abstract void launchEdit();
 
 	public abstract void launchSave();

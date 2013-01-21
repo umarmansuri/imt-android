@@ -25,20 +25,20 @@ import com.mobeta.android.dslv.DragSortListView;
 
 public class OdjFragment extends BasePluginFragment {
 
+	protected List<OdjBean> odjs;
 	private final int eventId;
 	private Button mButtonSend;
 	private DragSortListView mListOdj;
 	private EditText mTextOdj;
 
+	
 	private final DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
 		@Override
 		public void drop(int from, int to) {
-		}
-	};
-
-	private final DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
-		@Override
-		public void remove(int which) {
+			OdjBean odj = odjs.get(from);
+			odjs.remove(odj);
+			odjs.add(to, odj);
+			mListOdj.setAdapter(new OdjAdapter(getActivity(), eventId,true));
 		}
 	};
 
@@ -46,7 +46,6 @@ public class OdjFragment extends BasePluginFragment {
 		@Override
 		public float getSpeed(float w, long t) {
 			if (w > 0.8f) {
-				// Traverse all views in a millisecond
 				return (getOdjAdapter().getCount()) / 0.001f;
 			} else {
 				return 10.0f * w;
@@ -66,10 +65,8 @@ public class OdjFragment extends BasePluginFragment {
 				R.layout.activity_event_odjs, null);
 		this.mListOdj = (DragSortListView) mView
 				.findViewById(R.id.event_odj_liste);
-		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,
-				false));
+		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,false));
 		this.mListOdj.setDropListener(this.onDrop);
-		this.mListOdj.setRemoveListener(this.onRemove);
 		this.mListOdj.setDragScrollProfile(this.ssProfile);
 
 		this.mTextOdj = (EditText) mView.findViewById(R.id.event_odj_editOdj);
@@ -79,9 +76,9 @@ public class OdjFragment extends BasePluginFragment {
 			public void onClick(View v) {
 				// TODO envoyer via ws
 				final OdjBean odj = new OdjBean();
-				odj.setValue(OdjFragment.this.mTextOdj.getText().toString());
-				odj.setEid(OdjFragment.this.eventId);
-				odj.setOrder(OdjFragment.this.mListOdj.getChildCount());
+				odj.setValue(mTextOdj.getText().toString());
+				odj.setEid(eventId);
+				odj.setOrder(mListOdj.getChildCount());
 				final long res = new OdjRepository(getActivity())
 						.insertOdj(odj);
 				if (res < 0) {
@@ -89,9 +86,9 @@ public class OdjFragment extends BasePluginFragment {
 							"Votre objet du jour n'a pu être envoyé.",
 							Toast.LENGTH_SHORT).show();
 				}
-				OdjFragment.this.mListOdj.setAdapter(new OdjAdapter(
-						getActivity(), OdjFragment.this.eventId, false));
-				OdjFragment.this.mTextOdj.setText("");
+				mListOdj.setAdapter(new OdjAdapter(
+						getActivity(), eventId, false));
+				mTextOdj.setText("");
 			}
 		});
 		return mView;
@@ -108,20 +105,27 @@ public class OdjFragment extends BasePluginFragment {
 
 	@Override
 	public void launchEdit() {
-		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,
-				true));
+		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,true));
 	}
 
 	@Override
 	public void launchSave() {
-		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,
-				false));
+		OdjRepository repo = new OdjRepository(getActivity());
+		OdjBean odj;
+		for(int i = 0; i < odjs.size(); i++) {
+			odj = odjs.get(i);
+			odj.setOrder(i);
+			repo.updateOdj(odj);
+		}
+		mListOdj.setAdapter(new OdjAdapter(getActivity(), eventId,true));
+		odjs = null;
+		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,false));
 	}
 
 	@Override
 	public void launchCancel() {
-		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,
-				false));
+		odjs = null;
+		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), this.eventId,false));
 	}
 
 	@Override
@@ -141,26 +145,19 @@ public class OdjFragment extends BasePluginFragment {
 
 	private class OdjAdapter implements ListAdapter {
 
-		private List<OdjBean> odj;
 		private final boolean isInEditMode;
 
 		public OdjAdapter(Context context, int id, boolean isInEditMode) {
 			this.isInEditMode = isInEditMode;
-			loadNext();
-		}
-
-		private void loadNext() {
-			if (this.odj == null) {
-				this.odj = new ArrayList<OdjBean>();
+			if(odjs == null) {
+				odjs = new OdjRepository(getActivity()).getAllByEid(eventId);
 			}
-			this.odj = new OdjRepository(getActivity())
-					.getAllByEid(OdjFragment.this.eventId);
 		}
 
 		@Override
 		public int getCount() {
-			if (this.odj != null) {
-				return this.odj.size();
+			if (odjs != null) {
+				return odjs.size();
 			}
 			return 0;
 		}
@@ -169,15 +166,12 @@ public class OdjFragment extends BasePluginFragment {
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
 			final OdjView view = new OdjView(getActivity(),
-					this.odj.get(position), this.isInEditMode);
+					odjs.get(position), this.isInEditMode);
 			view.setOnDeleteClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					new OdjRepository(getActivity())
-							.deleteOdj(OdjAdapter.this.odj.get(position)
-									.getId());
-					OdjFragment.this.mListOdj.setAdapter(new OdjAdapter(
-							getActivity(), OdjFragment.this.eventId, true));
+					odjs.remove(position);
+					mListOdj.setAdapter(new OdjAdapter(getActivity(), eventId, true));
 				}
 			});
 			return view;
@@ -185,12 +179,12 @@ public class OdjFragment extends BasePluginFragment {
 
 		@Override
 		public OdjBean getItem(int position) {
-			return this.odj.get(position);
+			return odjs.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			return this.odj.get(position).getId();
+			return odjs.get(position).getId();
 		}
 
 		@Override
@@ -210,7 +204,7 @@ public class OdjFragment extends BasePluginFragment {
 
 		@Override
 		public boolean isEmpty() {
-			if (this.odj == null | this.odj.size() == 0) {
+			if (odjs == null | odjs.size() == 0) {
 				return true;
 			} else {
 				return false;
