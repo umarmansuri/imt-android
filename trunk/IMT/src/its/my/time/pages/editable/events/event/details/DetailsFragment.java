@@ -44,8 +44,6 @@ public class DetailsFragment extends BasePluginFragment {
 	private static final String KEY_BUNDLE_COMPTE = "KEY_BUNDLE_COMPTE";
 	private static final String KEY_BUNDLE_RECURRENCE = "KEY_BUNDLE_RECURRENCE";
 
-	private EventBaseBean event;
-
 	private TimeButton mTextHeureDeb;
 	private TimeButton mTextHeureFin;
 	private DateButton mTextJourDeb;
@@ -66,13 +64,11 @@ public class DetailsFragment extends BasePluginFragment {
 	private int typeEvent;
 	private static Bundle state;
 
-	public DetailsFragment(EventBaseBean event) {
-		this.event = event;
+	public DetailsFragment() {
 		this.typeEvent = EventTypes.TYPE_BASE;
 	}
 
-	public DetailsFragment(EventBaseBean event, int typeEvent) {
-		this.event = event;
+	public DetailsFragment(int typeEvent) {
 		this.typeEvent = typeEvent;
 	}
 
@@ -125,19 +121,19 @@ public class DetailsFragment extends BasePluginFragment {
 	}
 
 	public void initialiseValuesFromEvent() {
-		this.mTextTitle.setText(this.event.getTitle());
-		this.mTextJourDeb.setDate(this.event.gethDeb());
-		this.mTextHeureDeb.setDate(this.event.gethDeb());
+		this.mTextTitle.setText(getParentActivity().getEvent().getTitle());
+		this.mTextJourDeb.setDate(getParentActivity().getEvent().gethDeb());
+		this.mTextHeureDeb.setDate(getParentActivity().getEvent().gethDeb());
 		this.mTextJourFin = (DateButton) this.view
 				.findViewById(R.id.activity_event_details_text_dfin);
 
-		if (this.event.gethFin() != null) {
-			this.mTextHeureFin.setDate(this.event.gethFin());
-			this.mTextJourFin.setDate(this.event.gethFin());
+		if (getParentActivity().getEvent().gethFin() != null) {
+			this.mTextHeureFin.setDate(getParentActivity().getEvent().gethFin());
+			this.mTextJourFin.setDate(getParentActivity().getEvent().gethFin());
 		}
-		this.mTextDetails.setText(this.event.getDetails());
-		if (this.event.isAllDay()) {
-			this.mSwitchAllDay.changeState(this.event.isAllDay(), true);
+		this.mTextDetails.setText(getParentActivity().getEvent().getDetails());
+		if (getParentActivity().getEvent().isAllDay()) {
+			this.mSwitchAllDay.changeState(getParentActivity().getEvent().isAllDay(), true);
 		}
 	}
 
@@ -154,7 +150,7 @@ public class DetailsFragment extends BasePluginFragment {
 		this.mTextJourFin.setDate(cal);
 
 		this.mTextDetails.setText(state.getString(KEY_BUNDLE_DETAILS));
-		if (this.event.isAllDay()) {
+		if (getParentActivity().getEvent().isAllDay()) {
 			this.mSwitchAllDay.changeState(
 					state.getBoolean(KEY_BUNDLE_ALL_DAY), false);
 		}
@@ -170,7 +166,7 @@ public class DetailsFragment extends BasePluginFragment {
 		int comptePosition = 0;
 		int i = 0;
 		for (final CompteBean compte : this.mListCompte) {
-			if (compte.getId() != this.event.getCid()) {
+			if (compte.getId() != getParentActivity().getEvent().getCid()) {
 				comptePosition = i;
 			}
 			i++;
@@ -187,14 +183,14 @@ public class DetailsFragment extends BasePluginFragment {
 			@Override
 			public void onItemSelected(AdapterView<?> container,
 					View view, int position, long id) {
-				DetailsFragment.this.event
+				getParentActivity().getEvent()
 				.setCid(DetailsFragment.this.mListCompte.get(
 						position).getId());
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> container) {
-				DetailsFragment.this.event.setCid(-1);
+				getParentActivity().getEvent().setCid(-1);
 			}
 		});
 
@@ -276,11 +272,11 @@ public class DetailsFragment extends BasePluginFragment {
 	}
 
 	public EventBaseBean getEvent() {
-		return this.event;
+		return getParentActivity().getEvent();
 	}
 
 	public void setEvent(EventBaseBean event) {
-		this.event = event;
+		getParentActivity().setEvent(event);
 	}
 
 	@Override
@@ -296,9 +292,9 @@ public class DetailsFragment extends BasePluginFragment {
 	@Override
 	public void launchSave() {
 		ViewUtil.enableAllView(view, false);
-		this.event.setAllDay(this.mSwitchAllDay.isChecked());
-		this.event.setCid(this.mListCompte.get(this.mSpinnerCompte.getSelectedItemPosition()).getId());
-		this.event.setDetails(this.mTextDetails.getText().toString());
+		getParentActivity().getEvent().setAllDay(this.mSwitchAllDay.isChecked());
+		getParentActivity().getEvent().setCid(this.mListCompte.get(this.mSpinnerCompte.getSelectedItemPosition()).getId());
+		getParentActivity().getEvent().setDetails(this.mTextDetails.getText().toString());
 
 		Calendar cal = new GregorianCalendar(this.mTextJourDeb.getDate().get(
 				Calendar.YEAR),
@@ -306,26 +302,27 @@ public class DetailsFragment extends BasePluginFragment {
 				this.mTextJourDeb.getDate().get(Calendar.DAY_OF_MONTH),
 				this.mTextHeureDeb.getDate().get(Calendar.HOUR_OF_DAY),
 				this.mTextHeureDeb.getDate().get(Calendar.MINUTE));
-		this.event.sethDeb(cal);
+		getParentActivity().getEvent().sethDeb(cal);
 		cal = new GregorianCalendar(this.mTextJourFin.getDate().get(
 				Calendar.YEAR),
 				this.mTextJourFin.getDate().get(Calendar.MONTH),
 				this.mTextJourFin.getDate().get(Calendar.DAY_OF_MONTH),
 				this.mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
 				this.mTextHeureFin.getDate().get(Calendar.MINUTE));
-		this.event.sethFin(cal);
-		this.event.setTitle(this.mTextTitle.getText().toString());
-		this.event.setTypeId(this.typeEvent);
-		if(this.event.getId() == -1) {
-			this.event.setId((int) new EventBaseRepository(getActivity()).insertEvent(this.event));
+		getParentActivity().getEvent().sethFin(cal);
+		getParentActivity().getEvent().setTitle(this.mTextTitle.getText().toString());
+		getParentActivity().getEvent().setTypeId(this.typeEvent);
+		if(getParentActivity().getEvent().getId() == -1) {
+			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insertEvent(getParentActivity().getEvent()));
 		} else {
-			new EventBaseRepository(getActivity()).updateEvent(this.event);
+			new EventBaseRepository(getActivity()).updateEvent(getParentActivity().getEvent());
 		}
+		getParentActivity().setEvent(getParentActivity().getEvent());
 	}
 
 	@Override
 	public void launchCancel() {
-		if(this.event.getId() == -1) {
+		if(getParentActivity().getEvent().getId() == -1) {
 			getSherlockActivity().finish();
 		} else {
 			ViewUtil.enableAllView(view, false);

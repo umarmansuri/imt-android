@@ -20,6 +20,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
@@ -134,7 +135,11 @@ public abstract class BaseEventActivity extends BaseActivity {
 	}
 
 	public EventBaseBean getEvent() {
+		Log.d("Text chgt:"," parentActivity Event = " + event);
 		return event;
+	}
+	public void setEvent(EventBaseBean event) {
+		this.event = event;
 	}
 
 	private static String makeFragmentName(int viewId, int index) {

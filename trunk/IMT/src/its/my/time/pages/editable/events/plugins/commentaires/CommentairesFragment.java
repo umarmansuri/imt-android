@@ -26,28 +26,17 @@ import android.widget.Toast;
 
 public class CommentairesFragment extends BasePluginFragment {
 
-	private final int eventId;
 	private Button mButtonSend;
 	private EditText mTextCommentaire;
 	private ListView mListComment;
 
-	public CommentairesFragment(int l) {
-		this.eventId = l;
-	}
-
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-		final RelativeLayout mView = (RelativeLayout) inflater.inflate(
-				R.layout.activity_event_commentaires, null);
-		this.mListComment = (ListView) mView
-				.findViewById(R.id.event_comment_liste);
-		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
-				this.eventId, false));
-
-		this.mTextCommentaire = (EditText) mView
-				.findViewById(R.id.event_comment_editComment);
+		final RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_commentaires, null);
+		this.mListComment = (ListView) mView.findViewById(R.id.event_comment_liste);
+		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
+		this.mTextCommentaire = (EditText) mView.findViewById(R.id.event_comment_editComment);
 
 		this.mButtonSend = (Button) mView.findViewById(R.id.event_comment_save);
 		this.mButtonSend.setOnClickListener(new OnClickListener() {
@@ -55,11 +44,9 @@ public class CommentairesFragment extends BasePluginFragment {
 			public void onClick(View v) {
 				// TODO envoyer via ws
 				final CommentBean commentaire = new CommentBean();
-				commentaire
-						.setComment(CommentairesFragment.this.mTextCommentaire
-								.getText().toString());
+				commentaire.setComment(CommentairesFragment.this.mTextCommentaire.getText().toString());
 				commentaire.setDate(Calendar.getInstance());
-				commentaire.setEid(CommentairesFragment.this.eventId);
+				commentaire.setEid(getParentActivity().getEvent().getId());
 				commentaire.setUid(PreferencesUtil.getCurrentUid(getActivity()));
 				final long res = new CommentRepository(getActivity())
 						.insertComment(commentaire);
@@ -69,12 +56,12 @@ public class CommentairesFragment extends BasePluginFragment {
 							Toast.LENGTH_SHORT).show();
 				}
 				CommentairesFragment.this.mListComment
-						.setAdapter(new CommentairesAdapter(getActivity(),
-								CommentairesFragment.this.eventId, false));
+						.setAdapter(new CommentairesAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
 				CommentairesFragment.this.mTextCommentaire.setText("");
 			}
 		});
 
+		
 		return mView;
 	}
 
@@ -86,19 +73,19 @@ public class CommentairesFragment extends BasePluginFragment {
 	@Override
 	public void launchEdit() {
 		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
-				this.eventId, true));
+				getParentActivity().getEvent().getId(), true));
 	}
 
 	@Override
 	public void launchSave() {
 		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
-				this.eventId, false));
+				getParentActivity().getEvent().getId(), false));
 	}
 
 	@Override
 	public void launchCancel() {
 		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
-				this.eventId, false));
+				getParentActivity().getEvent().getId(), false));
 	}
 
 	@Override
@@ -131,7 +118,7 @@ public class CommentairesFragment extends BasePluginFragment {
 				this.comments = new ArrayList<CommentBean>();
 			}
 			this.comments = new CommentRepository(getActivity())
-					.getAllByEid(CommentairesFragment.this.eventId);
+					.getAllByEid(getParentActivity().getEvent().getId());
 		}
 
 		@Override
@@ -155,7 +142,7 @@ public class CommentairesFragment extends BasePluginFragment {
 									.get(position).getId());
 					CommentairesFragment.this.mListComment
 							.setAdapter(new CommentairesAdapter(getActivity(),
-									CommentairesFragment.this.eventId, true));
+									getParentActivity().getEvent().getId(), true));
 				}
 			});
 			return view;

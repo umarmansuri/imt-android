@@ -24,16 +24,7 @@ import android.widget.RelativeLayout;
 
 public class ParticipantsFragment extends BasePluginFragment {
 
-	private final int eventId;
 	private ListView mListParticipant;
-
-	public ParticipantsFragment() {
-		this(-1);
-	}
-
-	public ParticipantsFragment(int l) {
-		this.eventId = l;
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +35,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 		this.mListParticipant = (ListView) mView
 				.findViewById(R.id.event_participants_liste);
 		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				this.eventId, false));
+				getParentActivity().getEvent().getId(), false));
 
 		return mView;
 	}
@@ -57,19 +48,19 @@ public class ParticipantsFragment extends BasePluginFragment {
 	@Override
 	public void launchEdit() {
 		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				this.eventId, true));
+				getParentActivity().getEvent().getId(), true));
 	}
 
 	@Override
 	public void launchSave() {
 		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				this.eventId, true));
+				getParentActivity().getEvent().getId(), true));
 	}
 
 	@Override
 	public void launchCancel() {
 		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				this.eventId, true));
+				getParentActivity().getEvent().getId(), true));
 	}
 
 	@Override
@@ -101,7 +92,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 		private void loadNextParticipants() {
 
 			this.participants = new ParticipantRepository(getActivity())
-					.getAllByEid(ParticipantsFragment.this.eventId);
+					.getAllByEid(getParentActivity().getEvent().getId());
 			if (this.participants == null) {
 				this.participants = new ArrayList<ParticipantBean>();
 			}
@@ -138,7 +129,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 									.get(position).getId());
 					ParticipantsFragment.this.mListParticipant
 							.setAdapter(new ParticipantsAdapter(getActivity(),
-									ParticipantsFragment.this.eventId, true));
+									getParentActivity().getEvent().getId(), true));
 				}
 			});
 			return view;

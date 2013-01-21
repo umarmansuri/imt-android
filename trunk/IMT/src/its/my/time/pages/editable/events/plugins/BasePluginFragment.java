@@ -1,18 +1,28 @@
 package its.my.time.pages.editable.events.plugins;
 
 import its.my.time.pages.editable.events.BaseEventActivity;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 public abstract class BasePluginFragment extends SherlockFragment {
 
+
+	private BaseEventActivity parentActivity;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.parentActivity = (BaseEventActivity) getActivity();
+	}
+	
 	@Override
 	public void onResume() {
 		setRetainInstance(true);
 		super.onResume();
 	}
 
-	private BaseEventActivity parentActivity;
 
 	@Override
 	public void setMenuVisibility(boolean menuVisible) {
@@ -31,6 +41,11 @@ public abstract class BasePluginFragment extends SherlockFragment {
 			}
 		}
 		super.setMenuVisibility(menuVisible);
+	}
+	
+	public BaseEventActivity getParentActivity() {
+		Log.d("Text chgt:"," parentActivity = " + parentActivity);
+		return parentActivity;
 	}
 	
 	public abstract void launchEdit();
