@@ -4,7 +4,6 @@ import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.odj.OdjBean;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
-import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +82,7 @@ public class OdjFragment extends BasePluginFragment {
 				odj.setValue(mTextOdj.getText().toString());
 				odj.setEid(eventId);
 				odj.setOrder(mListOdj.getChildCount());
-				long res = DatabaseUtil.Plugins.getOdjRepository(getActivity()).insertOdj(odj);
+				long res = new OdjRepository(getActivity()).insertOdj(odj);
 				if(res < 0) {
 					Toast.makeText(getActivity(), "Votre objet du jour n'a pu être envoyé.", Toast.LENGTH_SHORT).show();
 				}
@@ -143,7 +142,7 @@ public class OdjFragment extends BasePluginFragment {
 			if(odj == null) {
 				odj = new ArrayList<OdjBean>();
 			}
-			odj = DatabaseUtil.Plugins.getOdjRepository(getActivity()).getAllByEid(eventId);
+			odj = new OdjRepository(getActivity()).getAllByEid(eventId);
 		}
 
 		@Override

@@ -3,9 +3,10 @@ package its.my.time.pages.editable.events.plugins.participants;
 import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantBean;
+import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
+import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
-import its.my.time.util.DatabaseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 
 		private void loadNextParticipants() {
 
-			participants = DatabaseUtil.Plugins.getParticipantRepository(getActivity()).getAllByEid(eventId);
+			participants = new ParticipantRepository(getActivity()).getAllByEid(eventId);
 			if(participants == null) {
 				participants = new ArrayList<ParticipantBean>();
 			}
@@ -97,7 +98,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 			for (ParticipantBean participant : participants) {
 				ids.add(participant.getUid());
 			}
-			utilisateurs = DatabaseUtil.getUtilisateurRepository(getActivity()).getAllByIds(ids);
+			utilisateurs = new UtilisateurRepository(getActivity()).getAllByIds(ids);
 			if(utilisateurs == null) {
 				utilisateurs = new ArrayList<UtilisateurBean>();
 			}

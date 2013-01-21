@@ -2,10 +2,10 @@ package its.my.time.pages.editable.events.task;
 
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
-import its.my.time.pages.editable.events.event.details.DetailsFragment;
 import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
 import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
 import its.my.time.pages.editable.events.plugins.pj.PjFragment;
+import its.my.time.pages.editable.events.task.details.TaskDetailsFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -34,7 +34,7 @@ public class TaskPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
-		case INDEX_PAGE_EVENT:return new DetailsFragment(event, EventBaseRepository.Types.TYPE_TASK);
+		case INDEX_PAGE_EVENT:return new TaskDetailsFragment(event, EventBaseRepository.Types.TYPE_TASK);
 		case INDEX_PAGE_PARTICIPANTS:return new ParticipantsFragment(event.getId());
 		case INDEX_PAGE_COMMENTAIRES:return new CommentairesFragment(event.getId());
 		case INDEX_PAGE_PJ:return new PjFragment(event.getId());

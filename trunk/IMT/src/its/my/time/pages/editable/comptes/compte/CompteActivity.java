@@ -4,7 +4,6 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.util.ActivityUtil;
-import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.menu.MenuGroupe;
 
@@ -46,7 +45,7 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 
 		Bundle bundle = getIntent().getExtras();
 		if(bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			compte = DatabaseUtil.getCompteRepository(this).getById(bundle.getLong(ActivityUtil.KEY_EXTRA_ID)); 
+			compte = new CompteRepository(this).getById(bundle.getLong(ActivityUtil.KEY_EXTRA_ID)); 
 		} else {
 			compte = new CompteBean();
 			compte.setColor(Color.parseColor("#70b2cd"));

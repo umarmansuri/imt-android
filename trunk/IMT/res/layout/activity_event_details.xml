@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent" >
-  
+
         <LinearLayout
             android:id="@+id/layout_conteneur"
             android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_margin="4dp"
             android:background="@color/white"
             android:orientation="vertical" >
- 
+
             <LinearLayout
                 android:id="@+id/activity_event_details_deb"
                 android:layout_width="match_parent"
@@ -29,8 +29,8 @@
                     android:id="@+id/activity_event_details_lib_ddeb"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:text="@string/view_event_detail_debut" />
 
                 <its.my.time.view.date.DateButton
@@ -146,8 +146,8 @@
                     android:id="@+id/activity_event_details_lib_compte"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="4"
                     android:hint="@string/view_event_detail_compte" />
 
                 <Spinner
@@ -159,9 +159,16 @@
                 <Spinner
                     android:id="@+id/activity_event_details_spinner_recurrence"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content" 
+                    android:layout_height="wrap_content"
                     android:layout_weight="7" />
             </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp" >
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 

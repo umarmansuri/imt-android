@@ -3,8 +3,8 @@ package its.my.time.pages.editable.events.plugins.pj;
 import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
+import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.pages.editable.events.plugins.EditableLittleView;
-import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 
 import java.io.File;
@@ -34,7 +34,7 @@ public class PjView extends EditableLittleView{
 		super.initialiseValues();
 		
 		UtilisateurBean user = new UtilisateurBean();
-		user = DatabaseUtil.getUtilisateurRepository(getContext()).getById(pj.getUid());
+		user = new UtilisateurRepository(getContext()).getById(pj.getUid());
 
 		((TextView)findViewById(R.id.event_pj_date)).setText(DateUtil.getLongDateTime(pj.getDate()));
 		//TODO activer quand user actif 

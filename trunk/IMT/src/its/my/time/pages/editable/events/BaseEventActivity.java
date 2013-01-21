@@ -5,7 +5,6 @@ import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.ActivityUtil;
-import its.my.time.util.DatabaseUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.view.ControledViewPager;
 
@@ -34,7 +33,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		setContentView(R.layout.activity_event);
 
 		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			event = DatabaseUtil.Events.getEventRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
+			event = new EventBaseRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
 		}
 		if (event == null) {
 			event = new EventBaseBean();

@@ -4,7 +4,6 @@ import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.comment.CommentBean;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
-import its.my.time.util.DatabaseUtil;
 import its.my.time.util.PreferencesUtil;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class CommentairesFragment extends BasePluginFragment {
 				commentaire.setDate(Calendar.getInstance());
 				commentaire.setEid(eventId);
 				commentaire.setUid(PreferencesUtil.getCurrentUid(getActivity()));
-				long res = DatabaseUtil.Plugins.getCommentRepository(getActivity()).insertComment(commentaire);
+				long res = new CommentRepository(getActivity()).insertComment(commentaire);
 				if(res < 0) {
 					Toast.makeText(getActivity(), "Votre commentaire n'a pu être envoyé.", Toast.LENGTH_SHORT).show();
 				}
@@ -114,7 +113,7 @@ public class CommentairesFragment extends BasePluginFragment {
 			if(comments == null) {
 				comments = new ArrayList<CommentBean>();
 			}
-			comments = DatabaseUtil.Plugins.getCommentRepository(getActivity()).getAllByEid(eventId);
+			comments = new CommentRepository(getActivity()).getAllByEid(eventId);
 		}
 
 		@Override
