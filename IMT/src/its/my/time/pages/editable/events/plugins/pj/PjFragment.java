@@ -26,15 +26,10 @@ import android.widget.Toast;
 
 public class PjFragment extends BasePluginFragment {
 
-	private final int eventId;
 	private Button mButtonSend;
 	private ListView mListPj;
 
 	private static final int PICK_FILE_RESULT_CODE = 1;
-
-	public PjFragment(int l) {
-		this.eventId = l;
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +38,7 @@ public class PjFragment extends BasePluginFragment {
 		final RelativeLayout mView = (RelativeLayout) inflater.inflate(
 				R.layout.activity_event_piecejointe, null);
 		this.mListPj = (ListView) mView.findViewById(R.id.event_pj_liste);
-		this.mListPj.setAdapter(new PjAdapter(getActivity(), this.eventId,
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(),
 				false));
 
 		this.mButtonSend = (Button) mView.findViewById(R.id.event_pj_Btenvoi);
@@ -67,7 +62,6 @@ public class PjFragment extends BasePluginFragment {
 				}
 			}
 		});
-
 		return mView;
 	}
 
@@ -87,7 +81,7 @@ public class PjFragment extends BasePluginFragment {
 				pj.setName(decoupeNom[decoupeNom.length - 1]);
 				pj.setLink(theFilePath);
 				pj.setDate(Calendar.getInstance());
-				pj.setEid(this.eventId);
+				pj.setEid(getParentActivity().getEvent().getId());
 				// TODO utilisateur désactivé
 				// pj.setUid(PreferencesUtil.getCurrentUid(getActivity()));
 				pj.setUid(1);
@@ -98,7 +92,7 @@ public class PjFragment extends BasePluginFragment {
 							Toast.LENGTH_SHORT).show();
 				}
 				this.mListPj.setAdapter(new PjAdapter(getActivity(),
-						this.eventId, false));
+						getParentActivity().getEvent().getId(), false));
 			}
 		}
 			;
@@ -114,18 +108,18 @@ public class PjFragment extends BasePluginFragment {
 	@Override
 	public void launchEdit() {
 		this.mListPj
-				.setAdapter(new PjAdapter(getActivity(), this.eventId, true));
+				.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(), true));
 	}
 
 	@Override
 	public void launchSave() {
-		this.mListPj.setAdapter(new PjAdapter(getActivity(), this.eventId,
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(),
 				false));
 	}
 
 	@Override
 	public void launchCancel() {
-		this.mListPj.setAdapter(new PjAdapter(getActivity(), this.eventId,
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(),
 				false));
 	}
 
@@ -159,7 +153,7 @@ public class PjFragment extends BasePluginFragment {
 				this.pjs = new ArrayList<PjBean>();
 			}
 			this.pjs = new PjRepository(getActivity())
-					.getAllByEid(PjFragment.this.eventId);
+					.getAllByEid(getParentActivity().getEvent().getId());
 		}
 
 		@Override
@@ -181,7 +175,7 @@ public class PjFragment extends BasePluginFragment {
 					new PjRepository(getActivity()).deletepj(PjAdapter.this.pjs
 							.get(position).getId());
 					PjFragment.this.mListPj.setAdapter(new PjAdapter(
-							getActivity(), PjFragment.this.eventId, true));
+							getActivity(), getParentActivity().getEvent().getId(), true));
 				}
 			});
 			return view;

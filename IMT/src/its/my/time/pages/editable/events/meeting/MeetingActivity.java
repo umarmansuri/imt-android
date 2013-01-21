@@ -21,15 +21,15 @@ public class MeetingActivity extends BaseEventActivity {
 	public ArrayList<BasePluginFragment> getPages() {
 		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
 
-		BasePluginFragment fragment = new MeetingDetailsFragment(this.event);
+		BasePluginFragment fragment = new MeetingDetailsFragment();
 		fragments.add(fragment);
-		fragment = new OdjFragment(this.event.getId());
+		fragment = new OdjFragment();
 		fragments.add(fragment);
-		fragment = new ParticipantsFragment(this.event.getId());
+		fragment = new ParticipantsFragment();
 		fragments.add(fragment);
-		fragment = new CommentairesFragment(this.event.getId());
+		fragment = new CommentairesFragment();
 		fragments.add(fragment);
-		fragment = new PjFragment(this.event.getId());
+		fragment = new PjFragment();
 		fragments.add(fragment);
 		return fragments;
 	}

@@ -20,14 +20,13 @@ public class EventActivity extends BaseEventActivity {
 	@Override
 	public ArrayList<BasePluginFragment> getPages() {
 		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
-		BasePluginFragment fragment = new DetailsFragment(this.event,
-				EventTypes.TYPE_BASE);
+		BasePluginFragment fragment = new DetailsFragment(EventTypes.TYPE_BASE);
 		fragments.add(fragment);
-		fragment = new ParticipantsFragment(this.event.getId());
+		fragment = new ParticipantsFragment();
 		fragments.add(fragment);
-		fragment = new CommentairesFragment(this.event.getId());
+		fragment = new CommentairesFragment();
 		fragments.add(fragment);
-		fragment = new PjFragment(this.event.getId());
+		fragment = new PjFragment();
 		fragments.add(fragment);
 		return fragments;
 	}
