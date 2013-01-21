@@ -5,6 +5,7 @@ import its.my.time.data.bdd.events.plugins.odj.OdjBean;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -25,11 +26,12 @@ import com.mobeta.android.dslv.DragSortListView;
 public class OdjFragment extends BasePluginFragment {
 
 	protected List<OdjBean> odjs;
+	protected ArrayList<Long> removedOdjsId;
 	private Button mButtonSend;
 	private DragSortListView mListOdj;
 	private EditText mTextOdj;
 
-	
+
 	private final DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
 		@Override
 		public void drop(int from, int to) {
@@ -79,10 +81,10 @@ public class OdjFragment extends BasePluginFragment {
 				mTextOdj.setText("");
 			}
 		});
-		
+
 		layoutNew = mView.findViewById(R.id.event_layout_new_odj);
 		layoutNew.setVisibility(View.GONE);
-		
+
 		return mView;
 	}
 
@@ -106,6 +108,7 @@ public class OdjFragment extends BasePluginFragment {
 		layoutNew.setVisibility(View.GONE);
 		OdjRepository repo = new OdjRepository(getActivity());
 		OdjBean odj;
+
 		for(int i = 0; i < odjs.size(); i++) {
 			odj = odjs.get(i);
 			odj.setOrder(i);
@@ -114,6 +117,12 @@ public class OdjFragment extends BasePluginFragment {
 			} else {
 				repo.updateOdj(odj);
 			}
+		}
+		if(removedOdjsId != null) {
+			for (long id : removedOdjsId) {
+				repo.deleteOdj(id);
+			}
+			removedOdjsId = null;
 		}
 		mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),true));
 		odjs = null;
@@ -164,11 +173,14 @@ public class OdjFragment extends BasePluginFragment {
 		@Override
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
-			final OdjView view = new OdjView(getActivity(),
-					odjs.get(position), this.isInEditMode);
+			final OdjView view = new OdjView(getActivity(),odjs.get(position), this.isInEditMode);
 			view.setOnDeleteClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					if(removedOdjsId == null) {
+						removedOdjsId = new ArrayList<Long>();
+					}
+					removedOdjsId.add(odjs.get(position).getId());
 					odjs.remove(position);
 					mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(), true));
 				}
