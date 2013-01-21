@@ -2,8 +2,6 @@ package its.my.time.data.bdd.events.plugins.comment;
 
 import java.util.Calendar;
 
-
-
 public class CommentBean {
 
 	private long id;
@@ -11,7 +9,7 @@ public class CommentBean {
 	private Calendar date;
 	private long uid;
 	private long eid;
-	
+
 	public CommentBean(int id, String title, String comment, int uid, int eid) {
 		super();
 		this.id = id;
@@ -28,7 +26,7 @@ public class CommentBean {
 	}
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -36,7 +34,7 @@ public class CommentBean {
 	}
 
 	public String getComment() {
-		return comment;
+		return this.comment;
 	}
 
 	public void setComment(String comment) {
@@ -44,7 +42,7 @@ public class CommentBean {
 	}
 
 	public long getUid() {
-		return uid;
+		return this.uid;
 	}
 
 	public void setUid(long uid) {
@@ -52,7 +50,7 @@ public class CommentBean {
 	}
 
 	public long getEid() {
-		return eid;
+		return this.eid;
 	}
 
 	public void setEid(int eid) {
@@ -60,7 +58,7 @@ public class CommentBean {
 	}
 
 	public Calendar getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Calendar date) {

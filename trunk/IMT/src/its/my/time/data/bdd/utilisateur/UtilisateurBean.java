@@ -2,9 +2,8 @@ package its.my.time.data.bdd.utilisateur;
 
 import java.util.Calendar;
 
-
 public class UtilisateurBean {
-	
+
 	private int id;
 	private String nom;
 	private String prenom;
@@ -17,76 +16,99 @@ public class UtilisateurBean {
 	private int codePostal;
 	private String ville;
 	private String pays;
-	
+
 	public int getId() {
-		return id;
+		return this.id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNom() {
-		return nom;
+		return this.nom;
 	}
+
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
 	public String getPrenom() {
-		return prenom;
+		return this.prenom;
 	}
+
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
 	public String getTel() {
-		return tel;
+		return this.tel;
 	}
+
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+
 	public String getMail() {
-		return mail;
+		return this.mail;
 	}
+
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+
 	public String getAdresse() {
-		return adresse;
+		return this.adresse;
 	}
+
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
+
 	public int getCodePostal() {
-		return codePostal;
+		return this.codePostal;
 	}
+
 	public void setCodePostal(int codePostal) {
 		this.codePostal = codePostal;
 	}
+
 	public String getVille() {
-		return ville;
+		return this.ville;
 	}
+
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
+
 	public String getPays() {
-		return pays;
+		return this.pays;
 	}
+
 	public void setPays(String pays) {
 		this.pays = pays;
 	}
+
 	public String getPseudo() {
-		return pseudo;
+		return this.pseudo;
 	}
+
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
 	}
+
 	public String getMdp() {
-		return mdp;
+		return this.mdp;
 	}
+
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
+
 	public Calendar getDateAniv() {
-		return dateAniv;
+		return this.dateAniv;
 	}
+
 	public void setDateAniv(Calendar dateAniv) {
 		this.dateAniv = dateAniv;
 	}

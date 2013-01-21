@@ -9,13 +9,13 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
-public abstract class BaseView extends FrameLayout{
+public abstract class BaseView extends FrameLayout {
 
 	protected static int nbPageLoading = 0;
-	
+
 	public BaseView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		((CalendarActivity)getContext()).setSupportProgressBarVisibility(true);
+		((CalendarActivity) getContext()).setSupportProgressBarVisibility(true);
 		new LoadView().execute();
 	}
 
@@ -28,38 +28,40 @@ public abstract class BaseView extends FrameLayout{
 	}
 
 	protected abstract View createView();
+
 	protected abstract String getTopBarText();
-	
+
 	private class LoadView extends AsyncTask<Void, Void, View> {
 
 		@Override
 		protected void onPreExecute() {
 			nbPageLoading++;
-			((CalendarActivity)getContext()).setSupportProgressBarIndeterminateVisibility(true);
+			((CalendarActivity) getContext())
+					.setSupportProgressBarIndeterminateVisibility(true);
 		}
-		
+
 		@Override
 		protected View doInBackground(Void... params) {
-			View view = createView();
+			final View view = createView();
 			view.setVisibility(INVISIBLE);
 			return view;
 		}
-		
+
 		@Override
 		protected void onPostExecute(View result) {
 			removeAllViews();
 			addView(result);
-			Animation anim = new AlphaAnimation(0, 1);
+			final Animation anim = new AlphaAnimation(0, 1);
 			anim.setFillAfter(true);
 			anim.setDuration(500);
 			result.startAnimation(anim);
-			
+
 			nbPageLoading--;
-			if(nbPageLoading == 0) {
-				((CalendarActivity)getContext()).setSupportProgressBarIndeterminateVisibility(false);
+			if (nbPageLoading == 0) {
+				((CalendarActivity) getContext())
+						.setSupportProgressBarIndeterminateVisibility(false);
 			}
 		}
 	}
-	
-	
+
 }

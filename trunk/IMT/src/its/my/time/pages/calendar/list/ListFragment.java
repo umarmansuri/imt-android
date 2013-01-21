@@ -12,15 +12,15 @@ public class ListFragment extends SherlockFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-		ListView mListView = new ListView(getSherlockActivity());
+
+		final ListView mListView = new ListView(getSherlockActivity());
 		mListView.setAdapter(new ListEventAdapter(getActivity()));
 		return mListView;
 	}

@@ -27,7 +27,7 @@ public abstract class BaseActivity extends MenuActivity {
 
 	protected abstract CharSequence getActionBarTitle();
 
-	private OnClickListener mOnIconeClickLIstener = new OnClickListener() {
+	private final OnClickListener mOnIconeClickLIstener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
@@ -45,10 +45,11 @@ public abstract class BaseActivity extends MenuActivity {
 				return;
 			default:
 				return;
-			}	
+			}
 		}
 	};
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_editable, menu);
 
@@ -58,7 +59,7 @@ public abstract class BaseActivity extends MenuActivity {
 		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_edit);
 		icone.setPadding(20, 0, 20, 0);
-		icone.setOnClickListener(mOnIconeClickLIstener);
+		icone.setOnClickListener(this.mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_EDIT).setActionView(icone);
 
 		icone = new MooncakeIcone(this);
@@ -67,7 +68,7 @@ public abstract class BaseActivity extends MenuActivity {
 		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_save);
 		icone.setPadding(20, 0, 20, 0);
-		icone.setOnClickListener(mOnIconeClickLIstener);
+		icone.setOnClickListener(this.mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_SAVE).setActionView(icone);
 
 		icone = new MooncakeIcone(this);
@@ -76,54 +77,57 @@ public abstract class BaseActivity extends MenuActivity {
 		icone.setTextColor(getResources().getColor(R.color.grey));
 		icone.setId(R.id.menu_cancel);
 		icone.setPadding(20, 0, 20, 0);
-		icone.setOnClickListener(mOnIconeClickLIstener );
+		icone.setOnClickListener(this.mOnIconeClickLIstener);
 		menu.getItem(INDEX_MENU_CANCEL).setActionView(icone);
 
 		this.menu = menu;
-		boolean res = super.onCreateOptionsMenu(menu);
+		final boolean res = super.onCreateOptionsMenu(menu);
 		onViewCreated();
 		return res;
 	}
 
 	private void launchEdit() {
-		menu.getItem(INDEX_MENU_EDIT).setVisible(false);
-		menu.getItem(INDEX_MENU_SAVE).setVisible(true);
-		menu.getItem(INDEX_MENU_CANCEL).setVisible(true);
+		this.menu.getItem(INDEX_MENU_EDIT).setVisible(false);
+		this.menu.getItem(INDEX_MENU_SAVE).setVisible(true);
+		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(true);
 		showEdit();
 	}
 
 	private void launchSave() {
-		menu.getItem(INDEX_MENU_EDIT).setVisible(true);
-		menu.getItem(INDEX_MENU_SAVE).setVisible(false);
-		menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
+		this.menu.getItem(INDEX_MENU_EDIT).setVisible(true);
+		this.menu.getItem(INDEX_MENU_SAVE).setVisible(false);
+		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
 		showSave();
 	}
 
 	private void launchCancel() {
-		menu.getItem(INDEX_MENU_EDIT).setVisible(true);
-		menu.getItem(INDEX_MENU_SAVE).setVisible(false);
-		menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
+		this.menu.getItem(INDEX_MENU_EDIT).setVisible(true);
+		this.menu.getItem(INDEX_MENU_SAVE).setVisible(false);
+		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
 		showCancel();
 	}
 
 	public void launchEditMode() {
 		launchEdit();
 	}
-	
+
 	protected abstract void showEdit();
+
 	protected abstract void showSave();
+
 	protected abstract void showCancel();
+
 	protected abstract void onViewCreated();
 
 	public void setEditVisibility(boolean visible) {
-		menu.getItem(INDEX_MENU_EDIT).setVisible(visible);
+		this.menu.getItem(INDEX_MENU_EDIT).setVisible(visible);
 	}
 
 	public void setCancelVisibility(boolean visible) {
-		menu.getItem(INDEX_MENU_CANCEL).setVisible(visible);
+		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(visible);
 	}
 
 	public void setSaveVisibility(boolean visible) {
-		menu.getItem(INDEX_MENU_SAVE).setVisible(visible);
+		this.menu.getItem(INDEX_MENU_SAVE).setVisible(visible);
 	}
 }

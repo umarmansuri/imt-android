@@ -11,45 +11,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
-public class ListEventAdapter implements ListAdapter{
+public class ListEventAdapter implements ListAdapter {
 
-	private static final int NB_EVENT_LOADED = 10;
-
-	private Context context;
+	private final Context context;
 	private List<EventBaseBean> events;
-	private int indexEvent;
 
 	public ListEventAdapter(Context context) {
 		this.context = context;
-		indexEvent = 0;
 		loadNextEvents();
 	}
 
 	private void loadNextEvents() {
-		events = new EventBaseRepository(context).getAllNextFromNow();
-		indexEvent+=NB_EVENT_LOADED;
+		this.events = new EventBaseRepository(this.context).getAllNextFromNow();
 	}
 
 	@Override
 	public int getCount() {
-		if(events != null) {
-			return events.size();
+		if (this.events != null) {
+			return this.events.size();
 		}
 		return 0;
 	}
 
 	@Override
-	public Object getItem(int position) {return null;}
+	public Object getItem(int position) {
+		return null;
+	}
 
 	@Override
-	public long getItemId(int position) {return events.get(position).getId();}
+	public long getItemId(int position) {
+		return this.events.get(position).getId();
+	}
 
 	@Override
-	public int getItemViewType(int position) {return 0;}
+	public int getItemViewType(int position) {
+		return 0;
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		return new LittleEventView(context, events.get(position));
+		return new LittleEventView(this.context, this.events.get(position));
 	}
 
 	@Override
@@ -64,21 +65,29 @@ public class ListEventAdapter implements ListAdapter{
 
 	@Override
 	public boolean isEmpty() {
-		if(events == null | events.size() == 0) {return true;} else {return false;}
+		if (this.events == null | this.events.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public void registerDataSetObserver(DataSetObserver observer) {	}
+	public void registerDataSetObserver(DataSetObserver observer) {
+	}
 
 	@Override
-	public void unregisterDataSetObserver(DataSetObserver observer) {}
+	public void unregisterDataSetObserver(DataSetObserver observer) {
+	}
 
 	@Override
-	public boolean areAllItemsEnabled() {return false;}
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
 
 	@Override
-	public boolean isEnabled(int position) {return false;}
-
-
+	public boolean isEnabled(int position) {
+		return false;
+	}
 
 }

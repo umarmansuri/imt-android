@@ -7,10 +7,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.widget.TextView;
 
-public class OdjView extends EditableLittleView{
+public class OdjView extends EditableLittleView {
 
-	private OdjBean odj;
-	
+	private final OdjBean odj;
+
 	public OdjView(Context context, OdjBean odj, boolean isInEditMode) {
 		super(context, isInEditMode);
 		inflate(context, R.layout.activity_event_odjs_little, this);
@@ -21,6 +21,7 @@ public class OdjView extends EditableLittleView{
 
 	private void initialiseDetails() {
 		super.initialiseValues();
-		((TextView)findViewById(R.id.event_odj_odjs)).setText(odj.getValue());
+		((TextView) findViewById(R.id.event_odj_odjs)).setText(this.odj
+				.getValue());
 	}
 }

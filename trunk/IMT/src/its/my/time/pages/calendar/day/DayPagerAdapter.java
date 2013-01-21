@@ -8,7 +8,7 @@ import java.util.Calendar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-public class DayPagerAdapter extends BasePagerAdapter{
+public class DayPagerAdapter extends BasePagerAdapter {
 
 	public DayPagerAdapter(FragmentManager fm, Calendar cal) {
 		super(fm, cal);
@@ -16,14 +16,14 @@ public class DayPagerAdapter extends BasePagerAdapter{
 
 	@Override
 	protected Fragment getView(int incrementation) {
-		Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
+		final Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
 		displayedDay.add(Calendar.DAY_OF_MONTH, incrementation);
 		return new DayFragment(displayedDay);
 	}
 
 	@Override
 	protected String getCustomTitle(int incrementation) {
-		Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
+		final Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
 		displayedDay.add(Calendar.DAY_OF_MONTH, incrementation);
 		return DateUtil.getLongDate(displayedDay);
 	}

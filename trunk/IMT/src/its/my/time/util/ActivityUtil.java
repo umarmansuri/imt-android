@@ -2,7 +2,6 @@ package its.my.time.util;
 
 import its.my.time.R;
 import its.my.time.SplashActivity;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.editable.comptes.ComptesActivity;
 import its.my.time.pages.editable.comptes.compte.CompteActivity;
@@ -24,39 +23,39 @@ public class ActivityUtil {
 	public static final String KEY_EXTRA_ID = "KEY_ID";
 	public static final String KEY_EXTRA_ISO_TIME = "KEY_EXTRA_ISO_TIME";
 	public static final String KEY_EXTRA_ALL_DAY = "KEY_EXTRA_ALL_DAY";
-	
+
 	public static final String ACTION_FINISH = "ACTION_FINISH";
-	
+
 	public static void logout(Context context) {
 		PreferencesUtil.setCurrentUid(context, -1);
-		Intent i=new Intent(ACTION_FINISH);
-        i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
-        context.sendBroadcast(i);
+		final Intent i = new Intent(ACTION_FINISH);
+		i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
+		context.sendBroadcast(i);
 		startSplashActivity(context);
 	}
 
 	public static void startSplashActivity(Context context) {
-		Intent intent = new Intent(context, SplashActivity.class);
+		final Intent intent = new Intent(context, SplashActivity.class);
 		context.startActivity(intent);
 	}
-	
+
 	public static void startProfilActivity(Context context) {
-		Intent intent = new Intent(context, ProfilActivity.class);
+		final Intent intent = new Intent(context, ProfilActivity.class);
 		context.startActivity(intent);
 	}
 
 	public static void startCalendarActivity(Context context) {
-		Intent intent = new Intent(context, CalendarActivity.class);
+		final Intent intent = new Intent(context, CalendarActivity.class);
 		context.startActivity(intent);
 	}
-	
+
 	public static void startComptesActivity(Context context) {
-		Intent intent = new Intent(context, ComptesActivity.class);
+		final Intent intent = new Intent(context, ComptesActivity.class);
 		context.startActivity(intent);
 	}
 
 	public static void startCompteActivity(Context context, long id) {
-		Intent intent = new Intent(context, CompteActivity.class);
+		final Intent intent = new Intent(context, CompteActivity.class);
 		intent.putExtra(KEY_EXTRA_ID, id);
 		context.startActivity(intent);
 	}
@@ -82,42 +81,40 @@ public class ActivityUtil {
 	}
 
 	public static void startEventActivity(Context context, int id, int typeEvent) {
-		Intent intent = getEventIntentFromType(context, typeEvent);
+		final Intent intent = getEventIntentFromType(context, typeEvent);
 		intent.putExtra(KEY_EXTRA_ID, id);
 		context.startActivity(intent);
 	}
 
-	public static void startEventActivity(final Context context, final Calendar calHeure, final boolean isAllDay) {
-		String[] labels = new String[]{
+	public static void startEventActivity(final Context context,
+			final Calendar calHeure, final boolean isAllDay) {
+		final String[] labels = new String[] {
 				context.getResources().getString(R.string.label_event_base),
 				context.getResources().getString(R.string.label_event_meeting),
 				context.getResources().getString(R.string.label_event_task),
-				context.getResources().getString(R.string.label_event_call)
-		};
-		final Integer[] types = new Integer[]{
-				EventTypes.TYPE_BASE,
-				EventTypes.TYPE_MEETING,
-				EventTypes.TYPE_TASK,
-				EventTypes.TYPE_CALL
-		};
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				context.getResources().getString(R.string.label_event_call) };
+		final Integer[] types = new Integer[] { EventTypes.TYPE_BASE,
+				EventTypes.TYPE_MEETING, EventTypes.TYPE_TASK,
+				EventTypes.TYPE_CALL };
+
+		final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle("Evénement à créer");
 		builder.setItems(labels, new DialogInterface.OnClickListener() {
-		    public void onClick(DialogInterface dialog, int item) {
-		    	startEventActivity(context, calHeure, types[item], isAllDay);
-		    }
+			@Override
+			public void onClick(DialogInterface dialog, int item) {
+				startEventActivity(context, calHeure, types[item], isAllDay);
+			}
 		});
-		AlertDialog alert = builder.create();
+		final AlertDialog alert = builder.create();
 		alert.show();
 	}
 
-	private static void startEventActivity(Context context, Calendar calHeure, int typeEvent, boolean isAllDay) {
-		Intent intent = getEventIntentFromType(context, typeEvent);
+	private static void startEventActivity(Context context, Calendar calHeure,
+			int typeEvent, boolean isAllDay) {
+		final Intent intent = getEventIntentFromType(context, typeEvent);
 		intent.putExtra(KEY_EXTRA_ID, -1);
 		intent.putExtra(KEY_EXTRA_ISO_TIME, DateUtil.getTimeInIso(calHeure));
 		intent.putExtra(KEY_EXTRA_ALL_DAY, isAllDay);
 		context.startActivity(intent);
 	}
 }
-

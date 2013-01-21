@@ -46,108 +46,108 @@ public class Switcher extends FrameLayout implements OnClickListener {
 	private void init() {
 		inflate(getContext(), R.layout.switcher, this);
 
-		mMainView = findViewById(R.id.switcher_main);
-		mOnView = (TextView) findViewById(R.id.switcher_text_on);
-		mOffView = (TextView) findViewById(R.id.switcher_text_off);
+		this.mMainView = findViewById(R.id.switcher_main);
+		this.mOnView = (TextView) findViewById(R.id.switcher_text_on);
+		this.mOffView = (TextView) findViewById(R.id.switcher_text_off);
 
-		Resources r = getResources();
-		itemHalfWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, r.getDisplayMetrics());
+		final Resources r = getResources();
+		this.itemHalfWidth = TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 35, r.getDisplayMetrics());
 
-		animOn = new TranslateAnimation(-itemHalfWidth, 0, 0, 0);
-		animOff = new TranslateAnimation(0, -itemHalfWidth, 0, 0); 
+		this.animOn = new TranslateAnimation(-this.itemHalfWidth, 0, 0, 0);
+		this.animOff = new TranslateAnimation(0, -this.itemHalfWidth, 0, 0);
 
-		animOn.setAnimationListener(animListener);
-		animOff.setAnimationListener(animListener);
+		this.animOn.setAnimationListener(this.animListener);
+		this.animOff.setAnimationListener(this.animListener);
 		refreshValue(true, false);
 		setOnClickListener(this);
 	}
 
 	public OnStateChangedListener getOnStateChangedListener() {
-		return onStateChangedListener;
+		return this.onStateChangedListener;
 	}
 
-	public void setOnStateChangedListener(OnStateChangedListener onStateChangedListener) {
+	public void setOnStateChangedListener(
+			OnStateChangedListener onStateChangedListener) {
 		this.onStateChangedListener = onStateChangedListener;
 	}
 
 	public boolean isChecked() {
-		return isChecked;
+		return this.isChecked;
 	}
 
 	public void changeState(boolean isChecked, boolean withAnim, boolean isInit) {
 		this.isChecked = isChecked;
 		refreshValue(withAnim, !isInit);
 	}
-	
+
 	public void changeState(boolean isChecked, boolean withAnim) {
 		this.isChecked = isChecked;
 		refreshValue(withAnim, true);
 	}
 
-
 	public void toggleState(boolean withAnim) {
-		changeState(!isChecked, withAnim);
+		changeState(!this.isChecked, withAnim);
 	}
 
 	private void refreshValue(boolean withAnim, boolean launchListener) {
-		animListener.setLaunchListener(launchListener);
-		if (isChecked)
+		this.animListener.setLaunchListener(launchListener);
+		if (this.isChecked) {
 			animToOn(withAnim);
-		else
+		} else {
 			animToOff(withAnim);
+		}
 	}
 
-
 	private void animToOn(boolean withAnim) {
-		if(withAnim) {
-			animOn.setDuration(200);
+		if (withAnim) {
+			this.animOn.setDuration(200);
 		} else {
-			animOn.setDuration(1);	
+			this.animOn.setDuration(1);
 		}
-		animOn.setFillAfter(true);
-		mMainView.startAnimation(animOn);
+		this.animOn.setFillAfter(true);
+		this.mMainView.startAnimation(this.animOn);
 	}
 
 	private void animToOff(boolean withAnim) {
-		if(withAnim) {
-			animOff.setDuration(200);
+		if (withAnim) {
+			this.animOff.setDuration(200);
 		} else {
-			animOff.setDuration(1);	
+			this.animOff.setDuration(1);
 		}
-		animOff.setFillAfter(true);
-		mMainView.startAnimation(animOff);		
+		this.animOff.setFillAfter(true);
+		this.mMainView.startAnimation(this.animOff);
 	}
-
 
 	@Override
 	public void onClick(View v) {
-		isChecked = !isChecked;
+		this.isChecked = !this.isChecked;
 		refreshValue(true, true);
 	}
 
 	public void changeOnColor(int color) {
-		GradientDrawable dr = (GradientDrawable)mOnView.getBackground().getConstantState().newDrawable();
+		GradientDrawable dr = (GradientDrawable) this.mOnView.getBackground()
+				.getConstantState().newDrawable();
 		dr = (GradientDrawable) dr.mutate();
 		dr.setColor(color);
-		mOnView.setBackgroundDrawable(dr);
-		mOnView.setText(null);
+		this.mOnView.setBackgroundDrawable(dr);
+		this.mOnView.setText(null);
 
-		dr = (GradientDrawable)mOffView.getBackground().getConstantState().newDrawable();
+		dr = (GradientDrawable) this.mOffView.getBackground()
+				.getConstantState().newDrawable();
 		dr = (GradientDrawable) dr.mutate();
 		dr.setColor(getResources().getColor(R.color.grey));
-		mOffView.setBackgroundDrawable(dr);
-		mOffView.setText(null);
+		this.mOffView.setBackgroundDrawable(dr);
+		this.mOffView.setText(null);
 	}
 
-
-
-	private SwitcherAnimationListener animListener = new SwitcherAnimationListener();
+	private final SwitcherAnimationListener animListener = new SwitcherAnimationListener();
 
 	public class SwitcherAnimationListener implements AnimationListener {
 		private boolean launchListener = true;
 
 		public boolean isLaunchListener() {
-			return launchListener;
+			return this.launchListener;
 		}
 
 		public void setLaunchListener(boolean launchListener) {
@@ -156,26 +156,29 @@ public class Switcher extends FrameLayout implements OnClickListener {
 
 		@Override
 		public void onAnimationStart(Animation animation) {
-			if(animation == animOff) {
-				mOffView.setVisibility(View.VISIBLE);
+			if (animation == Switcher.this.animOff) {
+				Switcher.this.mOffView.setVisibility(View.VISIBLE);
 			} else {
-				mOnView.setVisibility(View.VISIBLE);	
+				Switcher.this.mOnView.setVisibility(View.VISIBLE);
 			}
 		}
 
 		@Override
-		public void onAnimationRepeat(Animation animation) {}
+		public void onAnimationRepeat(Animation animation) {
+		}
 
 		@Override
 		public void onAnimationEnd(Animation animation) {
-			if(animation == animOff) {
-				mOnView.setVisibility(View.INVISIBLE);
+			if (animation == Switcher.this.animOff) {
+				Switcher.this.mOnView.setVisibility(View.INVISIBLE);
 			} else {
-				mOffView.setVisibility(View.INVISIBLE);
+				Switcher.this.mOffView.setVisibility(View.INVISIBLE);
 			}
-			mMainView.invalidate();
-			if (onStateChangedListener != null && launchListener) {
-				onStateChangedListener.onStateCHangedListener(Switcher.this, isChecked);
+			Switcher.this.mMainView.invalidate();
+			if (Switcher.this.onStateChangedListener != null
+					&& this.launchListener) {
+				Switcher.this.onStateChangedListener.onStateCHangedListener(
+						Switcher.this, Switcher.this.isChecked);
 			}
 		}
 	}
@@ -183,6 +186,5 @@ public class Switcher extends FrameLayout implements OnClickListener {
 	public interface OnStateChangedListener {
 		public void onStateCHangedListener(Switcher switcher, boolean isChecked);
 	}
-
 
 }

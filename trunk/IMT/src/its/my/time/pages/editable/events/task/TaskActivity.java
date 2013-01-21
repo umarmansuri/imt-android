@@ -11,23 +11,22 @@ import java.util.ArrayList;
 
 public class TaskActivity extends BaseEventActivity {
 
-
 	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvelle tâche";
 	}
-	
+
 	@Override
 	public ArrayList<BasePluginFragment> getPages() {
-		ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
-		
-		BasePluginFragment fragment = new TaskDetailsFragment(event);
+		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
+
+		BasePluginFragment fragment = new TaskDetailsFragment(this.event);
 		fragments.add(fragment);
-		fragment = new ParticipantsFragment(event.getId());
+		fragment = new ParticipantsFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new CommentairesFragment(event.getId());
+		fragment = new CommentairesFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new PjFragment(event.getId());
+		fragment = new PjFragment(this.event.getId());
 		fragments.add(fragment);
 		return fragments;
 	}

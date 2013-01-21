@@ -6,14 +6,14 @@ public class OdjBean {
 	private String value;
 	private int order;
 	private long eid;
-	
+
 	public OdjBean() {
-		id = -1;
-		value = "";
-		eid = -1;
-		order = -1;
+		this.id = -1;
+		this.value = "";
+		this.eid = -1;
+		this.order = -1;
 	}
-	
+
 	public OdjBean(long id, String value, long eid, int order) {
 		super();
 		this.id = id;
@@ -21,28 +21,35 @@ public class OdjBean {
 		this.eid = eid;
 		this.order = order;
 	}
+
 	public long getId() {
-		return id;
+		return this.id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getValue() {
-		return value;
+		return this.value;
 	}
+
 	public void setValue(String value) {
 		this.value = value;
 	}
+
 	public long getEid() {
-		return eid;
+		return this.eid;
 	}
+
 	public void setEid(long eid) {
 		this.eid = eid;
 	}
 
 	public int getOrder() {
-		return order;
+		return this.order;
 	}
+
 	public void setOrder(int order) {
 		this.order = order;
 	}

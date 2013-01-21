@@ -13,14 +13,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 
-public class DateButton extends Button implements OnDateSetListener, OnClickListener {
+public class DateButton extends Button implements OnDateSetListener,
+		OnClickListener {
 
 	private DatePickerDialog dialog;
 	private Calendar date;
-	
-	
-	
-	
+
 	public DateButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(null);
@@ -37,36 +35,37 @@ public class DateButton extends Button implements OnDateSetListener, OnClickList
 	}
 
 	private void init(Calendar initDate) {
-		if(initDate!=null) {
-			date = initDate;
+		if (initDate != null) {
+			this.date = initDate;
 		} else {
-			date = Calendar.getInstance();
+			this.date = Calendar.getInstance();
 		}
 		setOnClickListener(this);
-		setText(DateUtil.getDayHourFrench(date));
+		setText(DateUtil.getDayHourFrench(this.date));
 	}
 
 	@Override
 	public void onDateSet(DatePicker arg0, int year, int month, int day) {
-		date.set(Calendar.YEAR,year);
-		date.set(Calendar.MONTH,month);
-		date.set(Calendar.DAY_OF_MONTH,day);
-		setText(DateUtil.getDayHourFrench(date));
+		this.date.set(Calendar.YEAR, year);
+		this.date.set(Calendar.MONTH, month);
+		this.date.set(Calendar.DAY_OF_MONTH, day);
+		setText(DateUtil.getDayHourFrench(this.date));
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		dialog = new DatePickerDialog(getContext(), this, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
-		dialog.show();
+		this.dialog = new DatePickerDialog(getContext(), this,
+				this.date.get(Calendar.YEAR), this.date.get(Calendar.MONTH),
+				this.date.get(Calendar.DAY_OF_MONTH));
+		this.dialog.show();
 	}
 
 	public Calendar getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Calendar date) {
 		init(date);
 	}
 
-	
 }

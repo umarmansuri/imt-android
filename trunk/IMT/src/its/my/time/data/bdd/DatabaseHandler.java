@@ -18,42 +18,42 @@ public class DatabaseHandler {
 
 	public static final int DATABASE_VERSION = 1;
 
-	protected final Context context; 
-	private DatabaseHelper DBHelper;
+	protected final Context context;
+	private final DatabaseHelper DBHelper;
 	protected SQLiteDatabase db;
 
-	public DatabaseHandler(Context context)
-	{
+	public DatabaseHandler(Context context) {
 		this.context = context;
 		this.DBHelper = new DatabaseHelper(this.context);
 	}
 
-	public DatabaseHandler open() throws SQLException 
-	{
+	public DatabaseHandler open() throws SQLException {
 		this.db = this.DBHelper.getWritableDatabase();
 		return this;
 	}
 
-	public void close(){this.DBHelper.close();}
+	public void close() {
+		this.DBHelper.close();
+	}
 
-	private static class DatabaseHelper extends SQLiteOpenHelper 
-	{
-		DatabaseHelper(Context context){
+	private static class DatabaseHelper extends SQLiteOpenHelper {
+		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
-	
+
 		@Override
-		public void onCreate(SQLiteDatabase db){
+		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(UtilisateurRepository.CREATE_TABLE);
 			db.execSQL(CompteRepository.CREATE_TABLE);
-			db.execSQL(EventBaseRepository.CREATE_TABLE);   
-			db.execSQL(CommentRepository.CREATE_TABLE); 
-			db.execSQL(ParticipantRepository.CREATE_TABLE);    
+			db.execSQL(EventBaseRepository.CREATE_TABLE);
+			db.execSQL(CommentRepository.CREATE_TABLE);
+			db.execSQL(ParticipantRepository.CREATE_TABLE);
 			db.execSQL(PjRepository.CREATE_TABLE);
 			db.execSQL(OdjRepository.CREATE_TABLE);
 		}
-	
+
 		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion,int newVersion){}
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		}
 	}
 }

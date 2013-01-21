@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 public class PjFragment extends BasePluginFragment {
 
-	private int eventId;
+	private final int eventId;
 	private Button mButtonSend;
 	private ListView mListPj;
 
@@ -40,24 +40,25 @@ public class PjFragment extends BasePluginFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		RelativeLayout mView = (RelativeLayout) inflater.inflate(
+		final RelativeLayout mView = (RelativeLayout) inflater.inflate(
 				R.layout.activity_event_piecejointe, null);
-		mListPj = (ListView) mView.findViewById(R.id.event_pj_liste);
-		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
+		this.mListPj = (ListView) mView.findViewById(R.id.event_pj_liste);
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), this.eventId,
+				false));
 
-		mButtonSend = (Button) mView.findViewById(R.id.event_pj_Btenvoi);
+		this.mButtonSend = (Button) mView.findViewById(R.id.event_pj_Btenvoi);
 
-		mButtonSend.setOnClickListener(new OnClickListener() {
+		this.mButtonSend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+				final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType("*/*");
 
 				intent.addCategory(Intent.CATEGORY_OPENABLE);
-				Intent i = Intent.createChooser(intent, "File");
+				final Intent i = Intent.createChooser(intent, "File");
 				try {
 					startActivityForResult(i, PICK_FILE_RESULT_CODE);
-				} catch (android.content.ActivityNotFoundException ex) {
+				} catch (final android.content.ActivityNotFoundException ex) {
 					// TODO Vérifier pourquoi ce n'est pas lui qui est affiché
 					// Potentially direct the user to the Market with a Dialog
 					// Toast.makeText(getActivity(),
@@ -78,48 +79,54 @@ public class PjFragment extends BasePluginFragment {
 		case PICK_FILE_RESULT_CODE: {
 			if (resultCode == Activity.RESULT_OK && data != null
 					&& data.getData() != null) {
-				String theFilePath = data.getData().getEncodedPath();
-				String[] decoupeNom = theFilePath.split("/");
+				final String theFilePath = data.getData().getEncodedPath();
+				final String[] decoupeNom = theFilePath.split("/");
 
 				// TODO envoyer via ws
-				PjBean pj = new PjBean();
+				final PjBean pj = new PjBean();
 				pj.setName(decoupeNom[decoupeNom.length - 1]);
 				pj.setLink(theFilePath);
 				pj.setDate(Calendar.getInstance());
-				pj.setEid(eventId);
-				//TODO utilisateur désactivé
-				//pj.setUid(PreferencesUtil.getCurrentUid(getActivity()));
+				pj.setEid(this.eventId);
+				// TODO utilisateur désactivé
+				// pj.setUid(PreferencesUtil.getCurrentUid(getActivity()));
 				pj.setUid(1);
-				long res = new PjRepository(getActivity()).insertpj(pj);
+				final long res = new PjRepository(getActivity()).insertpj(pj);
 				if (res < 0) {
 					Toast.makeText(getActivity(),
 							"Votre pièce jointe n'a pu être envoyée.",
 							Toast.LENGTH_SHORT).show();
 				}
-				mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
+				this.mListPj.setAdapter(new PjAdapter(getActivity(),
+						this.eventId, false));
 			}
-		};
-		break;
-		}}
+		}
+			;
+			break;
+		}
+	}
 
 	@Override
 	public String getTitle() {
 		return "Pièces jointes";
 	}
-	
+
 	@Override
 	public void launchEdit() {
-		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, true));
+		this.mListPj
+				.setAdapter(new PjAdapter(getActivity(), this.eventId, true));
 	}
 
 	@Override
 	public void launchSave() {
-		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), this.eventId,
+				false));
 	}
 
 	@Override
 	public void launchCancel() {
-		mListPj.setAdapter(new PjAdapter(getActivity(), eventId, false));
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), this.eventId,
+				false));
 	}
 
 	@Override
@@ -136,11 +143,11 @@ public class PjFragment extends BasePluginFragment {
 	public boolean isSavable() {
 		return true;
 	}
-	
-	private class PjAdapter implements ListAdapter{
+
+	private class PjAdapter implements ListAdapter {
 
 		private List<PjBean> pjs;
-		private boolean isInEditMode;
+		private final boolean isInEditMode;
 
 		public PjAdapter(Context context, int id, boolean isInEditMode) {
 			this.isInEditMode = isInEditMode;
@@ -148,43 +155,88 @@ public class PjFragment extends BasePluginFragment {
 		}
 
 		private void loadNextEvents() {
-			if(pjs == null) {
-				pjs = new ArrayList<PjBean>();
+			if (this.pjs == null) {
+				this.pjs = new ArrayList<PjBean>();
 			}
-			pjs = new PjRepository(getActivity()).getAllByEid(eventId);
+			this.pjs = new PjRepository(getActivity())
+					.getAllByEid(PjFragment.this.eventId);
 		}
 
 		@Override
 		public int getCount() {
-			if(pjs != null) {
-				return pjs.size();
+			if (this.pjs != null) {
+				return this.pjs.size();
 			}
 			return 0;
 		}
 
 		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			PjView view = new PjView(getActivity(), pjs.get(position), isInEditMode);
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
+			final PjView view = new PjView(getActivity(),
+					this.pjs.get(position), this.isInEditMode);
 			view.setOnDeleteClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					new PjRepository(getActivity()).deletepj(pjs.get(position).getId());
-					mListPj.setAdapter(new PjAdapter(getActivity(), eventId, true));	
+					new PjRepository(getActivity()).deletepj(PjAdapter.this.pjs
+							.get(position).getId());
+					PjFragment.this.mListPj.setAdapter(new PjAdapter(
+							getActivity(), PjFragment.this.eventId, true));
 				}
 			});
 			return view;
 		}
 
-		@Override public int getViewTypeCount() {return 1;}
-		@Override public boolean hasStableIds() {return true;}
-		@Override public boolean isEmpty() {if(pjs == null | pjs.size() == 0) {return true;} else {return false;}}
-		@Override public Object getItem(int position) {return null;}
-		@Override public long getItemId(int position) {return pjs.get(position).getId();}
-		@Override public int getItemViewType(int position) {return 0;}
-		@Override public void registerDataSetObserver(DataSetObserver observer) {	}
-		@Override public void unregisterDataSetObserver(DataSetObserver observer) {}
-		@Override public boolean areAllItemsEnabled() {return false;}
-		@Override public boolean isEnabled(int position) {return false;}
+		@Override
+		public int getViewTypeCount() {
+			return 1;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return true;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			if (this.pjs == null | this.pjs.size() == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return this.pjs.get(position).getId();
+		}
+
+		@Override
+		public int getItemViewType(int position) {
+			return 0;
+		}
+
+		@Override
+		public void registerDataSetObserver(DataSetObserver observer) {
+		}
+
+		@Override
+		public void unregisterDataSetObserver(DataSetObserver observer) {
+		}
+
+		@Override
+		public boolean areAllItemsEnabled() {
+			return false;
+		}
+
+		@Override
+		public boolean isEnabled(int position) {
+			return false;
+		}
 	}
 }
-

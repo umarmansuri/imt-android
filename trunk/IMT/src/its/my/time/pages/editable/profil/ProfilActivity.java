@@ -35,72 +35,75 @@ public class ProfilActivity extends BaseActivity {
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		setContentView(R.layout.activity_profile);
 
-		Bundle bundle = getIntent().getExtras();
-		if(PreferencesUtil.getCurrentUid(this) >= 0) {
-			user = new UtilisateurRepository(this).getById(PreferencesUtil.getCurrentUid(this)); 
-		} 
-		if(user == null) {
-			user = new UtilisateurBean();
+		final Bundle bundle = getIntent().getExtras();
+		if (PreferencesUtil.getCurrentUid(this) >= 0) {
+			this.user = new UtilisateurRepository(this).getById(PreferencesUtil
+					.getCurrentUid(this));
 		}
-	
+		if (this.user == null) {
+			this.user = new UtilisateurBean();
+		}
+
 		super.onCreate(bundle);
 	}
-	
+
 	private void initialiseValues() {
-		nom = (EditText)findViewById(R.id.activity_profil_nom_value);
-		nom.setEnabled(false);
-		nom.setText(user.getNom());
+		this.nom = (EditText) findViewById(R.id.activity_profil_nom_value);
+		this.nom.setEnabled(false);
+		this.nom.setText(this.user.getNom());
 
-		prenom = (EditText)findViewById(R.id.activity_profil_prenom_value);
-		prenom.setEnabled(false);
-		prenom.setText(user.getPrenom());
+		this.prenom = (EditText) findViewById(R.id.activity_profil_prenom_value);
+		this.prenom.setEnabled(false);
+		this.prenom.setText(this.user.getPrenom());
 
-		pseudo = (EditText)findViewById(R.id.activity_profil_identifiant_value);
-		pseudo.setEnabled(false);
-		pseudo.setText(user.getPseudo());
-		
-		mdp = (EditText)findViewById(R.id.activity_profil_password_value);
-		mdp.setEnabled(false);
-		mdp.setText(user.getMdp());
-		
-		mdp2 = (EditText)findViewById(R.id.activity_profil_password_again_value);
-		mdp2.setEnabled(false);
-		mdp2.setText(user.getMdp());
-		
-		adresse = (EditText)findViewById(R.id.activity_profil_adresse_value);
-		adresse.setEnabled(false);
-		adresse.setText(user.getAdresse());
-		
-		dateAniv = (EditText)findViewById(R.id.activity_profil_password_value);
-		dateAniv.setEnabled(false);
-		dateAniv.setText(DateUtil.getTimeInIso(user.getDateAniv()));
+		this.pseudo = (EditText) findViewById(R.id.activity_profil_identifiant_value);
+		this.pseudo.setEnabled(false);
+		this.pseudo.setText(this.user.getPseudo());
+
+		this.mdp = (EditText) findViewById(R.id.activity_profil_password_value);
+		this.mdp.setEnabled(false);
+		this.mdp.setText(this.user.getMdp());
+
+		this.mdp2 = (EditText) findViewById(R.id.activity_profil_password_again_value);
+		this.mdp2.setEnabled(false);
+		this.mdp2.setText(this.user.getMdp());
+
+		this.adresse = (EditText) findViewById(R.id.activity_profil_adresse_value);
+		this.adresse.setEnabled(false);
+		this.adresse.setText(this.user.getAdresse());
+
+		this.dateAniv = (EditText) findViewById(R.id.activity_profil_password_value);
+		this.dateAniv.setEnabled(false);
+		this.dateAniv.setText(DateUtil.getTimeInIso(this.user.getDateAniv()));
 	}
 
 	@Override
 	protected void onViewCreated() {
 		initialiseValues();
 	}
+
+	@Override
 	protected CharSequence getActionBarTitle() {
-		if(PreferencesUtil.getCurrentUid(this) >= 0) {
-			return "Inscription";	
+		if (PreferencesUtil.getCurrentUid(this) >= 0) {
+			return "Inscription";
 		} else {
 			return "Profil";
 		}
 	}
-	
+
 	private void changeState(boolean state) {
-		nom.setEnabled(state);
-		prenom.setEnabled(state);
-		pseudo.setEnabled(state);
-		mdp.setEnabled(state);
-		mdp2.setEnabled(state);
-		adresse.setEnabled(state);
-		dateAniv.setEnabled(state);
-		tel.setEnabled(state);
-		codePostal.setEnabled(state);
-		ville.setEnabled(state);
+		this.nom.setEnabled(state);
+		this.prenom.setEnabled(state);
+		this.pseudo.setEnabled(state);
+		this.mdp.setEnabled(state);
+		this.mdp2.setEnabled(state);
+		this.adresse.setEnabled(state);
+		this.dateAniv.setEnabled(state);
+		this.tel.setEnabled(state);
+		this.codePostal.setEnabled(state);
+		this.ville.setEnabled(state);
 	}
-	
+
 	@Override
 	protected void showEdit() {
 		changeState(true);
@@ -109,10 +112,10 @@ public class ProfilActivity extends BaseActivity {
 	@Override
 	protected void showSave() {
 		changeState(false);
-		if(PreferencesUtil.getCurrentUid(this) >= 0) {
-			new UtilisateurRepository(this).insertUtilisateur(user);	
+		if (PreferencesUtil.getCurrentUid(this) >= 0) {
+			new UtilisateurRepository(this).insertUtilisateur(this.user);
 		} else {
-			new UtilisateurRepository(this).update(user);
+			new UtilisateurRepository(this).update(this.user);
 		}
 		finish();
 	}
@@ -127,28 +130,28 @@ public class ProfilActivity extends BaseActivity {
 	protected void onMenuGroupSwitch(View v, int positionGroup,
 			boolean isChecked) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMenuItemSwitch(View v, int positionGroup,
 			int positionObjet, boolean isChecked) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMenuGroupClick(ExpandableListView parent, View v,
 			int groupPosition, long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMenuChildClick(ExpandableListView parent, View v,
 			int groupPosition, int childPosition, long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -161,7 +164,7 @@ public class ProfilActivity extends BaseActivity {
 	@Override
 	public void reload() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

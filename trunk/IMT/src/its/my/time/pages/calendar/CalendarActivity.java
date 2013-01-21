@@ -20,7 +20,6 @@ import java.util.List;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
@@ -39,7 +38,7 @@ import com.actionbarsherlock.view.Menu;
 import com.fonts.mooncake.MooncakeIcone;
 
 public class CalendarActivity extends MenuActivity implements
-OnPageChangeListener {
+		OnPageChangeListener {
 
 	public static final long ANIM_DURATION = 500;
 
@@ -66,24 +65,25 @@ OnPageChangeListener {
 		isWaitingEnd = false;
 		setContentView(R.layout.activity_calendar);
 
-		mMainFramePager = (FrameLayout) findViewById(R.id.main_pager);
+		this.mMainFramePager = (FrameLayout) findViewById(R.id.main_pager);
 
 		if (curentCal == null) {
 			curentCal = Calendar.getInstance();
 		}
-		if(indexCurrentPager != -1) {
-			new ChangePageTask().execute(indexCurrentPager);	
+		if (this.indexCurrentPager != -1) {
+			new ChangePageTask().execute(this.indexCurrentPager);
 		} else {
 			new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
 		}
-		
+
 		super.onResume();
 	}
 
+	@Override
 	protected void initialiseActionBar() {
 		super.initialiseActionBar();
 
-		ActionBar mActionBar = getSupportActionBar();
+		final ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.background_header));
 		mActionBar.setHomeButtonEnabled(true);
@@ -91,12 +91,13 @@ OnPageChangeListener {
 		mActionBar.setDisplayShowTitleEnabled(false);
 
 		mActionBar.setDisplayShowCustomEnabled(true);
-		mTextTitle = new TextView(this);
-		mTextTitle.setGravity(Gravity.CENTER);
-		mTextTitle.setTextSize(20);
-		mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-		mTextTitle.setTextColor(getResources().getColor(R.color.grey));
-		mActionBar.setCustomView(mTextTitle);
+		this.mTextTitle = new TextView(this);
+		this.mTextTitle.setGravity(Gravity.CENTER);
+		this.mTextTitle.setTextSize(20);
+		this.mTextTitle.setLayoutParams(new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		this.mTextTitle.setTextColor(getResources().getColor(R.color.grey));
+		mActionBar.setCustomView(this.mTextTitle);
 	}
 
 	private static final int INDEX_MENU_PROFIL = 0;
@@ -109,37 +110,45 @@ OnPageChangeListener {
 
 	private static final int INDEX_MENU_COMPTE = 2;
 	private static int INDEX_MENU_COMPTE_GERER = 0;
-	private static final int INDEX_MENU_LIBELLE = 3;
-	private static final int INDEX_MENU_PARAMETRES = 4;
 
 	@Override
-	protected ArrayList<MenuGroupe> onMainMenuCreated(ArrayList<MenuGroupe> menuGroupes) {
-		int iconeColor = getResources().getColor(R.color.grey);
-		int iconeSize = 30;
+	protected ArrayList<MenuGroupe> onMainMenuCreated(
+			ArrayList<MenuGroupe> menuGroupes) {
+		final int iconeColor = getResources().getColor(R.color.grey);
+		final int iconeSize = 30;
 
-		MenuGroupe menuGroupe = new MenuGroupe("Profil", MooncakeIcone.icon_user);
+		MenuGroupe menuGroupe = new MenuGroupe("Profil",
+				MooncakeIcone.icon_user);
 		menuGroupes.add(menuGroupe);
 
 		menuGroupe = new MenuGroupe("Agenda", MooncakeIcone.icon_table);
 		ArrayList<MenuObjet> donnees = new ArrayList<MenuObjet>();
-		TextView textView = new TextView(CalendarActivity.this);
-		textView.setText(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)));
+		final TextView textView = new TextView(CalendarActivity.this);
+		textView.setText(String.valueOf(Calendar.getInstance().get(
+				Calendar.DAY_OF_MONTH)));
 		textView.setTextColor(iconeColor);
 		textView.setTextSize(iconeSize);
 		textView.setGravity(Gravity.CENTER);
-		donnees.add(new MenuObjet(menuGroupe, "Aujourd'hui", MooncakeIcone.icon_time));
-		donnees.add(new MenuObjet(menuGroupe, "Mois",  MooncakeIcone.icon_calendar_month));
-		donnees.add(new MenuObjet(menuGroupe, "Jour",  MooncakeIcone.icon_calendar));
-		donnees.add(new MenuObjet(menuGroupe, "Liste", MooncakeIcone.icon_list_2));
+		donnees.add(new MenuObjet(menuGroupe, "Aujourd'hui",
+				MooncakeIcone.icon_time));
+		donnees.add(new MenuObjet(menuGroupe, "Mois",
+				MooncakeIcone.icon_calendar_month));
+		donnees.add(new MenuObjet(menuGroupe, "Jour",
+				MooncakeIcone.icon_calendar));
+		donnees.add(new MenuObjet(menuGroupe, "Liste",
+				MooncakeIcone.icon_list_2));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
 		menuGroupe = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
-		CompteRepository compteRepo = new CompteRepository(this);
-		comptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
-		for (CompteBean compteBean : comptes) {
-			donnees.add(new MenuObjet(menuGroupe, compteBean.getTitle(), MooncakeIcone.icon_business_card, true, compteBean.isShowed(), compteBean.getColor()));
+		final CompteRepository compteRepo = new CompteRepository(this);
+		this.comptes = compteRepo.getAllCompteByUid(PreferencesUtil
+				.getCurrentUid(this));
+		for (final CompteBean compteBean : this.comptes) {
+			donnees.add(new MenuObjet(menuGroupe, compteBean.getTitle(),
+					MooncakeIcone.icon_business_card, true, compteBean
+							.isShowed(), compteBean.getColor()));
 			INDEX_MENU_COMPTE_GERER++;
 		}
 		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
@@ -148,26 +157,30 @@ OnPageChangeListener {
 
 		menuGroupe = new MenuGroupe("Libellés", MooncakeIcone.icon_tags);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 1", MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 2", MooncakeIcone.icon_tag, true, false, Color.BLUE));
-		donnees.add(new MenuObjet(menuGroupe, "Libellé 3", MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 1",
+				MooncakeIcone.icon_tag, true));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 2",
+				MooncakeIcone.icon_tag, true, false, Color.BLUE));
+		donnees.add(new MenuObjet(menuGroupe, "Libellé 3",
+				MooncakeIcone.icon_tag, true));
 		donnees.add(new MenuObjet(menuGroupe, "Gérer", MooncakeIcone.icon_cog));
 		menuGroupe.setObjets(donnees);
 		menuGroupes.add(menuGroupe);
 
-		menuGroupe = new MenuGroupe("Réglages",  MooncakeIcone.icon_settings);
+		menuGroupe = new MenuGroupe("Réglages", MooncakeIcone.icon_settings);
 		menuGroupes.add(menuGroupe);
 
 		return menuGroupes;
 	}
 
 	@Override
-	protected void onMenuChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
+	protected void onMenuChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
 		switch (groupPosition) {
 		case INDEX_MENU_AGENDA:
 			switch (childPosition) {
 			case INDEX_MENU_AGENDA_DAY:
-				if (indexCurrentPager == INDEX_MENU_AGENDA_DAY) {
+				if (this.indexCurrentPager == INDEX_MENU_AGENDA_DAY) {
 					Toast.makeText(this, "Vous êtes déjà en vue jour!",
 							Toast.LENGTH_SHORT).show();
 				} else {
@@ -175,7 +188,7 @@ OnPageChangeListener {
 				}
 				break;
 			case INDEX_MENU_AGENDA_MONTH:
-				if (indexCurrentPager == INDEX_MENU_AGENDA_MONTH) {
+				if (this.indexCurrentPager == INDEX_MENU_AGENDA_MONTH) {
 					Toast.makeText(this, "Vous êtes déjà en vue mois!",
 							Toast.LENGTH_SHORT).show();
 				} else {
@@ -183,15 +196,19 @@ OnPageChangeListener {
 				}
 				break;
 			case INDEX_MENU_AGENDA_LISTE:
-				if (indexCurrentPager == INDEX_MENU_AGENDA_LISTE) {
-					Toast.makeText(this, "Vous êtes déjà en vue liste!",Toast.LENGTH_SHORT).show();
+				if (this.indexCurrentPager == INDEX_MENU_AGENDA_LISTE) {
+					Toast.makeText(this, "Vous êtes déjà en vue liste!",
+							Toast.LENGTH_SHORT).show();
 				} else {
 					new ChangePageTask().execute(INDEX_MENU_AGENDA_LISTE);
 				}
 				break;
 			case INDEX_MENU_AGENDA_TODAY:
-				if (indexCurrentPager == INDEX_MENU_AGENDA_LISTE) {
-					Toast.makeText(this, "Vous ne pouvez pas faire cette opération en vue liste!",Toast.LENGTH_SHORT).show();
+				if (this.indexCurrentPager == INDEX_MENU_AGENDA_LISTE) {
+					Toast.makeText(
+							this,
+							"Vous ne pouvez pas faire cette opération en vue liste!",
+							Toast.LENGTH_SHORT).show();
 				} else {
 					gotoDate(Calendar.getInstance());
 				}
@@ -199,7 +216,7 @@ OnPageChangeListener {
 			}
 			break;
 		case INDEX_MENU_COMPTE:
-			if(childPosition == INDEX_MENU_COMPTE_GERER) {
+			if (childPosition == INDEX_MENU_COMPTE_GERER) {
 				ActivityUtil.startComptesActivity(this);
 			}
 			break;
@@ -219,23 +236,28 @@ OnPageChangeListener {
 	}
 
 	@Override
-	protected void onMenuGroupSwitch(View v, int positionGroup,boolean isChecked) {}
+	protected void onMenuGroupSwitch(View v, int positionGroup,
+			boolean isChecked) {
+	}
+
 	@Override
-	protected void onMenuItemSwitch(View v, int positionGroup, int positionObjet, boolean isChecked) {
+	protected void onMenuItemSwitch(View v, int positionGroup,
+			int positionObjet, boolean isChecked) {
 		switch (positionGroup) {
 		case INDEX_MENU_COMPTE:
-			comptes.get(positionObjet).setShowed(!comptes.get(positionObjet).isShowed());
-			new CompteRepository(this).update(comptes.get(positionObjet));
+			this.comptes.get(positionObjet).setShowed(
+					!this.comptes.get(positionObjet).isShowed());
+			new CompteRepository(this).update(this.comptes.get(positionObjet));
 			break;
 
 		default:
 			break;
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MooncakeIcone icone = new MooncakeIcone(this);
+		final MooncakeIcone icone = new MooncakeIcone(this);
 		icone.setTextSize(18);
 		icone.setIconeRes(MooncakeIcone.icon_calendar);
 
@@ -249,7 +271,7 @@ OnPageChangeListener {
 
 	@Override
 	public void reload() {
-		new ChangePageTask().execute(indexCurrentPager);
+		new ChangePageTask().execute(this.indexCurrentPager);
 	}
 
 	public void showDays(Calendar cal) {
@@ -267,15 +289,15 @@ OnPageChangeListener {
 	}
 
 	private void gotoDate(Calendar cal) {
-		((BasePagerAdapter) ((ViewPager) mMainFramePager.getChildAt(0)).getAdapter()).setCurrentCalendar(cal);
-		((ViewPager) mMainFramePager.getChildAt(0))
-		.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+		((BasePagerAdapter) ((ViewPager) this.mMainFramePager.getChildAt(0))
+				.getAdapter()).setCurrentCalendar(cal);
+		((ViewPager) this.mMainFramePager.getChildAt(0))
+				.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 	}
-
 
 	@Override
 	protected boolean onBackButtonPressed() {
-		switch (indexCurrentPager) {
+		switch (this.indexCurrentPager) {
 		case INDEX_MENU_AGENDA_DAY:
 			showMonths(curentCal);
 			return true;
@@ -284,14 +306,14 @@ OnPageChangeListener {
 				finish();
 			} else {
 				isWaitingEnd = true;
-				Toast.makeText(this,
-						"Appuyer une nouvelle fois pour quitter",
+				Toast.makeText(this, "Appuyer une nouvelle fois pour quitter",
 						DURATION_WAITING_END).show();
 				new Thread(new Runnable() {
+					@Override
 					public void run() {
 						try {
 							Thread.sleep(DURATION_WAITING_END * 10);
-						} catch (Exception e) {
+						} catch (final Exception e) {
 						}
 						isWaitingEnd = false;
 					}
@@ -322,14 +344,15 @@ OnPageChangeListener {
 
 	@Override
 	public void onPageSelected(final int position) {
-		changeTitle(((BasePagerAdapter) mViewPager.getAdapter()).getTitle(position));
+		changeTitle(((BasePagerAdapter) this.mViewPager.getAdapter())
+				.getTitle(position));
 	}
 
 	private void changeTitle(final String title) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				mTextTitle.setText(title);
+				CalendarActivity.this.mTextTitle.setText(title);
 			}
 		});
 	}
@@ -340,51 +363,57 @@ OnPageChangeListener {
 
 		@Override
 		protected void onPreExecute() {
-			Animation anim = new AlphaAnimation(1, 0);
+			final Animation anim = new AlphaAnimation(1, 0);
 			anim.setFillAfter(true);
 			anim.setDuration(ANIM_DURATION);
-			mMainFramePager.startAnimation(anim);
+			CalendarActivity.this.mMainFramePager.startAnimation(anim);
 		}
 
 		@Override
 		protected View doInBackground(Integer... params) {
-			indexNextPage = params[0];
-			mViewPager = new ControledViewPager(getApplicationContext());
-			mViewPager.setId(ID_PAGER);
-			switch (indexNextPage) {
+			this.indexNextPage = params[0];
+			CalendarActivity.this.mViewPager = new ControledViewPager(
+					getApplicationContext());
+			CalendarActivity.this.mViewPager.setId(ID_PAGER);
+			switch (this.indexNextPage) {
 			case INDEX_MENU_AGENDA_DAY:
-				mViewPager.setAdapter(new DayPagerAdapter(
-						getSupportFragmentManager(), curentCal));
-				indexCurrentPager = INDEX_MENU_AGENDA_DAY;
+				CalendarActivity.this.mViewPager
+						.setAdapter(new DayPagerAdapter(
+								getSupportFragmentManager(), curentCal));
+				CalendarActivity.this.indexCurrentPager = INDEX_MENU_AGENDA_DAY;
 				break;
 			case INDEX_MENU_AGENDA_MONTH:
-				mViewPager.setAdapter(new MonthPagerAdapter(
-						getSupportFragmentManager(), (Calendar) curentCal));
-				mViewPager.getAdapter().notifyDataSetChanged();
-				indexCurrentPager = INDEX_MENU_AGENDA_MONTH;
+				CalendarActivity.this.mViewPager
+						.setAdapter(new MonthPagerAdapter(
+								getSupportFragmentManager(), curentCal));
+				CalendarActivity.this.mViewPager.getAdapter()
+						.notifyDataSetChanged();
+				CalendarActivity.this.indexCurrentPager = INDEX_MENU_AGENDA_MONTH;
 				break;
 			case INDEX_MENU_AGENDA_LISTE:
-				ListView mListView = new ListView(getApplicationContext());
+				final ListView mListView = new ListView(getApplicationContext());
 				mListView
-				.setAdapter(new ListEventAdapter(CalendarActivity.this));
-				indexCurrentPager = INDEX_MENU_AGENDA_LISTE;
+						.setAdapter(new ListEventAdapter(CalendarActivity.this));
+				CalendarActivity.this.indexCurrentPager = INDEX_MENU_AGENDA_LISTE;
 				changeTitle("Liste");
 				return mListView;
 			}
-			mViewPager.setOnPageChangeListener(CalendarActivity.this);
-			mViewPager.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+			CalendarActivity.this.mViewPager
+					.setOnPageChangeListener(CalendarActivity.this);
+			CalendarActivity.this.mViewPager
+					.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 
-			return mViewPager;
+			return CalendarActivity.this.mViewPager;
 		}
 
 		@Override
 		protected void onPostExecute(View result) {
-			mMainFramePager.removeAllViews();
-			mMainFramePager.addView(result);
-			Animation anim = new AlphaAnimation(0, 1);
+			CalendarActivity.this.mMainFramePager.removeAllViews();
+			CalendarActivity.this.mMainFramePager.addView(result);
+			final Animation anim = new AlphaAnimation(0, 1);
 			anim.setFillAfter(true);
 			anim.setDuration(ANIM_DURATION);
-			mMainFramePager.startAnimation(anim);
+			CalendarActivity.this.mMainFramePager.startAnimation(anim);
 		}
 	}
 }

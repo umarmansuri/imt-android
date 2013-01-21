@@ -38,44 +38,49 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
-		Bundle bundle = getIntent().getExtras();
+		final Bundle bundle = getIntent().getExtras();
 		super.onCreate(bundle);
 
 		setContentView(R.layout.activity_event);
 
 		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			event = new EventBaseRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
+			this.event = new EventBaseRepository(this).getById(bundle
+					.getInt(ActivityUtil.KEY_EXTRA_ID));
 		}
-		if (event == null) {
-			event = new EventBaseBean();
-			event.setTypeId(EventTypes.TYPE_TASK);
-			event.sethDeb(DateUtil.getDateFromISO(bundle
+		if (this.event == null) {
+			this.event = new EventBaseBean();
+			this.event.setTypeId(EventTypes.TYPE_TASK);
+			this.event.sethDeb(DateUtil.getDateFromISO(bundle
 					.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
-			event.sethFin((Calendar) event.gethDeb().clone());
-			event.gethFin().add(Calendar.HOUR_OF_DAY, 2);
-			event.setAllDay(bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false));
+			this.event.sethFin((Calendar) this.event.gethDeb().clone());
+			this.event.gethFin().add(Calendar.HOUR_OF_DAY, 2);
+			this.event.setAllDay(bundle.getBoolean(
+					ActivityUtil.KEY_EXTRA_ALL_DAY, false));
 		}
 
-
-
-		mPager = (ControledViewPager) findViewById(R.id.event_pager);
-		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
-		mPager.setOnPageChangeListener(pageListener);
+		this.mPager = (ControledViewPager) findViewById(R.id.event_pager);
+		this.mPager.setAdapter(new EventPagerAdapter(
+				getSupportFragmentManager()));
+		this.mPager.setOnPageChangeListener(this.pageListener);
 		fragments = getPages();
-		mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
-		
-		ActionBar mActionBar = getSupportActionBar();
+		this.mPager.setAdapter(new EventPagerAdapter(
+				getSupportFragmentManager()));
+
+		final ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		
-		List<String> titles = new ArrayList<String>();
-		for (BasePluginFragment fragment : fragments) {
+
+		final List<String> titles = new ArrayList<String>();
+		for (final BasePluginFragment fragment : fragments) {
 			titles.add(fragment.getTitle());
 		}
-		
-		mActionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
-				R.layout.navigation_spinner_item, titles.toArray(new String[]{})), navigationListener);
+
+		mActionBar.setListNavigationCallbacks(
+				new ArrayAdapter<String>(this,
+						R.layout.navigation_spinner_item, titles
+								.toArray(new String[] {})),
+				this.navigationListener);
 	}
-	
+
 	public abstract ArrayList<BasePluginFragment> getPages();
 
 	@Override
@@ -92,32 +97,43 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onPageScrolled(int arg0, float arg1, int arg2) {}
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+		}
+
 		@Override
-		public void onPageScrollStateChanged(int arg0) {}
+		public void onPageScrollStateChanged(int arg0) {
+		}
 	};
 
 	protected OnNavigationListener navigationListener = new OnNavigationListener() {
 
 		@Override
 		public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-			if(mPager.isPagingEnabled()) {
-				mPager.setCurrentItem(itemPosition);
-			} else if(itemPosition != mPager.getCurrentItem()) {
-				getSupportActionBar().setSelectedNavigationItem(mPager.getCurrentItem());
-				Toast.makeText(BaseEventActivity.this, "Veuillez enregistrer avant de changer d'onglet", Toast.LENGTH_SHORT).show();
+			if (BaseEventActivity.this.mPager.isPagingEnabled()) {
+				BaseEventActivity.this.mPager.setCurrentItem(itemPosition);
+			} else if (itemPosition != BaseEventActivity.this.mPager
+					.getCurrentItem()) {
+				getSupportActionBar().setSelectedNavigationItem(
+						BaseEventActivity.this.mPager.getCurrentItem());
+				Toast.makeText(BaseEventActivity.this,
+						"Veuillez enregistrer avant de changer d'onglet",
+						Toast.LENGTH_SHORT).show();
 			}
 			return true;
 		}
 	};
 
 	public BasePluginFragment getActiveFragment() {
-		if(mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
-			FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) mPager.getAdapter();
-			return (BasePluginFragment) a.instantiateItem(mPager, mPager.getCurrentItem());	
+		if (this.mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
+			final FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) this.mPager
+					.getAdapter();
+			return (BasePluginFragment) a.instantiateItem(this.mPager,
+					this.mPager.getCurrentItem());
 		} else {
-			String name = makeFragmentName(mPager.getId(), mPager.getCurrentItem());
-			return  (BasePluginFragment) getSupportFragmentManager().findFragmentByTag(name);	
+			final String name = makeFragmentName(this.mPager.getId(),
+					this.mPager.getCurrentItem());
+			return (BasePluginFragment) getSupportFragmentManager()
+					.findFragmentByTag(name);
 		}
 	}
 
@@ -125,22 +141,21 @@ public abstract class BaseEventActivity extends BaseActivity {
 		return "android:switcher:" + viewId + ":" + index;
 	}
 
-
 	@Override
 	protected void showEdit() {
-		mPager.setPagingEnabled(false);
+		this.mPager.setPagingEnabled(false);
 		getActiveFragment().launchEdit();
 	}
 
 	@Override
 	protected void showCancel() {
-		mPager.setPagingEnabled(true);
+		this.mPager.setPagingEnabled(true);
 		getActiveFragment().launchCancel();
 	}
 
 	@Override
 	protected void showSave() {
-		mPager.setPagingEnabled(true);
+		this.mPager.setPagingEnabled(true);
 		getActiveFragment().launchSave();
 	}
 
@@ -190,11 +205,10 @@ public abstract class BaseEventActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	@Override
-	protected void onViewCreated() {}
-
-
+	protected void onViewCreated() {
+	}
 
 	public class EventPagerAdapter extends FragmentPagerAdapter {
 		public EventPagerAdapter(FragmentManager fm) {

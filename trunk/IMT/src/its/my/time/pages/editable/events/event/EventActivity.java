@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class EventActivity extends BaseEventActivity {
 
-
 	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvel évènement";
@@ -20,18 +19,17 @@ public class EventActivity extends BaseEventActivity {
 
 	@Override
 	public ArrayList<BasePluginFragment> getPages() {
-		ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
-		BasePluginFragment fragment = new DetailsFragment(event, EventTypes.TYPE_BASE);
+		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
+		BasePluginFragment fragment = new DetailsFragment(this.event,
+				EventTypes.TYPE_BASE);
 		fragments.add(fragment);
-		fragment = new ParticipantsFragment(event.getId());
+		fragment = new ParticipantsFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new CommentairesFragment(event.getId());
+		fragment = new CommentairesFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new PjFragment(event.getId());
+		fragment = new PjFragment(this.event.getId());
 		fragments.add(fragment);
 		return fragments;
 	}
-
-
 
 }

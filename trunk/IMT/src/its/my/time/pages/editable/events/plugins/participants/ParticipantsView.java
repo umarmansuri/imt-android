@@ -7,12 +7,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.widget.TextView;
 
-public class ParticipantsView extends EditableLittleView{
+public class ParticipantsView extends EditableLittleView {
 
-	private UtilisateurBean utilisateur;
-	
-	
-	public ParticipantsView(Context context, UtilisateurBean utilisateur, boolean isInEditMode) {
+	private final UtilisateurBean utilisateur;
+
+	public ParticipantsView(Context context, UtilisateurBean utilisateur,
+			boolean isInEditMode) {
 		super(context, isInEditMode);
 		inflate(context, R.layout.activity_event_participant_little, this);
 		setBackgroundColor(Color.WHITE);
@@ -21,7 +21,10 @@ public class ParticipantsView extends EditableLittleView{
 	}
 
 	private void initialiseDetails() {
-		((TextView)findViewById(R.id.event_participant_title)).setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
-		((TextView)findViewById(R.id.event_participant_details)).setText(utilisateur.getAdresse());
+		((TextView) findViewById(R.id.event_participant_title))
+				.setText(this.utilisateur.getNom() + " "
+						+ this.utilisateur.getPrenom());
+		((TextView) findViewById(R.id.event_participant_details))
+				.setText(this.utilisateur.getAdresse());
 	}
 }

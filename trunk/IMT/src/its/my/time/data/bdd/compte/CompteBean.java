@@ -1,7 +1,5 @@
 package its.my.time.data.bdd.compte;
 
-
-
 public class CompteBean {
 
 	private int id;
@@ -10,44 +8,53 @@ public class CompteBean {
 	private int type;
 	private boolean isShowed;
 	private long uid;
-	
-	
-	
+
 	public int getId() {
-		return id;
+		return this.id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public int getColor() {
-		return color;
+		return this.color;
 	}
+
 	public void setColor(int color) {
 		this.color = color;
 	}
+
 	public int getType() {
-		return type;
+		return this.type;
 	}
+
 	public void setType(int type) {
 		this.type = type;
 	}
+
 	public boolean isShowed() {
-		return isShowed;
+		return this.isShowed;
 	}
+
 	public void setShowed(boolean isShowed) {
 		this.isShowed = isShowed;
 	}
+
 	public long getUid() {
-		return uid;
+		return this.uid;
 	}
+
 	public void setUid(long uid) {
 		this.uid = uid;
 	}
-	
+
 }

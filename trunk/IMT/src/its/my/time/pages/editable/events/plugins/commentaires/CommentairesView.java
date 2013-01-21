@@ -8,11 +8,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.widget.TextView;
 
-public class CommentairesView extends EditableLittleView{
+public class CommentairesView extends EditableLittleView {
 
-	private CommentBean comment;
-	
-	public CommentairesView(Context context, CommentBean comment, boolean isEditMode) {
+	private final CommentBean comment;
+
+	public CommentairesView(Context context, CommentBean comment,
+			boolean isEditMode) {
 		super(context, isEditMode);
 		inflate(context, R.layout.activity_event_commentaires_little, this);
 		setBackgroundColor(Color.WHITE);
@@ -22,7 +23,9 @@ public class CommentairesView extends EditableLittleView{
 
 	private void initialiseDetails() {
 		super.initialiseValues();
-		((TextView)findViewById(R.id.event_comment_date)).setText(DateUtil.getLongDateTime(comment.getDate()));
-		((TextView)findViewById(R.id.event_comment_comments)).setText(comment.getComment());
+		((TextView) findViewById(R.id.event_comment_date)).setText(DateUtil
+				.getLongDateTime(this.comment.getDate()));
+		((TextView) findViewById(R.id.event_comment_comments))
+				.setText(this.comment.getComment());
 	}
 }

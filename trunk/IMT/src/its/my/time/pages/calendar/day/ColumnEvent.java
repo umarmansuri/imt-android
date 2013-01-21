@@ -12,15 +12,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+public class ColumnEvent extends RelativeLayout {
 
-public class ColumnEvent extends RelativeLayout{
-
-	private ArrayList<EventBaseBean> events = new ArrayList<EventBaseBean>();
-	private ArrayList<EventLittleView> eventViews = new ArrayList<EventLittleView>();
+	private final ArrayList<EventBaseBean> events = new ArrayList<EventBaseBean>();
+	private final ArrayList<EventLittleView> eventViews = new ArrayList<EventLittleView>();
 
 	public ColumnEvent(Context context) {
 		super(context);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 		params.weight = 1;
 		setLayoutParams(params);
 		setGravity(Gravity.CENTER_HORIZONTAL);
@@ -28,45 +29,46 @@ public class ColumnEvent extends RelativeLayout{
 
 	/**
 	 * Tente d'ajouter l'evenement à la vue
-	 * @return la vue de l'event si l'évènment a été placé, sinon (si la place est deja pise), return null
+	 * 
+	 * @return la vue de l'event si l'évènment a été placé, sinon (si la place
+	 *         est deja pise), return null
 	 */
 	public EventLittleView addEvent(EventBaseBean newEv, Calendar day) {
-		for (EventBaseBean event : events) {
-			if(EventUtil.isAtSameTime(newEv, event)) {
+		for (final EventBaseBean event : this.events) {
+			if (EventUtil.isAtSameTime(newEv, event)) {
 				return null;
 			}
 		}
-		EventLittleView view = new EventLittleView(getContext(), newEv, day);
-		eventViews.add(view);
-		events.add(newEv);
+		final EventLittleView view = new EventLittleView(getContext(), newEv,
+				day);
+		this.eventViews.add(view);
+		this.events.add(newEv);
 		addView(view);
 		return view;
 	}
 
 	public EventLittleView addEvent(EventLittleView view) {
-		for (EventBaseBean event : events) {
-			if(EventUtil.isAtSameTime(view.getEvent(), event)) {
+		for (final EventBaseBean event : this.events) {
+			if (EventUtil.isAtSameTime(view.getEvent(), event)) {
 				return null;
 			}
 		}
-		eventViews.add(view);
-		events.add(view.getEvent());
+		this.eventViews.add(view);
+		this.events.add(view.getEvent());
 		addView(view);
 		return view;
 	}
 
 	public boolean unload(EventLittleView view) {
-		if(events.contains(view.getEvent())) {
-			events.remove(view.getEvent());
+		if (this.events.contains(view.getEvent())) {
+			this.events.remove(view.getEvent());
 			removeView(view);
-			if(events.size() == 0) {
-				((ViewGroup)getParent()).removeView(this);
+			if (this.events.size() == 0) {
+				((ViewGroup) getParent()).removeView(this);
 			}
 			return true;
 		}
 		return false;
 	}
-
-
 
 }

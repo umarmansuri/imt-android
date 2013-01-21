@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class OnDateTimeChangedListener implements OnDateSetListener,
-OnTimeSetListener {
+		OnTimeSetListener {
 
 	private TextView currentView;
 	private int mYear;
@@ -23,34 +23,34 @@ OnTimeSetListener {
 
 	@Override
 	public void onTimeSet(TimePicker picker, int hour, int minute) {
-		mHour = hour;
-		mMinute = minute;
+		this.mHour = hour;
+		this.mMinute = minute;
 		updateTime();
 	}
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
-		mYear = year;
-		mMonth = monthOfYear;
-		mDay = dayOfMonth;
+		this.mYear = year;
+		this.mMonth = monthOfYear;
+		this.mDay = dayOfMonth;
 		updateDate();
 	}
 
 	private void updateDate() {
-		Calendar cal = new GregorianCalendar();
-		cal.set(mYear, mMonth, mDay, mHour, mMinute);
-		currentView.setText(DateUtil.getTime(cal));
+		final Calendar cal = new GregorianCalendar();
+		cal.set(this.mYear, this.mMonth, this.mDay, this.mHour, this.mMinute);
+		this.currentView.setText(DateUtil.getTime(cal));
 	}
 
 	private void updateTime() {
-		Calendar cal = new GregorianCalendar();
-		cal.set(mYear, mMonth, mDay, mHour, mMinute);
-		currentView.setText(DateUtil.getDay(cal));
+		final Calendar cal = new GregorianCalendar();
+		cal.set(this.mYear, this.mMonth, this.mDay, this.mHour, this.mMinute);
+		this.currentView.setText(DateUtil.getDay(cal));
 	}
 
 	public TextView getCurrentView() {
-		return currentView;
+		return this.currentView;
 	}
 
 	public void setCurrentView(TextView currentView) {

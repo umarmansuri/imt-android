@@ -10,31 +10,35 @@ import android.widget.TextView;
 
 public class LittleEventView extends FrameLayout {
 
-	private EventBaseBean event;
-	
-	private OnClickListener listener = new OnClickListener() {
+	private final EventBaseBean event;
+
+	private final OnClickListener listener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			ActivityUtil.startEventActivity(getContext(), event.getId(), event.getTypeId());
+			ActivityUtil.startEventActivity(getContext(),
+					LittleEventView.this.event.getId(),
+					LittleEventView.this.event.getTypeId());
 		}
 	};
 
-	
 	public LittleEventView(Context context, EventBaseBean event) {
 		super(context);
 		inflate(context, R.layout.activity_calendar_liste_event, this);
-		
+
 		this.event = event;
-		
+
 		initialiseDetails();
-		
-		setOnClickListener(listener);
+
+		setOnClickListener(this.listener);
 	}
 
 	private void initialiseDetails() {
-		((TextView)findViewById(R.id.calendar_liste_event_date)).setText("Mardi 17 octobre à 17h30");
-		((TextView)findViewById(R.id.calendar_liste_event_title)).setText(event.getTitle());
-		((TextView)findViewById(R.id.calendar_liste_event_details)).setText(event.getDetails());
+		((TextView) findViewById(R.id.calendar_liste_event_date))
+				.setText("Mardi 17 octobre à 17h30");
+		((TextView) findViewById(R.id.calendar_liste_event_title))
+				.setText(this.event.getTitle());
+		((TextView) findViewById(R.id.calendar_liste_event_details))
+				.setText(this.event.getDetails());
 	}
-	
+
 }

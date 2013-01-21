@@ -7,11 +7,10 @@ import android.view.View;
 
 public class MeetingDetailsFragment extends DetailsFragment {
 
-
 	public MeetingDetailsFragment(EventBaseBean event) {
 		super(event, EventTypes.TYPE_MEETING);
 	}
-	
+
 	public View getCustomView() {
 		return null;
 	}
@@ -20,7 +19,7 @@ public class MeetingDetailsFragment extends DetailsFragment {
 	public String getTitle() {
 		return "Réunion";
 	}
-	
+
 	@Override
 	public void launchEdit() {
 		super.launchEdit();
