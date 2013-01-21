@@ -1,6 +1,8 @@
 package its.my.time.data.bdd.events.plugins.odj;
 
 import its.my.time.data.bdd.DatabaseHandler;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class OdjRepository extends DatabaseHandler {
 	public static final String KEY_ORDER = "KEY_ORDER";
 	public static final String KEY_EID = "KEY_EID";
 
-	public static final String DATABASE_TABLE = "odj";
+	public static final String DATABASE_TABLE = "odj ";
 
 	public static final String CREATE_TABLE = "create table " + DATABASE_TABLE
 			+ " (" + KEY_ID + " integer primary key autoincrement," + KEY_VALUE
@@ -75,6 +77,19 @@ public class OdjRepository extends DatabaseHandler {
 		initialValues.put(KEY_EID, odj.getEid());
 		open();
 		final long res = this.db.insert(DATABASE_TABLE, null, initialValues);
+		close();
+		return res;
+	}
+	
+	public long updateOdj(OdjBean odj) {
+		final ContentValues initialValues = new ContentValues();
+		initialValues.put(KEY_VALUE, odj.getValue());
+		initialValues.put(KEY_ORDER, odj.getOrder());
+		initialValues.put(KEY_EID, odj.getEid());
+		final long id = odj.getId();
+		open();
+		final long res = this.db.update(DATABASE_TABLE, initialValues, KEY_ID
+				+ "=?", new String[] { "" + id });
 		close();
 		return res;
 	}

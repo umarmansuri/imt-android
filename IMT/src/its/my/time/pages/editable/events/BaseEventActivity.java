@@ -133,6 +133,10 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 	}
 
+	public EventBaseBean getEvent() {
+		return event;
+	}
+
 	private static String makeFragmentName(int viewId, int index) {
 		return "android:switcher:" + viewId + ":" + index;
 	}
