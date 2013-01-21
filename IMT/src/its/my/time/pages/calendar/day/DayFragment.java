@@ -9,15 +9,14 @@ import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class DayFragment extends SherlockFragment{
+public class DayFragment extends SherlockFragment {
 
-	
-	private Calendar cal;
+	private final Calendar cal;
 
 	public DayFragment() {
 		this(Calendar.getInstance());
 	}
-	
+
 	public DayFragment(Calendar cal) {
 		this.cal = cal;
 	}
@@ -25,7 +24,7 @@ public class DayFragment extends SherlockFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return new DayView(getSherlockActivity(), cal);
+		return new DayView(getSherlockActivity(), this.cal);
 	}
-	
+
 }

@@ -8,15 +8,13 @@ import android.widget.FrameLayout;
 
 import com.fonts.mooncake.MooncakeIcone;
 
-public abstract class EditableLittleView extends FrameLayout{
+public abstract class EditableLittleView extends FrameLayout {
 
 	private boolean isInEditMode;
 	private MooncakeIcone deleteIcone;
 	private View grabberIcone;
 	private OnClickListener onDeleteClickListener;
-	
-	
-	
+
 	public EditableLittleView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
@@ -33,42 +31,42 @@ public abstract class EditableLittleView extends FrameLayout{
 		super(context);
 		this.isInEditMode = isEditMode;
 	}
-	
+
 	public void initialiseValues() {
-		deleteIcone = (MooncakeIcone)findViewById(R.id.delete);
-		if(deleteIcone != null) {
-			deleteIcone.setIconeRes(MooncakeIcone.icon_minus_sign);
-			if(isInEditMode) {
-				deleteIcone.setOnClickListener(new OnClickListener() {
+		this.deleteIcone = (MooncakeIcone) findViewById(R.id.delete);
+		if (this.deleteIcone != null) {
+			this.deleteIcone.setIconeRes(MooncakeIcone.icon_minus_sign);
+			if (this.isInEditMode) {
+				this.deleteIcone.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if(onDeleteClickListener != null) {
-							onDeleteClickListener.onClick(deleteIcone);
+						if (EditableLittleView.this.onDeleteClickListener != null) {
+							EditableLittleView.this.onDeleteClickListener
+									.onClick(EditableLittleView.this.deleteIcone);
 						}
 					}
 				});
 			} else {
-				deleteIcone.setVisibility(View.INVISIBLE);
+				this.deleteIcone.setVisibility(View.INVISIBLE);
 			}
 		}
 
-		grabberIcone = findViewById(R.id.grabber);
-		if(grabberIcone != null) {
-			if(isInEditMode) {
+		this.grabberIcone = findViewById(R.id.grabber);
+		if (this.grabberIcone != null) {
+			if (this.isInEditMode) {
 
 			} else {
-				grabberIcone.setVisibility(View.INVISIBLE);
+				this.grabberIcone.setVisibility(View.INVISIBLE);
 			}
 		}
 	}
 
 	public OnClickListener getOnDeleteClickListener() {
-		return onDeleteClickListener;
+		return this.onDeleteClickListener;
 	}
 
 	public void setOnDeleteClickListener(OnClickListener onDeleteClickListener) {
 		this.onDeleteClickListener = onDeleteClickListener;
 	}
-	
-	
+
 }

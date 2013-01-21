@@ -12,24 +12,24 @@ import java.util.ArrayList;
 
 public class MeetingActivity extends BaseEventActivity {
 
-
 	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvel appel";
 	}
+
 	@Override
 	public ArrayList<BasePluginFragment> getPages() {
-		ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
-		
-		BasePluginFragment fragment = new MeetingDetailsFragment(event);
+		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
+
+		BasePluginFragment fragment = new MeetingDetailsFragment(this.event);
 		fragments.add(fragment);
-		fragment = new OdjFragment(event.getId());
+		fragment = new OdjFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new ParticipantsFragment(event.getId());
+		fragment = new ParticipantsFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new CommentairesFragment(event.getId());
+		fragment = new CommentairesFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new PjFragment(event.getId());
+		fragment = new PjFragment(this.event.getId());
 		fragments.add(fragment);
 		return fragments;
 	}

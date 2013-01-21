@@ -2,9 +2,8 @@ package its.my.time.data.bdd.events.eventBase;
 
 import java.util.Calendar;
 
-
 public class EventBaseBean {
-	
+
 	private String details;
 	private Calendar hDeb;
 	private Calendar hFin;
@@ -14,7 +13,7 @@ public class EventBaseBean {
 	private int typeId;
 	private int detailsId;
 	private boolean isAllDay;
-	
+
 	public EventBaseBean() {
 		super();
 		this.details = "";
@@ -27,59 +26,75 @@ public class EventBaseBean {
 		this.detailsId = -1;
 		this.isAllDay = false;
 	}
-	
-	
+
 	public boolean isAllDay() {
-		return isAllDay;
+		return this.isAllDay;
 	}
+
 	public void setAllDay(boolean isAllDay) {
 		this.isAllDay = isAllDay;
 	}
+
 	public String getDetails() {
-		return details;
+		return this.details;
 	}
+
 	public Calendar gethDeb() {
-		return hDeb;
+		return this.hDeb;
 	}
+
 	public Calendar gethFin() {
-		return hFin;
+		return this.hFin;
 	}
+
 	public int getId() {
-		return id;
+		return this.id;
 	}
+
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
+
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
 	public void sethDeb(Calendar hDeb) {
 		this.hDeb = hDeb;
 	}
+
 	public void sethFin(Calendar hFin) {
 		this.hFin = hFin;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public long getCid() {
-		return cid;
+		return this.cid;
 	}
+
 	public void setCid(long cid) {
 		this.cid = cid;
 	}
+
 	public int getTypeId() {
-		return typeId;
+		return this.typeId;
 	}
+
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
 	}
+
 	public int getDetailsId() {
-		return detailsId;
+		return this.detailsId;
 	}
+
 	public void setDetailsId(int detailsId) {
 		this.detailsId = detailsId;
 	}

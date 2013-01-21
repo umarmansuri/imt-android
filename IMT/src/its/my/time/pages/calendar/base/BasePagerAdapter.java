@@ -8,11 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-
 public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	public static final int NB_PAGE = 1000;
-	
+
 	private Calendar cal;
 
 	public BasePagerAdapter(FragmentManager fm, Calendar cal) {
@@ -22,16 +21,18 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		int incrementation = getIncrementation(position);
-		Fragment fr = getView(incrementation);
+		final int incrementation = getIncrementation(position);
+		final Fragment fr = getView(incrementation);
 		return fr;
 	}
 
 	@Override
-	public int getCount() {return NB_PAGE;}
+	public int getCount() {
+		return NB_PAGE;
+	}
 
 	public String getTitle(int position) {
-		int incrementation = getIncrementation(position);
+		final int incrementation = getIncrementation(position);
 		return getCustomTitle(incrementation);
 	}
 
@@ -42,18 +43,15 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 	protected abstract String getCustomTitle(int incrementation);
 
 	protected abstract Fragment getView(int incrementation);
-	
+
 	public Calendar getCurrentCalendar() {
-		cal = CalendarActivity.curentCal;
-		return cal;
+		this.cal = CalendarActivity.curentCal;
+		return this.cal;
 	}
-	
+
 	public void setCurrentCalendar(Calendar cal) {
 		this.cal = cal;
 		notifyDataSetChanged();
 	}
-
-
-
 
 }

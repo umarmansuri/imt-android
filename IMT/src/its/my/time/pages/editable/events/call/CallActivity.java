@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class CallActivity extends BaseEventActivity {
 
-
 	@Override
 	protected CharSequence getActionBarTitle() {
 		return "Nouvel appel";
@@ -19,14 +18,14 @@ public class CallActivity extends BaseEventActivity {
 
 	@Override
 	public ArrayList<BasePluginFragment> getPages() {
-		ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
-		BasePluginFragment fragment = new CallDetailsFragment(event);
+		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
+		BasePluginFragment fragment = new CallDetailsFragment(this.event);
 		fragments.add(fragment);
-		fragment = new ParticipantsFragment(event.getId());
+		fragment = new ParticipantsFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new CommentairesFragment(event.getId());
+		fragment = new CommentairesFragment(this.event.getId());
 		fragments.add(fragment);
-		fragment = new PjFragment(event.getId());
+		fragment = new PjFragment(this.event.getId());
 		fragments.add(fragment);
 		return fragments;
 	}

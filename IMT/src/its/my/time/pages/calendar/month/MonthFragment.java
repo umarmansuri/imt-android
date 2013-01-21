@@ -15,10 +15,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 public class MonthFragment extends SherlockFragment {
 
-
-	private Calendar cal;
-
-
+	private final Calendar cal;
 
 	public MonthFragment() {
 		this(Calendar.getInstance());
@@ -32,17 +29,19 @@ public class MonthFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return new MonthView(getSherlockActivity(), cal, dayListener);
+		return new MonthView(getSherlockActivity(), this.cal, this.dayListener);
 	}
 
-	private MonthView.OnDayClickListener dayListener = new MonthView.OnDayClickListener() {
+	private final MonthView.OnDayClickListener dayListener = new MonthView.OnDayClickListener() {
 
+		@Override
 		public void onDayLongClickListener(GregorianCalendar day) {
 			ActivityUtil.startEventActivity(getSherlockActivity(), day, true);
 		}
 
+		@Override
 		public void onDayClickListener(GregorianCalendar day) {
-			((CalendarActivity)getSherlockActivity()).showDays(day);
+			((CalendarActivity) getSherlockActivity()).showDays(day);
 		}
-	}; 
+	};
 }

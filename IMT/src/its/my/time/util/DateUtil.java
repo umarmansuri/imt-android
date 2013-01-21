@@ -27,10 +27,10 @@ public class DateUtil {
 
 	public static String getDay(Calendar cal) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("EEEE, d MMMMM yyyy");
+		final SimpleDateFormat sdf = new SimpleDateFormat("EEEE, d MMMMM yyyy");
 
-		String res = sdf.format(cal.getTime());
-		char[] chars = res.toCharArray();
+		final String res = sdf.format(cal.getTime());
+		final char[] chars = res.toCharArray();
 		chars[0] = Character.toUpperCase(chars[0]);
 
 		return new String(chars);
@@ -44,9 +44,9 @@ public class DateUtil {
 	 * 
 	 */
 	public static String getDay(int day) {
-		GregorianCalendar leJour = new GregorianCalendar();
+		final GregorianCalendar leJour = new GregorianCalendar();
 		leJour.set(Calendar.DAY_OF_WEEK, day);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
 		return dateFormat.format(leJour.getTime());
 	}
 
@@ -57,7 +57,7 @@ public class DateUtil {
 	 * @return Un string sous la forme "3.4.2012 12h30"
 	 */
 	public static String getDayHour(Calendar cal) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("d.M.y H:m");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("d.M.y H:m");
 		return dateFormat.format(cal.getTime());
 	}
 
@@ -71,9 +71,9 @@ public class DateUtil {
 		String leJour = getDay(cal.get(Calendar.DAY_OF_WEEK));
 		leJour = Character.toUpperCase(leJour.charAt(0))
 				+ leJour.substring(1, leJour.length());
-		String leMois = getMonth(cal.get(Calendar.YEAR),
+		final String leMois = getMonth(cal.get(Calendar.YEAR),
 				cal.get(Calendar.MONTH));
-		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " "
+		final String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " "
 				+ leMois;
 		return res;
 	}
@@ -88,9 +88,9 @@ public class DateUtil {
 		String leJour = getDay(cal.get(Calendar.DAY_OF_WEEK));
 		leJour = Character.toUpperCase(leJour.charAt(0))
 				+ leJour.substring(1, leJour.length());
-		String leMois = getMonth(cal.get(Calendar.YEAR),
+		final String leMois = getMonth(cal.get(Calendar.YEAR),
 				cal.get(Calendar.MONTH));
-		String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " "
+		final String res = leJour + " " + cal.get(Calendar.DAY_OF_MONTH) + " "
 				+ leMois + " à " + cal.get(Calendar.HOUR_OF_DAY) + ":"
 				+ cal.get(Calendar.MINUTE);
 		return res;
@@ -103,42 +103,44 @@ public class DateUtil {
 	 * @return Renvoi le mois sous la forme Mois Anne (ex: "Mars 2012")
 	 */
 	public static String getMonth(int numYear, int numMonth) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
-		String res = dateFormat.format(new GregorianCalendar(numYear, numMonth,
-				1).getTime());
-		char[] chars = res.toCharArray();
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
+		final String res = dateFormat.format(new GregorianCalendar(numYear,
+				numMonth, 1).getTime());
+		final char[] chars = res.toCharArray();
 		chars[0] = Character.toUpperCase(chars[0]);
 		return new String(chars);
 	}
 
 	public static String getTime(Calendar cal) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		return dateFormat.format(cal.getTime());
 	}
 
 	public static String getDate(Calendar cal) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		return dateFormat.format(cal.getTime());
 	}
 
 	public static CharSequence getLittleDate(GregorianCalendar cal) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
 		return dateFormat.format(cal.getTime());
 	}
 
 	public static CharSequence getHourLabel(Calendar cal) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		return dateFormat.format(cal.getTime());
 	}
 
 	public static String FORMAT_DATE_ISO = "yyyy-MM-dd HH:mm:ss";
 
 	public static String getTimeInIso(Calendar cal, String format, TimeZone tz) {
-		if (format == null)
+		if (format == null) {
 			format = FORMAT_DATE_ISO;
-		if (tz == null)
+		}
+		if (tz == null) {
 			tz = TimeZone.getDefault();
-		DateFormat f = new SimpleDateFormat(format);
+		}
+		final DateFormat f = new SimpleDateFormat(format);
 		f.setTimeZone(tz);
 		return f.format(cal.getTime());
 	}
@@ -152,17 +154,17 @@ public class DateUtil {
 	}
 
 	public static GregorianCalendar getDateFromISO(String strDate) {
-		DateFormat f = new SimpleDateFormat(FORMAT_DATE_ISO);
-		GregorianCalendar res = new GregorianCalendar();
+		final DateFormat f = new SimpleDateFormat(FORMAT_DATE_ISO);
+		final GregorianCalendar res = new GregorianCalendar();
 		try {
 			res.setTime(f.parse(strDate));
-		} catch (ParseException e) {
+		} catch (final ParseException e) {
 		}
 		return res;
 	}
 
 	public static String getDayHourFrench(Calendar cal) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		return dateFormat.format(cal.getTime());
 	}
 
@@ -176,10 +178,10 @@ public class DateUtil {
 	 * @return true si l'evenement est dans le jour, sinon false
 	 */
 	public static boolean isInDay(EventBaseBean event, Calendar calDay) {
-		GregorianCalendar calDayDeb = new GregorianCalendar(
+		final GregorianCalendar calDayDeb = new GregorianCalendar(
 				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
 				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-		GregorianCalendar calDayFin = new GregorianCalendar(
+		final GregorianCalendar calDayFin = new GregorianCalendar(
 				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
 				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		calDayFin.add(Calendar.DAY_OF_MONTH, 1);
@@ -191,11 +193,11 @@ public class DateUtil {
 		long millisecondsDeb;
 		long millisecondsFin;
 
-		GregorianCalendar dayDeb = new GregorianCalendar(
+		final GregorianCalendar dayDeb = new GregorianCalendar(
 				day.get(Calendar.YEAR), day.get(Calendar.MONTH),
 				day.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 
-		GregorianCalendar dayFin = new GregorianCalendar(
+		final GregorianCalendar dayFin = new GregorianCalendar(
 				day.get(Calendar.YEAR), day.get(Calendar.MONTH),
 				day.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		dayFin.add(Calendar.DAY_OF_MONTH, 1);
@@ -213,15 +215,15 @@ public class DateUtil {
 			millisecondsDeb = hDeb.getTimeInMillis();
 			millisecondsFin = hFin.getTimeInMillis();
 		}
-		long diff = millisecondsFin - millisecondsDeb;
+		final long diff = millisecondsFin - millisecondsDeb;
 		return (float) diff / (60 * 60 * 1000);
 	}
 
 	public static boolean isInDay(Calendar gethDeb, Calendar cal) {
-		GregorianCalendar calBef = new GregorianCalendar(
+		final GregorianCalendar calBef = new GregorianCalendar(
 				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-		GregorianCalendar calAft = new GregorianCalendar(
+		final GregorianCalendar calAft = new GregorianCalendar(
 				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 		calAft.add(Calendar.DAY_OF_MONTH, 1);
@@ -229,7 +231,7 @@ public class DateUtil {
 	}
 
 	public static CharSequence getHourLabel(Calendar start, Calendar end) {
-		StringBuilder hourLabel = new StringBuilder();
+		final StringBuilder hourLabel = new StringBuilder();
 		hourLabel.append(DateUtil.getHourLabel(start));
 		if (end != null) {
 			hourLabel.append(" - " + DateUtil.getHourLabel(end));

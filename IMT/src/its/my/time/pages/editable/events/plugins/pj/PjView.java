@@ -18,9 +18,9 @@ import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class PjView extends EditableLittleView{
+public class PjView extends EditableLittleView {
 
-	private PjBean pj;
+	private final PjBean pj;
 
 	public PjView(Context context, PjBean pj, boolean isInEditMode) {
 		super(context, isInEditMode);
@@ -32,32 +32,37 @@ public class PjView extends EditableLittleView{
 
 	private void initialiseDetails() {
 		super.initialiseValues();
-		
-		UtilisateurBean user = new UtilisateurBean();
-		user = new UtilisateurRepository(getContext()).getById(pj.getUid());
 
-		((TextView)findViewById(R.id.event_pj_date)).setText(DateUtil.getLongDateTime(pj.getDate()));
-		//TODO activer quand user actif 
-		//((TextView)findViewById(R.id.event_pj_owner)).setText(user.getPrenom()+" "+user.getNom());
-		((TextView)findViewById(R.id.event_pj_owner)).setText("Pedro Orlandes");
-		((TextView)findViewById(R.id.event_pj_name)).setText(pj.getName());
-		((ImageButton)findViewById(R.id.event_pj_bouton)).setOnClickListener(new OnClickListener() {
+		new UtilisateurBean();
+		new UtilisateurRepository(getContext()).getById(this.pj.getUid());
 
-			@Override
-			public void onClick(View v) {
-				
-				File file = new File("/123.txt");
-				MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
-				String ext = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath());
-				String type = mimeMap.getMimeTypeFromExtension(ext);
-				if(type == null) {
-					type = "*/*";
-				}
-				
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setDataAndType(Uri.fromFile(file), type);
-				getContext().startActivity(intent);
-			}
-		});
+		((TextView) findViewById(R.id.event_pj_date)).setText(DateUtil
+				.getLongDateTime(this.pj.getDate()));
+		// TODO activer quand user actif
+		// ((TextView)findViewById(R.id.event_pj_owner)).setText(user.getPrenom()+" "+user.getNom());
+		((TextView) findViewById(R.id.event_pj_owner))
+				.setText("Pedro Orlandes");
+		((TextView) findViewById(R.id.event_pj_name))
+				.setText(this.pj.getName());
+		((ImageButton) findViewById(R.id.event_pj_bouton))
+				.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+
+						final File file = new File("/123.txt");
+						final MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
+						final String ext = MimeTypeMap
+								.getFileExtensionFromUrl(file.getAbsolutePath());
+						String type = mimeMap.getMimeTypeFromExtension(ext);
+						if (type == null) {
+							type = "*/*";
+						}
+
+						final Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setDataAndType(Uri.fromFile(file), type);
+						getContext().startActivity(intent);
+					}
+				});
 	}
 }

@@ -1,14 +1,13 @@
 package its.my.time.data.bdd.events.plugins.participant;
 
-
-
 public class ParticipantBean {
 
 	private int id;
 	private int uid;
 	private int eid;
-	
-	public ParticipantBean(int id, String title, String comment, int uid, int eid) {
+
+	public ParticipantBean(int id, String title, String comment, int uid,
+			int eid) {
 		super();
 		this.id = id;
 		this.uid = uid;
@@ -22,7 +21,7 @@ public class ParticipantBean {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -30,7 +29,7 @@ public class ParticipantBean {
 	}
 
 	public int getUid() {
-		return uid;
+		return this.uid;
 	}
 
 	public void setUid(int uid) {
@@ -38,12 +37,11 @@ public class ParticipantBean {
 	}
 
 	public int getEid() {
-		return eid;
+		return this.eid;
 	}
 
 	public void setEid(int eid) {
 		this.eid = eid;
 	}
-	
-	
+
 }

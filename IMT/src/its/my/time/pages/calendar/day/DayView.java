@@ -24,7 +24,7 @@ public class DayView extends BaseView {
 
 	private Calendar firstCal;
 
-	private GregorianCalendar cal;
+	private final GregorianCalendar cal;
 	private List<EventBaseBean> events;
 	private LinearLayout llEvent;
 
@@ -34,88 +34,95 @@ public class DayView extends BaseView {
 
 	private float ligneHeight;
 
-
 	public DayView(Context context, Calendar cal) {
 		super(context);
-		this.cal = new GregorianCalendar(cal.get(GregorianCalendar.YEAR),
-				cal.get(GregorianCalendar.MONTH),
-				cal.get(GregorianCalendar.DAY_OF_MONTH), 0, 0, 0);
-		firstCal = new GregorianCalendar(0, 0, 0, 8, 0);
+		this.cal = new GregorianCalendar(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0,
+				0);
+		this.firstCal = new GregorianCalendar(0, 0, 0, 8, 0);
 	}
 
 	@Override
 	protected View createView() {
-		view = (LinearLayout) inflate(getContext(),
+		this.view = (LinearLayout) inflate(getContext(),
 				R.layout.activity_calendar_day, null);
 
-		ViewGroup lignes = ((ViewGroup) view
+		final ViewGroup lignes = ((ViewGroup) this.view
 				.findViewById(R.id.activity_calendar_day_layoutHeure));
 		for (int i = 0; i < lignes.getChildCount(); i++) {
 			if (lignes.getChildAt(i).getClass().isAssignableFrom(Ligne.class)) {
-				lignes.getChildAt(i).setOnLongClickListener(new OnLongClickListener() {
-					@Override
-					public boolean onLongClick(View v) {
-						Ligne ligne = (Ligne)v;
-						Calendar hour = new GregorianCalendar(cal
-								.get(Calendar.YEAR), cal
-								.get(Calendar.MONTH), cal
-								.get(Calendar.DAY_OF_MONTH), ligne
-								.getHeure(), 0, 0);
-						ActivityUtil.startEventActivity(getContext(), hour, false);
-						return false;
-					}
-				});
+				lignes.getChildAt(i).setOnLongClickListener(
+						new OnLongClickListener() {
+							@Override
+							public boolean onLongClick(View v) {
+								final Ligne ligne = (Ligne) v;
+								final Calendar hour = new GregorianCalendar(
+										DayView.this.cal.get(Calendar.YEAR),
+										DayView.this.cal.get(Calendar.MONTH),
+										DayView.this.cal
+												.get(Calendar.DAY_OF_MONTH),
+										ligne.getHeure(), 0, 0);
+								ActivityUtil.startEventActivity(getContext(),
+										hour, false);
+								return false;
+							}
+						});
 
 			}
 		}
 
-		llEvent = (LinearLayout) view.findViewById(R.id.activity_calendar_day_layout_event);
-		mainScroll = (ScrollView) view.findViewById(R.id.activity_calendar_day_mainscroll);
+		this.llEvent = (LinearLayout) this.view
+				.findViewById(R.id.activity_calendar_day_layout_event);
+		this.mainScroll = (ScrollView) this.view
+				.findViewById(R.id.activity_calendar_day_mainscroll);
 
 		createTabHeure();
 
-		ligneHeight = getResources().getDimension(
+		this.ligneHeight = getResources().getDimension(
 				R.dimen.view_day_height_ligne_heure);
 
-		OnGlobalLayoutListener listener = new OnGlobalLayoutListener() {
+		final OnGlobalLayoutListener listener = new OnGlobalLayoutListener() {
 
 			@Override
 			public void onGlobalLayout() {
-				firstCal.add(Calendar.MINUTE, -30);
-				int scroll = ((int) (firstCal
-						.get(GregorianCalendar.HOUR_OF_DAY) * ligneHeight + (((float) firstCal
-						.get(GregorianCalendar.MINUTE) / 60) * ligneHeight)));
-				mainScroll.smoothScrollBy(scroll, 0);
+				DayView.this.firstCal.add(Calendar.MINUTE, -30);
+				final int scroll = ((int) (DayView.this.firstCal
+						.get(Calendar.HOUR_OF_DAY) * DayView.this.ligneHeight + (((float) DayView.this.firstCal
+						.get(Calendar.MINUTE) / 60) * DayView.this.ligneHeight)));
+				DayView.this.mainScroll.smoothScrollBy(scroll, 0);
 			}
 		};
-		view.getViewTreeObserver().addOnGlobalLayoutListener(listener);
-		return view;
+		this.view.getViewTreeObserver().addOnGlobalLayoutListener(listener);
+		return this.view;
 	}
 
 	@Override
 	protected String getTopBarText() {
-		return DateUtil.getLongDate(cal);
+		return DateUtil.getLongDate(this.cal);
 	}
 
 	private void createTabHeure() {
-		Calendar calDeb = new GregorianCalendar(cal.get(Calendar.YEAR),
-				cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
-				cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE),
-				cal.get(Calendar.SECOND));
+		final Calendar calDeb = new GregorianCalendar(
+				this.cal.get(Calendar.YEAR), this.cal.get(Calendar.MONTH),
+				this.cal.get(Calendar.DAY_OF_MONTH),
+				this.cal.get(Calendar.HOUR_OF_DAY),
+				this.cal.get(Calendar.MINUTE), this.cal.get(Calendar.SECOND));
 		calDeb.set(Calendar.HOUR_OF_DAY, 0);
 		calDeb.set(Calendar.MINUTE, 0);
 		calDeb.set(Calendar.SECOND, 0);
-		
-		Calendar calFin = new GregorianCalendar(calDeb.get(Calendar.YEAR),
-				calDeb.get(Calendar.MONTH), calDeb.get(Calendar.DAY_OF_MONTH),
+
+		final Calendar calFin = new GregorianCalendar(
+				calDeb.get(Calendar.YEAR), calDeb.get(Calendar.MONTH),
+				calDeb.get(Calendar.DAY_OF_MONTH),
 				calDeb.get(Calendar.HOUR_OF_DAY), calDeb.get(Calendar.MINUTE),
 				calDeb.get(Calendar.SECOND));
 		calFin.add(Calendar.DAY_OF_MONTH, 1);
-		events = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
+		this.events = new EventBaseRepository(getContext()).getAllEvents(
+				calDeb, calFin);
 
-		for (EventBaseBean event : events) {
-			if (firstCal == null || event.gethDeb().before(firstCal)) {
-				firstCal = event.gethDeb();
+		for (final EventBaseBean event : this.events) {
+			if (this.firstCal == null || event.gethDeb().before(this.firstCal)) {
+				this.firstCal = event.gethDeb();
 			}
 			addEventView(event);
 		}
@@ -123,14 +130,14 @@ public class DayView extends BaseView {
 
 	private EventLittleView addEventView(EventBaseBean event) {
 		ColumnEvent column;
-		for (int i = 0; i < llEvent.getChildCount(); i++) {
-			column = (ColumnEvent) llEvent.getChildAt(i);
-			EventLittleView eventView = column.addEvent(event, cal);
+		for (int i = 0; i < this.llEvent.getChildCount(); i++) {
+			column = (ColumnEvent) this.llEvent.getChildAt(i);
+			final EventLittleView eventView = column.addEvent(event, this.cal);
 
 			if (eventView != null) {
-				ListenerMoveEvent moveEventListener = new ListenerMoveEvent();
+				final ListenerMoveEvent moveEventListener = new ListenerMoveEvent();
 				eventView.setOnLongClickListener(moveEventListener);
-				ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(
+				final ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(
 						eventView);
 				eventView.getBottomDraggable().setOnLongClickListener(
 						changeEventDurationLIstener);
@@ -138,42 +145,42 @@ public class DayView extends BaseView {
 			}
 		}
 		column = new ColumnEvent(getContext());
-		EventLittleView eventView = column.addEvent(event, cal);
+		final EventLittleView eventView = column.addEvent(event, this.cal);
 
-		ListenerMoveEvent moveEventListener = new ListenerMoveEvent();
+		final ListenerMoveEvent moveEventListener = new ListenerMoveEvent();
 		eventView.setOnLongClickListener(moveEventListener);
-		ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(
+		final ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(
 				eventView);
 		eventView.getBottomDraggable().setOnLongClickListener(
 				changeEventDurationLIstener);
 
-		llEvent.addView(column);
+		this.llEvent.addView(column);
 		return eventView;
 	}
 
 	private EventLittleView addEventView(EventLittleView view) {
 		ColumnEvent column;
-		for (int i = 0; i < llEvent.getChildCount(); i++) {
-			column = (ColumnEvent) llEvent.getChildAt(i);
-			EventLittleView eventView = column.addEvent(view);
+		for (int i = 0; i < this.llEvent.getChildCount(); i++) {
+			column = (ColumnEvent) this.llEvent.getChildAt(i);
+			final EventLittleView eventView = column.addEvent(view);
 
 			if (eventView != null) {
 				return eventView;
 			}
 		}
 		column = new ColumnEvent(getContext());
-		EventLittleView eventView = column.addEvent(view);
+		final EventLittleView eventView = column.addEvent(view);
 
-		llEvent.addView(column);
+		this.llEvent.addView(column);
 		return eventView;
 	}
 
 	private void reloadEventLittleView(EventLittleView eventView) {
 		ColumnEvent column;
-		EventBaseBean event = eventView.getEvent();
+		final EventBaseBean event = eventView.getEvent();
 		new EventBaseRepository(getContext()).updateEvent(event);
-		for (int i = 0; i < llEvent.getChildCount(); i++) {
-			column = (ColumnEvent) llEvent.getChildAt(i);
+		for (int i = 0; i < this.llEvent.getChildCount(); i++) {
+			column = (ColumnEvent) this.llEvent.getChildAt(i);
 			if (column.unload(eventView)) {
 				addEventView(eventView);
 				return;
@@ -190,65 +197,69 @@ public class DayView extends BaseView {
 
 		@Override
 		public boolean onLongClick(View v) {
-			draggedView = (EventLittleView) v;
-			draggedView.changeDragged(true);
-			mainScroll.requestDisallowInterceptTouchEvent(true);
-			draggedView.setOnTouchListener(this);
-			draggedView.bringToFront();
+			this.draggedView = (EventLittleView) v;
+			this.draggedView.changeDragged(true);
+			DayView.this.mainScroll.requestDisallowInterceptTouchEvent(true);
+			this.draggedView.setOnTouchListener(this);
+			this.draggedView.bringToFront();
 			return false;
 		}
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) v
+			final RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) v
 					.getLayoutParams();
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
-				if (lastY != -100000) {
-					float topMargin = layout.topMargin + event.getRawY()
-							- lastY;
-					int nextLigne = Math.round(topMargin
-							/ ((float) (ligneHeight / 2)));
-					if (lastLigne != nextLigne) {
-						lastLigne = nextLigne;
+				if (this.lastY != -100000) {
+					final float topMargin = layout.topMargin + event.getRawY()
+							- this.lastY;
+					final int nextLigne = Math.round(topMargin
+							/ (DayView.this.ligneHeight / 2));
+					if (this.lastLigne != nextLigne) {
+						this.lastLigne = nextLigne;
 
-						layout.topMargin = (int) (lastLigne * (ligneHeight / 2));
+						layout.topMargin = (int) (this.lastLigne * (DayView.this.ligneHeight / 2));
 						if (layout.topMargin < 0) {
 							layout.topMargin = 0;
 						}
-						if (layout.topMargin + layout.height > mainScroll
+						if (layout.topMargin + layout.height > DayView.this.mainScroll
 								.getChildAt(0).getMeasuredHeight()) {
-							layout.topMargin = mainScroll.getChildAt(0)
-									.getMeasuredHeight() - layout.height - 30;
+							layout.topMargin = DayView.this.mainScroll
+									.getChildAt(0).getMeasuredHeight()
+									- layout.height - 30;
 						}
-						if (layout.topMargin + layout.height > mainScroll
+						if (layout.topMargin + layout.height > DayView.this.mainScroll
 								.getScrollY()
-								+ mainScroll.getMeasuredHeight()
+								+ DayView.this.mainScroll.getMeasuredHeight()
 								+ 10) {
-							mainScroll.smoothScrollTo(
+							DayView.this.mainScroll.smoothScrollTo(
 									0,
-									(int) (layout.topMargin
-											- mainScroll.getMeasuredHeight()
-											+ layout.height + 10));
+									layout.topMargin
+											- DayView.this.mainScroll
+													.getMeasuredHeight()
+											+ layout.height + 10);
 							layout.topMargin += 30;
 						}
-						if (layout.topMargin < mainScroll.getScrollY() - 10) {
-							mainScroll.smoothScrollTo(0,
-									(int) (layout.topMargin) - 10);
+						if (layout.topMargin < DayView.this.mainScroll
+								.getScrollY() - 10) {
+							DayView.this.mainScroll.smoothScrollTo(0,
+									(layout.topMargin) - 10);
 							layout.topMargin -= 30;
 						}
-						draggedView.updateFromLayout(layout);
-						lastY = (int) event.getRawY();
+						this.draggedView.updateFromLayout(layout);
+						this.lastY = (int) event.getRawY();
 					}
 				} else {
-					lastY = (int) event.getRawY();
+					this.lastY = (int) event.getRawY();
 				}
 			} else if (event.getAction() == MotionEvent.ACTION_UP) {
-				draggedView.changeDragged(false);
-				draggedView.setOnTouchListener(null);
-				lastY = -100000;
-				lastLigne = -1;
-				mainScroll.requestDisallowInterceptTouchEvent(false);
-				reloadEventLittleView(draggedView);
+				this.draggedView.changeDragged(false);
+				this.draggedView.setOnTouchListener(null);
+				this.lastY = -100000;
+				this.lastLigne = -1;
+				DayView.this.mainScroll
+						.requestDisallowInterceptTouchEvent(false);
+				reloadEventLittleView(this.draggedView);
 			}
 			return true;
 		}
@@ -260,8 +271,8 @@ public class DayView extends BaseView {
 
 		private int lastY = -100000;
 		private int lastLigne = -1;
-		private EventLittleView parent;
-		private Context context;
+		private final EventLittleView parent;
+		private final Context context;
 
 		public ListenerChangeEventDuration(EventLittleView parent) {
 			this.parent = parent;
@@ -270,66 +281,68 @@ public class DayView extends BaseView {
 
 		@Override
 		public boolean onLongClick(View v) {
-			mainScroll.requestDisallowInterceptTouchEvent(true);
+			DayView.this.mainScroll.requestDisallowInterceptTouchEvent(true);
 			v.setOnTouchListener(this);
-			parent.bringToFront();
+			this.parent.bringToFront();
 			return false;
 		}
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) parent
+			final RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) this.parent
 					.getLayoutParams();
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
-				if (lastY != -100000) {
-					float height = layout.height + event.getRawY() - lastY;
-					int nextLigne = Math.round((layout.topMargin + height)
-							/ ((float) (ligneHeight / 2)));
-					if (lastLigne != nextLigne) {
-						lastLigne = nextLigne;
-						layout.height = (int) (lastLigne * (ligneHeight / 2) - layout.topMargin);
-						if (layout.topMargin + layout.height > mainScroll
+				if (this.lastY != -100000) {
+					final float height = layout.height + event.getRawY()
+							- this.lastY;
+					final int nextLigne = Math
+							.round((layout.topMargin + height)
+									/ (DayView.this.ligneHeight / 2));
+					if (this.lastLigne != nextLigne) {
+						this.lastLigne = nextLigne;
+						layout.height = (int) (this.lastLigne
+								* (DayView.this.ligneHeight / 2) - layout.topMargin);
+						if (layout.topMargin + layout.height > DayView.this.mainScroll
 								.getChildAt(0).getMeasuredHeight()) {
-							layout.height = mainScroll.getChildAt(0)
-									.getMeasuredHeight()
-									- layout.topMargin
-									- 30;
+							layout.height = DayView.this.mainScroll.getChildAt(
+									0).getMeasuredHeight()
+									- layout.topMargin - 30;
 						}
-						if (layout.topMargin + layout.height > mainScroll
+						if (layout.topMargin + layout.height > DayView.this.mainScroll
 								.getScrollY()
-								+ mainScroll.getMeasuredHeight()
+								+ DayView.this.mainScroll.getMeasuredHeight()
 								+ 10) {
-							mainScroll.smoothScrollTo(
+							DayView.this.mainScroll.smoothScrollTo(
 									0,
-									(int) (layout.topMargin
-											- mainScroll.getMeasuredHeight()
-											+ layout.height + 10));
+									layout.topMargin
+											- DayView.this.mainScroll
+													.getMeasuredHeight()
+											+ layout.height + 10);
 							layout.height += 30;
 						}
-						if (layout.topMargin + layout.height < mainScroll
+						if (layout.topMargin + layout.height < DayView.this.mainScroll
 								.getScrollY() - 10) {
-							mainScroll
-									.smoothScrollTo(
-											0,
-											(int) (layout.topMargin + layout.height) - 10);
+							DayView.this.mainScroll.smoothScrollTo(0,
+									layout.topMargin + layout.height - 10);
 							layout.height -= 30;
 						}
-						if (layout.height < ligneHeight / 2) {
-							layout.height = (int) (ligneHeight / 2);
+						if (layout.height < DayView.this.ligneHeight / 2) {
+							layout.height = (int) (DayView.this.ligneHeight / 2);
 						}
-						lastY = (int) event.getRawY();
-						parent.updateFromLayout(layout);
+						this.lastY = (int) event.getRawY();
+						this.parent.updateFromLayout(layout);
 					}
 				} else {
-					lastY = (int) event.getRawY();
+					this.lastY = (int) event.getRawY();
 				}
 			}
 			if (event.getAction() == MotionEvent.ACTION_UP) {
 				v.setOnTouchListener(null);
-				lastY = -100000;
-				lastLigne = -1;
-				mainScroll.requestDisallowInterceptTouchEvent(false);
-				reloadEventLittleView(parent);
+				this.lastY = -100000;
+				this.lastLigne = -1;
+				DayView.this.mainScroll
+						.requestDisallowInterceptTouchEvent(false);
+				reloadEventLittleView(this.parent);
 			}
 			return true;
 		}

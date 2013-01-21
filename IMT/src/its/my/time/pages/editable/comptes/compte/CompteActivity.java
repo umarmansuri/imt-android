@@ -28,7 +28,9 @@ import android.widget.Spinner;
 
 import com.actionbarsherlock.R;
 
-public class CompteActivity extends BaseActivity implements OnItemSelectedListener, OnClickListener, TextWatcher, OnColorChangedListener {
+public class CompteActivity extends BaseActivity implements
+		OnItemSelectedListener, OnClickListener, TextWatcher,
+		OnColorChangedListener {
 
 	private CompteBean compte;
 
@@ -43,14 +45,15 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 	@Override
 	public void onCreate(Bundle savedInstance) {
 
-		Bundle bundle = getIntent().getExtras();
-		if(bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
-			compte = new CompteRepository(this).getById(bundle.getLong(ActivityUtil.KEY_EXTRA_ID)); 
+		final Bundle bundle = getIntent().getExtras();
+		if (bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
+			this.compte = new CompteRepository(this).getById(bundle
+					.getLong(ActivityUtil.KEY_EXTRA_ID));
 		} else {
-			compte = new CompteBean();
-			compte.setColor(Color.parseColor("#70b2cd"));
-			compte.setUid(PreferencesUtil.getCurrentUid(this));
-			isNew = true;
+			this.compte = new CompteBean();
+			this.compte.setColor(Color.parseColor("#70b2cd"));
+			this.compte.setUid(PreferencesUtil.getCurrentUid(this));
+			this.isNew = true;
 		}
 
 		super.onCreate(bundle);
@@ -60,34 +63,34 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 
 	@Override
 	protected void onViewCreated() {
-		initialiseValues();	
+		initialiseValues();
 	}
 
 	private void initialiseValues() {
-		mFieldTitleEdit = (EditText)findViewById(R.id.activity_compte_title);
-		mFieldTitleEdit.setEnabled(false);
-		mFieldTitleEdit.addTextChangedListener(this);
-		mFieldTitleEdit.setText(compte.getTitle());
+		this.mFieldTitleEdit = (EditText) findViewById(R.id.activity_compte_title);
+		this.mFieldTitleEdit.setEnabled(false);
+		this.mFieldTitleEdit.addTextChangedListener(this);
+		this.mFieldTitleEdit.setText(this.compte.getTitle());
 		updateTitle();
 
-		mFieldTypeSpinner = (Spinner)findViewById(R.id.activity_compte_type);
-		mFieldTypeSpinner.setEnabled(false);
-		mFieldTypeSpinner.setOnItemSelectedListener(this);
-		ArrayAdapter <CharSequence> adapter =
-				new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item );
+		this.mFieldTypeSpinner = (Spinner) findViewById(R.id.activity_compte_type);
+		this.mFieldTypeSpinner.setEnabled(false);
+		this.mFieldTypeSpinner.setOnItemSelectedListener(this);
+		final ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+				this, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		adapter.add("Google");
 		adapter.add("ERP 1");
 		adapter.add("CRM");
-		mFieldTypeSpinner.setAdapter(adapter);
-		mFieldTypeSpinner.setSelection(compte.getType());
+		this.mFieldTypeSpinner.setAdapter(adapter);
+		this.mFieldTypeSpinner.setSelection(this.compte.getType());
 
-		mFieldColorButton = (ImageButton)findViewById(R.id.activity_compte_color);
-		mFieldColorButton.setEnabled(false);
-		mFieldColorButton.setOnClickListener(this);
+		this.mFieldColorButton = (ImageButton) findViewById(R.id.activity_compte_color);
+		this.mFieldColorButton.setEnabled(false);
+		this.mFieldColorButton.setOnClickListener(this);
 		updateColorButton();
 
-		if(isNew) {
+		if (this.isNew) {
 			launchEditMode();
 		} else {
 
@@ -95,33 +98,33 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 	}
 
 	private void updateColorButton() {
-		ColorDrawable dr = new ColorDrawable(compte.getColor());
-		mFieldColorButton.setImageDrawable(dr);
+		final ColorDrawable dr = new ColorDrawable(this.compte.getColor());
+		this.mFieldColorButton.setImageDrawable(dr);
 	}
 
 	private void updateTitle() {
 		String title;
-		if(mFieldTitleEdit.getText().toString() != "") {
-			title = mFieldTitleEdit.getText().toString();
+		if (this.mFieldTitleEdit.getText().toString() != "") {
+			title = this.mFieldTitleEdit.getText().toString();
 		} else {
 			title = "Nouveau compte";
 		}
 		getSupportActionBar().setTitle(title);
-		compte.setTitle(title);
+		this.compte.setTitle(title);
 	}
-	
+
 	private void changeState(boolean state) {
-		mFieldTitleEdit.setEnabled(state);
-		mFieldTypeSpinner.setEnabled(state);
-		mFieldColorButton.setEnabled(state);
+		this.mFieldTitleEdit.setEnabled(state);
+		this.mFieldTypeSpinner.setEnabled(state);
+		this.mFieldColorButton.setEnabled(state);
 	}
-	
+
 	@Override
 	protected CharSequence getActionBarTitle() {
-		if(isNew) {
-			return "Nouveau compte";	
+		if (this.isNew) {
+			return "Nouveau compte";
 		} else {
-			return compte.getTitle();
+			return this.compte.getTitle();
 		}
 	}
 
@@ -133,10 +136,10 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 	@Override
 	protected void showSave() {
 		changeState(false);
-		if(isNew) {
-			new CompteRepository(this).insertCompte(compte);	
+		if (this.isNew) {
+			new CompteRepository(this).insertCompte(this.compte);
 		} else {
-			new CompteRepository(this).update(compte);
+			new CompteRepository(this).update(this.compte);
 		}
 		finish();
 	}
@@ -149,16 +152,18 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 
 	@Override
 	public void onClick(View v) {
-		if(v == mFieldColorButton) {
-			ColorPickerDialog dialog = new ColorPickerDialog(this, compte.getColor());
+		if (v == this.mFieldColorButton) {
+			final ColorPickerDialog dialog = new ColorPickerDialog(this,
+					this.compte.getColor());
 			dialog.show();
 			dialog.setOnColorChangedListener(this);
 		}
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View v, int position,long id) {
-		compte.setType(position);
+	public void onItemSelected(AdapterView<?> arg0, View v, int position,
+			long id) {
+		this.compte.setType(position);
 	}
 
 	@Override
@@ -172,7 +177,8 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 	}
 
 	@Override
-	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+			int arg3) {
 	}
 
 	@Override
@@ -182,44 +188,36 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 
 	@Override
 	public void onColorChanged(int color) {
-		compte.setColor(color);
+		this.compte.setColor(color);
 		updateColorButton();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	protected void onMenuGroupSwitch(View v, int positionGroup,
 			boolean isChecked) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMenuItemSwitch(View v, int positionGroup,
 			int positionObjet, boolean isChecked) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMenuGroupClick(ExpandableListView parent, View v,
 			int groupPosition, long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMenuChildClick(ExpandableListView parent, View v,
 			int groupPosition, int childPosition, long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -232,7 +230,7 @@ public class CompteActivity extends BaseActivity implements OnItemSelectedListen
 	@Override
 	public void reload() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

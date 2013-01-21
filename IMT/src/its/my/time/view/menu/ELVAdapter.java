@@ -17,13 +17,13 @@ import com.fonts.mooncake.MooncakeIcone;
 
 public class ELVAdapter extends BaseExpandableListAdapter {
 
-	private ArrayList<MenuGroupe> menuGroupes;
+	private final ArrayList<MenuGroupe> menuGroupes;
 	private OnItemSwitchedListener onItemSwitchedListener;
-	private LayoutInflater inflater;
+	private final LayoutInflater inflater;
 
 	public ELVAdapter(Context context, ArrayList<MenuGroupe> menuGroupes) {
 		this.menuGroupes = menuGroupes;
-		inflater = LayoutInflater.from(context);
+		this.inflater = LayoutInflater.from(context);
 	}
 
 	@Override
@@ -31,117 +31,152 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
+	@Override
 	public Object getChild(int gPosition, int cPosition) {
-		return menuGroupes.get(gPosition).getObjets().get(cPosition);
+		return this.menuGroupes.get(gPosition).getObjets().get(cPosition);
 	}
 
+	@Override
 	public long getChildId(int gPosition, int cPosition) {
 		return cPosition;
 	}
 
-	public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convert, ViewGroup parent) {
+	@Override
+	public View getChildView(final int groupPosition, final int childPosition,
+			boolean isLastChild, View convert, ViewGroup parent) {
 		final MenuObjet menuObjet = (MenuObjet) getChild(groupPosition,
 				childPosition);
 
 		final MenuChildViewHolder menuChildViewHolder;
-		
+
 		menuChildViewHolder = new MenuChildViewHolder();
-		View result = inflater.inflate(R.layout.menu_child, null);
-		menuChildViewHolder.childTitle = (TextView) result.findViewById(R.id.menu_child_title);
-		menuChildViewHolder.childIcone = (MooncakeIcone) result.findViewById(R.id.menu_child_icone);
-		menuChildViewHolder.childSwitcher = (Switcher) result.findViewById(R.id.menu_child_switcher);
+		final View result = this.inflater.inflate(R.layout.menu_child, null);
+		menuChildViewHolder.childTitle = (TextView) result
+				.findViewById(R.id.menu_child_title);
+		menuChildViewHolder.childIcone = (MooncakeIcone) result
+				.findViewById(R.id.menu_child_icone);
+		menuChildViewHolder.childSwitcher = (Switcher) result
+				.findViewById(R.id.menu_child_switcher);
 		result.setTag(menuChildViewHolder);
 		menuChildViewHolder.childTitle.setText(menuObjet.getNom());
 
-		if(menuObjet.getIconeRes()>=0) {
+		if (menuObjet.getIconeRes() >= 0) {
 			menuChildViewHolder.childIcone.setIconeRes(menuObjet.getIconeRes());
 		}
-		if(!menuObjet.isSwitcher()) {
+		if (!menuObjet.isSwitcher()) {
 			menuChildViewHolder.childSwitcher.setVisibility(View.GONE);
 		} else {
-			if(menuObjet.getSwitcherOnColor() != -1) {
-				menuChildViewHolder.childSwitcher.changeOnColor(menuObjet.getSwitcherOnColor());
+			if (menuObjet.getSwitcherOnColor() != -1) {
+				menuChildViewHolder.childSwitcher.changeOnColor(menuObjet
+						.getSwitcherOnColor());
 			}
-			if(menuObjet.getFirstState()) {
-				menuChildViewHolder.childSwitcher.changeState(menuObjet.getFirstState(), true, true);
+			if (menuObjet.getFirstState()) {
+				menuChildViewHolder.childSwitcher.changeState(
+						menuObjet.getFirstState(), true, true);
 			}
-			if(onItemSwitchedListener != null) {
-				menuChildViewHolder.childSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
-					@Override
-					public void onStateCHangedListener(Switcher switcher, boolean isChecked) {
-						onItemSwitchedListener.onObjetSwitched(menuChildViewHolder.childSwitcher, groupPosition, childPosition, isChecked);
-					}
-				});
+			if (this.onItemSwitchedListener != null) {
+				menuChildViewHolder.childSwitcher
+						.setOnStateChangedListener(new OnStateChangedListener() {
+							@Override
+							public void onStateCHangedListener(
+									Switcher switcher, boolean isChecked) {
+								ELVAdapter.this.onItemSwitchedListener
+										.onObjetSwitched(
+												menuChildViewHolder.childSwitcher,
+												groupPosition, childPosition,
+												isChecked);
+							}
+						});
 			}
 		}
 
 		return result;
 	}
 
+	@Override
 	public int getChildrenCount(int gPosition) {
-		return menuGroupes.get(gPosition).getObjets().size();
+		return this.menuGroupes.get(gPosition).getObjets().size();
 	}
 
+	@Override
 	public Object getGroup(int gPosition) {
-		return menuGroupes.get(gPosition);
+		return this.menuGroupes.get(gPosition);
 	}
 
+	@Override
 	public int getGroupCount() {
-		return menuGroupes.size();
+		return this.menuGroupes.size();
 	}
 
+	@Override
 	public long getGroupId(int gPosition) {
 		return gPosition;
 	}
 
-	public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+	@Override
+	public View getGroupView(final int groupPosition, boolean isExpanded,
+			View convertView, ViewGroup parent) {
 		final MenuGroupe objet = (MenuGroupe) getGroup(groupPosition);
 		final MenuGroupViewHolder menuGroupViewHolder;
 		menuGroupViewHolder = new MenuGroupViewHolder();
-		convertView = inflater.inflate(R.layout.menu_row, null);
-		menuGroupViewHolder.groupTitle = (TextView) convertView.findViewById(R.id.menu_group_title);
-		menuGroupViewHolder.groupIcone = (MooncakeIcone) convertView.findViewById(R.id.menu_group_icone);
-		menuGroupViewHolder.groupSwitcher = (Switcher) convertView.findViewById(R.id.menu_group_switcher);
+		convertView = this.inflater.inflate(R.layout.menu_row, null);
+		menuGroupViewHolder.groupTitle = (TextView) convertView
+				.findViewById(R.id.menu_group_title);
+		menuGroupViewHolder.groupIcone = (MooncakeIcone) convertView
+				.findViewById(R.id.menu_group_icone);
+		menuGroupViewHolder.groupSwitcher = (Switcher) convertView
+				.findViewById(R.id.menu_group_switcher);
 		convertView.setTag(menuGroupViewHolder);
 		menuGroupViewHolder.groupTitle.setText(objet.getNom());
-		if(objet.getIconeRes()>=0) {
+		if (objet.getIconeRes() >= 0) {
 			menuGroupViewHolder.groupIcone.setIconeRes(objet.getIconeRes());
 		}
-		if(!objet.isSwitcher()) {
+		if (!objet.isSwitcher()) {
 			menuGroupViewHolder.groupSwitcher.setVisibility(View.GONE);
 		} else {
-			if(objet.getSwitcherOnColor() != -1) {
-				menuGroupViewHolder.groupSwitcher.changeOnColor(objet.getSwitcherOnColor());
+			if (objet.getSwitcherOnColor() != -1) {
+				menuGroupViewHolder.groupSwitcher.changeOnColor(objet
+						.getSwitcherOnColor());
 			}
-			if(objet.getFirstState()) {
-				menuGroupViewHolder.groupSwitcher.changeState(objet.getFirstState(), true, true);
-			} 
-			if(onItemSwitchedListener != null) {
-				menuGroupViewHolder.groupSwitcher.setOnStateChangedListener(new OnStateChangedListener() {
-					@Override
-					public void onStateCHangedListener(Switcher switcher, boolean isChecked) {
-						onItemSwitchedListener.onGroupSwitched(menuGroupViewHolder.groupSwitcher, groupPosition, isChecked);
-					}
-				});
+			if (objet.getFirstState()) {
+				menuGroupViewHolder.groupSwitcher.changeState(
+						objet.getFirstState(), true, true);
+			}
+			if (this.onItemSwitchedListener != null) {
+				menuGroupViewHolder.groupSwitcher
+						.setOnStateChangedListener(new OnStateChangedListener() {
+							@Override
+							public void onStateCHangedListener(
+									Switcher switcher, boolean isChecked) {
+								ELVAdapter.this.onItemSwitchedListener
+										.onGroupSwitched(
+												menuGroupViewHolder.groupSwitcher,
+												groupPosition, isChecked);
+							}
+						});
 			}
 		}
 		return convertView;
 	}
 
+	@Override
 	public boolean hasStableIds() {
 		return true;
 	}
 
+	@Override
 	public boolean isChildSelectable(int arg0, int arg1) {
 		return true;
 	}
+
 	public OnItemSwitchedListener getOnItemSwitchedListener() {
-		return onItemSwitchedListener;
-	}
-	public void setOnItemSwitchedListener(OnItemSwitchedListener onItemSwitchedListener) {
-		this.onItemSwitchedListener = onItemSwitchedListener;
+		return this.onItemSwitchedListener;
 	}
 
+	public void setOnItemSwitchedListener(
+			OnItemSwitchedListener onItemSwitchedListener) {
+		this.onItemSwitchedListener = onItemSwitchedListener;
+	}
 
 	public class MenuChildViewHolder {
 		public TextView childTitle;
@@ -155,8 +190,10 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 		public Switcher groupSwitcher;
 	}
 
-	public interface OnItemSwitchedListener{
+	public interface OnItemSwitchedListener {
 		public void onGroupSwitched(View v, int positionGroup, boolean isChecked);
-		public void onObjetSwitched(View v, int positionGroup, int positionObjet, boolean isChecked);
+
+		public void onObjetSwitched(View v, int positionGroup,
+				int positionObjet, boolean isChecked);
 	}
 }

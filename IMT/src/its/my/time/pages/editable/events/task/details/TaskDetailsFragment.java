@@ -7,7 +7,6 @@ import android.view.View;
 
 public class TaskDetailsFragment extends DetailsFragment {
 
-
 	public TaskDetailsFragment(EventBaseBean event) {
 		super(event, EventTypes.TYPE_TASK);
 	}
@@ -16,11 +15,11 @@ public class TaskDetailsFragment extends DetailsFragment {
 	public String getTitle() {
 		return "Tâche";
 	}
-	
+
 	public View getCustomView() {
 		return null;
 	}
-	
+
 	@Override
 	public void launchEdit() {
 		super.launchEdit();

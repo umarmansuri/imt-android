@@ -26,45 +26,55 @@ import android.widget.Toast;
 
 public class CommentairesFragment extends BasePluginFragment {
 
-	private int eventId;
+	private final int eventId;
 	private Button mButtonSend;
 	private EditText mTextCommentaire;
 	private ListView mListComment;
-	
+
 	public CommentairesFragment(int l) {
 		this.eventId = l;
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-		RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_commentaires, null);
-		mListComment = (ListView)mView.findViewById(R.id.event_comment_liste);
-		mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId, false));
-		
-		mTextCommentaire = (EditText)mView.findViewById(R.id.event_comment_editComment); 
-		
-		mButtonSend = (Button)mView.findViewById(R.id.event_comment_save);
-		mButtonSend.setOnClickListener(new OnClickListener() {
+
+		final RelativeLayout mView = (RelativeLayout) inflater.inflate(
+				R.layout.activity_event_commentaires, null);
+		this.mListComment = (ListView) mView
+				.findViewById(R.id.event_comment_liste);
+		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
+				this.eventId, false));
+
+		this.mTextCommentaire = (EditText) mView
+				.findViewById(R.id.event_comment_editComment);
+
+		this.mButtonSend = (Button) mView.findViewById(R.id.event_comment_save);
+		this.mButtonSend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TODO envoyer via ws
-				CommentBean commentaire = new CommentBean();
-				commentaire.setComment(mTextCommentaire.getText().toString());
+				// TODO envoyer via ws
+				final CommentBean commentaire = new CommentBean();
+				commentaire
+						.setComment(CommentairesFragment.this.mTextCommentaire
+								.getText().toString());
 				commentaire.setDate(Calendar.getInstance());
-				commentaire.setEid(eventId);
+				commentaire.setEid(CommentairesFragment.this.eventId);
 				commentaire.setUid(PreferencesUtil.getCurrentUid(getActivity()));
-				long res = new CommentRepository(getActivity()).insertComment(commentaire);
-				if(res < 0) {
-					Toast.makeText(getActivity(), "Votre commentaire n'a pu être envoyé.", Toast.LENGTH_SHORT).show();
+				final long res = new CommentRepository(getActivity())
+						.insertComment(commentaire);
+				if (res < 0) {
+					Toast.makeText(getActivity(),
+							"Votre commentaire n'a pu être envoyé.",
+							Toast.LENGTH_SHORT).show();
 				}
-				mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId, false));
-				mTextCommentaire.setText("");
+				CommentairesFragment.this.mListComment
+						.setAdapter(new CommentairesAdapter(getActivity(),
+								CommentairesFragment.this.eventId, false));
+				CommentairesFragment.this.mTextCommentaire.setText("");
 			}
 		});
-		
-		
+
 		return mView;
 	}
 
@@ -72,22 +82,24 @@ public class CommentairesFragment extends BasePluginFragment {
 	public String getTitle() {
 		return "Commentaires";
 	}
-	
+
 	@Override
 	public void launchEdit() {
-		mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId, true));	
+		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
+				this.eventId, true));
 	}
 
 	@Override
 	public void launchSave() {
-		mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId, false));
+		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
+				this.eventId, false));
 	}
 
 	@Override
 	public void launchCancel() {
-		mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId, false));
+		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
+				this.eventId, false));
 	}
-	
 
 	@Override
 	public boolean isEditable() {
@@ -103,55 +115,102 @@ public class CommentairesFragment extends BasePluginFragment {
 	public boolean isSavable() {
 		return true;
 	}
-	
-	private class CommentairesAdapter implements ListAdapter{
+
+	private class CommentairesAdapter implements ListAdapter {
 
 		private List<CommentBean> comments;
-		private boolean isEditMode;
-		
+		private final boolean isEditMode;
+
 		public CommentairesAdapter(Context context, int id, boolean isEditMode) {
 			this.isEditMode = isEditMode;
 			loadNextEvents();
 		}
 
 		private void loadNextEvents() {
-			if(comments == null) {
-				comments = new ArrayList<CommentBean>();
+			if (this.comments == null) {
+				this.comments = new ArrayList<CommentBean>();
 			}
-			comments = new CommentRepository(getActivity()).getAllByEid(eventId);
+			this.comments = new CommentRepository(getActivity())
+					.getAllByEid(CommentairesFragment.this.eventId);
 		}
 
 		@Override
 		public int getCount() {
-			if(comments != null) {
-				return comments.size();
+			if (this.comments != null) {
+				return this.comments.size();
 			}
 			return 0;
 		}
 
-
 		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			CommentairesView view = new CommentairesView(getActivity(), comments.get(position), isEditMode);
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
+			final CommentairesView view = new CommentairesView(getActivity(),
+					this.comments.get(position), this.isEditMode);
 			view.setOnDeleteClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					new CommentRepository(getActivity()).deletecomment(comments.get(position).getId());
-					mListComment.setAdapter(new CommentairesAdapter(getActivity(), eventId, true));	
+					new CommentRepository(getActivity())
+							.deletecomment(CommentairesAdapter.this.comments
+									.get(position).getId());
+					CommentairesFragment.this.mListComment
+							.setAdapter(new CommentairesAdapter(getActivity(),
+									CommentairesFragment.this.eventId, true));
 				}
 			});
 			return view;
 		}
 
-		@Override public int getViewTypeCount() {return 1;}
-		@Override public boolean hasStableIds() {return true;}
-		@Override public boolean isEmpty() {if(comments == null | comments.size() == 0) {return true;} else {return false;}}
-		@Override public Object getItem(int position) {return null;}
-		@Override public long getItemId(int position) {return comments.get(position).getId();}
-		@Override public int getItemViewType(int position) {return 0;}
-		@Override public void registerDataSetObserver(DataSetObserver observer) {	}
-		@Override public void unregisterDataSetObserver(DataSetObserver observer) {}
-		@Override public boolean areAllItemsEnabled() {return false;}
-		@Override public boolean isEnabled(int position) {return false;}
+		@Override
+		public int getViewTypeCount() {
+			return 1;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return true;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			if (this.comments == null | this.comments.size() == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return this.comments.get(position).getId();
+		}
+
+		@Override
+		public int getItemViewType(int position) {
+			return 0;
+		}
+
+		@Override
+		public void registerDataSetObserver(DataSetObserver observer) {
+		}
+
+		@Override
+		public void unregisterDataSetObserver(DataSetObserver observer) {
+		}
+
+		@Override
+		public boolean areAllItemsEnabled() {
+			return false;
+		}
+
+		@Override
+		public boolean isEnabled(int position) {
+			return false;
+		}
 	}
 }

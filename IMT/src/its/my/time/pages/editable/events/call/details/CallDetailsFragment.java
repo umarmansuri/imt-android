@@ -7,15 +7,14 @@ import android.view.View;
 
 public class CallDetailsFragment extends DetailsFragment {
 
-
 	public CallDetailsFragment(EventBaseBean event) {
 		super(event, EventTypes.TYPE_CALL);
 	}
-	
+
 	public View getCustomView() {
 		return null;
 	}
-	
+
 	@Override
 	public String getTitle() {
 		return "Appel";

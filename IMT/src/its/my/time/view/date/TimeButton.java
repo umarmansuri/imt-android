@@ -13,11 +13,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TimePicker;
 
-public class TimeButton extends Button implements OnTimeSetListener, OnClickListener {
+public class TimeButton extends Button implements OnTimeSetListener,
+		OnClickListener {
 
 	private TimePickerDialog dialog;
 	private Calendar date;
-	
+
 	public TimeButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(null);
@@ -34,35 +35,36 @@ public class TimeButton extends Button implements OnTimeSetListener, OnClickList
 	}
 
 	private void init(Calendar initDate) {
-		if(initDate!=null) {
-			date = initDate;
+		if (initDate != null) {
+			this.date = initDate;
 		} else {
-			date = Calendar.getInstance();
+			this.date = Calendar.getInstance();
 		}
 		setOnClickListener(this);
-		setText(DateUtil.getTime(date));
+		setText(DateUtil.getTime(this.date));
 	}
 
 	@Override
 	public void onTimeSet(TimePicker arg0, int hour, int minute) {
-		date.set(Calendar.HOUR_OF_DAY,hour);
-		date.set(Calendar.MINUTE,minute);
-		setText(DateUtil.getTime(date));
+		this.date.set(Calendar.HOUR_OF_DAY, hour);
+		this.date.set(Calendar.MINUTE, minute);
+		setText(DateUtil.getTime(this.date));
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		dialog = new TimePickerDialog(getContext(), this, date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), true);
-		dialog.show();
+		this.dialog = new TimePickerDialog(getContext(), this,
+				this.date.get(Calendar.HOUR_OF_DAY),
+				this.date.get(Calendar.MINUTE), true);
+		this.dialog.show();
 	}
 
 	public Calendar getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Calendar date) {
 		init(date);
 	}
 
-	
 }

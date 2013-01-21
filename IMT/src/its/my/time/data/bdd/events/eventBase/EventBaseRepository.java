@@ -14,7 +14,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-public class EventBaseRepository extends DatabaseHandler{
+public class EventBaseRepository extends DatabaseHandler {
 
 	private static final int KEY_INDEX_ID = 0;
 	private static final int KEY_INDEX_DETAILS = 1;
@@ -36,41 +36,32 @@ public class EventBaseRepository extends DatabaseHandler{
 	private static final String KEY_DETAILS_ID = "KEY_DETAILS_ID";
 	private static final String KEY_ALL_DAY = "KEY_ALL_DAY";
 
-
 	private static final String DATABASE_TABLE = "event";
 
-	public static final String CREATE_TABLE =  "create table " + DATABASE_TABLE + "("
-			+ KEY_ID + " integer primary key,"
-			+ KEY_TITLE + " text not null,"
-			+ KEY_DETAILS + " text,"
-			+ KEY_HDEB + " text not null,"
-			+ KEY_HFIN + " text not null,"
-			+ KEY_CID + " integer not null,"
-			+ KEY_TYPE_ID + " integer not null,"
-			+ KEY_DETAILS_ID + " integer not null,"
-			+ KEY_ALL_DAY + " integer not null);";
+	public static final String CREATE_TABLE = "create table " + DATABASE_TABLE
+			+ "(" + KEY_ID + " integer primary key," + KEY_TITLE
+			+ " text not null," + KEY_DETAILS + " text," + KEY_HDEB
+			+ " text not null," + KEY_HFIN + " text not null," + KEY_CID
+			+ " integer not null," + KEY_TYPE_ID + " integer not null,"
+			+ KEY_DETAILS_ID + " integer not null," + KEY_ALL_DAY
+			+ " integer not null);";
 
-	private String[] allAttr = new String[]{
-			KEY_ID, 
-			KEY_DETAILS, 
-			KEY_HDEB, 
-			KEY_HFIN, 
-			KEY_TITLE, 
-			KEY_CID, 
-			KEY_TYPE_ID, 
-			KEY_DETAILS_ID, 
-			KEY_ALL_DAY};
+	private final String[] allAttr = new String[] { KEY_ID, KEY_DETAILS,
+			KEY_HDEB, KEY_HFIN, KEY_TITLE, KEY_CID, KEY_TYPE_ID,
+			KEY_DETAILS_ID, KEY_ALL_DAY };
 
 	public EventBaseRepository(Context context) {
 		super(context);
 	}
 
 	public List<EventBaseBean> convertCursorToListObject(Cursor c) {
-		List<EventBaseBean> liste = new ArrayList<EventBaseBean>();
-		if (c.getCount() == 0){return liste;}
+		final List<EventBaseBean> liste = new ArrayList<EventBaseBean>();
+		if (c.getCount() == 0) {
+			return liste;
+		}
 		c.moveToFirst();
 		do {
-			EventBaseBean event = convertCursorToObject(c);
+			final EventBaseBean event = convertCursorToObject(c);
 			liste.add(event);
 		} while (c.moveToNext());
 		c.close();
@@ -78,7 +69,7 @@ public class EventBaseRepository extends DatabaseHandler{
 	}
 
 	public EventBaseBean convertCursorToObject(Cursor c) {
-		EventBaseBean event = new EventBaseBean();
+		final EventBaseBean event = new EventBaseBean();
 		event.setId(c.getInt(KEY_INDEX_ID));
 		event.setCid(c.getInt(KEY_INDEX_CID));
 		event.setTitle(c.getString(KEY_INDEX_TITLE));
@@ -92,18 +83,18 @@ public class EventBaseRepository extends DatabaseHandler{
 	}
 
 	public EventBaseBean convertCursorToOneObject(Cursor c) {
-		if(c.getCount() <= 0) {
+		if (c.getCount() <= 0) {
 			return null;
 		}
 		c.moveToFirst();
-		EventBaseBean event = convertCursorToObject(c);
+		final EventBaseBean event = convertCursorToObject(c);
 		c.close();
 		return event;
 	}
 
-	public long insertEvent(EventBaseBean event){
-		ContentValues initialValues = new ContentValues();
-		if(event.getId() != -1){
+	public long insertEvent(EventBaseBean event) {
+		final ContentValues initialValues = new ContentValues();
+		if (event.getId() != -1) {
 			initialValues.put(KEY_ID, event.getId());
 		}
 		initialValues.put(KEY_TITLE, event.getTitle());
@@ -115,13 +106,13 @@ public class EventBaseRepository extends DatabaseHandler{
 		initialValues.put(KEY_TYPE_ID, event.getTypeId());
 		initialValues.put(KEY_ALL_DAY, event.isAllDay());
 		open();
-		long res = this.db.insert(DATABASE_TABLE, null, initialValues);
+		final long res = this.db.insert(DATABASE_TABLE, null, initialValues);
 		close();
 		return res;
 	}
 
-	public long updateEvent(EventBaseBean event){
-		ContentValues initialValues = new ContentValues();
+	public long updateEvent(EventBaseBean event) {
+		final ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_TITLE, event.getTitle());
 		initialValues.put(KEY_DETAILS, event.getDetails());
 		initialValues.put(KEY_HDEB, DateUtil.getTimeInIso(event.gethDeb()));
@@ -130,63 +121,81 @@ public class EventBaseRepository extends DatabaseHandler{
 		initialValues.put(KEY_DETAILS_ID, event.getDetailsId());
 		initialValues.put(KEY_TYPE_ID, event.getTypeId());
 		initialValues.put(KEY_ALL_DAY, event.isAllDay());
-		long id = event.getId();
+		final long id = event.getId();
 		open();
-		long res = this.db.update(DATABASE_TABLE, initialValues, KEY_ID + "=?", new String[] { "" + id});
+		final long res = this.db.update(DATABASE_TABLE, initialValues, KEY_ID
+				+ "=?", new String[] { "" + id });
 		close();
 		return res;
 	}
 
 	public boolean deleteEvent(long rowId) {
 		open();
-		boolean res = this.db.delete(DATABASE_TABLE, KEY_ID + "=" + rowId, null) > 0;
+		final boolean res = this.db.delete(DATABASE_TABLE,
+				KEY_ID + "=" + rowId, null) > 0;
 		close();
 		return res;
 	}
 
 	public EventBaseBean getById(long id) {
 		open();
-		Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_ID + "=?", new String[] { "" + id }, null, null, null);
-		EventBaseBean res = convertCursorToOneObject(c);
+		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, KEY_ID
+				+ "=?", new String[] { "" + id }, null, null, null);
+		final EventBaseBean res = convertCursorToOneObject(c);
 		close();
 		return res;
 	}
 
 	public List<EventBaseBean> getAllEvent() {
 		open();
-		CompteRepository compteRepo = new CompteRepository(context);
-		List<CompteBean> comptes = compteRepo.getVisibleCompteByUid(PreferencesUtil.getCurrentUid(context));
-		ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
-		for (CompteBean compteBean : comptes) {
-			Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_CID + " =" + compteBean.getId(), null, null, null,  "" + KEY_INDEX_HDEB);
+		final CompteRepository compteRepo = new CompteRepository(this.context);
+		final List<CompteBean> comptes = compteRepo
+				.getVisibleCompteByUid(PreferencesUtil
+						.getCurrentUid(this.context));
+		final ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
+		for (final CompteBean compteBean : comptes) {
+			final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,
+					KEY_CID + " =" + compteBean.getId(), null, null, null, ""
+							+ KEY_INDEX_HDEB);
 			res.addAll(convertCursorToListObject(c));
-		}	
+		}
 		close();
 		return res;
 	}
 
 	public List<EventBaseBean> getAllEvents(Calendar calDeb, Calendar calFin) {
-		String isoDeb = DateUtil.getTimeInIso(calDeb);
-		String isoFin = DateUtil.getTimeInIso(calFin);
+		final String isoDeb = DateUtil.getTimeInIso(calDeb);
+		final String isoFin = DateUtil.getTimeInIso(calFin);
 		open();
-		CompteRepository compteRepo = new CompteRepository(context);
-		List<CompteBean> comptes = compteRepo.getVisibleCompteByUid(PreferencesUtil.getCurrentUid(context));
-		ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
-		for (CompteBean compteBean : comptes) {
-			Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_HDEB + " <= Datetime('"+ isoFin +"') AND " + KEY_HFIN + " >= Datetime('"+ isoDeb +"') AND " + KEY_CID + " =" + compteBean.getId(), null, null, null,  "" + KEY_INDEX_HDEB);
+		final CompteRepository compteRepo = new CompteRepository(this.context);
+		final List<CompteBean> comptes = compteRepo
+				.getVisibleCompteByUid(PreferencesUtil
+						.getCurrentUid(this.context));
+		final ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
+		for (final CompteBean compteBean : comptes) {
+			final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,
+					KEY_HDEB + " <= Datetime('" + isoFin + "') AND " + KEY_HFIN
+							+ " >= Datetime('" + isoDeb + "') AND " + KEY_CID
+							+ " =" + compteBean.getId(), null, null, null, ""
+							+ KEY_INDEX_HDEB);
 			res.addAll(convertCursorToListObject(c));
-		}				
+		}
 		close();
 		return res;
 	}
 
 	public List<EventBaseBean> getAllNextFromNow() {
 		open();
-		CompteRepository compteRepo = new CompteRepository(context);
-		List<CompteBean> comptes = compteRepo.getVisibleCompteByUid(PreferencesUtil.getCurrentUid(context));
-		ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
-		for (CompteBean compteBean : comptes) {
-			Cursor c = this.db.query(DATABASE_TABLE,allAttr, KEY_HFIN + " >= Datetime('now')  AND " + KEY_CID + " =" + compteBean.getId(), null, null, null,  "" + KEY_INDEX_HDEB);
+		final CompteRepository compteRepo = new CompteRepository(this.context);
+		final List<CompteBean> comptes = compteRepo
+				.getVisibleCompteByUid(PreferencesUtil
+						.getCurrentUid(this.context));
+		final ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
+		for (final CompteBean compteBean : comptes) {
+			final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,
+					KEY_HFIN + " >= Datetime('now')  AND " + KEY_CID + " ="
+							+ compteBean.getId(), null, null, null, ""
+							+ KEY_INDEX_HDEB);
 			res.addAll(convertCursorToListObject(c));
 		}
 		close();

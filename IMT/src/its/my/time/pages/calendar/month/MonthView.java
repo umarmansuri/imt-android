@@ -26,26 +26,27 @@ import android.widget.TextView;
 
 public class MonthView extends BaseView {
 
-	private MonthDisplayHelper helper;
-	private OnDayClickListener listener;
+	private final MonthDisplayHelper helper;
+	private final OnDayClickListener listener;
 
 	public MonthView(Context context, Calendar cal, OnDayClickListener listener) {
 		super(context);
-		this.helper = new MonthDisplayHelper(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), DateUtil.FIRST_DAY);
+		this.helper = new MonthDisplayHelper(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH), DateUtil.FIRST_DAY);
 		this.listener = listener;
 	}
 
-
 	@Override
 	protected View createView() {
-		LinearLayout view = (LinearLayout) inflate(getContext(), R.layout.activity_calendar_month, null);
+		final LinearLayout view = (LinearLayout) inflate(getContext(),
+				R.layout.activity_calendar_month, null);
 		createTabDay(view);
 		return view;
 	}
 
 	@Override
 	protected String getTopBarText() {
-		return DateUtil.getMonth(helper.getYear(), helper.getMonth());
+		return DateUtil.getMonth(this.helper.getYear(), this.helper.getMonth());
 	}
 
 	private void addStyleToday(View view) {
@@ -58,20 +59,22 @@ public class MonthView extends BaseView {
 	private void createTabDay(LinearLayout view) {
 
 		boolean isInMois = false;
-		GregorianCalendar cal = new GregorianCalendar();
+		final GregorianCalendar cal = new GregorianCalendar();
 		cal.setFirstDayOfWeek(Calendar.MONDAY);
 
-		LinearLayout tabJour = (LinearLayout)view.findViewById(R.id.llTabJour);
+		final LinearLayout tabJour = (LinearLayout) view
+				.findViewById(R.id.llTabJour);
 		LinearLayout ligne;
 		RelativeLayout layoutDay;
-		for (int i = 0; i < 5; i++){
+		for (int i = 0; i < 5; i++) {
 			ligne = (LinearLayout) tabJour.getChildAt(i);
 
-			//cellule du numério de semaine
+			// cellule du numério de semaine
 
-			cal.set(helper.getYear(), helper.getMonth(), helper.getDayAt(i, 0));
+			cal.set(this.helper.getYear(), this.helper.getMonth(),
+					this.helper.getDayAt(i, 0));
 
-			if (!isInMois){
+			if (!isInMois) {
 				if (i <= 1) {
 					cal.add(Calendar.MONTH, -1);
 				} else {
@@ -79,79 +82,102 @@ public class MonthView extends BaseView {
 				}
 			}
 
-			TextView txtVwSem = (TextView) ligne.getChildAt(0);
+			final TextView txtVwSem = (TextView) ligne.getChildAt(0);
 			txtVwSem.setText(String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)));
-			txtVwSem.setId(IdUtil.getWeekId(cal.get(Calendar.YEAR), cal.get(Calendar.WEEK_OF_YEAR)));
+			txtVwSem.setId(IdUtil.getWeekId(cal.get(Calendar.YEAR),
+					cal.get(Calendar.WEEK_OF_YEAR)));
 
-			//liste des jours
-			for (int j = 1; j < 8; j++){
-				//detecte si le jour est dans le mois en cours
-				if (helper.getDayAt(i, j - 1) == 1){
+			// liste des jours
+			for (int j = 1; j < 8; j++) {
+				// detecte si le jour est dans le mois en cours
+				if (this.helper.getDayAt(i, j - 1) == 1) {
 					isInMois = !isInMois;
 				}
 
 				layoutDay = (RelativeLayout) ligne.getChildAt(j);
-				TextView txtVw = (TextView) layoutDay.findViewById(R.id.activity_calendar_month_day_label);
-				txtVw.setId(IdUtil.getDayId(helper.getYear(), helper.getMonth(), helper.getDayAt(i, j - 1)));
+				TextView txtVw = (TextView) layoutDay
+						.findViewById(R.id.activity_calendar_month_day_label);
+				txtVw.setId(IdUtil.getDayId(this.helper.getYear(),
+						this.helper.getMonth(), this.helper.getDayAt(i, j - 1)));
 				txtVw.setEnabled(isInMois);
-				txtVw.setText(String.valueOf(helper.getDayAt(i, j - 1)));
+				txtVw.setText(String.valueOf(this.helper.getDayAt(i, j - 1)));
 				if (!isInMois) {
 					txtVw.setTextColor(getResources().getColor(R.color.grey));
 				}
 
-				GregorianCalendar today = new GregorianCalendar();
-
+				final GregorianCalendar today = new GregorianCalendar();
 
 				boolean isToday = false;
-				if (today.get(Calendar.YEAR) == helper.getYear() 
-						&& today.get(Calendar.MONTH) == helper.getMonth()
-						&& today.get(Calendar.DAY_OF_MONTH) == helper.getDayAt(i, j - 1)
-						&& isInMois) {
+				if (today.get(Calendar.YEAR) == this.helper.getYear()
+						&& today.get(Calendar.MONTH) == this.helper.getMonth()
+						&& today.get(Calendar.DAY_OF_MONTH) == this.helper
+								.getDayAt(i, j - 1) && isInMois) {
 					addStyleToday(layoutDay);
 					isToday = true;
 				}
 
-				GregorianCalendar calDeb = new GregorianCalendar(helper.getYear(), helper.getMonth(), helper.getDayAt(i, j - 1), 0, 0, 0);
-				GregorianCalendar calFin = new GregorianCalendar(helper.getYear(), helper.getMonth(), helper.getDayAt(i, j - 1), 0, 0, 0);
+				final GregorianCalendar calDeb = new GregorianCalendar(
+						this.helper.getYear(), this.helper.getMonth(),
+						this.helper.getDayAt(i, j - 1), 0, 0, 0);
+				final GregorianCalendar calFin = new GregorianCalendar(
+						this.helper.getYear(), this.helper.getMonth(),
+						this.helper.getDayAt(i, j - 1), 0, 0, 0);
 				calFin.add(Calendar.DAY_OF_MONTH, 1);
 				List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
-				listEventsFinal = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
-				LinearLayout layoutListe = (LinearLayout)layoutDay.findViewById(R.id.activity_calendar_month_day_liste);
+				listEventsFinal = new EventBaseRepository(getContext())
+						.getAllEvents(calDeb, calFin);
+				final LinearLayout layoutListe = (LinearLayout) layoutDay
+						.findViewById(R.id.activity_calendar_month_day_liste);
 				ViewGroup eventLayout;
-				TextView textEvent; 
+				TextView textEvent;
 				int nbEventShowed = 0;
-				for (int nbEvents = 0; nbEvents < listEventsFinal.size() && nbEventShowed <2; nbEvents++) {
-						EventBaseBean eventBaseBean = listEventsFinal.get(nbEvents);
-						eventLayout = (ViewGroup) inflate(getContext(), R.layout.activity_calendar_month_day_event, null);
-						//TODO mettre bonne couleur
-						eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(new CompteRepository(getContext()).getById(eventBaseBean.getCid()).getColor());
-						textEvent = (TextView) eventLayout.findViewById(R.id.activity_calendar_month_day_event_text);
-						textEvent.setText(eventBaseBean.getTitle());
-						if(isToday) {
-							textEvent.setBackgroundColor(Color.parseColor("#FFFFCC"));
-						}
-						layoutListe.addView(eventLayout);
-						nbEventShowed++;
+				for (int nbEvents = 0; nbEvents < listEventsFinal.size()
+						&& nbEventShowed < 2; nbEvents++) {
+					final EventBaseBean eventBaseBean = listEventsFinal
+							.get(nbEvents);
+					eventLayout = (ViewGroup) inflate(getContext(),
+							R.layout.activity_calendar_month_day_event, null);
+					// TODO mettre bonne couleur
+					eventLayout.findViewById(
+							R.id.activity_calendar_month_day_event_frame)
+							.setBackgroundColor(
+									new CompteRepository(getContext()).getById(
+											eventBaseBean.getCid()).getColor());
+					textEvent = (TextView) eventLayout
+							.findViewById(R.id.activity_calendar_month_day_event_text);
+					textEvent.setText(eventBaseBean.getTitle());
+					if (isToday) {
+						textEvent.setBackgroundColor(Color
+								.parseColor("#FFFFCC"));
+					}
+					layoutListe.addView(eventLayout);
+					nbEventShowed++;
 				}
-				if(nbEventShowed < listEventsFinal.size()) {
-					txtVw = (TextView) layoutDay.findViewById(R.id.activity_calendar_month_day_plus);
-					txtVw.setText("+" + (listEventsFinal.size() - nbEventShowed));	
+				if (nbEventShowed < listEventsFinal.size()) {
+					txtVw = (TextView) layoutDay
+							.findViewById(R.id.activity_calendar_month_day_plus);
+					txtVw.setText("+"
+							+ (listEventsFinal.size() - nbEventShowed));
 					txtVw.setTextColor(Color.RED);
 				}
-				
 
-				if(listener != null) {
-					final GregorianCalendar calListener = (GregorianCalendar) calDeb.clone();
+				if (this.listener != null) {
+					final GregorianCalendar calListener = (GregorianCalendar) calDeb
+							.clone();
 					calListener.set(Calendar.HOUR_OF_DAY, 8);
 					calListener.set(Calendar.HOUR_OF_DAY, 10);
 					layoutDay.setOnClickListener(new OnClickListener() {
+						@Override
 						public void onClick(View v) {
-							listener.onDayClickListener(calListener);
+							MonthView.this.listener
+									.onDayClickListener(calListener);
 						}
 					});
 					layoutDay.setOnLongClickListener(new OnLongClickListener() {
+						@Override
 						public boolean onLongClick(View v) {
-							listener.onDayLongClickListener(calListener);
+							MonthView.this.listener
+									.onDayLongClickListener(calListener);
 							return false;
 						}
 					});
@@ -162,6 +188,7 @@ public class MonthView extends BaseView {
 
 	public interface OnDayClickListener {
 		void onDayClickListener(GregorianCalendar day);
+
 		void onDayLongClickListener(GregorianCalendar day);
 	}
 
