@@ -20,8 +20,8 @@ public class ColumnEvent extends RelativeLayout {
 	public ColumnEvent(Context context) {
 		super(context);
 		final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+				android.view.ViewGroup.LayoutParams.FILL_PARENT);
 		params.weight = 1;
 		setLayoutParams(params);
 		setGravity(Gravity.CENTER_HORIZONTAL);

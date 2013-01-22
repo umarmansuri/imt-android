@@ -150,7 +150,6 @@ public class MonthView extends BaseView {
 				if (nbEventShowed < listEventsFinal.size()) {
 					txtVw = (TextView) layoutDay.findViewById(R.id.activity_calendar_month_day_plus);
 					txtVw.setText("+" + (listEventsFinal.size() - nbEventShowed));
-					txtVw.setTextColor(Color.RED);
 				}
 
 				if (this.listener != null) {

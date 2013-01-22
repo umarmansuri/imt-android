@@ -41,10 +41,8 @@ public abstract class BaseActivity extends MyTimeActivity {
 			case R.id.menu_save:
 				launchSave();
 				return;
-			case android.R.id.home:
-				finish();
-				return;
 			default:
+				finish();
 				return;
 			}
 		}
