@@ -9,49 +9,54 @@
         android:id="@+id/splash_panel1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" >
+        android:layout_above="@+id/splash_panel2"
+        android:layout_centerInParent="true"
+        android:paddingBottom="30dp" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_above="@+id/splash_login"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/splash_horloge_background" />
 
         <ImageView
             android:id="@+id/splash_foreground"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_above="@+id/splash_login"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/splash_horloge_foreground" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignBottom="@+id/splash_panel1"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/splash_horloge_background" />
 
         <EditText
             android:id="@+id/splash_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/splash_foreground"
-            android:maxLines="1"
-            android:inputType="textNoSuggestions"
+            android:layout_above="@+id/splash_mdp"
             android:layout_margin="6dp"
-            android:hint="Pseudo" />
+            android:hint="Pseudo"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1" />
 
         <EditText
             android:id="@+id/splash_mdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/splash_login"
-            android:maxLines="1"
-            android:inputType="textPassword"
+            android:layout_above="@+id/splash_btnConnexion"
             android:layout_margin="6dp"
-            android:hint="Mot de Passe" />
+            android:hint="Mot de Passe"
+            android:inputType="textPassword"
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/splash_btnConnexion"
             style="@style/Btn.Green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/splash_mdp"
             android:layout_margin="6dp"
             android:text="@string/connexion" />
     </RelativeLayout>

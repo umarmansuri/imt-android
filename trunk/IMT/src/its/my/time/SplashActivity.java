@@ -65,6 +65,8 @@ public class SplashActivity extends Activity {
 		this.btnMdpLost = (TextView) findViewById(R.id.splash_mdpLost);
 		this.btnMdpLost.setOnClickListener(this.clickListener);
 
+
+		startClockAnimation();
 		//temp();
 		/*
 		 * if(PreferencesUtil.getCurrentUid(SplashActivity.this) < 0)
@@ -150,7 +152,6 @@ public class SplashActivity extends Activity {
 			user = connexion.getConnexion(this.pseudo.getText().toString(),
 					this.mdp.getText().toString());
 			if (user != null) {
-				startClockAnimation();
 				new LoadMainActivity().execute();
 			} else {
 				Toast.makeText(this, "FAIL PELO !", Toast.LENGTH_LONG).show();
@@ -159,10 +160,10 @@ public class SplashActivity extends Activity {
 	}
 
 	public void startClockAnimation() {
-		final Animation anim = new RotateAnimation(-20f, 0f,
+		final Animation anim = new RotateAnimation(-35f, 0f,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
-		anim.setDuration(3000);
+		anim.setDuration(4000);
 		anim.setFillAfter(true);
 		findViewById(R.id.splash_foreground).setAnimation(anim);
 		findViewById(R.id.splash_foreground).getAnimation().start();
