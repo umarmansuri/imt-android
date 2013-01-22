@@ -74,8 +74,9 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	public static Calendar curentCal;
 	private static boolean isWaitingEnd;
 
+	
 	@Override
-	protected void onResume() {
+	protected void onStart() {
 		isWaitingEnd = false;
 		setContentView(R.layout.activity_calendar);
 
@@ -109,7 +110,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		this.mTextTitle.setGravity(Gravity.CENTER);
 		this.mTextTitle.setTextSize(20);
 		this.mTextTitle.setLayoutParams(new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		this.mTextTitle.setTextColor(getResources().getColor(R.color.grey));
 		mActionBar.setCustomView(this.mTextTitle);
 	}

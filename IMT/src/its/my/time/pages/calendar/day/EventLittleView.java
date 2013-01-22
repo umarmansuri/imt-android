@@ -54,7 +54,7 @@ public class EventLittleView extends FrameLayout {
 		this.height = (int) (DateUtil.getNbHeure(ev.gethDeb(), ev.gethFin(),
 				day) * this.ligneHeight);
 		final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT, this.height);
+				android.view.ViewGroup.LayoutParams.FILL_PARENT, this.height);
 		if (DateUtil.isInDay(ev.gethDeb(), day)) {
 			params.topMargin = ((int) (ev.gethDeb().get(Calendar.HOUR_OF_DAY)
 					* this.ligneHeight + (((float) ev.gethDeb().get(

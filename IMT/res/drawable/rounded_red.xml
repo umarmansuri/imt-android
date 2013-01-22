@@ -5,11 +5,8 @@
         <shape android:shape="rectangle" >
             <corners android:radius="5dip" />
 
-            <solid android:color="@color/white" />
+            <solid android:color="@color/dark_red" />
 
-            <stroke
-                android:width="2dip"
-                android:color="@color/black" />
         </shape>
     </item>
 </layer-list>
