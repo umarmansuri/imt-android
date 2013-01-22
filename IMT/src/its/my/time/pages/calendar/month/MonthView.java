@@ -111,7 +111,7 @@ public class MonthView extends BaseView {
 				if (today.get(Calendar.YEAR) == this.helper.getYear()
 						&& today.get(Calendar.MONTH) == this.helper.getMonth()
 						&& today.get(Calendar.DAY_OF_MONTH) == this.helper
-								.getDayAt(i, j - 1) && isInMois) {
+						.getDayAt(i, j - 1) && isInMois) {
 					addStyleToday(layoutDay);
 					isToday = true;
 				}
@@ -125,7 +125,7 @@ public class MonthView extends BaseView {
 				calFin.add(Calendar.DAY_OF_MONTH, 1);
 				List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
 				listEventsFinal = new EventBaseRepository(getContext())
-						.getAllEvents(calDeb, calFin);
+				.getAllEvents(calDeb, calFin);
 				final LinearLayout layoutListe = (LinearLayout) layoutDay
 						.findViewById(R.id.activity_calendar_month_day_liste);
 				ViewGroup eventLayout;
@@ -138,26 +138,18 @@ public class MonthView extends BaseView {
 					eventLayout = (ViewGroup) inflate(getContext(),
 							R.layout.activity_calendar_month_day_event, null);
 					// TODO mettre bonne couleur
-					eventLayout.findViewById(
-							R.id.activity_calendar_month_day_event_frame)
-							.setBackgroundColor(
-									new CompteRepository(getContext()).getById(
-											eventBaseBean.getCid()).getColor());
-					textEvent = (TextView) eventLayout
-							.findViewById(R.id.activity_calendar_month_day_event_text);
+					eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(new CompteRepository(getContext()).getById(eventBaseBean.getCid()).getColor());
+					textEvent = (TextView) eventLayout.findViewById(R.id.activity_calendar_month_day_event_text);
 					textEvent.setText(eventBaseBean.getTitle());
 					if (isToday) {
-						textEvent.setBackgroundColor(Color
-								.parseColor("#FFFFCC"));
+						textEvent.setBackgroundColor(Color.parseColor("#FFFFCC"));
 					}
 					layoutListe.addView(eventLayout);
 					nbEventShowed++;
 				}
 				if (nbEventShowed < listEventsFinal.size()) {
-					txtVw = (TextView) layoutDay
-							.findViewById(R.id.activity_calendar_month_day_plus);
-					txtVw.setText("+"
-							+ (listEventsFinal.size() - nbEventShowed));
+					txtVw = (TextView) layoutDay.findViewById(R.id.activity_calendar_month_day_plus);
+					txtVw.setText("+" + (listEventsFinal.size() - nbEventShowed));
 					txtVw.setTextColor(Color.RED);
 				}
 
@@ -169,15 +161,13 @@ public class MonthView extends BaseView {
 					layoutDay.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							MonthView.this.listener
-									.onDayClickListener(calListener);
+							MonthView.this.listener.onDayClickListener(calListener);
 						}
 					});
 					layoutDay.setOnLongClickListener(new OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View v) {
-							MonthView.this.listener
-									.onDayLongClickListener(calListener);
+							MonthView.this.listener.onDayLongClickListener(calListener);
 							return false;
 						}
 					});

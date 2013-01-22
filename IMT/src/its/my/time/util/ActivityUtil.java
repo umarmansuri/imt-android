@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 
 public class ActivityUtil {
 
@@ -52,6 +53,7 @@ public class ActivityUtil {
 	public static void startComptesActivity(Context context) {
 		final Intent intent = new Intent(context, ComptesActivity.class);
 		context.startActivity(intent);
+		Log.d("ActivityUtil","Compte activity started!");
 	}
 
 	public static void startCompteActivity(Context context, long id) {

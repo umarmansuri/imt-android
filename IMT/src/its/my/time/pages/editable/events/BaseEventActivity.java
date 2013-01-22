@@ -135,7 +135,6 @@ public abstract class BaseEventActivity extends BaseActivity {
 	}
 
 	public EventBaseBean getEvent() {
-		Log.d("Text chgt:"," parentActivity Event = " + event);
 		return event;
 	}
 	public void setEvent(EventBaseBean event) {
