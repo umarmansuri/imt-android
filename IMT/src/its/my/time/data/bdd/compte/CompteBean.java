@@ -5,7 +5,7 @@ public class CompteBean {
 	private int id;
 	private String title;
 	private int color;
-	private int type;
+	private int type = -1;
 	private boolean isShowed;
 	private long uid;
 

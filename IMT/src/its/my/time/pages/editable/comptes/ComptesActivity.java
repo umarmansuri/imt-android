@@ -6,6 +6,7 @@ import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.MenuActivity;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.util.Types;
 import its.my.time.view.menu.MenuGroupe;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class ComptesActivity extends MenuActivity {
 	@Override
 	protected void onResume() {
 		this.comptes = new CompteRepository(this)
-				.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
+		.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
 		this.adapter = new ComptesAdapter(this.comptes);
 		this.mMainListe.setAdapter(this.adapter);
 		this.mMainListe.setOnItemClickListener(new OnItemClickListener() {
@@ -100,14 +101,10 @@ public class ComptesActivity extends MenuActivity {
 
 	@Override
 	protected ArrayList<MenuGroupe> onMainMenuCreated(
-			ArrayList<MenuGroupe> menuGroupes) {
-		menuGroupes.add(new MenuGroupe("Ajouter", MooncakeIcone.icon_plus,
-				false));
-		menuGroupes.add(new MenuGroupe("Supprimer",
-				MooncakeIcone.icon_resize_vertical, false));
-		menuGroupes.add(new MenuGroupe("Réglages", MooncakeIcone.icon_settings,
-				false));
-		return menuGroupes;
+			ArrayList<MenuGroupe> menuGroupes) {menuGroupes.add(new MenuGroupe("Ajouter", MooncakeIcone.icon_plus,false));
+			menuGroupes.add(new MenuGroupe("Supprimer",MooncakeIcone.icon_minus_sign, false));
+			menuGroupes.add(new MenuGroupe("Réglages", MooncakeIcone.icon_settings,false));
+			return menuGroupes;
 	}
 
 	@Override
@@ -127,22 +124,21 @@ public class ComptesActivity extends MenuActivity {
 				+ this.comptes.get(which).getTitle() + "'.\n\nContinuer?");
 		builder.setPositiveButton("Supprimer",
 				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int index) {
-						new CompteRepository(ComptesActivity.this)
-								.deleteCompte(ComptesActivity.this.comptes.get(
-										which).getId());
-						onResume();
-					}
-				});
+			@Override
+			public void onClick(DialogInterface dialog, int index) {
+				new CompteRepository(ComptesActivity.this).deleteCompte(ComptesActivity.this.comptes.get(which).getId());
+				comptes.remove(which);
+				mMainListe.setAdapter(adapter);
+			}
+		});
 		builder.setNegativeButton("Annuler",
 				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						onResume();
-					}
-				});
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				onResume();
+			}
+		});
 		builder.show();
 	}
 
@@ -184,19 +180,17 @@ public class ComptesActivity extends MenuActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			final View v = getLayoutInflater().inflate(
-					R.layout.activity_comptes_compte_little, null);
-			((TextView) v.findViewById(R.id.activity_comptes_compte_title))
-					.setText(getItem(position).getTitle());
+			final View v = getLayoutInflater().inflate(R.layout.activity_comptes_compte_little, null);
+			((TextView) v.findViewById(R.id.activity_comptes_compte_title)).setText(getItem(position).getTitle());
 
 			final GradientDrawable dr = new GradientDrawable();
 			dr.setColor(getItem(position).getColor());
 			v.findViewById(R.id.activity_comptes_compte_color)
-					.setBackgroundDrawable(dr);
+			.setBackgroundDrawable(dr);
 			final MooncakeIcone icone = (MooncakeIcone) v
 					.findViewById(R.id.delete);
 			icone.setIconeRes(MooncakeIcone.icon_minus_sign);
-			if (this.removable) {
+			if (this.removable && comptes.get(position).getType() != Types.Comptes.MYTIME.id) {
 				icone.setVisibility(View.VISIBLE);
 				icone.setEnabled(true);
 				icone.setOnClickListener(this.onRemoveClickListener);

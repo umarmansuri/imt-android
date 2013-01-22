@@ -8,7 +8,7 @@ import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.util.ActivityUtil;
-import its.my.time.util.EventTypes;
+import its.my.time.util.Types;
 import its.my.time.util.PreferencesUtil;
 
 import java.util.Calendar;
@@ -68,7 +68,7 @@ public class SplashActivity extends Activity {
 		this.pseudo = (EditText) findViewById(R.id.splash_login);
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
-		//temp();
+		temp();
 		/*
 		 * if(PreferencesUtil.getCurrentUid(SplashActivity.this) < 0)
 		 * ActivityUtil.startProfilActivity(SplashActivity.this); else {
@@ -90,53 +90,58 @@ public class SplashActivity extends Activity {
 		long resUser = userRepo.insertUtilisateur(user);
 		PreferencesUtil.setCurrentUid(SplashActivity.this, resUser);
 
-		CompteRepository repoCompte = new
-				CompteRepository(SplashActivity.this); CompteBean compte = new
-				CompteBean(); compte.setColor(Color.RED); compte.setShowed(true);
-				compte.setTitle("Titre compte 1"); compte.setType(0);
-				compte.setUid(resUser); long resCompte1 =  repoCompte.insertCompte(compte);
+		CompteRepository repoCompte = new CompteRepository(SplashActivity.this); 
+		CompteBean compte = new CompteBean(); 
+		compte.setColor(Color.RED); 
+		compte.setShowed(true);
+		compte.setTitle(Types.Comptes.MYTIME.label); 
+		compte.setType(Types.Comptes.MYTIME.id);
+		compte.setUid(resUser); 
+		long resCompte1 =  repoCompte.insertCompte(compte);
 
-				compte = new CompteBean(); compte.setColor(Color.BLUE);
-				compte.setShowed(true); compte.setTitle("Compte 2");
-				compte.setType(0); compte.setUid(resUser); long resCompte2 =
-						repoCompte.insertCompte(compte);
-
-
-
-				EventBaseRepository adapter = new
-						EventBaseRepository(SplashActivity.this); EventBaseBean bean;
-						Calendar calDeb2; Calendar calFin2; bean = new EventBaseBean();
-						bean.setCid(resCompte1); bean.setTitle("Voicin un évènement");
-						calDeb2 = Calendar.getInstance(); bean.sethDeb(calDeb2); calFin2
-						= Calendar.getInstance(); calFin2.add(Calendar.HOUR, 2);
-						bean.sethFin(calFin2);
-						bean.setTypeId(EventTypes.TYPE_MEETING);
-						bean.setDetailsId(0); 
-						long res = adapter.insertEvent(bean);
-
-						bean.setTitle("Deuxième"); bean.setId(1); res =
-								adapter.insertEvent(bean);
-
-						bean.setTitle("Et un petit dernier..."); bean.setId(2); res =
-								adapter.insertEvent(bean);
+		compte = new CompteBean(); compte.setColor(Color.BLUE);
+		compte.setShowed(true); 
+		compte.setTitle("Compte 2");
+		compte.setType(2); 
+		compte.setUid(resUser); 
+		long resCompte2 = repoCompte.insertCompte(compte);
 
 
 
-						bean.setCid(resCompte2); bean.setId(3);
-						bean.setTitle("Voicin un évènement"); calDeb2 =
-								Calendar.getInstance(); calDeb2.add(Calendar.DAY_OF_MONTH, -10);
-								bean.sethDeb(calDeb2); calFin2 = (Calendar) calDeb2.clone();
-								calFin2.add(Calendar.HOUR, 2); bean.sethFin(calFin2);
-								bean.setTypeId(EventTypes.TYPE_CALL);
-								bean.setDetailsId(0); res = adapter.insertEvent(bean);
+		EventBaseRepository adapter = new
+				EventBaseRepository(SplashActivity.this); EventBaseBean bean;
+				Calendar calDeb2; Calendar calFin2; bean = new EventBaseBean();
+				bean.setCid(resCompte1); bean.setTitle("Voicin un évènement");
+				calDeb2 = Calendar.getInstance(); bean.sethDeb(calDeb2); calFin2
+				= Calendar.getInstance(); calFin2.add(Calendar.HOUR, 2);
+				bean.sethFin(calFin2);
+				bean.setTypeId(Types.Event.MEETING);
+				bean.setDetailsId(0); 
+				long res = adapter.insertEvent(bean);
 
-								bean.setTitle("Deuxième"); bean.setId(4); res =
-										adapter.insertEvent(bean); bean.setTitle("Troisieme...");
-										bean.setId(5); res = adapter.insertEvent(bean);
-										bean.setTitle("Un autre"); bean.setId(6); res =
-												adapter.insertEvent(bean);
-										bean.setTitle("Et le dernier!!!!!!!!!!"); bean.setId(7); res =
-												adapter.insertEvent(bean);
+				bean.setTitle("Deuxième"); bean.setId(1); res =
+						adapter.insertEvent(bean);
+
+				bean.setTitle("Et un petit dernier..."); bean.setId(2); res =
+						adapter.insertEvent(bean);
+
+
+
+				bean.setCid(resCompte2); bean.setId(3);
+				bean.setTitle("Voicin un évènement"); calDeb2 =
+						Calendar.getInstance(); calDeb2.add(Calendar.DAY_OF_MONTH, -10);
+						bean.sethDeb(calDeb2); calFin2 = (Calendar) calDeb2.clone();
+						calFin2.add(Calendar.HOUR, 2); bean.sethFin(calFin2);
+						bean.setTypeId(Types.Event.CALL);
+						bean.setDetailsId(0); res = adapter.insertEvent(bean);
+
+						bean.setTitle("Deuxième"); bean.setId(4); res =
+								adapter.insertEvent(bean); bean.setTitle("Troisieme...");
+								bean.setId(5); res = adapter.insertEvent(bean);
+								bean.setTitle("Un autre"); bean.setId(6); res =
+										adapter.insertEvent(bean);
+								bean.setTitle("Et le dernier!!!!!!!!!!"); bean.setId(7); res =
+										adapter.insertEvent(bean);
 	}
 
 	private void connexion() {

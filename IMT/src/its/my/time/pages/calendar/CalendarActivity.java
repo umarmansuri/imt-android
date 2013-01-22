@@ -11,7 +11,6 @@ import its.my.time.pages.calendar.month.MonthPagerAdapter;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.ControledViewPager;
-import its.my.time.view.SeparatedListAdapter;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
 
@@ -41,7 +40,7 @@ import com.fonts.mooncake.MooncakeIcone;
 public class CalendarActivity extends MenuActivity implements
 		OnPageChangeListener {
 
-	public static final long ANIM_DURATION = 500;
+	public static final long ANIM_DURATION = 200;
 
 	private static final int ID_PAGER = 888889;
 	private static final int DURATION_WAITING_END = 300;
