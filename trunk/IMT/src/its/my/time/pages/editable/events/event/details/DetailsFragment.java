@@ -103,10 +103,8 @@ public class DetailsFragment extends BasePluginFragment {
 				.findViewById(R.id.activity_event_details_switcher_allDay);
 
 		if (state == null) {
-			Log.d("DetailsFragment", "Launch from bean");
 			initialiseValuesFromEvent();
 		} else {
-			Log.d("DetailsFragment", "Launch from state");
 			initialiseValueFromInstance();
 		}
 		initialiseActions();

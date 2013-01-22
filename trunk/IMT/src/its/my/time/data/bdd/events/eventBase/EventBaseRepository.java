@@ -184,12 +184,10 @@ public class EventBaseRepository extends DatabaseHandler {
 		return res;
 	}
 
-	public List<EventBaseBean> getAllNextFromNow() {
+	public List<EventBaseBean> getAllNextFromNow(long uid) {
 		open();
 		final CompteRepository compteRepo = new CompteRepository(this.context);
-		final List<CompteBean> comptes = compteRepo
-				.getVisibleCompteByUid(PreferencesUtil
-						.getCurrentUid(this.context));
+		final List<CompteBean> comptes = compteRepo.getVisibleCompteByUid(uid);
 		final ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
 		for (final CompteBean compteBean : comptes) {
 			final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,

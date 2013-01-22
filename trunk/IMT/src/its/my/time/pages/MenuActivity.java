@@ -109,9 +109,7 @@ OnClickListener {
 	private ArrayList<MenuGroupe> menuGroupes;
 	private final OnChildClickListener onMenuChildClickListener = new OnChildClickListener() {
 		@Override
-		public boolean onChildClick(final ExpandableListView parent,
-				final View v, final int groupPosition, final int childPosition,
-				final long id) {
+		public boolean onChildClick(final ExpandableListView parent,final View v, final int groupPosition, final int childPosition,final long id) {
 			if (!MenuActivity.this.menuGroupes.get(groupPosition).getObjets()
 					.get(childPosition).isSwitcher()) {
 				MenuActivity.this.hasSwitcherValueChanged = false;
@@ -119,18 +117,15 @@ OnClickListener {
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						if (groupPosition < MenuActivity.this.menuGroupes
-								.size() - 2) {
-							onMenuChildClick(parent, v, groupPosition,
-									childPosition, id);
+						if (groupPosition < MenuActivity.this.menuGroupes.size() - 2) {
+							onMenuChildClick(parent, v, groupPosition,childPosition, id);
 						} else {
 							// TODO si un menu 'constant' contient de enfants
 						}
 					}
 				}, (long) (ANIMATION_DURATION * 1.5));
 			} else {
-				((MenuChildViewHolder) v.getTag()).childSwitcher
-				.toggleState(true);
+				((MenuChildViewHolder) v.getTag()).childSwitcher.toggleState(true);
 			}
 			return false;
 		}

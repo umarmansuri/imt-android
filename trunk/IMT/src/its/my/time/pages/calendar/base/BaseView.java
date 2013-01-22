@@ -44,6 +44,7 @@ public abstract class BaseView extends FrameLayout {
 		protected View doInBackground(Void... params) {
 			final View view = createView();
 			view.setVisibility(INVISIBLE);
+			view.layout(0, 0, 0, 0);
 			return view;
 		}
 

@@ -11,6 +11,7 @@ import its.my.time.pages.calendar.month.MonthPagerAdapter;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.ControledViewPager;
+import its.my.time.view.SeparatedListAdapter;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
 
@@ -140,6 +141,7 @@ public class CalendarActivity extends MenuActivity implements
 		donnees = new ArrayList<MenuObjet>();
 		final CompteRepository compteRepo = new CompteRepository(this);
 		this.comptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
+		INDEX_MENU_COMPTE_GERER = 0;
 		for (final CompteBean compteBean : this.comptes) {
 			donnees.add(new MenuObjet(menuGroupe, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), compteBean.getColor()));
 			INDEX_MENU_COMPTE_GERER++;
@@ -381,8 +383,7 @@ public class CalendarActivity extends MenuActivity implements
 				break;
 			case INDEX_MENU_AGENDA_LISTE:
 				final ListView mListView = new ListView(getApplicationContext());
-				mListView
-						.setAdapter(new ListEventAdapter(CalendarActivity.this));
+				mListView.setAdapter(new ListEventAdapter(CalendarActivity.this));
 				CalendarActivity.this.indexCurrentPager = INDEX_MENU_AGENDA_LISTE;
 				changeTitle("Liste");
 				return mListView;

@@ -16,6 +16,8 @@ public class DateUtil {
 	public static final int DATETIMESELECTOR_ID = 5;
 	public static final int DEFAULTDATESELECTOR_ID = 0;
 	public static final int FIRST_DAY = 2;
+	public static String FORMAT_DATE_ISO = "yyyy-MM-dd HH:mm:ss";
+
 	public static final int MONTHYEARDATESELECTOR_ID = 3;
 
 	public static final int TIMESELECTOR_ID = 4;
@@ -23,6 +25,21 @@ public class DateUtil {
 	public static Calendar addMonth(Calendar date, int numMonth) {
 		date.add(Calendar.MONTH, numMonth);
 		return date;
+	}
+
+	public static String getDate(Calendar cal) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormat.format(cal.getTime());
+	}
+
+	public static GregorianCalendar getDateFromISO(String strDate) {
+		final DateFormat f = new SimpleDateFormat(FORMAT_DATE_ISO);
+		final GregorianCalendar res = new GregorianCalendar();
+		try {
+			res.setTime(f.parse(strDate));
+		} catch (final ParseException e) {
+		}
+		return res;
 	}
 
 	public static String getDay(Calendar cal) {
@@ -58,6 +75,35 @@ public class DateUtil {
 	 */
 	public static String getDayHour(Calendar cal) {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("d.M.y H:m");
+		return dateFormat.format(cal.getTime());
+	}
+
+	public static String getDayHourFrench(Calendar cal) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		return dateFormat.format(cal.getTime());
+	}
+
+	public static CharSequence getHourLabelLong(Calendar cal) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("à HH'h'mm");
+		return dateFormat.format(cal.getTime());
+	}
+	
+	public static CharSequence getHourLabel(Calendar cal) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		return dateFormat.format(cal.getTime());
+	}
+
+	public static CharSequence getHourLabel(Calendar start, Calendar end) {
+		final StringBuilder hourLabel = new StringBuilder();
+		hourLabel.append(DateUtil.getHourLabel(start));
+		if (end != null) {
+			hourLabel.append(" - " + DateUtil.getHourLabel(end));
+		}
+		return hourLabel.toString();
+	}
+
+	public static CharSequence getLittleDate(Calendar cal) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
 		return dateFormat.format(cal.getTime());
 	}
 
@@ -111,84 +157,6 @@ public class DateUtil {
 		return new String(chars);
 	}
 
-	public static String getTime(Calendar cal) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-		return dateFormat.format(cal.getTime());
-	}
-
-	public static String getDate(Calendar cal) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		return dateFormat.format(cal.getTime());
-	}
-
-	public static CharSequence getLittleDate(GregorianCalendar cal) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
-		return dateFormat.format(cal.getTime());
-	}
-
-	public static CharSequence getHourLabel(Calendar cal) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-		return dateFormat.format(cal.getTime());
-	}
-
-	public static String FORMAT_DATE_ISO = "yyyy-MM-dd HH:mm:ss";
-
-	public static String getTimeInIso(Calendar cal, String format, TimeZone tz) {
-		if (format == null) {
-			format = FORMAT_DATE_ISO;
-		}
-		if (tz == null) {
-			tz = TimeZone.getDefault();
-		}
-		final DateFormat f = new SimpleDateFormat(format);
-		f.setTimeZone(tz);
-		return f.format(cal.getTime());
-	}
-
-	public static String getTimeInIso(Calendar cal) {
-		if (cal == null) {
-			return "";
-		} else {
-			return getTimeInIso(cal, FORMAT_DATE_ISO, TimeZone.getDefault());
-		}
-	}
-
-	public static GregorianCalendar getDateFromISO(String strDate) {
-		final DateFormat f = new SimpleDateFormat(FORMAT_DATE_ISO);
-		final GregorianCalendar res = new GregorianCalendar();
-		try {
-			res.setTime(f.parse(strDate));
-		} catch (final ParseException e) {
-		}
-		return res;
-	}
-
-	public static String getDayHourFrench(Calendar cal) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		return dateFormat.format(cal.getTime());
-	}
-
-	/**
-	 * Regarde si l'evenement est dans le jour
-	 * 
-	 * @param event
-	 *            l'evenement en question
-	 * @param calDay
-	 *            Le jour
-	 * @return true si l'evenement est dans le jour, sinon false
-	 */
-	public static boolean isInDay(EventBaseBean event, Calendar calDay) {
-		final GregorianCalendar calDayDeb = new GregorianCalendar(
-				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
-				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-		final GregorianCalendar calDayFin = new GregorianCalendar(
-				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
-				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-		calDayFin.add(Calendar.DAY_OF_MONTH, 1);
-		return (event.gethDeb().before(calDayFin) && event.gethFin().after(
-				calDayDeb));
-	}
-
 	public static float getNbHeure(Calendar hDeb, Calendar hFin, Calendar day) {
 		long millisecondsDeb;
 		long millisecondsFin;
@@ -219,6 +187,31 @@ public class DateUtil {
 		return (float) diff / (60 * 60 * 1000);
 	}
 
+	public static String getTime(Calendar cal) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		return dateFormat.format(cal.getTime());
+	}
+
+	public static String getTimeInIso(Calendar cal) {
+		if (cal == null) {
+			return "";
+		} else {
+			return getTimeInIso(cal, FORMAT_DATE_ISO, TimeZone.getDefault());
+		}
+	}
+
+	public static String getTimeInIso(Calendar cal, String format, TimeZone tz) {
+		if (format == null) {
+			format = FORMAT_DATE_ISO;
+		}
+		if (tz == null) {
+			tz = TimeZone.getDefault();
+		}
+		final DateFormat f = new SimpleDateFormat(format);
+		f.setTimeZone(tz);
+		return f.format(cal.getTime());
+	}
+
 	public static boolean isInDay(Calendar gethDeb, Calendar cal) {
 		final GregorianCalendar calBef = new GregorianCalendar(
 				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
@@ -230,12 +223,24 @@ public class DateUtil {
 		return calBef.before(gethDeb) && calAft.after(gethDeb);
 	}
 
-	public static CharSequence getHourLabel(Calendar start, Calendar end) {
-		final StringBuilder hourLabel = new StringBuilder();
-		hourLabel.append(DateUtil.getHourLabel(start));
-		if (end != null) {
-			hourLabel.append(" - " + DateUtil.getHourLabel(end));
-		}
-		return hourLabel.toString();
+	/**
+	 * Regarde si l'evenement est dans le jour
+	 * 
+	 * @param event
+	 *            l'evenement en question
+	 * @param calDay
+	 *            Le jour
+	 * @return true si l'evenement est dans le jour, sinon false
+	 */
+	public static boolean isInDay(EventBaseBean event, Calendar calDay) {
+		final GregorianCalendar calDayDeb = new GregorianCalendar(
+				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
+				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+		final GregorianCalendar calDayFin = new GregorianCalendar(
+				calDay.get(Calendar.YEAR), calDay.get(Calendar.MONTH),
+				calDay.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+		calDayFin.add(Calendar.DAY_OF_MONTH, 1);
+		return (event.gethDeb().before(calDayFin) && event.gethFin().after(
+				calDayDeb));
 	}
 }
