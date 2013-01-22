@@ -3,7 +3,7 @@ package its.my.time.pages.editable.comptes;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.pages.MenuActivity;
+import its.my.time.pages.MyTimeActivity;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
@@ -25,15 +25,19 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fonts.mooncake.MooncakeIcone;
 import com.mobeta.android.dslv.DragSortListView;
 
-public class ComptesActivity extends MenuActivity {
+public class ComptesActivity extends MyTimeActivity {
 
 	private DragSortListView mMainListe;
 	private List<CompteBean> comptes;
 	private ComptesAdapter adapter;
+	private MenuGroupe menuAjouter;
+	private MenuGroupe menuSupprimer;
+	private MenuGroupe menuReglages;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,55 +70,35 @@ public class ComptesActivity extends MenuActivity {
 
 	}
 
+
 	@Override
-	protected void onMenuGroupClick(ExpandableListView parent, View v,
-			int groupPosition, long id) {
-		switch (groupPosition) {
-		case 0:
-			ActivityUtil.startCompteActivity(ComptesActivity.this, -1);
-			break;
-		case 1:
+	protected ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes) {
+		menuAjouter = new MenuGroupe("Ajouter", MooncakeIcone.icon_plus,false);
+		menuGroupes.add(menuAjouter);
+		menuSupprimer = new MenuGroupe("Supprimer",MooncakeIcone.icon_minus_sign, false);
+		menuGroupes.add(menuSupprimer);
+		menuReglages = new MenuGroupe("Réglages", MooncakeIcone.icon_settings,false);
+		menuGroupes.add(menuReglages);
+		return menuGroupes;
+	}
+
+	@Override
+	protected void onMenuGroupClick(ExpandableListView parent,MenuGroupe group, long id) {
+		if(group == menuAjouter){
+			ActivityUtil.startCompteActivity(this, -1);
+		} else if(group == menuSupprimer){
 			this.adapter.setDraggable(true);
 			this.mMainListe.setAdapter(this.adapter);
-			break;
-		case 2:
-
-			break;
+		} else if(group == menuReglages){
+			Toast.makeText(this, "Régles...", Toast.LENGTH_SHORT).show();
 		}
-	}
-
-	@Override
-	protected void onMenuChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
-
-	}
-
-	@Override
-	protected void onMenuGroupSwitch(View v, int positionGroup,
-			boolean isChecked) {
-	}
-
-	@Override
-	protected void onMenuItemSwitch(View v, int positionGroup,
-			int positionObjet, boolean isChecked) {
-	}
-
-	@Override
-	protected ArrayList<MenuGroupe> onMainMenuCreated(
-			ArrayList<MenuGroupe> menuGroupes) {menuGroupes.add(new MenuGroupe("Ajouter", MooncakeIcone.icon_plus,false));
-			menuGroupes.add(new MenuGroupe("Supprimer",MooncakeIcone.icon_minus_sign, false));
-			menuGroupes.add(new MenuGroupe("Réglages", MooncakeIcone.icon_settings,false));
-			return menuGroupes;
+		super.onMenuGroupClick(parent, group, id);
 	}
 
 	@Override
 	protected boolean onBackButtonPressed() {
 		finish();
 		return true;
-	}
-
-	@Override
-	public void reload() {
 	}
 
 	public void remove(final int which) {
@@ -178,6 +162,7 @@ public class ComptesActivity extends MenuActivity {
 			return 0;
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View v = getLayoutInflater().inflate(R.layout.activity_comptes_compte_little, null);
@@ -185,10 +170,8 @@ public class ComptesActivity extends MenuActivity {
 
 			final GradientDrawable dr = new GradientDrawable();
 			dr.setColor(getItem(position).getColor());
-			v.findViewById(R.id.activity_comptes_compte_color)
-			.setBackgroundDrawable(dr);
-			final MooncakeIcone icone = (MooncakeIcone) v
-					.findViewById(R.id.delete);
+			v.findViewById(R.id.activity_comptes_compte_color).setBackgroundDrawable(dr);
+			final MooncakeIcone icone = (MooncakeIcone) v.findViewById(R.id.delete);
 			icone.setIconeRes(MooncakeIcone.icon_minus_sign);
 			if (this.removable && comptes.get(position).getType() != Types.Comptes.MYTIME.id) {
 				icone.setVisibility(View.VISIBLE);

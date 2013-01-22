@@ -1,7 +1,7 @@
 package its.my.time.pages.editable;
 
 import its.my.time.R;
-import its.my.time.pages.MenuActivity;
+import its.my.time.pages.MyTimeActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import com.actionbarsherlock.view.Menu;
 import com.fonts.mooncake.MooncakeIcone;
 
-public abstract class BaseActivity extends MenuActivity {
+public abstract class BaseActivity extends MyTimeActivity {
 
 	private Menu menu;
 

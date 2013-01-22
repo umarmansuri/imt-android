@@ -32,7 +32,7 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public Object getChild(int gPosition, int cPosition) {
+	public MenuObjet getChild(int gPosition, int cPosition) {
 		return this.menuGroupes.get(gPosition).getObjets().get(cPosition);
 	}
 
@@ -99,7 +99,7 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public Object getGroup(int gPosition) {
+	public MenuGroupe getGroup(int gPosition) {
 		return this.menuGroupes.get(gPosition);
 	}
 
@@ -192,8 +192,6 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 
 	public interface OnItemSwitchedListener {
 		public void onGroupSwitched(View v, int positionGroup, boolean isChecked);
-
-		public void onObjetSwitched(View v, int positionGroup,
-				int positionObjet, boolean isChecked);
+		public void onObjetSwitched(View v, int positionGroup,int positionObjet, boolean isChecked);
 	}
 }

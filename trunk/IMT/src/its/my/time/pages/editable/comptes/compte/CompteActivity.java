@@ -7,9 +7,7 @@ import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 import its.my.time.util.Types.Comptes.Compte;
-import its.my.time.view.menu.MenuGroupe;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
@@ -23,14 +21,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.actionbarsherlock.R;
 
-public class CompteActivity extends BaseActivity implements OnClickListener, TextWatcher,
-OnColorChangedListener {
+public class CompteActivity extends BaseActivity implements OnClickListener, TextWatcher, OnColorChangedListener {
 
 	private CompteBean compte;
 
@@ -184,71 +180,13 @@ OnColorChangedListener {
 		}
 	}
 
-	@Override
-	public void afterTextChanged(Editable v) {
-		updateTitle();
-	}
-
-	@Override
-	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-			int arg3) {
-	}
-
-	@Override
-	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-
-	}
+	@Override public void afterTextChanged(Editable v) {updateTitle();}
+	@Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {}
+	@Override public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 
 	@Override
 	public void onColorChanged(int color) {
 		this.color = color;
 		updateColorButton();
-	}
-
-	@Override
-	protected void onMenuGroupSwitch(View v, int positionGroup,
-			boolean isChecked) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onMenuItemSwitch(View v, int positionGroup,
-			int positionObjet, boolean isChecked) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onMenuGroupClick(ExpandableListView parent, View v,
-			int groupPosition, long id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onMenuChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected ArrayList<MenuGroupe> onMainMenuCreated(
-			ArrayList<MenuGroupe> menuGroupes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void reload() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected boolean onBackButtonPressed() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
