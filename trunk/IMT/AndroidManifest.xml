@@ -65,7 +65,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".data.ws.test.OAuth.OAuthResponseActivity"
+            android:name=".data.ws.OAuthResponseActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
             <intent-filter>
@@ -76,7 +76,7 @@
 
                 <data
                     android:host="oauthresponse"
-                    android:scheme="myapp" />
+                    android:scheme="mytime" />
             </intent-filter>
         </activity>
     </application>

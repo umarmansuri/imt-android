@@ -28,7 +28,8 @@ public class ActivityUtil {
 	public static final String ACTION_FINISH = "ACTION_FINISH";
 
 	public static void logout(Context context) {
-		PreferencesUtil.setCurrentUid(context, -1);
+		PreferencesUtil.clearAll(context);
+		
 		final Intent i = new Intent(ACTION_FINISH);
 		i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
 		context.sendBroadcast(i);
