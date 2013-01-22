@@ -211,10 +211,8 @@ OnClickListener {
 
 	/**
 	 * 
-	 * @param groupPosition
-	 *            le groupe actif
-	 * @param itemPosition
-	 *            l'item actif, <b>OU -1 !! </b>
+	 * @param groupPosition le groupe actif
+	 * @param itemPosition l'item actif, <b>OU -1 !! </b>
 	 */
 	public void setCurrentItemMenu(int groupPosition, int childPosition) {
 		if (childPosition == -1) {
@@ -223,6 +221,7 @@ OnClickListener {
 			this.mMainMenu.setSelectedChild(groupPosition, childPosition, true);
 		}
 	}
+	
 
 	public void changeMainMenuVisibility(boolean showed, boolean withAnimation) {
 		this.isMenuShowed = showed;
