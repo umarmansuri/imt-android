@@ -84,5 +84,6 @@ public class MenuGroupe {
 		this.switcherOnColor = switcherOnColor;
 		this.firstState = firstState;
 	}
+	
 
 }

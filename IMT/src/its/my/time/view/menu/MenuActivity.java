@@ -1,19 +1,16 @@
-package its.my.time.pages;
+package its.my.time.view.menu;
 
 import its.my.time.R;
-import its.my.time.util.ActivityUtil;
 import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.ELVAdapter;
 import its.my.time.view.menu.ELVAdapter.MenuChildViewHolder;
 import its.my.time.view.menu.ELVAdapter.OnItemSwitchedListener;
 import its.my.time.view.menu.MenuGroupe;
+import its.my.time.view.menu.MenuObjet;
 
 import java.util.ArrayList;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -35,7 +32,6 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -55,7 +51,6 @@ OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		registerReceiver(this.LOGOUT_Receiver, new IntentFilter(ActivityUtil.ACTION_FINISH));
 
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
 		super.setContentView(R.layout.activity_base);
@@ -83,14 +78,6 @@ OnClickListener {
 	}
 
 
-	@Override
-	protected void onDestroy() {
-		try {
-			unregisterReceiver(this.LOGOUT_Receiver);
-		} catch (Exception e) {}
-		super.onDestroy();
-	}
-
 	protected void initialiseActionBar() {
 		final ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setBackgroundDrawable(getResources().getDrawable(
@@ -117,11 +104,7 @@ OnClickListener {
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						if (groupPosition < MenuActivity.this.menuGroupes.size() - 2) {
-							onMenuChildClick(parent, v, groupPosition,childPosition, id);
-						} else {
-							// TODO si un menu 'constant' contient de enfants
-						}
+						onMenuChildClick(parent, menuAdapter.getGroup(groupPosition), menuAdapter.getChild(groupPosition, childPosition), id);
 					}
 				}, (long) (ANIMATION_DURATION * 1.5));
 			} else {
@@ -134,32 +117,19 @@ OnClickListener {
 		@Override
 		public boolean onGroupClick(final ExpandableListView parent,
 				final View v, final int groupPosition, final long id) {
-			if (MenuActivity.this.menuGroupes.get(groupPosition).getObjets()
-					.size() <= 0) {
+			if (MenuActivity.this.menuGroupes.get(groupPosition).getObjets().size() <= 0) {
 				MenuActivity.this.hasSwitcherValueChanged = false;
 				changeMainMenuVisibility(false, true);
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						if (groupPosition < MenuActivity.this.menuGroupes
-								.size() - 2) {
-							onMenuGroupClick(parent, v, groupPosition, id);
-						} else {
-							if (groupPosition == MenuActivity.this.menuGroupes
-									.size() - 2) {
-								Toast.makeText(MenuActivity.this, "A propos",
-										Toast.LENGTH_SHORT).show();
-							} else if (groupPosition == MenuActivity.this.menuGroupes
-									.size() - 1) {
-								ActivityUtil.logout(MenuActivity.this);
-							}
+						if (groupPosition < MenuActivity.this.menuGroupes.size()) {
+							onMenuGroupClick(parent, menuAdapter.getGroup(groupPosition), id);
 						}
 					}
 				}, (long) (ANIMATION_DURATION * 1.5));
-			} else if (MenuActivity.this.menuGroupes.get(groupPosition)
-					.isSwitcher()) {
-				((MenuChildViewHolder) v.getTag()).childSwitcher
-				.toggleState(true);
+			} else if (MenuActivity.this.menuGroupes.get(groupPosition).isSwitcher()) {
+				((MenuChildViewHolder) v.getTag()).childSwitcher.toggleState(true);
 			}
 			return false;
 		}
@@ -208,36 +178,31 @@ OnClickListener {
 			}
 		}
 	};
+	private ELVAdapter menuAdapter;
 
 	public void initialiseMenu() {
 		this.menuGroupes = new ArrayList<MenuGroupe>();
-		this.menuGroupes = onMainMenuCreated(this.menuGroupes);
+		this.menuGroupes = onCreateMenu(this.menuGroupes);
 		if (this.menuGroupes == null) {
 			this.menuGroupes = new ArrayList<MenuGroupe>();
 		}
-		MenuGroupe menuGroupe = new MenuGroupe("A propos",
-				MooncakeIcone.icon_info_sign);
-		this.menuGroupes.add(menuGroupe);
-		menuGroupe = new MenuGroupe("Déconnexion", MooncakeIcone.icon_off);
-		this.menuGroupes.add(menuGroupe);
+		
 
-		final ELVAdapter adapter = new ELVAdapter(this, this.menuGroupes);
-		adapter.setOnItemSwitchedListener(new OnItemSwitchedListener() {
+		menuAdapter = new ELVAdapter(this, this.menuGroupes);
+		menuAdapter.setOnItemSwitchedListener(new OnItemSwitchedListener() {
 			@Override
-			public void onObjetSwitched(View v, int positionGroup,
-					int positionObjet, boolean isChecked) {
+			public void onObjetSwitched(View v, int positionGroup,int positionObjet, boolean isChecked) {
 				MenuActivity.this.hasSwitcherValueChanged = true;
-				onMenuItemSwitch(v, positionGroup, positionObjet, isChecked);
+				onMenuChildSwitch(menuAdapter.getGroup(positionGroup), menuAdapter.getChild(positionGroup, positionObjet), isChecked);
 			}
 
 			@Override
-			public void onGroupSwitched(View v, int positionGroup,
-					boolean isChecked) {
+			public void onGroupSwitched(View v, int positionGroup,boolean isChecked) {
 				MenuActivity.this.hasSwitcherValueChanged = true;
-				onMenuGroupSwitch(v, positionGroup, isChecked);
+				onMenuGroupSwitch(menuAdapter.getGroup(positionGroup), isChecked);
 			}
 		});
-		this.mMainMenu.setAdapter(adapter);
+		this.mMainMenu.setAdapter(menuAdapter);
 		this.mMainMenu.setGroupIndicator(null);
 		this.mMainMenu.setOnChildClickListener(this.onMenuChildClickListener);
 		this.mMainMenu.setOnGroupClickListener(this.onMenuGroupClickListener);
@@ -308,24 +273,18 @@ OnClickListener {
 		}
 	}
 
-	protected abstract void onMenuGroupSwitch(View v, int positionGroup,
-			boolean isChecked);
-
-	protected abstract void onMenuItemSwitch(View v, int positionGroup,
-			int positionObjet, boolean isChecked);
-
-	protected abstract void onMenuGroupClick(ExpandableListView parent, View v,
-			int groupPosition, long id);
-
-	protected abstract void onMenuChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id);
-
-	protected abstract ArrayList<MenuGroupe> onMainMenuCreated(
-			ArrayList<MenuGroupe> menuGroupes);
+	protected abstract void onMenuGroupSwitch(MenuGroupe group,boolean isChecked);
+	protected abstract void onMenuChildSwitch(MenuGroupe group, MenuObjet objet, boolean isChecked);
+	protected abstract void onMenuGroupClick(ExpandableListView parent, MenuGroupe group, long id);
+	protected abstract void onMenuChildClick(ExpandableListView parent, MenuGroupe group,  MenuObjet objet, long id);
+	
+	
+	
+	protected abstract ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes);
+	protected abstract void reload();
 
 	private boolean hasSwitcherValueChanged;
 
-	public abstract void reload();
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -388,17 +347,4 @@ OnClickListener {
 		return true;
 	}
 
-	private final BroadcastReceiver LOGOUT_Receiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context arg0, Intent arg1) {
-			final String action_finish = arg1.getStringExtra("FINISH");
-
-			if (action_finish.equalsIgnoreCase("ACTION.FINISH.LOGOUT")) {
-				finish();
-				// this line unregister the receiver,so that i run only one time
-				// and when next time logout is clicked then again it called
-				unregisterReceiver(MenuActivity.this.LOGOUT_Receiver);
-			}
-		}
-	};
 }

@@ -8,7 +8,6 @@ import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.Types;
 import its.my.time.view.ControledViewPager;
-import its.my.time.view.menu.MenuGroupe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,10 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.R;
@@ -43,7 +39,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		super.onCreate(bundle);
 
 		setContentView(R.layout.activity_event);
-		
+
 		isNew = false;
 		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
 			this.event = new EventBaseRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
@@ -161,52 +157,6 @@ public abstract class BaseEventActivity extends BaseActivity {
 	protected void showSave() {
 		this.mPager.setPagingEnabled(true);
 		getActiveFragment().launchSave();
-	}
-
-	@Override
-	protected void onMenuGroupSwitch(View v, int positionGroup,
-			boolean isChecked) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onMenuItemSwitch(View v, int positionGroup,
-			int positionObjet, boolean isChecked) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onMenuGroupClick(ExpandableListView parent, View v,
-			int groupPosition, long id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onMenuChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected ArrayList<MenuGroupe> onMainMenuCreated(
-			ArrayList<MenuGroupe> menuGroupes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void reload() {
-		
-	}
-
-	@Override
-	protected boolean onBackButtonPressed() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
