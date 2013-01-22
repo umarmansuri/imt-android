@@ -7,7 +7,7 @@ import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DateUtil;
-import its.my.time.util.EventTypes;
+import its.my.time.util.Types;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.ViewUtil;
 import its.my.time.view.Switcher;
@@ -65,7 +65,7 @@ public class DetailsFragment extends BasePluginFragment {
 	private static Bundle state;
 
 	public DetailsFragment() {
-		this.typeEvent = EventTypes.TYPE_BASE;
+		this.typeEvent = Types.Event.BASE;
 	}
 
 	public DetailsFragment(int typeEvent) {

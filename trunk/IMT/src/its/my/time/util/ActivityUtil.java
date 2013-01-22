@@ -65,16 +65,16 @@ public class ActivityUtil {
 	private static Intent getEventIntentFromType(Context context, int typeEvent) {
 		Intent intent;
 		switch (typeEvent) {
-		case EventTypes.TYPE_TASK:
+		case Types.Event.TASK:
 			intent = new Intent(context, TaskActivity.class);
 			break;
-		case EventTypes.TYPE_MEETING:
+		case Types.Event.MEETING:
 			intent = new Intent(context, MeetingActivity.class);
 			break;
-		case EventTypes.TYPE_CALL:
+		case Types.Event.CALL:
 			intent = new Intent(context, CallActivity.class);
 			break;
-		case EventTypes.TYPE_BASE:
+		case Types.Event.BASE:
 		default:
 			intent = new Intent(context, EventActivity.class);
 			break;
@@ -95,9 +95,9 @@ public class ActivityUtil {
 				context.getResources().getString(R.string.label_event_meeting),
 				context.getResources().getString(R.string.label_event_task),
 				context.getResources().getString(R.string.label_event_call) };
-		final Integer[] types = new Integer[] { EventTypes.TYPE_BASE,
-				EventTypes.TYPE_MEETING, EventTypes.TYPE_TASK,
-				EventTypes.TYPE_CALL };
+		final Integer[] types = new Integer[] { Types.Event.BASE,
+				Types.Event.MEETING, Types.Event.TASK,
+				Types.Event.CALL };
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle("Evénement à créer");

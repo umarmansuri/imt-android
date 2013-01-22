@@ -6,7 +6,7 @@ import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
-import its.my.time.util.EventTypes;
+import its.my.time.util.Types;
 import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.MenuGroupe;
 
@@ -50,7 +50,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 		if (this.event == null) {
 			this.event = new EventBaseBean();
-			this.event.setTypeId(EventTypes.TYPE_TASK);
+			this.event.setTypeId(Types.Event.TASK);
 			this.event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
 			this.event.sethFin((Calendar) this.event.gethDeb().clone());
 			this.event.gethFin().add(Calendar.HOUR_OF_DAY, 2);
