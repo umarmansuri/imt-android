@@ -243,4 +243,24 @@ public class DateUtil {
 		return (event.gethDeb().before(calDayFin) && event.gethFin().after(
 				calDayDeb));
 	}
+	
+	/**
+	 * Donne le nombre d'années entre une date et la date courante
+	 * 
+	 * @param Calendar
+	 *            la date d'anniversaire par exemple
+	 * @return le nombre d'années (l'âge)
+	 */
+	public static int getNbYears(Calendar d)
+	{
+	  Calendar curr = Calendar.getInstance();
+	  Calendar birth = d;
+	  int yeardiff = curr.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+	  curr.add(Calendar.YEAR,-yeardiff);
+	  if(birth.after(curr))
+	  {
+	    yeardiff = yeardiff - 1;
+	  }
+	  return yeardiff;
+	}
 }
