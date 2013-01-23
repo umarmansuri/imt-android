@@ -110,7 +110,7 @@ public class ComptesActivity extends MyTimeActivity {
 				new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int index) {
-				new CompteRepository(ComptesActivity.this).deleteCompte(ComptesActivity.this.comptes.get(which).getId());
+				new CompteRepository(ComptesActivity.this).deleteCompte(ComptesActivity.this.comptes.get(which));
 				comptes.remove(which);
 				mMainListe.setAdapter(adapter);
 			}

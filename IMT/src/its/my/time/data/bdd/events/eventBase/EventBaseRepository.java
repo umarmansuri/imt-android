@@ -133,8 +133,8 @@ public class EventBaseRepository extends DatabaseHandler {
 		open();
 		final boolean res = this.db.delete(DATABASE_TABLE,
 				KEY_ID + "=" + rowId, null) > 0;
-		close();
-		return res;
+				close();
+				return res;
 	}
 
 	public EventBaseBean getById(long id) {
@@ -167,19 +167,13 @@ public class EventBaseRepository extends DatabaseHandler {
 		final String isoDeb = DateUtil.getTimeInIso(calDeb);
 		final String isoFin = DateUtil.getTimeInIso(calFin);
 		open();
-		final CompteRepository compteRepo = new CompteRepository(this.context);
-		final List<CompteBean> comptes = compteRepo
-				.getVisibleCompteByUid(PreferencesUtil
-						.getCurrentUid(this.context));
 		final ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
-		for (final CompteBean compteBean : comptes) {
-			final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,
-					KEY_HDEB + " <= Datetime('" + isoFin + "') AND " + KEY_HFIN
-							+ " >= Datetime('" + isoDeb + "') AND " + KEY_CID
-							+ " =" + compteBean.getId(), null, null, null, ""
-							+ KEY_INDEX_HDEB);
-			res.addAll(convertCursorToListObject(c));
-		}
+		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,
+				KEY_HDEB + " <= Datetime('" + isoFin + "') AND " + KEY_HFIN
+				+ " >= Datetime('" + isoDeb + "')", null, null, null, ""
+						+ KEY_INDEX_HDEB);
+		res.addAll(convertCursorToListObject(c));
+
 		close();
 		return res;
 	}
@@ -193,7 +187,7 @@ public class EventBaseRepository extends DatabaseHandler {
 			final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,
 					KEY_HFIN + " >= Datetime('now')  AND " + KEY_CID + " ="
 							+ compteBean.getId(), null, null, null, ""
-							+ KEY_INDEX_HDEB);
+									+ KEY_INDEX_HDEB);
 			res.addAll(convertCursorToListObject(c));
 		}
 		close();

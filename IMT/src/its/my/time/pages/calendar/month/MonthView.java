@@ -1,17 +1,22 @@
 package its.my.time.pages.calendar.month;
 
 import its.my.time.R;
+import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
+import its.my.time.data.bdd.compte.CompteRepository.OnCompteChangedListener;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.calendar.base.BaseView;
 import its.my.time.util.DateUtil;
 import its.my.time.util.IdUtil;
+import its.my.time.util.PreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -24,10 +29,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MonthView extends BaseView {
+public class MonthView extends BaseView implements OnCompteChangedListener {
 
 	private final MonthDisplayHelper helper;
 	private final OnDayClickListener listener;
+	private HashMap<Integer, CompteBean> comptes;
+	private HashMap<Integer, List<View>> eventLittleViews;
+	private CompteRepository compteRepo;
 
 	public MonthView(Context context, Calendar cal, OnDayClickListener listener) {
 		super(context);
@@ -38,8 +46,23 @@ public class MonthView extends BaseView {
 
 	@Override
 	protected View createView() {
-		final LinearLayout view = (LinearLayout) inflate(getContext(),
-				R.layout.activity_calendar_month, null);
+
+		if(compteRepo == null) {
+			compteRepo = new CompteRepository(getContext());
+		}
+		compteRepo.addOnCompteCHangedListener(this);
+		List<CompteBean> listComptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid(getContext()));
+
+		if(comptes == null) {
+			comptes = new HashMap<Integer, CompteBean>();
+			eventLittleViews = new HashMap<Integer, List<View>>();
+			for (CompteBean compte : listComptes) {
+				comptes.put(Integer.valueOf(compte.getId()), compte);
+				eventLittleViews.put(compte.getId(), new ArrayList<View>());
+			}
+		}
+
+		final LinearLayout view = (LinearLayout) inflate(getContext(),R.layout.activity_calendar_month, null);
 		createTabDay(view);
 		return view;
 	}
@@ -123,57 +146,83 @@ public class MonthView extends BaseView {
 						this.helper.getYear(), this.helper.getMonth(),
 						this.helper.getDayAt(i, j - 1), 0, 0, 0);
 				calFin.add(Calendar.DAY_OF_MONTH, 1);
-				List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
-				listEventsFinal = new EventBaseRepository(getContext())
-				.getAllEvents(calDeb, calFin);
-				final LinearLayout layoutListe = (LinearLayout) layoutDay
-						.findViewById(R.id.activity_calendar_month_day_liste);
-				ViewGroup eventLayout;
-				TextView textEvent;
-				int nbEventShowed = 0;
-				for (int nbEvents = 0; nbEvents < listEventsFinal.size()
-						&& nbEventShowed < 2; nbEvents++) {
-					final EventBaseBean eventBaseBean = listEventsFinal
-							.get(nbEvents);
-					eventLayout = (ViewGroup) inflate(getContext(),
-							R.layout.activity_calendar_month_day_event, null);
-					// TODO mettre bonne couleur
-					eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(new CompteRepository(getContext()).getById(eventBaseBean.getCid()).getColor());
-					textEvent = (TextView) eventLayout.findViewById(R.id.activity_calendar_month_day_event_text);
-					textEvent.setText(eventBaseBean.getTitle());
-					if (isToday) {
-						textEvent.setBackgroundColor(Color.parseColor("#FFFFCC"));
-					}
-					layoutListe.addView(eventLayout);
-					nbEventShowed++;
-				}
-				if (nbEventShowed < listEventsFinal.size()) {
-					txtVw = (TextView) layoutDay.findViewById(R.id.activity_calendar_month_day_plus);
-					txtVw.setText("+" + (listEventsFinal.size() - nbEventShowed));
-				}
 
+				List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
+				listEventsFinal = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
+
+				if(listEventsFinal.size() > 0) {
+					final LinearLayout layoutListe = (LinearLayout) layoutDay.findViewById(R.id.activity_calendar_month_day_liste);
+					ViewGroup eventLayout;
+					TextView textEvent;
+					for (int nbEvents = 0; nbEvents < listEventsFinal.size(); nbEvents++) {
+						final EventBaseBean eventBaseBean = listEventsFinal.get(nbEvents);
+						eventLayout = (ViewGroup) inflate(getContext(),R.layout.activity_calendar_month_day_event, null);
+						eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(compteRepo.getById(eventBaseBean.getCid()).getColor());
+						textEvent = (TextView) eventLayout.findViewById(R.id.activity_calendar_month_day_event_text);
+						textEvent.setText(eventBaseBean.getTitle());
+						if (isToday) {
+							textEvent.setBackgroundColor(Color.parseColor("#FFFFCC"));
+						}
+						CompteBean compte = comptes.get((int)eventBaseBean.getCid());
+						if(!compte.isShowed()) {
+							eventLayout.setVisibility(INVISIBLE);
+						}
+						layoutListe.addView(eventLayout);
+						eventLittleViews.get((int)eventBaseBean.getCid()).add(eventLayout);
+					}
+				} else {
+					layoutDay.findViewById(R.id.activity_calendar_month_day_liste_scroll).setVisibility(INVISIBLE);
+				}
 				if (this.listener != null) {
-					final GregorianCalendar calListener = (GregorianCalendar) calDeb
-							.clone();
+					final GregorianCalendar calListener = (GregorianCalendar) calDeb.clone();
 					calListener.set(Calendar.HOUR_OF_DAY, 8);
 					calListener.set(Calendar.HOUR_OF_DAY, 10);
-					layoutDay.setOnClickListener(new OnClickListener() {
+
+
+					OnClickListener clickListener = new OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							MonthView.this.listener.onDayClickListener(calListener);
 						}
-					});
-					layoutDay.setOnLongClickListener(new OnLongClickListener() {
+					};
+
+					OnLongClickListener longCLickListener = new OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View v) {
 							MonthView.this.listener.onDayLongClickListener(calListener);
 							return false;
 						}
-					});
+					};
+					layoutDay.setOnClickListener(clickListener );
+					layoutDay.setOnLongClickListener(longCLickListener);
+
+
+					View v = layoutDay.findViewById(R.id.activity_calendar_month_day_liste_scroll);
+					if(v != null) {
+						v.setOnClickListener(clickListener );
+						v.setOnLongClickListener(longCLickListener);
+					}
 				}
 			}
 		}
 	}
+
+	@Override public void onCompteAdded(CompteBean compte) {}
+	@Override public void onCompteRemoved(CompteBean compte) {}
+
+	@Override
+	public void onCompteUpdated(CompteBean compte) {
+		if(compte.isShowed()) {
+			for (View v : eventLittleViews.get(compte.getId())) {
+				v.setVisibility(VISIBLE);
+			}
+		} else {
+			for (View v : eventLittleViews.get(compte.getId())) {
+				v.setVisibility(INVISIBLE);
+			}
+		}
+	}
+
 
 	public interface OnDayClickListener {
 		void onDayClickListener(GregorianCalendar day);
