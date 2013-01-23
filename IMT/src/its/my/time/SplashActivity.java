@@ -68,12 +68,7 @@ public class SplashActivity extends Activity {
 		this.pseudo = (EditText) findViewById(R.id.splash_login);
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
-		temp();
-		/*
-		 * if(PreferencesUtil.getCurrentUid(SplashActivity.this) < 0)
-		 * ActivityUtil.startProfilActivity(SplashActivity.this); else {
-		 * startClockAnimation(); new LoadMainActivity().execute(); }
-		 */
+		//temp();
 	}
 
 	private void temp() {
@@ -158,7 +153,7 @@ public class SplashActivity extends Activity {
 				starAnimation();
 				new LoadMainActivity().execute();
 			} else {
-				Toast.makeText(this, "FAIL PELO !", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Erreur de Connexion !", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
