@@ -83,16 +83,42 @@ public class CompteRepository extends DatabaseHandler {
 		initialValues.put(KEY_UID, compte.getUid());
 		initialValues.put(KEY_SHOWED, true);
 		open();
-		final long res = this.db.insert(DATABASE_TABLE, null, initialValues);
+		final int res = (int) this.db.insert(DATABASE_TABLE, null, initialValues);
 		close();
+		if(res != -1) {
+			compte.setId(res);
+			compteAdded(compte);
+		}
 		return res;
 	}
 
-	public boolean deleteCompte(long rowId) {
+	public int update(CompteBean compte) {
+		final ContentValues initialValues = new ContentValues();
+		initialValues.put(KEY_TITLE, compte.getTitle());
+		initialValues.put(KEY_COLOR, compte.getColor());
+		initialValues.put(KEY_TYPE, compte.getType());
+		initialValues.put(KEY_UID, compte.getUid());
+		if (compte.isShowed()) {
+			initialValues.put(KEY_SHOWED, 1);
+		} else {
+			initialValues.put(KEY_SHOWED, 0);
+		}
 		open();
-		final boolean res = this.db.delete(DATABASE_TABLE,
-				KEY_ID + "=" + rowId, null) > 0;
+		final int nbRow = this.db.update(DATABASE_TABLE, initialValues, KEY_ID+ "=?", new String[] { "" + compte.getId() });
 		close();
+		if(nbRow > 0) {
+			compteUpdated(compte);
+		}
+		return nbRow;
+	}
+
+	public boolean deleteCompte(CompteBean compte) {
+		open();
+		final boolean res = this.db.delete(DATABASE_TABLE,KEY_ID + "=" + compte.getId(), null) > 0;
+		close();
+		if(res == true) {
+			compteUpdated(compte);
+		}
 		return res;
 	}
 
@@ -124,21 +150,37 @@ public class CompteRepository extends DatabaseHandler {
 		return res;
 	}
 
-	public int update(CompteBean compte) {
-		final ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_TITLE, compte.getTitle());
-		initialValues.put(KEY_COLOR, compte.getColor());
-		initialValues.put(KEY_TYPE, compte.getType());
-		initialValues.put(KEY_UID, compte.getUid());
-		if (compte.isShowed()) {
-			initialValues.put(KEY_SHOWED, 1);
-		} else {
-			initialValues.put(KEY_SHOWED, 0);
+	private void compteAdded(CompteBean compte) {
+		for (OnCompteChangedListener listener: onCompteChangedListeners) {
+			listener.onCompteAdded(compte);
 		}
-		open();
-		final int nbRow = this.db.update(DATABASE_TABLE, initialValues, KEY_ID
-				+ "=?", new String[] { "" + compte.getId() });
-		close();
-		return nbRow;
 	}
+
+	private void compteRemoved(CompteBean compte) {
+		for (OnCompteChangedListener listener: onCompteChangedListeners) {
+			listener.onCompteRemoved(compte);
+		}
+	}
+
+	private void compteUpdated(CompteBean compte) {
+		for (OnCompteChangedListener listener: onCompteChangedListeners) {
+			listener.onCompteUpdated(compte);
+		}
+	}
+
+
+	private static List<OnCompteChangedListener> onCompteChangedListeners = new ArrayList<CompteRepository.OnCompteChangedListener>();
+	public interface OnCompteChangedListener {
+		public void onCompteAdded(CompteBean compte);
+		public void onCompteUpdated(CompteBean compte);
+		public void onCompteRemoved(CompteBean compte);
+	}
+	
+	public void addOnCompteCHangedListener(OnCompteChangedListener listener) {
+		onCompteChangedListeners.add(listener);
+	}
+	public void removeOnCompteChangedListener(OnCompteChangedListener listener) {
+		onCompteChangedListeners.remove(listener);
+	}
+	
 }

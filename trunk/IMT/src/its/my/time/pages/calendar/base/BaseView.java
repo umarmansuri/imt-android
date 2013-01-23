@@ -36,15 +36,12 @@ public abstract class BaseView extends FrameLayout {
 		@Override
 		protected void onPreExecute() {
 			nbPageLoading++;
-			((CalendarActivity) getContext())
-					.setSupportProgressBarIndeterminateVisibility(true);
+			((CalendarActivity) getContext()).setSupportProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override
 		protected View doInBackground(Void... params) {
 			final View view = createView();
-			view.setVisibility(INVISIBLE);
-			view.layout(0, 0, 0, 0);
 			return view;
 		}
 
@@ -52,11 +49,6 @@ public abstract class BaseView extends FrameLayout {
 		protected void onPostExecute(View result) {
 			removeAllViews();
 			addView(result);
-			final Animation anim = new AlphaAnimation(0, 1);
-			anim.setFillAfter(true);
-			anim.setDuration(500);
-			result.startAnimation(anim);
-
 			nbPageLoading--;
 			if (nbPageLoading == 0) {
 				((CalendarActivity) getContext())

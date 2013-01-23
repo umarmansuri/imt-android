@@ -55,19 +55,12 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private List<CompteBean> comptes;
 
 	private MenuGroupe menuProfil;
-
 	private MenuGroupe menuAgenda;
-
 	private MenuGroupe menuCompte;
-
 	private MenuGroupe menuLibelles;
-
 	private MenuGroupe menuReglages;
-
 	private MenuObjet menuAgendaToday;
-
 	private MenuObjet menuAgendaJour;
-
 	private MenuObjet menuAgendaMois;
 
 	private MenuObjet menuAgendaListe;
@@ -252,7 +245,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 
 	@Override
 	public void reload() {
-		new ChangePageTask().execute(this.indexCurrentPager);
+		//new ChangePageTask().execute(this.indexCurrentPager);
 	}
 
 	public void showDays(Calendar cal) {
