@@ -59,6 +59,12 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private MenuGroupe menuCompte;
 	private MenuGroupe menuLibelles;
 	private MenuGroupe menuReglages;
+	
+	private MenuGroupe menuGroupePropos;
+	
+	private MenuGroupe menuGroupeDeconnexion;
+
+
 	private MenuObjet menuAgendaToday;
 	private MenuObjet menuAgendaJour;
 	private MenuObjet menuAgendaMois;
@@ -155,6 +161,12 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 
 		menuReglages = new MenuGroupe("Réglages", MooncakeIcone.icon_settings);
 		menuGroupes.add(menuReglages);
+		
+		menuGroupePropos = new MenuGroupe("A propos",MooncakeIcone.icon_info_sign);
+		menuGroupes.add(menuGroupePropos);
+		
+		menuGroupeDeconnexion = new MenuGroupe("Déconnexion", MooncakeIcone.icon_off);
+		menuGroupes.add(menuGroupeDeconnexion);
 
 		return menuGroupes;
 	}
@@ -163,9 +175,13 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	protected void onMenuGroupClick(ExpandableListView parent,MenuGroupe group, long id) {
 		if(group == menuProfil) {
 			ActivityUtil.startProfilActivity(this);
-		} else if(group == menuReglages) {
+		}else if(group == menuReglages) {
 			Toast.makeText(this, "Réglages...", Toast.LENGTH_SHORT).show();
-		} 
+		}else if(group == menuGroupeDeconnexion) {
+			ActivityUtil.logout(this);
+		}else if(group == menuGroupePropos) {
+			Toast.makeText(this, "A propos...", Toast.LENGTH_SHORT).show();
+		}
 		super.onMenuGroupClick(parent, group, id);
 	}
 

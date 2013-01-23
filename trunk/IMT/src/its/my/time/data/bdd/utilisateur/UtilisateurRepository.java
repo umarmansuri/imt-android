@@ -9,6 +9,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class UtilisateurRepository extends DatabaseHandler {
 
@@ -17,13 +18,13 @@ public class UtilisateurRepository extends DatabaseHandler {
 	public static final int KEY_INDEX_PRENOM = 2;
 	public static final int KEY_INDEX_PSEUDO = 3;
 	public static final int KEY_INDEX_MDP = 4;
-	public static final int KEY_INDEX_DATE_ANNIVERSAIRE = 4;
-	public static final int KEY_INDEX_TEL = 5;
-	public static final int KEY_INDEX_MAIL = 6;
-	public static final int KEY_INDEX_ADRESSE = 7;
-	public static final int KEY_INDEX_CODE_POSTAL = 8;
-	public static final int KEY_INDEX_VILLE = 9;
-	public static final int KEY_INDEX_PAYS = 10;
+	public static final int KEY_INDEX_DATE_ANNIVERSAIRE = 5;
+	public static final int KEY_INDEX_TEL = 6;
+	public static final int KEY_INDEX_MAIL = 7;
+	public static final int KEY_INDEX_ADRESSE = 8;
+	public static final int KEY_INDEX_CODE_POSTAL = 9;
+	public static final int KEY_INDEX_VILLE = 10;
+	public static final int KEY_INDEX_PAYS = 11;
 
 	public static final String KEY_ID = "KEY_ID";
 	public static final String KEY_NOM = "KEY_NOM";
@@ -45,7 +46,7 @@ public class UtilisateurRepository extends DatabaseHandler {
 			+ " text," + KEY_PRENOM + " text," + KEY_PSEUDO + " text,"
 			+ KEY_MDP + " text," + KEY_DATE_ANNIVERSAIRE + " text," + KEY_TEL
 			+ " text," + KEY_MAIL + " text," + KEY_ADRESSE + " text,"
-			+ KEY_CODE_POSTAL + " integer," + KEY_VILLE + " text," + KEY_PAYS
+			+ KEY_CODE_POSTAL + " text," + KEY_VILLE + " text," + KEY_PAYS
 			+ " text);";
 
 	private final String[] allAttr = new String[] { KEY_ID, KEY_NOM,
@@ -82,7 +83,7 @@ public class UtilisateurRepository extends DatabaseHandler {
 		utilisateur.setTel(c.getString(KEY_INDEX_TEL));
 		utilisateur.setMail(c.getString(KEY_INDEX_MAIL));
 		utilisateur.setAdresse(c.getString(KEY_INDEX_ADRESSE));
-		utilisateur.setCodePostal(c.getInt(KEY_INDEX_CODE_POSTAL));
+		utilisateur.setCodePostal(c.getString(KEY_INDEX_CODE_POSTAL));
 		utilisateur.setVille(c.getString(KEY_INDEX_VILLE));
 		utilisateur.setPays(c.getString(KEY_INDEX_PAYS));
 		return utilisateur;
@@ -137,7 +138,7 @@ public class UtilisateurRepository extends DatabaseHandler {
 
 	public UtilisateurBean getById(long id) {
 		open();
-		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, KEY_ID
+		final Cursor c = db.query(DATABASE_TABLE, allAttr, KEY_ID
 				+ "=?", new String[] { "" + id }, null, null, null);
 		final UtilisateurBean res = convertCursorToOneObject(c);
 		close();
@@ -146,7 +147,7 @@ public class UtilisateurRepository extends DatabaseHandler {
 
 	public UtilisateurBean getConnexion(String Pseudo, String Mdp) {
 		open();
-		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, KEY_PSEUDO
+		final Cursor c = db.query(DATABASE_TABLE, allAttr, KEY_PSEUDO
 				+ " = '" + Pseudo + "' AND " + KEY_MDP + " = '" + Mdp + "'",
 				null, null, null, null);
 		final UtilisateurBean res = convertCursorToOneObject(c);
@@ -187,7 +188,7 @@ public class UtilisateurRepository extends DatabaseHandler {
 		initialValues.put(KEY_VILLE, utilisateur.getVille());
 		initialValues.put(KEY_PAYS, utilisateur.getPays());
 		open();
-		final int nbRow = this.db.update(DATABASE_TABLE, initialValues, KEY_ID
+		final int nbRow = db.update(DATABASE_TABLE, initialValues, KEY_ID
 				+ "=?", new String[] { "" + utilisateur.getId() });
 		close();
 		return nbRow;

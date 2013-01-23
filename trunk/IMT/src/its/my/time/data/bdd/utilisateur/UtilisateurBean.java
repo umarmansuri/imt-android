@@ -13,104 +13,81 @@ public class UtilisateurBean {
 	private String tel;
 	private String mail;
 	private String adresse;
-	private int codePostal;
+	private String codePostal;
 	private String ville;
 	private String pays;
-
 	public int getId() {
-		return this.id;
+		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getNom() {
-		return this.nom;
+		return nom;
 	}
-
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
 	public String getPrenom() {
-		return this.prenom;
+		return prenom;
 	}
-
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-
-	public String getTel() {
-		return this.tel;
+	public String getPseudo() {
+		return pseudo;
 	}
-
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+	public Calendar getDateAniv() {
+		return dateAniv;
+	}
+	public void setDateAniv(Calendar dateAniv) {
+		this.dateAniv = dateAniv;
+	}
+	public String getMdp() {
+		return mdp;
+	}
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
+	}
+	public String getTel() {
+		return tel;
+	}
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-
 	public String getMail() {
-		return this.mail;
+		return mail;
 	}
-
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-
 	public String getAdresse() {
-		return this.adresse;
+		return adresse;
 	}
-
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
-
-	public int getCodePostal() {
-		return this.codePostal;
+	public String getCodePostal() {
+		return codePostal;
 	}
-
-	public void setCodePostal(int codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
-
 	public String getVille() {
-		return this.ville;
+		return ville;
 	}
-
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
-
 	public String getPays() {
-		return this.pays;
+		return pays;
 	}
-
 	public void setPays(String pays) {
 		this.pays = pays;
 	}
 
-	public String getPseudo() {
-		return this.pseudo;
-	}
-
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}
-
-	public String getMdp() {
-		return this.mdp;
-	}
-
-	public void setMdp(String mdp) {
-		this.mdp = mdp;
-	}
-
-	public Calendar getDateAniv() {
-		return this.dateAniv;
-	}
-
-	public void setDateAniv(Calendar dateAniv) {
-		this.dateAniv = dateAniv;
-	}
-
+	
 }

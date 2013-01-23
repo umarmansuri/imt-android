@@ -38,14 +38,43 @@
                         android:contentDescription="@string/descriptionPicureProfil"
                         android:src="@drawable/ic_action_profil_black" />
 
-                    <TextView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/activity_profil_icone_right"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_margin="10dp"
+                        android:layout_margin="4dp"
                         android:layout_toRightOf="@+id/activity_profil_icone_value"
-                        android:text="Modifier l&apos;image de profil"
-                        android:textSize="@dimen/text_size_small" />
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/activity_profil_icone_texte"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:text="Modifier l&apos;image de profil"
+                            android:textSize="@dimen/text_size_small" />
+
+                        <its.my.time.view.date.DateButton
+                            android:id="@+id/activity_profil_birthday_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="6dp"
+                            android:ellipsize="end"
+                            android:hint="@string/view_profil_birthday"
+                            android:inputType="datetime"
+                            android:textSize="@dimen/text_size_small" />
+
+                        <TextView
+                            android:id="@+id/activity_profil_birthday_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="6dp"
+                            android:text="22 ans"
+                            android:textSize="@dimen/text_size_small" />
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <FrameLayout
@@ -63,7 +92,7 @@
                         android:layout_margin="10dp"
                         android:ellipsize="end"
                         android:hint="@string/view_profil_lastname"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:textSize="@dimen/text_size_small" >
 
                         <requestFocus />
@@ -147,29 +176,10 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/activity_profil_birthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/activity_profil_password_again"
-                    android:layout_margin="4dp"
-                    android:background="@color/white" >
-
-                    <EditText
-                        android:id="@+id/activity_profil_birthday_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:ellipsize="end"
-                        android:hint="@string/view_profil_birthday"
-                        android:inputType="datetime"
-                        android:textSize="@dimen/text_size_small" />
-                </FrameLayout>
-
-                <FrameLayout
                     android:id="@+id/activity_profil_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/activity_profil_birthday"
+                    android:layout_below="@+id/activity_profil_password_again"
                     android:layout_margin="4dp"
                     android:background="@color/white" >
 
@@ -180,7 +190,26 @@
                         android:layout_margin="10dp"
                         android:ellipsize="end"
                         android:hint="@string/view_profil_phone"
-                        android:inputType="textPersonName"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_small" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/activity_profil_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_profil_phone"
+                    android:layout_margin="4dp"
+                    android:background="@color/white" >
+
+                    <EditText
+                        android:id="@+id/activity_profil_mail_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/view_profil_mail"
+                        android:inputType="textEmailAddress"
                         android:textSize="@dimen/text_size_small" />
                 </FrameLayout>
 
@@ -188,7 +217,7 @@
                     android:id="@+id/activity_profil_adresse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/activity_profil_phone"
+                    android:layout_below="@+id/activity_profil_mail"
                     android:layout_margin="4dp"
                     android:background="@color/white" >
 
@@ -218,7 +247,7 @@
                         android:layout_margin="10dp"
                         android:ellipsize="end"
                         android:hint="@string/view_profil_code_postal"
-                        android:inputType="textPersonName"
+                        android:inputType="number"
                         android:textSize="@dimen/text_size_small" />
                 </FrameLayout>
 
