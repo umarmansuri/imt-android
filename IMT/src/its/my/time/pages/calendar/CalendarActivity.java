@@ -328,17 +328,11 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 			CalendarActivity.this.mViewPager.setId(ID_PAGER);
 			switch (this.indexNextPage) {
 			case INDEX_MENU_AGENDA_DAY:
-				CalendarActivity.this.mViewPager
-				.setAdapter(new DayPagerAdapter(
-						getSupportFragmentManager(), curentCal));
+				CalendarActivity.this.mViewPager.setAdapter(new DayPagerAdapter(getSupportFragmentManager(), curentCal));
 				CalendarActivity.this.indexCurrentPager = INDEX_MENU_AGENDA_DAY;
 				break;
 			case INDEX_MENU_AGENDA_MONTH:
-				CalendarActivity.this.mViewPager
-				.setAdapter(new MonthPagerAdapter(
-						getSupportFragmentManager(), curentCal));
-				CalendarActivity.this.mViewPager.getAdapter()
-				.notifyDataSetChanged();
+				CalendarActivity.this.mViewPager.setAdapter(new MonthPagerAdapter(getSupportFragmentManager(), curentCal));
 				CalendarActivity.this.indexCurrentPager = INDEX_MENU_AGENDA_MONTH;
 				break;
 			case INDEX_MENU_AGENDA_LISTE:
@@ -348,10 +342,8 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 				changeTitle("Liste");
 				return mListView;
 			}
-			CalendarActivity.this.mViewPager
-			.setOnPageChangeListener(CalendarActivity.this);
-			CalendarActivity.this.mViewPager
-			.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+			CalendarActivity.this.mViewPager.setOnPageChangeListener(CalendarActivity.this);
+			CalendarActivity.this.mViewPager.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 
 			return CalendarActivity.this.mViewPager;
 		}

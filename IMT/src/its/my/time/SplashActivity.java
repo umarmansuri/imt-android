@@ -68,7 +68,7 @@ public class SplashActivity extends Activity {
 		this.pseudo = (EditText) findViewById(R.id.splash_login);
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
-		//temp();
+		temp();
 	}
 
 	private void temp() {

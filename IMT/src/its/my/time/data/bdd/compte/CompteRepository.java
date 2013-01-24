@@ -170,6 +170,7 @@ public class CompteRepository extends DatabaseHandler {
 
 
 	private static List<OnCompteChangedListener> onCompteChangedListeners = new ArrayList<CompteRepository.OnCompteChangedListener>();
+	
 	public interface OnCompteChangedListener {
 		public void onCompteAdded(CompteBean compte);
 		public void onCompteUpdated(CompteBean compte);

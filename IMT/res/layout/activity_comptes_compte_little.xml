@@ -21,7 +21,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/activity_comptes_compte_color"
-        android:background="@color/white"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:singleLine="true"

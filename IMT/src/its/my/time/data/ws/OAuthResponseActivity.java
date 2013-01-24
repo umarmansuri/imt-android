@@ -11,7 +11,11 @@ import net.smartam.leeloo.common.message.types.GrantType;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.view.View;
 
 public class OAuthResponseActivity extends Activity {
 
@@ -28,7 +32,7 @@ public class OAuthResponseActivity extends Activity {
 			String code = uri.getQueryParameter("code");
 			
 			OAuthClientRequest request = null;
-
+			
 			try {
 				request = OAuthClientRequest.tokenLocation("<service request URL>")
 					.setGrantType(GrantType.AUTHORIZATION_CODE)
