@@ -126,15 +126,14 @@ public class Switcher extends FrameLayout implements OnClickListener {
 	}
 
 	public void changeOnColor(int color) {
-		GradientDrawable dr = (GradientDrawable) this.mOnView.getBackground()
-				.getConstantState().newDrawable();
+		GradientDrawable dr = (GradientDrawable) this.mOnView.getBackground().getConstantState().newDrawable();
 		dr = (GradientDrawable) dr.mutate();
 		dr.setColor(color);
+		
 		this.mOnView.setBackgroundDrawable(dr);
 		this.mOnView.setText(null);
 
-		dr = (GradientDrawable) this.mOffView.getBackground()
-				.getConstantState().newDrawable();
+		dr = (GradientDrawable) this.mOffView.getBackground().getConstantState().newDrawable();
 		dr = (GradientDrawable) dr.mutate();
 		dr.setColor(getResources().getColor(R.color.grey));
 		this.mOffView.setBackgroundDrawable(dr);

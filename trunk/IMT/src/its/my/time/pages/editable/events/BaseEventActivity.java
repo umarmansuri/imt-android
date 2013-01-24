@@ -35,11 +35,11 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
-		final Bundle bundle = getIntent().getExtras();
-		super.onCreate(bundle);
+		super.onCreate(savedInstance);
 
 		setContentView(R.layout.activity_event);
 
+		final Bundle bundle = getIntent().getExtras();
 		isNew = false;
 		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
 			this.event = new EventBaseRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
@@ -53,12 +53,13 @@ public abstract class BaseEventActivity extends BaseActivity {
 			this.event.setAllDay(bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false));
 			isNew = true;
 		}
-
+		fragments = getPages();
+		if(fragments == null) {
+			fragments = new ArrayList<BasePluginFragment>();
+		}
 		this.mPager = (ControledViewPager) findViewById(R.id.event_pager);
 		this.mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
 		this.mPager.setOnPageChangeListener(this.pageListener);
-		fragments = getPages();
-		this.mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
 
 		final ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
