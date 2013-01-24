@@ -1,6 +1,7 @@
 package its.my.time.data.bdd;
 
 import its.my.time.data.bdd.compte.CompteRepository;
+import its.my.time.data.bdd.contact.ContactRepository;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
@@ -45,6 +46,7 @@ public class DatabaseHandler {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(UtilisateurRepository.CREATE_TABLE);
 			db.execSQL(CompteRepository.CREATE_TABLE);
+			db.execSQL(ContactRepository.CREATE_TABLE);
 			db.execSQL(EventBaseRepository.CREATE_TABLE);
 			db.execSQL(CommentRepository.CREATE_TABLE);
 			db.execSQL(ParticipantRepository.CREATE_TABLE);
