@@ -121,4 +121,12 @@ public class ActivityUtil {
 		intent.putExtra(KEY_EXTRA_ALL_DAY, isAllDay);
 		context.startActivity(intent);
 	}
+
+	public static void startContactsActivity(Context context,int i) {
+		// TODO Auto-generated method stub	
+	}
+	
+	public static void startContactActivity(Context context,int i) {
+		// TODO Auto-generated method stub	
+	}
 }

@@ -200,14 +200,14 @@ public class SplashActivity extends Activity {
 			  long resUser =
 			  userRepo.insertUtilisateur(user);
 			  
-			  CompteRepository repoCompte = new
-			  CompteRepository(SplashActivity.this); CompteBean compte = new
-			  CompteBean(); compte.setColor(Color.RED); compte.setShowed(true);
+			  ContactRepository repoCompte = new
+			  ContactRepository(SplashActivity.this); ContactBean compte = new
+			  ContactBean(); compte.setColor(Color.RED); compte.setShowed(true);
 			  compte.setTitle("Titre compte 1"); compte.setType(0);
 			  compte.setUid(resUser); long resCompte1 =
 			  repoCompte.insertCompte(compte);
 			  
-			  compte = new CompteBean(); compte.setColor(Color.BLUE);
+			  compte = new ContactBean(); compte.setColor(Color.BLUE);
 			  compte.setShowed(true); compte.setTitle("Compte 2");
 			  compte.setType(0); compte.setUid(resUser); long resCompte2 =
 			  repoCompte.insertCompte(compte);

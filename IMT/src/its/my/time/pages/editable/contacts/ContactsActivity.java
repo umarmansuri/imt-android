@@ -1,4 +1,4 @@
-package its.my.time.pages.editable.comptes;
+package its.my.time.pages.editable.contacts;
 
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
@@ -30,11 +30,11 @@ import android.widget.Toast;
 import com.fonts.mooncake.MooncakeIcone;
 import com.mobeta.android.dslv.DragSortListView;
 
-public class ComptesActivity extends MyTimeActivity {
+public class ContactsActivity extends MyTimeActivity {
 
 	private DragSortListView mMainListe;
-	private List<CompteBean> comptes;
-	private ComptesAdapter adapter;
+	private List<CompteBean> contacts;
+	private ContactsAdapter adapter;
 	private MenuGroupe menuAjouter;
 	private MenuGroupe menuSupprimer;
 	private MenuGroupe menuReglages;
@@ -49,15 +49,14 @@ public class ComptesActivity extends MyTimeActivity {
 
 	@Override
 	protected void onResume() {
-		comptes = new CompteRepository(this)
-		.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
-		this.adapter = new ComptesAdapter(comptes);
+		this.contacts = new CompteRepository(this).getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
+
+		this.adapter = new ContactsAdapter(this.contacts);
 		this.mMainListe.setAdapter(this.adapter);
 		this.mMainListe.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View view,
-					int position, long id) {
-				ActivityUtil.startCompteActivity(ComptesActivity.this, id);
+			public void onItemClick(AdapterView<?> arg0, View view,int position, long id) {
+				ActivityUtil.startCompteActivity(ContactsActivity.this, id);
 			}
 		});
 		super.onResume();
@@ -66,7 +65,7 @@ public class ComptesActivity extends MyTimeActivity {
 	@Override
 	protected void initialiseActionBar() {
 		super.initialiseActionBar();
-		getSupportActionBar().setTitle("Comptes");
+		getSupportActionBar().setTitle("Contacts");
 
 	}
 
@@ -85,12 +84,12 @@ public class ComptesActivity extends MyTimeActivity {
 	@Override
 	protected void onMenuGroupClick(ExpandableListView parent,MenuGroupe group, long id) {
 		if(group == menuAjouter){
-			ActivityUtil.startCompteActivity(this, -1);
+			ActivityUtil.startContactActivity(this, -1);
 		} else if(group == menuSupprimer){
 			this.adapter.setDraggable(true);
 			this.mMainListe.setAdapter(this.adapter);
 		} else if(group == menuReglages){
-			Toast.makeText(this, "Régles...", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Réglages...", Toast.LENGTH_SHORT).show();
 		}
 		super.onMenuGroupClick(parent, group, id);
 	}
@@ -104,19 +103,16 @@ public class ComptesActivity extends MyTimeActivity {
 	public void remove(final int which) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Suppression");
-		builder.setMessage("Vous allez définitivement supprimer votre compte '"
-				+ comptes.get(which).getTitle() + "'.\n\nContinuer?");
-		builder.setPositiveButton("Supprimer",
-				new DialogInterface.OnClickListener() {
+		builder.setMessage("Vous allez définitivement supprimer le contact '" + this.contacts.get(which).getTitle() + "'.\n\nContinuer?");
+		builder.setPositiveButton("Supprimer",new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int index) {
-				new CompteRepository(ComptesActivity.this).deleteCompte(comptes.get(which));
-				comptes.remove(which);
+				new CompteRepository(ContactsActivity.this).deleteCompte(ContactsActivity.this.contacts.get(which));
+				contacts.remove(which);
 				mMainListe.setAdapter(adapter);
 			}
 		});
-		builder.setNegativeButton("Annuler",
-				new DialogInterface.OnClickListener() {
+		builder.setNegativeButton("Annuler",new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
@@ -126,11 +122,11 @@ public class ComptesActivity extends MyTimeActivity {
 		builder.show();
 	}
 
-	private class ComptesAdapter implements ListAdapter {
+	private class ContactsAdapter implements ListAdapter {
 
 		private boolean removable;
 
-		public ComptesAdapter(List<CompteBean> comptes) {
+		public ContactsAdapter(List<CompteBean> comptes) {
 			if (comptes == null) {
 				comptes = new ArrayList<CompteBean>();
 			}
@@ -142,17 +138,17 @@ public class ComptesActivity extends MyTimeActivity {
 
 		@Override
 		public int getCount() {
-			return comptes.size();
+			return contacts.size();
 		}
 
 		@Override
 		public CompteBean getItem(int position) {
-			return comptes.get(position);
+			return contacts.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			return comptes.get(position).getId();
+			return contacts.get(position).getId();
 		}
 
 		@Override
@@ -171,7 +167,7 @@ public class ComptesActivity extends MyTimeActivity {
 			v.findViewById(R.id.activity_comptes_compte_color).setBackgroundDrawable(dr);
 			final MooncakeIcone icone = (MooncakeIcone) v.findViewById(R.id.delete);
 			icone.setIconeRes(MooncakeIcone.icon_minus_sign);
-			if (this.removable && comptes.get(position).getType() != Types.Comptes.MYTIME.id) {
+			if (this.removable && contacts.get(position).getType() != Types.Comptes.MYTIME.id) {
 				icone.setVisibility(View.VISIBLE);
 				icone.setEnabled(true);
 				icone.setOnClickListener(this.onRemoveClickListener);
@@ -185,7 +181,7 @@ public class ComptesActivity extends MyTimeActivity {
 		private final OnClickListener onRemoveClickListener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final int index = ComptesActivity.this.mMainListe
+				final int index = ContactsActivity.this.mMainListe
 						.getPositionForView((ViewGroup) v.getParent());
 				remove(index);
 			}
@@ -203,7 +199,7 @@ public class ComptesActivity extends MyTimeActivity {
 
 		@Override
 		public boolean isEmpty() {
-			return comptes.size() == 0;
+			return contacts.size() == 0;
 		}
 
 		@Override
