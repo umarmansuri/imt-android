@@ -21,10 +21,7 @@ public class ParticipantsView extends EditableLittleView {
 	}
 
 	private void initialiseDetails() {
-		((TextView) findViewById(R.id.event_participant_title))
-				.setText(this.utilisateur.getNom() + " "
-						+ this.utilisateur.getPrenom());
-		((TextView) findViewById(R.id.event_participant_details))
-				.setText(this.utilisateur.getAdresse());
+		((TextView) findViewById(R.id.event_participant_title)).setText(this.utilisateur.getNom() + " " + this.utilisateur.getPrenom());
+		((TextView) findViewById(R.id.event_participant_details)).setText(this.utilisateur.getAdresse());
 	}
 }

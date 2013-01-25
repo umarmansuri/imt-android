@@ -1,12 +1,14 @@
 package its.my.time.pages.editable.events.plugins.participants;
 
 import its.my.time.R;
+import its.my.time.data.bdd.contacts.ContactBean;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantBean;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
+import its.my.time.util.ContactsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,28 +20,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.fonts.mooncake.MooncakeIcone;
+
 public class ParticipantsFragment extends BasePluginFragment {
 
+	private static final int PICK_CONTACT = 0;
+
 	private ListView mListParticipant;
+
+	private MooncakeIcone mBtnAdd;
+
+	private AutoCompleteTextView mEditSearch;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final RelativeLayout mView = (RelativeLayout) inflater.inflate(
-				R.layout.activity_event_participant, null);
-		this.mListParticipant = (ListView) mView
-				.findViewById(R.id.event_participants_liste);
-		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				getParentActivity().getEvent().getId(), false));
+		final RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_participant, null);
+		this.mListParticipant = (ListView) mView.findViewById(R.id.event_participants_liste);
+		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
 
+		mBtnAdd = (MooncakeIcone)mView.findViewById(R.id.event_participants_ajout_btn);
+		mBtnAdd.setIconeRes(MooncakeIcone.icon_users);
+
+		
+		
+		
+		mEditSearch = (AutoCompleteTextView)mView.findViewById(R.id.event_participants_ajout_text);
+		ArrayList<ContactBean> contacts = ContactsUtil.getAll(getActivity());
+		ContactAdapter adapter = new ContactAdapter(contacts);
+		mEditSearch.setAdapter(adapter);
+		
 		return mView;
 	}
 
+	
 	@Override
 	public String getTitle() {
 		return "Participants";
@@ -92,7 +112,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 		private void loadNextParticipants() {
 
 			this.participants = new ParticipantRepository(getActivity())
-					.getAllByEid(getParentActivity().getEvent().getId());
+			.getAllByEid(getParentActivity().getEvent().getId());
 			if (this.participants == null) {
 				this.participants = new ArrayList<ParticipantBean>();
 			}
@@ -102,7 +122,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 				ids.add(participant.getUid());
 			}
 			this.utilisateurs = new UtilisateurRepository(getActivity())
-					.getAllByIds(ids);
+			.getAllByIds(ids);
 			if (this.utilisateurs == null) {
 				this.utilisateurs = new ArrayList<UtilisateurBean>();
 			}
@@ -125,11 +145,11 @@ public class ParticipantsFragment extends BasePluginFragment {
 				@Override
 				public void onClick(View v) {
 					new CommentRepository(getActivity())
-							.deletecomment(ParticipantsAdapter.this.participants
-									.get(position).getId());
+					.deletecomment(ParticipantsAdapter.this.participants
+							.get(position).getId());
 					ParticipantsFragment.this.mListParticipant
-							.setAdapter(new ParticipantsAdapter(getActivity(),
-									getParentActivity().getEvent().getId(), true));
+					.setAdapter(new ParticipantsAdapter(getActivity(),
+							getParentActivity().getEvent().getId(), true));
 				}
 			});
 			return view;
