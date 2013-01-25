@@ -47,9 +47,9 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 				return contact;
 			} else {
 				res++;
-				for (ContactInfoBean contactInfo : contact.getInfos()) {
+				for (int i = 1; i < contact.getInfos().size(); i++) {
 					if(res == position) {
-						return contactInfo;
+						return contact.getInfos().get(i);
 					}
 					res++;
 				}
@@ -97,6 +97,7 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 			imageView.setIconeRes(MooncakeIcone.icon_user);
 		}
 		((TextView)v.findViewById(R.id.text1)).setText(contact.getNom());
+		((TextView)v.findViewById(R.id.text2)).setText(contact.getInfos().get(0).getValue());
 		return v;
 	}
 	
