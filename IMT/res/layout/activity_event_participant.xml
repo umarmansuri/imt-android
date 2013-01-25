@@ -4,28 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ListView
-        android:id="@+id/event_participants_liste"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/event_layout_new_participant"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
-
     <LinearLayout
         android:id="@+id/event_layout_new_participant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="10dp" >
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
 
-        <Button
-            android:id="@+id/event_participants_ajout"
-            style="@style/Btn.Green"
-            android:layout_width="wrap_content"
+        <AutoCompleteTextView
+            android:id="@+id/event_participants_ajout_text"
+            android:layout_width="0dip"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/add" />
+            android:textSize="16sp"
+            android:layout_margin="5dp"
+            android:singleLine="true" />
+
+        <com.fonts.mooncake.MooncakeIcone
+            android:id="@+id/event_participants_ajout_btn"
+            style="@style/Btn.Green"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/event_participants_liste"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/event_layout_new_participant" />
 
 </RelativeLayout>

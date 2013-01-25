@@ -1,0 +1,10 @@
+<ContactsSource xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ContactsDataKind
+        android:detailColumn="data3"
+        android:detailSocialSummary="true"
+        android:icon="@drawable/icon"
+        android:mimeType="@string/contacts_mime_type"
+        android:summaryColumn="data2" />
+
+</ContactsSource>

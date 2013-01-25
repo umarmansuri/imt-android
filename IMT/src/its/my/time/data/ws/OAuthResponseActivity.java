@@ -19,7 +19,7 @@ import android.view.View;
 
 public class OAuthResponseActivity extends Activity {
 
-	protected final static String CLIENT_ID = "";
+	protected final static String CLIENT_ID = "1_1oi3k2mksbdws0c0gsskc0008wc0w0o4wckss4cw8s0wss048ssecret=49qgq45pjc6cc4kc4kg4okgg8o0wcc4wogg4s4s8so0g4k84k8";
 	protected final static String CLIENT_SECRET = "";
 	protected final static String REDIRECT_URL = "mytime://oauthresponse";
 	protected final static String AUTHENTICATION_URL = "";

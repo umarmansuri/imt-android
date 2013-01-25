@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ACCOUNT_TYPE">its.my.time.android.account</string>
+    <string name="account_preference_title">Paramètres</string>
+    <string name="account_preference_screen_key">account_settings</string>
+    <string name="account_preference_screen_title">Paramètres du compte</string>
+    <string name="account_preference_screen_summary">Délai de synchronisation, notification, etc.</string>
+    
+    <string name="contacts_mime_type">vnd.android.cursor.item/vnd.its.my.time.android.profile</string>
+    <string name="contacts_view_profil">Voir la profil</string>
+    <string name="contacts_profil">Profil My-Time</string>
+    
+</resources>
