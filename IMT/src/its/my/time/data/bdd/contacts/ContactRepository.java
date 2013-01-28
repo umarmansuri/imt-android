@@ -1,8 +1,8 @@
-package its.my.time.data.bdd.contactsOld;
+package its.my.time.data.bdd.contacts;
 
 import its.my.time.data.bdd.DatabaseHandler;
-import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoBean;
-import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoRepository;
+import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
+import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoRepository;
 import its.my.time.util.ContactsUtil;
 
 import java.util.ArrayList;

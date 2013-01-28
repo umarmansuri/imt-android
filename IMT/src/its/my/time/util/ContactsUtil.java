@@ -1,8 +1,8 @@
 package its.my.time.util;
 
 import its.my.time.R;
-import its.my.time.data.bdd.contactsOld.ContactBean;
-import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoBean;
+import its.my.time.data.bdd.contacts.ContactBean;
+import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;

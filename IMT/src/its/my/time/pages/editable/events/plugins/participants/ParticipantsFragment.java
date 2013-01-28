@@ -1,8 +1,8 @@
 package its.my.time.pages.editable.events.plugins.participants;
 
 import its.my.time.R;
-import its.my.time.data.bdd.contactsOld.ContactBean;
-import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoBean;
+import its.my.time.data.bdd.contacts.ContactBean;
+import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantBean;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;

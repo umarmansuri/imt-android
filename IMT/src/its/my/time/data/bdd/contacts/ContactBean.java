@@ -1,6 +1,6 @@
-package its.my.time.data.bdd.contactsOld;
+package its.my.time.data.bdd.contacts;
 
-import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoBean;
+import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
 
 import java.util.ArrayList;
 import java.util.List;
