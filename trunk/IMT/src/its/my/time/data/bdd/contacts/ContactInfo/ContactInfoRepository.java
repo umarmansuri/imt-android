@@ -1,4 +1,4 @@
-package its.my.time.data.bdd.contactsOld.ContactInfo;
+package its.my.time.data.bdd.contacts.ContactInfo;
 
 import its.my.time.data.bdd.DatabaseHandler;
 
