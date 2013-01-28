@@ -1,12 +1,15 @@
 package its.my.time.pages.editable.events.plugins.participants;
 
 import its.my.time.R;
-import its.my.time.data.bdd.contacts.ContactBean;
-import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
+import its.my.time.data.bdd.contactsOld.ContactBean;
+import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoBean;
+import its.my.time.util.ContactsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -22,21 +25,58 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 
 	private ArrayList<ContactBean> mOriginalValues;
 	private ArrayList<ContactBean> contacts;
-	private int total;
+	private Context context;
 
-	public ContactAdapter(ArrayList<ContactBean> contacts) {
-		this.mOriginalValues = contacts;
+	public ContactAdapter(Context context) {
+		mOriginalValues = new ArrayList<ContactBean>();
 
-		total = 0;
-		for (ContactBean contactBean : contacts) {
-			total+=1;
-			total+= contactBean.getInfos().size() - 1;
-		}
+		this.context = context;
+		new LoadContact().execute();
 	}
 
 	@Override
 	public int getCount() {
+		int total = 0;
+		for (ContactBean contactBean : contacts) {
+			total+= contactBean.getInfos().size();
+		}
 		return total;
+	}
+
+	public ContactBean getContactAt(int position) {
+		int res = 0;
+		for (ContactBean contact : contacts) {
+			if(res == position) {
+				return contact;
+			} else {
+				res++;
+				for (int i = 1; i < contact.getInfos().size(); i++) {
+					if(res == position) {
+						return contact;
+					}
+					res++;
+				}
+			}
+		}
+		return null;
+	}
+
+	public ContactInfoBean getContactInfoAt(int position) {
+		int res = 0;
+		for (ContactBean contact : contacts) {
+			if(res == position) {
+				return contact.getInfos().get(0);
+			} else {
+				res++;
+				for (int i = 1; i < contact.getInfos().size(); i++) {
+					if(res == position) {
+						return contact.getInfos().get(i);
+					}
+					res++;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -100,8 +140,8 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 		((TextView)v.findViewById(R.id.text2)).setText(contact.getInfos().get(0).getValue());
 		return v;
 	}
-	
-	
+
+
 
 	@Override
 	public Filter getFilter() {
@@ -151,5 +191,23 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 		};
 		return filter;
 	}
+
+	public class LoadContact extends AsyncTask<Void, Void, ArrayList<ContactBean>> {
+
+		@Override
+		protected ArrayList<ContactBean> doInBackground(Void... params) {
+			return ContactsUtil.getAll(context);
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<ContactBean> result) {
+			mOriginalValues = result;
+		}
+
+
+
+
+	}
+
 
 }

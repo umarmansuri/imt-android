@@ -207,8 +207,7 @@ public class DayView extends BaseView {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			final RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) v
-					.getLayoutParams();
+			final RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) v.getLayoutParams();
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				if (this.lastY != -100000) {
 					final float topMargin = layout.topMargin + event.getRawY()
@@ -257,8 +256,7 @@ public class DayView extends BaseView {
 				this.draggedView.setOnTouchListener(null);
 				this.lastY = -100000;
 				this.lastLigne = -1;
-				DayView.this.mainScroll
-						.requestDisallowInterceptTouchEvent(false);
+				DayView.this.mainScroll.requestDisallowInterceptTouchEvent(false);
 				reloadEventLittleView(this.draggedView);
 			}
 			return true;

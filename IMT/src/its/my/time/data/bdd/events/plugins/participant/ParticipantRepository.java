@@ -11,21 +11,19 @@ import android.database.Cursor;
 
 public class ParticipantRepository extends DatabaseHandler {
 
-	public static final int KEY_INDEX_ID = 0;
-	public static final int KEY_INDEX_UID = 1;
-	public static final int KEY_INDEX_EID = 2;
+	public static final int KEY_INDEX_EID = 0;
+	public static final int KEY_INDEX_CONTACT_INFO_ID = 1;
 
-	public static final String KEY_ID = "KEY_ID";
-	public static final String KEY_UID = "KEY_UID";
 	public static final String KEY_EID = "KEY_EID";
+	public static final String KEY_CONTACT_INFO_ID = "KEY_CONTACT_INFO_ID";
 
 	public static final String DATABASE_TABLE = "participant";
 
 	public static final String CREATE_TABLE = "create table " + DATABASE_TABLE
-			+ "(" + KEY_ID + " INTEGER primary key autoincrement," + KEY_UID
-			+ " INTEGER not null," + KEY_EID + " INTEGER not null);";
+			+ "(" + KEY_EID + " INTEGER not null," 
+			+ KEY_CONTACT_INFO_ID + " INTEGER not null);";
 
-	private final String[] allAttr = new String[] { KEY_ID, KEY_UID, KEY_EID };
+	private final String[] allAttr = new String[] { KEY_EID, KEY_CONTACT_INFO_ID};
 
 	public ParticipantRepository(Context context) {
 		super(context);
@@ -47,9 +45,8 @@ public class ParticipantRepository extends DatabaseHandler {
 
 	public ParticipantBean convertCursorToObject(Cursor c) {
 		final ParticipantBean comment = new ParticipantBean();
-		comment.setId(c.getInt(KEY_INDEX_ID));
-		comment.setUid(c.getInt(KEY_INDEX_UID));
 		comment.setEid(c.getInt(KEY_INDEX_EID));
+		comment.setIdContactInfo(c.getInt(KEY_INDEX_CONTACT_INFO_ID));
 		return comment;
 	}
 
@@ -63,40 +60,21 @@ public class ParticipantRepository extends DatabaseHandler {
 		return event;
 	}
 
-	public long insertcomment(ParticipantBean comment) {
+	public long insertParticipant(ParticipantBean comment) {
 		final ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_EID, comment.getEid());
-		initialValues.put(KEY_UID, comment.getUid());
-		initialValues.put(KEY_ID, comment.getId());
+		initialValues.put(KEY_CONTACT_INFO_ID, comment.getIdContactInfo());
 		open();
 		final long res = this.db.insert(DATABASE_TABLE, null, initialValues);
 		close();
 		return res;
 	}
 
-	public boolean deletecomment(long rowId) {
+	public boolean deleteParticipant(long eid, long contactInfoId) {
 		open();
 		final boolean res = this.db.delete(DATABASE_TABLE,
-				KEY_ID + "=" + rowId, null) > 0;
+				KEY_EID + "=" + eid + " AND " + KEY_CONTACT_INFO_ID + "=" + contactInfoId, null) > 0;
 		close();
-		return res;
-	}
-
-	public ParticipantBean getAllcomment() {
-		open();
-		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, null,
-				null, null, null, null);
-		final ParticipantBean res = convertCursorToOneObject(c);
-		close();
-		return res;
-	}
-
-	public ParticipantBean getById(long id) {
-		open();
-		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, KEY_ID
-				+ "=?", new String[] { "" + id }, null, null, null);
-		close();
-		final ParticipantBean res = convertCursorToOneObject(c);
 		return res;
 	}
 

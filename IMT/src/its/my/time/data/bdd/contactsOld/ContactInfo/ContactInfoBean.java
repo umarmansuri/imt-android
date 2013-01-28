@@ -1,4 +1,4 @@
-package its.my.time.data.bdd.contacts.ContactInfo;
+package its.my.time.data.bdd.contactsOld.ContactInfo;
 
 public class ContactInfoBean {
 	public static final int TYPE_MAIL = 0;

@@ -1,8 +1,8 @@
 package its.my.time.util;
 
 import its.my.time.R;
-import its.my.time.data.bdd.contacts.ContactBean;
-import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
+import its.my.time.data.bdd.contactsOld.ContactBean;
+import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoBean;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -20,6 +20,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.RawContacts;
 import android.provider.ContactsContract.RawContacts.Entity;
@@ -31,32 +33,46 @@ public class ContactsUtil {
 	private static final String TAG = "ContactsUtil";
 	private static ContentResolver mContentResolver = null;
 
-	public static ContentProviderResult[] addContact(Context context, Account account, String name) {
-		Log.i(TAG, "Adding contact: " + name);
+	public static ContentProviderResult[] addContact(Context context, Account account, ContactBean contact) {
 		ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
 
 		//Create our RawContact
 		ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(RawContacts.CONTENT_URI);
 		builder.withValue(RawContacts.ACCOUNT_NAME, account.name);
 		builder.withValue(RawContacts.ACCOUNT_TYPE, account.type);
-		builder.withValue(RawContacts.SYNC1, name);
+		builder.withValue(RawContacts.SYNC1, contact.getNom() + " " + contact.getPrenom());
 		operationList.add(builder.build());
 
 		//Create a Data record of common type 'StructuredName' for our RawContact
 		builder = ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI);
 		builder.withValueBackReference(ContactsContract.CommonDataKinds.StructuredName.RAW_CONTACT_ID, 0);
 		builder.withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE);
-		builder.withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name);
+		builder.withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getNom() + " " + contact.getPrenom());
+		builder.withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, contact.getPrenom());
+		builder.withValue(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME, contact.getNom());
 		operationList.add(builder.build());
 
 		//Create a Data record of custom type "vnd.android.cursor.item/vnd.fm.last.android.profile" to display a link to the Last.fm profile
 		builder = ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI);
 		builder.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0);
 		builder.withValue(ContactsContract.Data.MIMETYPE, context.getString(R.string.contacts_mime_type));
-		builder.withValue(ContactsContract.Data.DATA1, name);
+		builder.withValue(ContactsContract.Data.DATA1, contact.getNom() + " " + contact.getPrenom());
 		builder.withValue(ContactsContract.Data.DATA2, context.getString(R.string.contacts_profil));
 		builder.withValue(ContactsContract.Data.DATA3, context.getString(R.string.contacts_view_profil));
 		operationList.add(builder.build());
+
+		for (ContactInfoBean info : contact.getInfos()) {
+			builder = ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI);
+			builder.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0);
+			if(info.getType() == ContactInfoBean.TYPE_MAIL) {
+				builder.withValue(ContactsContract.Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
+				builder.withValue(Email.ADDRESS, info.getValue());
+			} else if(info.getType() == ContactInfoBean.TYPE_PHONE) {
+				builder.withValue(ContactsContract.Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
+				builder.withValue(Phone.NUMBER, info.getValue());
+			}
+			operationList.add(builder.build());
+		}
 
 		try {
 			mContentResolver = context.getContentResolver();
@@ -105,83 +121,92 @@ public class ContactsUtil {
 	}
 
 
-	public static void testUpdate(Context context, Account account) {
-		ArrayList<Long> localContactsId = new ArrayList<Long>();
-		mContentResolver = context.getContentResolver();
-		Log.i(TAG, "performSync: " + account.toString());
-
-		// Load the local Last.fm contacts
-		Uri rawContactUri = RawContacts.CONTENT_URI.buildUpon().appendQueryParameter(RawContacts.ACCOUNT_NAME, account.name).appendQueryParameter(
-				RawContacts.ACCOUNT_TYPE, account.type).build();
-		Cursor c1 = mContentResolver.query(rawContactUri, new String[] { BaseColumns._ID, RawContacts.SYNC1 }, null, null, null);
-		while (c1.moveToNext()) {
-			localContactsId.add(c1.getLong(0));
-		}
-
-		ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
-		try {
-			for (long id: localContactsId) {
-				updateContactStatus(context, operationList, id, true);
-			}
-			if(operationList.size() > 0)
-				mContentResolver.applyBatch(ContactsContract.AUTHORITY, operationList);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-	}
-
 	public static ArrayList<ContactBean> getAll(Context context) {
 		ArrayList<ContactBean> result = new ArrayList<ContactBean>();
-
 		Cursor cursor = context.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null); 
 		while (cursor.moveToNext()) { 
 			long contactId = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 			String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 			Bitmap image = loadContactPhoto(context, contactId);
 			Cursor emails = context.getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
-
-			ContactBean contact = new ContactBean();
-			contact.setNom(contactName);
-			contact.setImage(image);
-			List<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
-			while (emails.moveToNext()) {
-				String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-				ContactInfoBean bean = new ContactInfoBean();
-				bean.setContactId(contactId);
-				bean.setType(ContactInfoBean.TYPE_MAIL);
-				bean.setValue(emailAddress);
-				infos.add(bean);
+			if(emails.getCount() > 0) {
+				ContactBean contact = new ContactBean();
+				contact.setNom(contactName);
+				contact.setImage(image);
+				contact.setRawContactId((int) contactId);
+				List<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
+				while (emails.moveToNext()) {
+					long emailId = emails.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email._ID));
+					String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+					ContactInfoBean bean = new ContactInfoBean();
+					bean.setContactId(contactId);
+					bean.setType(ContactInfoBean.TYPE_MAIL);
+					bean.setValue(emailAddress);
+					bean.setId((int) emailId);
+					infos.add(bean);
+				}
+				contact.setInfos(infos);
+				result.add(contact);
 			}
-			contact.setInfos(infos);
-			result.add(contact);
 			emails.close();
 		}
 		cursor.close();
 		return result;
 	}
 
-	public static Bitmap loadContactPhoto(Context context, long id) {
-		 Uri contactUri = ContentUris.withAppendedId(Contacts.CONTENT_URI, id);
-	     Uri photoUri = Uri.withAppendedPath(contactUri, Contacts.Photo.CONTENT_DIRECTORY);
-	     Cursor cursor = context.getContentResolver().query(photoUri,
-	          new String[] {Contacts.Photo.PHOTO}, null, null, null);
-	     if (cursor == null) {
-	         return null;
-	     }
-	     try {
-	         if (cursor.moveToFirst()) {
-	             byte[] data = cursor.getBlob(0);
-	             if (data != null) {
-	                 return BitmapFactory.decodeStream(new ByteArrayInputStream(data));
-	             }
-	         }
-	     } finally {
-	         cursor.close();
-	     }
-		return null;
+	public static ContactInfoBean getContactInfoById(Context context, long id) {
+		Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email._ID + " = " + id, null, null);
+		if(cursor.getCount() > 0) {
+			Log.d(TAG,"Count = " + cursor.getCount());
+			cursor.moveToNext();
+
+
+			ContactInfoBean contactInfo = new ContactInfoBean();
+			contactInfo.setContactId(cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID)));
+			contactInfo.setValue(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
+			return contactInfo;
+		} else {
+			return null;
+		}
 	}
 
+	public static ContactBean getContatById(Context context, int id) {
+		ContentResolver cr = context.getContentResolver();
+		Cursor cursor = cr.query( 
+				ContactsContract.Contacts.CONTENT_URI, 
+				null,
+				ContactsContract.Contacts._ID + " = ?", 
+				new String[]{String.valueOf(id)}, null); 
+		if(cursor.getCount() > 0) {
+			cursor.moveToNext();
+			ContactBean contact = new ContactBean();
+			contact.setNom(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+			contact.setImage(loadContactPhoto(context, id));
+			return contact;
+		} else {
+			return null;
+		}
+	}
 
+	public static Bitmap loadContactPhoto(Context context, long id) {
+		Uri contactUri = ContentUris.withAppendedId(Contacts.CONTENT_URI, id);
+		Uri photoUri = Uri.withAppendedPath(contactUri, Contacts.Photo.CONTENT_DIRECTORY);
+		Cursor cursor = context.getContentResolver().query(photoUri,
+				new String[] {Contacts.Photo.PHOTO}, null, null, null);
+		if (cursor == null) {
+			return null;
+		}
+		try {
+			if (cursor.moveToFirst()) {
+				byte[] data = cursor.getBlob(0);
+				if (data != null) {
+					return BitmapFactory.decodeStream(new ByteArrayInputStream(data));
+				}
+			}
+		} finally {
+			cursor.close();
+		}
+		return null;
+	}
 
 }

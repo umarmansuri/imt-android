@@ -3,6 +3,8 @@ package its.my.time;
 import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
+import its.my.time.data.bdd.contactsOld.ContactBean;
+import its.my.time.data.bdd.contactsOld.ContactInfo.ContactInfoBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
@@ -12,6 +14,7 @@ import its.my.time.util.ContactsUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.accounts.Account;
@@ -21,7 +24,6 @@ import android.content.ContentProviderResult;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -46,10 +48,9 @@ public class SplashActivity extends Activity {
 				android.R.anim.fade_out);
 		setTheme(android.R.style.Theme_Black_NoTitleBar);
 		super.onCreate(savedInstanceState);
+				
 		setContentView(R.layout.activity_splash);
-
 		this.clickListener = new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				if (v == SplashActivity.this.btnConnexion) {
@@ -204,13 +205,36 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				/*Account account = new Account("a", getString(R.string.ACCOUNT_TYPE));
+				Account account = new Account("a", getString(R.string.ACCOUNT_TYPE));
 				AccountManager am = AccountManager.get(SplashActivity.this);
 				accountCreated = am.addAccountExplicitly(account, "a", null);
 				
-				ContentProviderResult[] results = ContactsUtil.addContact(SplashActivity.this, account, "Adrien Hugon");
+				ContactsUtil.getAll(getApplicationContext());
 				
-				ContactsUtil.testUpdate(SplashActivity.this, account);*/
+				ContactBean contact = new ContactBean();
+				contact.setPrenom("aaaa");
+				contact.setNom("132123");
+				
+				ArrayList<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
+				ContactInfoBean info = new ContactInfoBean();
+				info.setType(ContactInfoBean.TYPE_MAIL);
+				info.setValue("ad.hugon@gmail.com");
+				infos.add(info);
+
+				info = new ContactInfoBean();
+				info.setType(ContactInfoBean.TYPE_PHONE);
+				info.setValue("06 17 45 44 62");
+				infos.add(info);
+
+				info = new ContactInfoBean();
+				info.setType(ContactInfoBean.TYPE_MAIL);
+				info.setValue("a.hugon@sciences-u-lyon.fr");
+				infos.add(info);
+				
+				contact.setInfos(infos);
+				
+				//ContentProviderResult[] results = ContactsUtil.addContact(SplashActivity.this, account, contact);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

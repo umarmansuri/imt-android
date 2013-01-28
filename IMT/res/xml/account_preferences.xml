@@ -1,13 +1,14 @@
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Test paramètres généraux" />
- 
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Paramètres du compte" />
+
     <PreferenceScreen
         android:key="account_settings"
-        android:title="Synchronisations et notifications"
-        android:summary="Un petit résumé">
+        android:summary="Notifications, synchronisation, etc..."
+        android:title="Paramètres du compte" >
         <intent
-            android:targetPackage="its.my.time"
-            android:targetClass="its.my.time.pages.editable.profil.ProfilActivity" />
+            android:targetClass="its.my.time.pages.editable.profil.ProfilActivity"
+            android:targetPackage="its.my.time" />
     </PreferenceScreen>
+
 </PreferenceScreen>
