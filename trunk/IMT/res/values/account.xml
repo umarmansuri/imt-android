@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="ACCOUNT_TYPE">its.my.time.android.account</string>
-    <string name="account_preference_title">Paramètres</string>
     <string name="account_preference_screen_key">account_settings</string>
     <string name="account_preference_screen_title">Paramètres du compte</string>
     <string name="account_preference_screen_summary">Délai de synchronisation, notification, etc.</string>
-    
     <string name="contacts_mime_type">vnd.android.cursor.item/vnd.its.my.time.android.profile</string>
     <string name="contacts_view_profil">Voir la profil</string>
     <string name="contacts_profil">Profil My-Time</string>
-    
+    <string name="preference_notification_key">preference_key_notification</string>
+    <string name="preference_notification_title">preference_key_notification</string>
+    <string name="preference_contacts_delai_key">preference_key_contacts_delai</string>
+    <string name="preference_sync_delai_values">preference_key_sync_delai</string>
+
+    <string-array name="preference_delai_values">
+        <item>30 minutes</item>
+        <item>1 heure</item>
+        <item>2 heures</item>
+        <item>4 heures</item>
+        <item>12 heures</item>
+        <item>24 heures</item>
+    </string-array>
+
 </resources>

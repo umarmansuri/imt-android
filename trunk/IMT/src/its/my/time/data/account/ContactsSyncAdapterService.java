@@ -28,7 +28,7 @@ import android.util.Log;
 public class ContactsSyncAdapterService extends Service {
 	private static final String TAG = "ContactsSyncAdapterService";
 	private static SyncAdapterImpl sSyncAdapter = null;
-	
+
 	public ContactsSyncAdapterService() {
 		super();
 	}
@@ -41,15 +41,15 @@ public class ContactsSyncAdapterService extends Service {
 	}
 
 	private SyncAdapterImpl getSyncAdapter() {
-		if (sSyncAdapter == null)
+		if (sSyncAdapter == null){
 			sSyncAdapter = new SyncAdapterImpl(this);
+		}
 		return sSyncAdapter;
 	}
 
 	private static void performSync(Context context, Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) throws OperationCanceledException {
 		ContentResolver mContentResolver = context.getContentResolver();
-		Log.i(TAG, "performSync: " + account.toString());
-		//This is where the magic will happen!
+		
 	}
 
 
@@ -63,6 +63,7 @@ public class ContactsSyncAdapterService extends Service {
 
 		@Override
 		public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
+
 			try {
 				ContactsSyncAdapterService.performSync(mContext, account, extras, authority, provider, syncResult);
 			} catch (OperationCanceledException e) {

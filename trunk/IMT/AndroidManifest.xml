@@ -39,7 +39,7 @@
         
         <service
             android:name=".data.account.AccountAuthenticatorService"
-            android:exported="true"
+            android:exported="false"
             android:process=":auth" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />

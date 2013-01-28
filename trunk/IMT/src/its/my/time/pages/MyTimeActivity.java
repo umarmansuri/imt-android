@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import com.fonts.mooncake.MooncakeIcone;
 
@@ -63,7 +62,6 @@ public abstract class MyTimeActivity extends MenuActivity{
 		if(group == menuGroupeDeconnexion) {
 			ActivityUtil.logout(this);
 		} else if(group == menuGroupePropos) {
-			Toast.makeText(this, "A propos...", Toast.LENGTH_SHORT).show();
 		}
 	}
 

@@ -55,7 +55,6 @@ public class ActivityUtil {
 	public static void startComptesActivity(Context context) {
 		final Intent intent = new Intent(context, ComptesActivity.class);
 		context.startActivity(intent);
-		Log.d("ActivityUtil","Compte activity started!");
 	}
 
 	public static void startCompteActivity(Context context, long id) {

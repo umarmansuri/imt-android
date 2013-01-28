@@ -7,10 +7,12 @@ import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 /**
  * Authenticator service that returns a subclass of AbstractAccountAuthenticator in onBind()
@@ -19,11 +21,7 @@ public class AccountAuthenticatorService extends Service {
 	
 	private static final String TAG = "AccountAuthenticatorService";
 	private static AccountAuthenticatorImpl sAccountAuthenticator = null;
-
-	public AccountAuthenticatorService() {
-		super();
-	}
-
+	
 	public IBinder onBind(Intent intent) {
 		IBinder ret = null;
 		if (intent.getAction().equals(android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT))
@@ -50,18 +48,23 @@ public class AccountAuthenticatorService extends Service {
 		 *  otherwise our activity will just pass the user's credentials on to the account manager.
 		 */
 		@Override
-		public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options)
-				throws NetworkErrorException {
+		public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options)throws NetworkErrorException {
 			Bundle reply = new Bundle();
 
 			Intent i = new Intent(mContext, ProfilActivity.class);
-			i.setAction("fm.last.android.sync.LOGIN");
 			i.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
 			reply.putParcelable(AccountManager.KEY_INTENT, i);
 
-			return reply;
+			return null;
 		}
 
+		@Override
+		public Bundle getAccountRemovalAllowed(AccountAuthenticatorResponse response, Account account) throws NetworkErrorException {
+			Bundle result = new Bundle();
+			result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false);
+			return result;
+		}
+		
 		@Override
 		public Bundle confirmCredentials(AccountAuthenticatorResponse response, Account account, Bundle options) {
 			return null;
@@ -69,7 +72,15 @@ public class AccountAuthenticatorService extends Service {
 
 		@Override
 		public Bundle editProperties(AccountAuthenticatorResponse response, String accountType) {
-			return null;
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.setComponent(new ComponentName("com.android.providers.subscribedfeeds","com.android.settings.ManageAccountsSettings"));
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			
+			Bundle bundle = new Bundle();
+			bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+			
+
+			return bundle;
 		}
 
 		@Override
@@ -84,6 +95,7 @@ public class AccountAuthenticatorService extends Service {
 
 		@Override
 		public Bundle hasFeatures(AccountAuthenticatorResponse response, Account account, String[] features) throws NetworkErrorException {
+			
 			return null;
 		}
 
