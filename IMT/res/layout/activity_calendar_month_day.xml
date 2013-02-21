@@ -24,23 +24,23 @@
             android:textColor="@color/page_month_day_text_color" />
     </LinearLayout>
 
-
-        <ScrollView
-            android:id="@+id/activity_calendar_month_day_liste_scroll"
- android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/activity_calendar_month_day_liste_scroll"
+        android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_alignParentBottom="true"
+        android:clickable="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/activity_calendar_month_day_first" >
 
-            <LinearLayout
-                android:id="@+id/activity_calendar_month_day_liste"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:dividerPadding="5dp"
-                android:orientation="vertical" >
-            </LinearLayout>
-        </ScrollView>
+        <LinearLayout
+            android:id="@+id/activity_calendar_month_day_liste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerPadding="5dp"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -150,8 +150,8 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 				List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
 				listEventsFinal = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
 
+				final LinearLayout layoutListe = (LinearLayout) layoutDay.findViewById(R.id.activity_calendar_month_day_liste);
 				if(listEventsFinal.size() > 0) {
-					final LinearLayout layoutListe = (LinearLayout) layoutDay.findViewById(R.id.activity_calendar_month_day_liste);
 					ViewGroup eventLayout;
 					TextView textEvent;
 					for (int nbEvents = 0; nbEvents < listEventsFinal.size(); nbEvents++) {
@@ -178,7 +178,6 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 					calListener.set(Calendar.HOUR_OF_DAY, 8);
 					calListener.set(Calendar.HOUR_OF_DAY, 10);
 
-
 					OnClickListener clickListener = new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -195,13 +194,8 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 					};
 					layoutDay.setOnClickListener(clickListener );
 					layoutDay.setOnLongClickListener(longCLickListener);
-
-
-					View v = layoutDay.findViewById(R.id.activity_calendar_month_day_liste_scroll);
-					if(v != null) {
-						v.setOnClickListener(clickListener );
-						v.setOnLongClickListener(longCLickListener);
-					}
+					layoutListe.setOnClickListener(clickListener );
+					layoutListe.setOnLongClickListener(longCLickListener);
 				}
 			}
 		}
