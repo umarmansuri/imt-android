@@ -6,7 +6,11 @@ import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
 import its.my.time.pages.editable.events.plugins.EditableLittleView;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.fonts.mooncake.MooncakeIcone;
 
 public class ParticipantsView extends EditableLittleView {
 
@@ -26,7 +30,21 @@ public class ParticipantsView extends EditableLittleView {
 	}
 
 	private void initialiseDetails() {
-		((TextView) findViewById(R.id.event_participant_title)).setText(contact.getNom() + " " + contact.getPrenom());
+		super.initialiseValues();
+		((TextView) findViewById(R.id.event_participant_title)).setText(contact.getNom());
 		((TextView) findViewById(R.id.event_participant_details)).setText(contactInfo.getValue());
+		
+		ViewGroup imageParent = (ViewGroup)findViewById(R.id.event_participant_image);
+		if(contact.getImage()!= null) {
+			ImageView imageView = new ImageView(getContext());
+			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			imageView.setImageBitmap(contact.getImage());
+
+			imageParent.removeAllViews();
+			imageParent.addView(imageView);
+		} else {
+			MooncakeIcone imageView = ((MooncakeIcone)(imageParent).getChildAt(0));
+			imageView.setIconeRes(MooncakeIcone.icon_user);
+		}
 	}
 }

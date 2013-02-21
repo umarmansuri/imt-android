@@ -20,7 +20,6 @@ import java.util.Calendar;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.ContentProviderResult;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -122,14 +121,14 @@ public class SplashActivity extends Activity {
 		bean.sethFin(calFin2);
 		bean.setTypeId(Types.Event.MEETING);
 		bean.setDetailsId(0); 
-		long res = adapter.insertEvent(bean);
+		adapter.insertEvent(bean);
 
 		bean.setTitle("Deuxième"); 
-		res =adapter.insertEvent(bean);
+		adapter.insertEvent(bean);
 
 		bean.setTitle("Et un petit dernier..."); 
 		bean.setId(2); 
-		res = adapter.insertEvent(bean);
+		adapter.insertEvent(bean);
 
 
 
@@ -143,19 +142,19 @@ public class SplashActivity extends Activity {
 		bean.sethFin(calFin2);
 		bean.setTypeId(Types.Event.CALL);
 		bean.setDetailsId(0); 
-		res = adapter.insertEvent(bean);
+		adapter.insertEvent(bean);
 
 		bean.setTitle("Deuxième"); 
-		res = adapter.insertEvent(bean); 
+		adapter.insertEvent(bean); 
 		bean.setTitle("Troisieme...");
 		bean.setId(5); 
-		res = adapter.insertEvent(bean);
+		adapter.insertEvent(bean);
 		bean.setTitle("Un autre");
 		bean.setId(6); 
-		res = adapter.insertEvent(bean);
+		adapter.insertEvent(bean);
 		bean.setTitle("Et le dernier!!!!!!!!!!"); 
 		bean.setId(7); 
-		res = adapter.insertEvent(bean);
+		adapter.insertEvent(bean);
 	}
 
 	private void connexion() {
@@ -194,6 +193,7 @@ public class SplashActivity extends Activity {
 	}
 
 	private class LoadMainActivity extends AsyncTask<Void, Void, Void> {
+		@SuppressWarnings("unused")
 		private boolean accountCreated;
 
 		@Override
@@ -212,8 +212,8 @@ public class SplashActivity extends Activity {
 				ContactsUtil.getAll(getApplicationContext());
 				
 				ContactBean contact = new ContactBean();
-				contact.setPrenom("aaaa");
-				contact.setNom("132123");
+				contact.setPrenom("Adrien");
+				contact.setNom("Queriaud");
 				
 				ArrayList<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
 				ContactInfoBean info = new ContactInfoBean();

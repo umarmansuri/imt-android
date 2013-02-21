@@ -17,7 +17,6 @@ public abstract class BaseActivity extends MyTimeActivity {
 	public static final int INDEX_MENU_SAVE = 1;
 	public static final int INDEX_MENU_CANCEL = 2;
 	
-	private boolean isNew;
 
 	@Override
 	public void onCreate(Bundle bundle) {

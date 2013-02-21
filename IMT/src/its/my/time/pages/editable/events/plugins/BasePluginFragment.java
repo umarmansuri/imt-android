@@ -2,7 +2,6 @@ package its.my.time.pages.editable.events.plugins;
 
 import its.my.time.pages.editable.events.BaseEventActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockFragment;
 

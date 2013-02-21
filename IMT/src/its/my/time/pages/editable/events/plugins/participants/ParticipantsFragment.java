@@ -30,11 +30,20 @@ import com.fonts.mooncake.MooncakeIcone;
 
 public class ParticipantsFragment extends BasePluginFragment {
 
-	private static final int PICK_CONTACT = 0;
 	private ListView mListParticipant;
 	private MooncakeIcone mBtnAdd;
 	private AutoCompleteTextView mEditSearch;
+
 	private ContactAdapter adapterContact;
+
+	private List<ParticipantBean> participants;
+	private ParticipantRepository repo;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		repo = new ParticipantRepository(getActivity());
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,22 +56,20 @@ public class ParticipantsFragment extends BasePluginFragment {
 		mBtnAdd = (MooncakeIcone)mView.findViewById(R.id.event_participants_ajout_btn);
 		mBtnAdd.setIconeRes(MooncakeIcone.icon_users);
 
-		
-		
-		
 		mEditSearch = (AutoCompleteTextView)mView.findViewById(R.id.event_participants_ajout_text);
 		mEditSearch.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				ParticipantBean participant = new ParticipantBean();
 				ContactInfoBean contatcInfo = adapterContact.getContactInfoAt(position);
 				participant.setIdContactInfo(contatcInfo.getId());
 				participant.setEid(getParentActivity().getEvent().getId());
-				new ParticipantRepository(getActivity()).insertParticipant(participant);
+				repo.insertParticipant(participant);
 				mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
+				mEditSearch.setText("");
 			}
 		});
-		
+
 		return mView;
 	}
 
@@ -72,7 +79,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 		mEditSearch.setAdapter(adapterContact);
 		super.onResume();
 	}
-	
+
 	@Override
 	public String getTitle() {
 		return "Participants";
@@ -80,25 +87,22 @@ public class ParticipantsFragment extends BasePluginFragment {
 
 	@Override
 	public void launchEdit() {
-		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				getParentActivity().getEvent().getId(), true));
+		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), true));
 	}
 
 	@Override
 	public void launchSave() {
-		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				getParentActivity().getEvent().getId(), true));
+		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
 	}
 
 	@Override
 	public void launchCancel() {
-		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),
-				getParentActivity().getEvent().getId(), true));
+		this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
 	}
 
 	@Override
 	public boolean isEditable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -116,15 +120,14 @@ public class ParticipantsFragment extends BasePluginFragment {
 		private HashMap<Long, ContactBean> contacts;
 		private List<ContactInfoBean> contactsInfo;
 		private final boolean isInEditMode;
-		private List<ParticipantBean> participants;
 
 		public ParticipantsAdapter(Context context, int id, boolean isInEditMode) {
 			this.isInEditMode = isInEditMode;
-			
+
 			contacts = new HashMap<Long, ContactBean>();
 			contactsInfo = new ArrayList<ContactInfoBean>();
-			
-			participants = new ParticipantRepository(getActivity()).getAllByEid(getParentActivity().getEvent().getId());
+
+			participants = repo.getAllByEid(getParentActivity().getEvent().getId());
 			if (participants != null) {
 				for (ParticipantBean participant : participants) {
 					ContactInfoBean contactInfo = ContactsUtil.getContactInfoById(getActivity(), participant.getIdContactInfo());
@@ -136,23 +139,27 @@ public class ParticipantsFragment extends BasePluginFragment {
 			}
 		}
 
-		@Override
-		public int getCount() {
-			return contactsInfo.size();
-		}
+		@Override public int getCount() {return contactsInfo.size();}
 
 		@Override
 		public View getView(final int position, View convertView,ViewGroup parent) {
 			ContactInfoBean contactInfo = contactsInfo.get(position);
-			ContactBean contact = contacts.get((int) contactInfo.getContactId());
+			ContactBean contact = contacts.get(contactInfo.getContactId());
 			final ParticipantsView view = new ParticipantsView(getActivity(),contact, contactInfo, this.isInEditMode);
-			view.setOnDeleteClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					new ParticipantRepository(getActivity()).deleteParticipant(participants.get(position).getEid(),participants.get(position).getIdContactInfo());
-					ParticipantsFragment.this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), true));
-				}
-			});
+
+			if(isInEditMode) {
+				view.findViewById(R.id.delete).setVisibility(View.VISIBLE);
+				view.setOnDeleteClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						repo.deleteParticipant(getParentActivity().getEvent().getId(), participants.get(position).getIdContactInfo());
+						participants.remove(position);
+						ParticipantsFragment.this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), true));
+					}
+				});				
+			} else {
+				view.findViewById(R.id.delete).setVisibility(View.GONE);
+			}
 			return view;
 		}
 
@@ -183,7 +190,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 
 		@Override
 		public boolean isEmpty() {
-			if (this.participants == null | this.participants.size() == 0) {
+			if (participants == null | participants.size() == 0) {
 				return true;
 			} else {
 				return false;

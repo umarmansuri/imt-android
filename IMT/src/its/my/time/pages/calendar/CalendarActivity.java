@@ -43,7 +43,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private static final int ID_PAGER = 888889;
 	private static final int DURATION_WAITING_END = 300;
 
-	private static final int INDEX_MENU_AGENDA_TODAY = 0;
 	private static final int INDEX_MENU_AGENDA_MONTH = 1;
 	private static final int INDEX_MENU_AGENDA_DAY = 2;
 	private static final int INDEX_MENU_AGENDA_LISTE = 3;
@@ -104,7 +103,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		this.mTextTitle.setGravity(Gravity.CENTER);
 		this.mTextTitle.setTextSize(20);
 		this.mTextTitle.setLayoutParams(new LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		this.mTextTitle.setTextColor(getResources().getColor(R.color.grey));
 		mActionBar.setCustomView(this.mTextTitle);
 	}

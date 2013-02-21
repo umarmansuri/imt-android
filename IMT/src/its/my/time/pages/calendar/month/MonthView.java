@@ -14,15 +14,14 @@ import its.my.time.util.PreferencesUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.util.MonthDisplayHelper;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -33,8 +32,8 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 
 	private final MonthDisplayHelper helper;
 	private final OnDayClickListener listener;
-	private HashMap<Integer, CompteBean> comptes;
-	private HashMap<Integer, List<View>> eventLittleViews;
+	private SparseArray<CompteBean> comptes;
+	private SparseArray<List<View>> eventLittleViews;
 	private CompteRepository compteRepo;
 
 	public MonthView(Context context, Calendar cal, OnDayClickListener listener) {
@@ -54,8 +53,8 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 		List<CompteBean> listComptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid(getContext()));
 
 		if(comptes == null) {
-			comptes = new HashMap<Integer, CompteBean>();
-			eventLittleViews = new HashMap<Integer, List<View>>();
+			comptes = new SparseArray<CompteBean>();
+			eventLittleViews = new SparseArray<List<View>>();
 			for (CompteBean compte : listComptes) {
 				comptes.put(Integer.valueOf(compte.getId()), compte);
 				eventLittleViews.put(compte.getId(), new ArrayList<View>());
@@ -72,6 +71,7 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 		return DateUtil.getMonth(this.helper.getYear(), this.helper.getMonth());
 	}
 
+	@SuppressWarnings("deprecation")
 	private void addStyleToday(View view) {
 		Drawable dr = view.getBackground();
 		dr = dr.mutate();

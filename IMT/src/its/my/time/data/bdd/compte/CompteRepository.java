@@ -156,12 +156,6 @@ public class CompteRepository extends DatabaseHandler {
 		}
 	}
 
-	private void compteRemoved(CompteBean compte) {
-		for (OnCompteChangedListener listener: onCompteChangedListeners) {
-			listener.onCompteRemoved(compte);
-		}
-	}
-
 	private void compteUpdated(CompteBean compte) {
 		for (OnCompteChangedListener listener: onCompteChangedListeners) {
 			listener.onCompteUpdated(compte);

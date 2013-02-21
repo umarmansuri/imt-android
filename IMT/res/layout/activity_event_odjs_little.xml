@@ -2,16 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_height_small">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/grabber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
         android:src="@drawable/grabber"
         android:contentDescription="Grabber" />
 
@@ -33,7 +31,7 @@
         android:id="@+id/event_odj_odjs"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"

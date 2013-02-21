@@ -87,7 +87,8 @@ public class ListEventAdapter extends SeparatedListAdapter {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			View view = super.getView(position, convertView, parent);
-			final Map<String, ?> map = (Map<String, ?>)getItem(position);;
+			@SuppressWarnings("unchecked")
+			final Map<String, ?> map = (Map<String, ?>)getItem(position);
 			int color = (Integer) map.get(EVENT_COLOR);
 			view.setBackgroundColor(color);
 			view.setOnClickListener(new OnClickListener() {

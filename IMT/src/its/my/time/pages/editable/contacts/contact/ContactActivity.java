@@ -1,5 +1,6 @@
 package its.my.time.pages.editable.contacts.contact;
 
+import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.editable.BaseActivity;
@@ -23,8 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-
-import com.actionbarsherlock.R;
 
 public class ContactActivity extends BaseActivity implements OnClickListener, TextWatcher, OnColorChangedListener {
 

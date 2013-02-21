@@ -12,14 +12,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 
 /**
  * Authenticator service that returns a subclass of AbstractAccountAuthenticator in onBind()
  */
 public class AccountAuthenticatorService extends Service {
 	
-	private static final String TAG = "AccountAuthenticatorService";
 	private static AccountAuthenticatorImpl sAccountAuthenticator = null;
 	
 	public IBinder onBind(Intent intent) {
