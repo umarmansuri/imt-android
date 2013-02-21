@@ -93,7 +93,6 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 			ligne = (LinearLayout) tabJour.getChildAt(i);
 
 			// cellule du numério de semaine
-
 			cal.set(this.helper.getYear(), this.helper.getMonth(),
 					this.helper.getDayAt(i, 0));
 
