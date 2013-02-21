@@ -2,11 +2,8 @@ package its.my.time.view.menu;
 
 import its.my.time.R;
 import its.my.time.view.ControledViewPager;
-import its.my.time.view.menu.ELVAdapter;
 import its.my.time.view.menu.ELVAdapter.MenuChildViewHolder;
 import its.my.time.view.menu.ELVAdapter.OnItemSwitchedListener;
-import its.my.time.view.menu.MenuGroupe;
-import its.my.time.view.menu.MenuObjet;
 
 import java.util.ArrayList;
 

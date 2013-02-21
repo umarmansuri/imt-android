@@ -163,30 +163,36 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 					mOriginalValues = new ArrayList<ContactBean>(contacts); // saves the original data in mOriginalValues
 				}
 
-				/********
-				 * 
-				 *  If constraint(CharSequence that is received) is null returns the mOriginalValues(Original) values
-				 *  else does the Filtering and returns FilteredArrList(Filtered)  
-				 *
-				 ********/
 				if (constraint == null || constraint.length() == 0) {
-
-					// set the Original result to return  
 					results.count = mOriginalValues.size();
 					results.values = mOriginalValues;
 				} else {
 					constraint = constraint.toString().toLowerCase();
 					for (int i = 0; i < mOriginalValues.size(); i++) {
 						ContactBean data = mOriginalValues.get(i);
-						if (data.getNom().toLowerCase().startsWith(constraint.toString())) {
+					
+						if(compareValue(data, constraint)) {
 							FilteredArrList.add(data);
 						}
+
 					}
-					// set the Filtered result to return
 					results.count = FilteredArrList.size();
 					results.values = FilteredArrList;
 				}
 				return results;
+			}
+
+			private boolean compareValue(ContactBean data,CharSequence constraint) {
+				if (data.getNom().toLowerCase().startsWith(constraint.toString())) {
+					return true;
+				} else {
+					for (ContactInfoBean info : data.getInfos()) {
+						if (info.getValue().toLowerCase().startsWith(constraint.toString())) {
+							return true;
+						}
+					}
+				}
+				return false;
 			}
 		};
 		return filter;

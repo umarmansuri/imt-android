@@ -9,7 +9,6 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 public class UtilisateurRepository extends DatabaseHandler {
 

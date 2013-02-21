@@ -1,5 +1,6 @@
 package its.my.time.pages.editable.profil;
 
+import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.R;
 
 public class ProfilActivity extends BaseActivity {
 

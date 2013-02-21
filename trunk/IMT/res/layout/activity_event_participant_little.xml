@@ -2,21 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_height_large" >
+    android:layout_height="@dimen/list_height_large"
+    android:background="#FFF" >
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/event_participant_image"
         android:layout_width="60dp"
-        android:layout_height="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_action_profil"
-        android:contentDescription="Image" />
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:padding="5dp" >
+
+        <com.fonts.mooncake.MooncakeIcone
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/light_grey"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </FrameLayout>
+
+    <com.fonts.mooncake.MooncakeIcone
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:paddingRight="10dp"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/text_size_medium" />
 
     <LinearLayout
         android:id="@+id/event_participant_details_layout"
         android:layout_width="0dip"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@+id/delete"
         android:layout_toRightOf="@+id/event_participant_image"
         android:orientation="vertical" >
 
@@ -26,7 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="25sp" />
+            android:textColor="@color/dark_grey"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/event_participant_details"
@@ -35,20 +62,8 @@
             android:layout_marginLeft="10dp"
             android:ellipsize="end"
             android:maxLines="3"
+            android:textColor="@color/dark_grey"
             android:textSize="@dimen/text_size_small" />
     </LinearLayout>
-
-    <com.fonts.mooncake.MooncakeIcone
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/event_participant_details_layout"
-        android:background="@color/white"
-        android:gravity="center"
-        android:paddingRight="10dp"
-        android:textColor="@color/grey"
-        android:textSize="@dimen/text_size_medium" />
 
 </RelativeLayout>

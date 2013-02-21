@@ -37,7 +37,7 @@ public class OdjFragment extends BasePluginFragment {
 			OdjBean odj = odjs.get(from);
 			odjs.remove(odj);
 			odjs.add(to, odj);
-			mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),true));
+			mListOdj.setAdapter(getOdjAdapter());
 		}
 	};
 
@@ -76,13 +76,12 @@ public class OdjFragment extends BasePluginFragment {
 				odj.setEid(getParentActivity().getEvent().getId());
 				odj.setOrder(mListOdj.getChildCount());
 				odjs.add(odj);
-				mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(), false));
+				mListOdj.setAdapter(getOdjAdapter());
 				mTextOdj.setText("");
 			}
 		});
 
 		layoutNew = mView.findViewById(R.id.event_layout_new_odj);
-		layoutNew.setVisibility(View.GONE);
 
 		return mView;
 	}
@@ -98,13 +97,13 @@ public class OdjFragment extends BasePluginFragment {
 
 	@Override
 	public void launchEdit() {
-		layoutNew.setVisibility(View.VISIBLE);
+		mTextOdj.setText("");
 		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),true));
 	}
 
 	@Override
 	public void launchSave() {
-		layoutNew.setVisibility(View.GONE);
+		mTextOdj.setText("");
 		OdjRepository repo = new OdjRepository(getActivity());
 		OdjBean odj;
 
@@ -130,6 +129,7 @@ public class OdjFragment extends BasePluginFragment {
 
 	@Override
 	public void launchCancel() {
+		mTextOdj.setText("");
 		odjs = null;
 		layoutNew.setVisibility(View.GONE);
 		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),false));

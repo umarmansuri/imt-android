@@ -1,5 +1,6 @@
 package its.my.time.pages.editable.events;
 
+import its.my.time.R;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.BaseActivity;
@@ -22,7 +23,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.actionbarsherlock.R;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 
@@ -46,7 +46,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 		if (this.event == null) {
 			this.event = new EventBaseBean();
-			this.event.setTypeId(Types.Event.TASK);
+			this.event.setTypeId(Types.Event.BASE);
 			this.event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
 			this.event.sethFin((Calendar) this.event.gethDeb().clone());
 			this.event.gethFin().add(Calendar.HOUR_OF_DAY, 2);

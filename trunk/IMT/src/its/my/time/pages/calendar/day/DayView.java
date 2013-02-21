@@ -270,11 +270,9 @@ public class DayView extends BaseView {
 		private int lastY = -100000;
 		private int lastLigne = -1;
 		private final EventLittleView parent;
-		private final Context context;
 
 		public ListenerChangeEventDuration(EventLittleView parent) {
 			this.parent = parent;
-			this.context = parent.getContext();
 		}
 
 		@Override

@@ -21,7 +21,6 @@ public class OdjView extends EditableLittleView {
 
 	private void initialiseDetails() {
 		super.initialiseValues();
-		((TextView) findViewById(R.id.event_odj_odjs)).setText(this.odj
-				.getValue());
+		((TextView) findViewById(R.id.event_odj_odjs)).setText(this.odj.getValue());
 	}
 }

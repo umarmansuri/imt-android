@@ -7,7 +7,6 @@ import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DateUtil;
-import its.my.time.util.Types;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.ViewUtil;
 import its.my.time.view.Switcher;
@@ -22,7 +21,6 @@ import java.util.List;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,15 +59,15 @@ public class DetailsFragment extends BasePluginFragment {
 
 	private EditText mTextTitle;
 
-	private int typeEvent;
+	//private int typeEvent;
 	private static Bundle state;
 
 	public DetailsFragment() {
-		this.typeEvent = Types.Event.BASE;
+		//this.typeEvent = Types.Event.BASE;
 	}
 
 	public DetailsFragment(int typeEvent) {
-		this.typeEvent = typeEvent;
+		//this.typeEvent = typeEvent;
 	}
 
 	@Override
@@ -309,7 +307,6 @@ public class DetailsFragment extends BasePluginFragment {
 				this.mTextHeureFin.getDate().get(Calendar.MINUTE));
 		getParentActivity().getEvent().sethFin(cal);
 		getParentActivity().getEvent().setTitle(this.mTextTitle.getText().toString());
-		getParentActivity().getEvent().setTypeId(this.typeEvent);
 		if(getParentActivity().getEvent().getId() == -1) {
 			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insertEvent(getParentActivity().getEvent()));
 		} else {

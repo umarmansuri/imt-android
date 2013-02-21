@@ -28,7 +28,7 @@ public class Ligne extends RelativeLayout {
 		}
 		a.recycle();
 		setLayoutParams(new LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT, getContext()
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT, getContext()
 						.getResources().getDimensionPixelOffset(
 								R.dimen.view_day_height_ligne_heure)));
 		setBackgroundResource(R.drawable.background_day_ligne_normal);

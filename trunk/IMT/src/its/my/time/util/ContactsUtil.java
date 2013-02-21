@@ -136,7 +136,7 @@ public class ContactsUtil {
 				contact.setRawContactId((int) contactId);
 				List<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
 				while (emails.moveToNext()) {
-					long emailId = emails.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email._ID));
+					long emailId = emails.getLong(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email._ID));
 					String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
 					ContactInfoBean bean = new ContactInfoBean();
 					bean.setContactId(contactId);
