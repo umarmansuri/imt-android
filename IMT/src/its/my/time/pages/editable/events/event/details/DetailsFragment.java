@@ -283,6 +283,7 @@ public class DetailsFragment extends BasePluginFragment {
 	@Override
 	public void launchEdit() {
 		ViewUtil.enableAllView(view, true);
+		super.launchEdit();
 	}
 
 	@Override
@@ -313,6 +314,7 @@ public class DetailsFragment extends BasePluginFragment {
 			new EventBaseRepository(getActivity()).updateEvent(getParentActivity().getEvent());
 		}
 		getParentActivity().setEvent(getParentActivity().getEvent());
+		super.launchSave();
 	}
 
 	@Override
@@ -323,6 +325,7 @@ public class DetailsFragment extends BasePluginFragment {
 			ViewUtil.enableAllView(view, false);
 			initialiseValuesFromEvent();
 		}
+		super.launchCancel();
 	}
 
 	@Override

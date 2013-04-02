@@ -107,20 +107,22 @@ public class PjFragment extends BasePluginFragment {
 
 	@Override
 	public void launchEdit() {
-		this.mListPj
-				.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(), true));
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(), true));
+		super.launchEdit();
 	}
 
 	@Override
 	public void launchSave() {
 		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(),
 				false));
+		super.launchSave();
 	}
 
 	@Override
 	public void launchCancel() {
 		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(),
 				false));
+		super.launchCancel();
 	}
 
 	@Override

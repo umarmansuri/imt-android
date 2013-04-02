@@ -4,6 +4,7 @@ import its.my.time.pages.editable.events.BaseEventActivity;
 import its.my.time.pages.editable.events.meeting.details.MeetingDetailsFragment;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
+import its.my.time.pages.editable.events.plugins.note.NoteFragment;
 import its.my.time.pages.editable.events.plugins.odj.OdjFragment;
 import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
 import its.my.time.pages.editable.events.plugins.pj.PjFragment;
@@ -30,6 +31,8 @@ public class MeetingActivity extends BaseEventActivity {
 		fragment = new CommentairesFragment();
 		fragments.add(fragment);
 		fragment = new PjFragment();
+		fragments.add(fragment);
+		fragment = new NoteFragment();
 		fragments.add(fragment);
 		return fragments;
 	}

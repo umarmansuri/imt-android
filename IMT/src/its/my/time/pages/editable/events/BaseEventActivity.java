@@ -117,6 +117,8 @@ public abstract class BaseEventActivity extends BaseActivity {
 			return true;
 		}
 	};
+	
+	
 	public BasePluginFragment getActiveFragment() {
 		if (this.mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
 			final FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) this.mPager
@@ -165,6 +167,17 @@ public abstract class BaseEventActivity extends BaseActivity {
 		if(isNew) {
 			launchEdit();
 		}
+	}
+	
+	@Override
+	protected boolean onBackButtonPressed() {
+		for (BasePluginFragment fragment : fragments) {
+			if(fragment.isInEditMode()) {
+				Toast.makeText(this, "Attention, certaines modifications n'ont pas été enregistrées.", Toast.LENGTH_SHORT).show();
+				return true;
+			}
+		}
+		return super.onBackButtonPressed();
 	}
 
 	public class EventPagerAdapter extends FragmentStatePagerAdapter {

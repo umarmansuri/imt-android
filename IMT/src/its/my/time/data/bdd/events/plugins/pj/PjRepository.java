@@ -22,7 +22,7 @@ public class PjRepository extends DatabaseHandler {
 	public static final String KEY_ID = "KEY_ID";
 	public static final String KEY_TITLE = "KEY_TITLE";
 	public static final String KEY_DATE = "KEY_DATE";
-	public static final String KEY_LINK = "KEY_LINK";
+	public static final String KEY_LINK = "KEY_HTML";
 	public static final String KEY_UID = "KEY_UID";
 	public static final String KEY_EID = "KEY_EID";
 

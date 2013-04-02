@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentResolver;
@@ -66,7 +67,7 @@ public class ContactsUtil {
 			builder.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0);
 			if(info.getType() == ContactInfoBean.TYPE_MAIL) {
 				builder.withValue(ContactsContract.Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
-				builder.withValue(Email.ADDRESS, info.getValue());
+				builder.withValue(Email.DATA1, info.getValue());
 			} else if(info.getType() == ContactInfoBean.TYPE_PHONE) {
 				builder.withValue(ContactsContract.Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
 				builder.withValue(Phone.NUMBER, info.getValue());
@@ -82,6 +83,11 @@ public class ContactsUtil {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static void addMyTimeContact(Context context,ContactBean contactBean) {
+		Account account = AccountManager.get(context).getAccountsByType(context.getString(R.string.ACCOUNT_TYPE))[0];
+		addContact(context, account, contactBean);
 	}
 
 	public static void updateContactStatus(Context context, ArrayList<ContentProviderOperation> operationList, long rawContactId, boolean isOccuped) {

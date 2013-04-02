@@ -11,6 +11,8 @@ import its.my.time.util.DateUtil;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -30,8 +32,7 @@ public class EventLittleView extends FrameLayout {
 		super(context);
 		this.event = ev;
 
-		this.mainView = inflate(getContext(),
-				R.layout.activity_calendar_day_event_little, null);
+		this.mainView = inflate(getContext(),R.layout.activity_calendar_day_event_little, null);
 		addView(this.mainView);
 
 		this.mTitle = (TextView) findViewById(R.id.activity_calendar_day_event_little_hour);
@@ -58,7 +59,7 @@ public class EventLittleView extends FrameLayout {
 		if (DateUtil.isInDay(ev.gethDeb(), day)) {
 			params.topMargin = ((int) (ev.gethDeb().get(Calendar.HOUR_OF_DAY)
 					* this.ligneHeight + (((float) ev.gethDeb().get(
-					Calendar.MINUTE) / 60) * this.ligneHeight)));
+							Calendar.MINUTE) / 60) * this.ligneHeight)));
 		}
 		setLayoutParams(params);
 
@@ -66,26 +67,22 @@ public class EventLittleView extends FrameLayout {
 	}
 
 	private void initialiseBackground() {
-		final int color = new CompteRepository(getContext()).getById(
-				this.event.getCid()).getColor();
-		ColorUtil.getDarkerColor(color);
+		final int color = new CompteRepository(getContext()).getById(this.event.getCid()).getColor();
+		
+		int colorDarker = ColorUtil.getDarkerColor(color);
 
-		/*
-		 * LayerDrawable ld = (LayerDrawable)
-		 * getResources().getDrawable(R.drawable
-		 * .form_activity_day_event_little); ShapeDrawable dBorder =
-		 * (ShapeDrawable)
-		 * ld.findDrawableByLayerId(R.id.drawable_day_event_little_border);
-		 * dBorder.getPaint().setColor(colorDarker);
-		 * 
-		 * ShapeDrawable dTop = (ShapeDrawable)
-		 * ld.findDrawableByLayerId(R.id.drawable_day_event_little_top);
-		 * dTop.getPaint().setColor(colorDarker);
-		 * 
-		 * ShapeDrawable dContent = (ShapeDrawable)
-		 * ld.findDrawableByLayerId(R.id.drawable_day_event_little_content);
-		 * dContent.getPaint().setColor(color);
-		 */
+		LayerDrawable ld = (LayerDrawable) getResources().getDrawable(R.drawable.form_activity_day_event_little);
+		ld = (LayerDrawable) ld.getConstantState().newDrawable();
+		
+		GradientDrawable dBorder =(GradientDrawable)ld.findDrawableByLayerId(R.id.drawable_day_event_little_border);
+		dBorder.setColor(colorDarker);
+
+		GradientDrawable dTop = (GradientDrawable)ld.findDrawableByLayerId(R.id.drawable_day_event_little_top);
+		dTop.setColor(colorDarker);
+
+		GradientDrawable dContent = (GradientDrawable)ld.findDrawableByLayerId(R.id.drawable_day_event_little_content);
+		dContent.setColor(color);
+
 	}
 
 	public EventBaseBean getEvent() {

@@ -74,18 +74,21 @@ public class CommentairesFragment extends BasePluginFragment {
 	public void launchEdit() {
 		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
 				getParentActivity().getEvent().getId(), true));
+		super.launchEdit();
 	}
 
 	@Override
 	public void launchSave() {
 		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
 				getParentActivity().getEvent().getId(), false));
+		super.launchSave();
 	}
 
 	@Override
 	public void launchCancel() {
 		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),
 				getParentActivity().getEvent().getId(), false));
+		super.launchCancel();
 	}
 
 	@Override
