@@ -19,7 +19,7 @@ public class ColorUtil {
 		final float[] hsv = new float[3];
 		int colorDarker = color;
 		Color.colorToHSV(colorDarker, hsv);
-		hsv[2] *= 0.4f;
+		hsv[2] *= 0.7f;
 		colorDarker = Color.HSVToColor(hsv);
 		return colorDarker;
 	}

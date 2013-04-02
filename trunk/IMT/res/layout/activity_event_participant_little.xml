@@ -3,67 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_height_large"
-    android:background="#FFF" >
+    android:background="@drawable/background_simple_list_item" 
+    android:padding="1dp">
 
     <FrameLayout
-        android:id="@+id/event_participant_image"
+        android:id="@+id/event_participant_icone"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:padding="5dp" >
-
-        <com.fonts.mooncake.MooncakeIcone
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/light_grey"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+        android:layout_centerVertical="true" >
     </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/delete"
+        android:layout_toRightOf="@+id/event_participant_icone" >
+
+        <TextView
+            android:id="@+id/event_participant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/event_participant_icone"
+            android:text="Jean Louis"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/event_participant_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_participant_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/event_participant_icone"
+            android:text="Mard 17 octobre 2012 à 18h30"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/black" />
+    </RelativeLayout>
 
     <com.fonts.mooncake.MooncakeIcone
         android:id="@+id/delete"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/event_participant_name"
+        android:background="@color/white"
         android:gravity="center"
-        android:paddingRight="10dp"
+        android:paddingRight="6dp"
         android:textColor="@color/grey"
         android:textSize="@dimen/text_size_medium" />
-
-    <LinearLayout
-        android:id="@+id/event_participant_details_layout"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_vertical"
-        android:layout_toLeftOf="@+id/delete"
-        android:layout_toRightOf="@+id/event_participant_image"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/event_participant_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/dark_grey"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/event_participant_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/text_size_small" />
-    </LinearLayout>
 
 </RelativeLayout>

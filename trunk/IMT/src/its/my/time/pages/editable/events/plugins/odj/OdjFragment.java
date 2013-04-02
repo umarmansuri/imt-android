@@ -99,6 +99,7 @@ public class OdjFragment extends BasePluginFragment {
 	public void launchEdit() {
 		mTextOdj.setText("");
 		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),true));
+		super.launchEdit();
 	}
 
 	@Override
@@ -125,6 +126,7 @@ public class OdjFragment extends BasePluginFragment {
 		mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),true));
 		odjs = null;
 		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),false));
+		super.launchSave();
 	}
 
 	@Override
@@ -133,6 +135,7 @@ public class OdjFragment extends BasePluginFragment {
 		odjs = null;
 		layoutNew.setVisibility(View.GONE);
 		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),false));
+		super.launchCancel();
 	}
 
 	@Override

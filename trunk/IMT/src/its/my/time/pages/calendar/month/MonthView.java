@@ -158,7 +158,7 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 						eventLayout = (ViewGroup) inflate(getContext(),R.layout.activity_calendar_month_day_event, null);
 						eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(compteRepo.getById(eventBaseBean.getCid()).getColor());
 						textEvent = (TextView) eventLayout.findViewById(R.id.activity_calendar_month_day_event_text);
-						textEvent.setText(eventBaseBean.getTitle());
+						//textEvent.setText(eventBaseBean.getTitle());
 						if (isToday) {
 							textEvent.setBackgroundColor(Color.parseColor("#FFFFCC"));
 						}

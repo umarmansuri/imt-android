@@ -15,5 +15,5 @@ public class TaskDetailsFragment extends DetailsFragment {
 		getParentActivity().getEvent().setTypeId(Types.Event.TASK);
 		super.launchSave();
 	}
-
+ 
 }

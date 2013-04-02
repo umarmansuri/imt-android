@@ -22,7 +22,6 @@ public abstract class BasePluginFragment extends SherlockFragment {
 		super.onResume();
 	}
 
-
 	@Override
 	public void setMenuVisibility(boolean menuVisible) {
 
@@ -46,18 +45,27 @@ public abstract class BasePluginFragment extends SherlockFragment {
 		return parentActivity;
 	}
 	
-	public abstract void launchEdit();
 
-	public abstract void launchSave();
-
-	public abstract void launchCancel();
-
+	private boolean isInEditMode = false;
+	public boolean isInEditMode() {
+		return isInEditMode;
+	}
+	
+	
+	
+	public void launchEdit(){
+		isInEditMode = true;
+	}
+	public void launchSave(){
+		isInEditMode = false;
+	}
+	public void launchCancel(){
+		isInEditMode = false;
+	}
 	public abstract boolean isEditable();
-
 	public abstract boolean isCancelable();
-
 	public abstract boolean isSavable();
-
 	public abstract String getTitle();
 
+	
 }

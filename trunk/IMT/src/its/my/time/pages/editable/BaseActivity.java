@@ -84,21 +84,21 @@ public abstract class BaseActivity extends MyTimeActivity {
 		return res;
 	}
 	
-	protected void launchEdit() {
+	public void launchEdit() {
 		this.menu.getItem(INDEX_MENU_EDIT).setVisible(false);
 		this.menu.getItem(INDEX_MENU_SAVE).setVisible(true);
 		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(true);
 		showEdit();
 	}
 
-	protected void launchSave() {
+	public void launchSave() {
 		this.menu.getItem(INDEX_MENU_EDIT).setVisible(true);
 		this.menu.getItem(INDEX_MENU_SAVE).setVisible(false);
 		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
 		showSave();
 	}
 
-	protected void launchCancel() {
+	public void launchCancel() {
 		this.menu.getItem(INDEX_MENU_EDIT).setVisible(true);
 		this.menu.getItem(INDEX_MENU_SAVE).setVisible(false);
 		this.menu.getItem(INDEX_MENU_CANCEL).setVisible(false);
