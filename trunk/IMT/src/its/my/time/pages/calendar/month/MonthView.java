@@ -7,6 +7,7 @@ import its.my.time.data.bdd.compte.CompteRepository.OnCompteChangedListener;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.calendar.base.BaseView;
+import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.IdUtil;
 import its.my.time.util.PreferencesUtil;
@@ -16,6 +17,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import net.londatiga.android.ActionItem;
+import net.londatiga.android.QuickAction;
+import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
@@ -63,6 +67,7 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 
 		final LinearLayout view = (LinearLayout) inflate(getContext(),R.layout.activity_calendar_month, null);
 		createTabDay(view);
+
 		return view;
 	}
 
@@ -111,20 +116,24 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 
 			// liste des jours
 			for (int j = 1; j < 8; j++) {
+
+				final QuickAction mQuickAction  = new QuickAction(getContext());
+
+
 				// detecte si le jour est dans le mois en cours
 				if (this.helper.getDayAt(i, j - 1) == 1) {
 					isInMois = !isInMois;
 				}
 
 				layoutDay = (RelativeLayout) ligne.getChildAt(j);
-				TextView txtVw = (TextView) layoutDay
+				final TextView txtVwDay = (TextView) layoutDay
 						.findViewById(R.id.activity_calendar_month_day_label);
-				txtVw.setId(IdUtil.getDayId(this.helper.getYear(),
+				txtVwDay.setId(IdUtil.getDayId(this.helper.getYear(),
 						this.helper.getMonth(), this.helper.getDayAt(i, j - 1)));
-				txtVw.setEnabled(isInMois);
-				txtVw.setText(String.valueOf(this.helper.getDayAt(i, j - 1)));
+				txtVwDay.setEnabled(isInMois);
+				txtVwDay.setText(String.valueOf(this.helper.getDayAt(i, j - 1)));
 				if (!isInMois) {
-					txtVw.setTextColor(getResources().getColor(R.color.grey));
+					txtVwDay.setTextColor(getResources().getColor(R.color.grey));
 				}
 
 				final GregorianCalendar today = new GregorianCalendar();
@@ -146,8 +155,8 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 						this.helper.getDayAt(i, j - 1), 0, 0, 0);
 				calFin.add(Calendar.DAY_OF_MONTH, 1);
 
-				List<EventBaseBean> listEventsFinal = new ArrayList<EventBaseBean>();
-				listEventsFinal = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
+				final List<EventBaseBean> listEventsFinal = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
+
 
 				final LinearLayout layoutListe = (LinearLayout) layoutDay.findViewById(R.id.activity_calendar_month_day_liste);
 				if(listEventsFinal.size() > 0) {
@@ -155,6 +164,11 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 					TextView textEvent;
 					for (int nbEvents = 0; nbEvents < listEventsFinal.size(); nbEvents++) {
 						final EventBaseBean eventBaseBean = listEventsFinal.get(nbEvents);
+
+						ActionItem item = new ActionItem(nbEvents, eventBaseBean.getTitle());
+						item.setSticky(true);
+						mQuickAction.addActionItem(item);
+
 						eventLayout = (ViewGroup) inflate(getContext(),R.layout.activity_calendar_month_day_event, null);
 						eventLayout.findViewById(R.id.activity_calendar_month_day_event_frame).setBackgroundColor(compteRepo.getById(eventBaseBean.getCid()).getColor());
 						textEvent = (TextView) eventLayout.findViewById(R.id.activity_calendar_month_day_event_text);
@@ -169,21 +183,46 @@ public class MonthView extends BaseView implements OnCompteChangedListener {
 						layoutListe.addView(eventLayout);
 						eventLittleViews.get((int)eventBaseBean.getCid()).add(eventLayout);
 					}
+					ActionItem item = new ActionItem(-1, "Ouvrir", getResources().getDrawable(android.R.drawable.ic_menu_more));
+					item.setSticky(true);
+					mQuickAction.addActionItem(item);
 				} else {
 					layoutDay.findViewById(R.id.activity_calendar_month_day_liste_scroll).setVisibility(INVISIBLE);
 				}
-				if (this.listener != null) {
-					final GregorianCalendar calListener = (GregorianCalendar) calDeb.clone();
-					calListener.set(Calendar.HOUR_OF_DAY, 8);
-					calListener.set(Calendar.HOUR_OF_DAY, 10);
 
-					OnClickListener clickListener = new OnClickListener() {
+
+				final GregorianCalendar calListener = (GregorianCalendar) calDeb.clone();
+				calListener.set(Calendar.HOUR_OF_DAY, 8);
+				calListener.set(Calendar.HOUR_OF_DAY, 10);
+
+
+				OnClickListener clickListener = null;
+				if(listEventsFinal.size() > 0) {
+					mQuickAction.setOnActionItemClickListener(new OnActionItemClickListener() {
+						@Override
+						public void onItemClick(QuickAction source, int pos, int actionId) {
+							if(actionId == -1) {
+								if (MonthView.this.listener != null) {
+									source.dismiss();
+									MonthView.this.listener.onDayClickListener(calListener);
+								}
+							} else {
+								source.dismiss();
+								EventBaseBean eventBaseBean = listEventsFinal.get(pos);
+								ActivityUtil.startEventActivity(getContext(), eventBaseBean.getId(), eventBaseBean.getTypeId());
+							}
+						}
+					});
+					
+					clickListener = new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							MonthView.this.listener.onDayClickListener(calListener);
+							mQuickAction.show(txtVwDay);
 						}
 					};
+				}
 
+				if (this.listener != null) {
 					OnLongClickListener longCLickListener = new OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View v) {
