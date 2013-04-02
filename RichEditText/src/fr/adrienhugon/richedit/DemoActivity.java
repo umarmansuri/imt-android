@@ -9,7 +9,7 @@ public class DemoActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState)  {
 		super.onCreate(savedInstanceState);
-		setContentView(new RicheEditText(this));
+		setContentView(new RichEditText(this));
 	}
 
 }

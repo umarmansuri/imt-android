@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
@@ -28,7 +29,7 @@ import fr.adrienhugon.richedit.adapters.fonts.FontAdapter;
 import fr.adrienhugon.richedit.adapters.gravities.GravityAdapter;
 import fr.adrienhugon.richedit.adapters.size.SizeAdapter;
 
-public class RicheEditText extends FrameLayout implements OnItemSelectedListener, OnClickListener{
+public class RichEditText extends FrameLayout implements OnItemSelectedListener, OnClickListener{
 
 	private CustomEditText mEditText;
 
@@ -63,17 +64,17 @@ public class RicheEditText extends FrameLayout implements OnItemSelectedListener
 
 	private final static String BULLET = "\n\t" + Html.fromHtml("&#8226;") + " ";
 
-	public RicheEditText(Context context, AttributeSet attrs, int defStyle) {
+	public RichEditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
 	}
 
-	public RicheEditText(Context context, AttributeSet attrs) {
+	public RichEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
 
-	public RicheEditText(Context context) {
+	public RichEditText(Context context) {
 		super(context);
 		init();
 	}
@@ -138,9 +139,6 @@ public class RicheEditText extends FrameLayout implements OnItemSelectedListener
 		mButtonUnderline.setOnClickListener(this);
 		mButtonOl.setOnClickListener(this);
 		mButtonUl.setOnClickListener(this);
-
-		//TODO enlever!
-		mEditText.updateText("voici donc un petit exemple qu'un utilisateur pourrait entrer...!");
 
 	}
 
@@ -351,5 +349,29 @@ public class RicheEditText extends FrameLayout implements OnItemSelectedListener
 			mEditText.getText().setSpan(new ForegroundColorSpan(color) , start, end, SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
 			currentColor = color;
 		}
+	}
+
+	public void setText(Spanned text) {
+		mEditText.setText(text);
+	}
+	
+	public String getTextHtml() {
+		return Html.toHtml(mEditText.getText());
+	}
+	
+	
+	
+	@Override
+	public void setEnabled(boolean enabled) {
+		mEditText.setEnabled(enabled);
+		mSpinnerFont.setEnabled(enabled);
+		mSpinnerSize.setEnabled(enabled);
+		mSpinnerColor.setEnabled(enabled);
+		mSpinnerGravity.setEnabled(enabled);
+		mButtonBold.setEnabled(enabled);
+		mButtonItalic.setEnabled(enabled);
+		mButtonUnderline.setEnabled(enabled);
+		mButtonOl.setEnabled(enabled);
+		mButtonUl.setEnabled(enabled);
 	}
 }
