@@ -72,7 +72,7 @@ public class SplashActivity extends Activity {
 		this.pseudo = (EditText) findViewById(R.id.splash_login);
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
-		temp();
+		//temp();
 	}
 
 	private void temp() {
@@ -96,14 +96,14 @@ public class SplashActivity extends Activity {
 		compte.setTitle(Types.Comptes.MYTIME.label); 
 		compte.setType(Types.Comptes.MYTIME.id);
 		compte.setUid(resUser); 
-		long resCompte1 =  repoCompte.insertCompte(compte);
+		int resCompte1 =  (int)repoCompte.insertCompte(compte);
 
 		compte = new CompteBean(); compte.setColor(Color.BLUE);
 		compte.setShowed(true); 
 		compte.setTitle("Compte 2");
 		compte.setType(2); 
 		compte.setUid(resUser); 
-		long resCompte2 = repoCompte.insertCompte(compte);
+		int resCompte2 = (int)repoCompte.insertCompte(compte);
 
 
 
