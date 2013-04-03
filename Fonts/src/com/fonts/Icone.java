@@ -23,8 +23,6 @@ public abstract class Icone extends TextView {
 		super(context, attrs, defStyle);
 
 		initialiseTypeFace();
-		
-		float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
 	
 		//int padding = (int) (10 * scaledDensity);
 		//setPadding(padding,padding,padding,padding);
