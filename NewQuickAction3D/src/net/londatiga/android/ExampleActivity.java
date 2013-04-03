@@ -57,6 +57,7 @@ public class ExampleActivity extends Activity {
         quickAction.addActionItem(infoItem);
         quickAction.addActionItem(eraseItem);
         quickAction.addActionItem(okItem);
+        quickAction.setAnimStyle(QuickAction.ANIM_FADE);
         
         //Set listener for action item clicked
 		quickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {			
