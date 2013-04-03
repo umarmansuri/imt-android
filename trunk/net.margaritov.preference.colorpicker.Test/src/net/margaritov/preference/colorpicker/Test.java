@@ -25,7 +25,8 @@ import android.preference.PreferenceActivity;
 
 public class Test extends PreferenceActivity {
     /** Called when the activity is first created. */
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
