@@ -24,6 +24,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.doomonafireball.betterpickers.BetterPickerUtils;
 import com.fonts.mooncake.MooncakeIcone;
 
 public class CalendarActivity extends MyTimeActivity implements OnPageChangeListener {
@@ -92,8 +94,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		super.initialiseActionBar();
 
 		final ActionBar mActionBar = getSupportActionBar();
-		mActionBar.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.background_header));
+		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 		mActionBar.setHomeButtonEnabled(true);
 		mActionBar.setDisplayShowHomeEnabled(true);
 		mActionBar.setDisplayShowTitleEnabled(false);
@@ -102,10 +103,18 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		this.mTextTitle = new TextView(this);
 		this.mTextTitle.setGravity(Gravity.CENTER);
 		this.mTextTitle.setTextSize(20);
-		this.mTextTitle.setLayoutParams(new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		this.mTextTitle.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		this.mTextTitle.setTextColor(getResources().getColor(R.color.grey));
 		mActionBar.setCustomView(this.mTextTitle);
+		mTextTitle.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+                int m = 3;
+                int d = 18;
+                int y = 1988;
+                BetterPickerUtils.showDateEditDialog(getSupportFragmentManager(), m, d, y);
+			}
+		});
 	}
 	@Override
 	protected ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes) {

@@ -1,10 +1,12 @@
 package its.my.time.pages.calendar.month;
 
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.util.ActivityUtil;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,15 +34,15 @@ public class MonthFragment extends SherlockFragment {
 		return new MonthView(getSherlockActivity(), this.cal, this.dayListener);
 	}
 
-	private final MonthView.OnDayClickListener dayListener = new MonthView.OnDayClickListener() {
+	private final OnDayClickListener dayListener = new OnDayClickListener() {
 
 		@Override
-		public void onDayLongClickListener(GregorianCalendar day) {
+		public void onDayLongClickListener(View v, GregorianCalendar day, List<EventBaseBean> events) {
 			ActivityUtil.startEventActivity(getSherlockActivity(), day, true);
 		}
 
 		@Override
-		public void onDayClickListener(GregorianCalendar day) {
+		public void onDayClickListener(View v, GregorianCalendar day, List<EventBaseBean> events) {
 			((CalendarActivity) getSherlockActivity()).showDays(day);
 		}
 	};
