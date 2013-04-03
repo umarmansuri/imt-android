@@ -106,7 +106,7 @@ public class ColorPickerPreference
 		}
 		widgetFrameView.addView(iView);
 		widgetFrameView.setMinimumWidth(0);
-		iView.setBackgroundDrawable(new AlphaPatternDrawable((int)(5 * mDensity)));
+		iView.setBackground(new AlphaPatternDrawable((int)(5 * mDensity)));
 		iView.setImageBitmap(getPreviewBitmap());
 	}
 
