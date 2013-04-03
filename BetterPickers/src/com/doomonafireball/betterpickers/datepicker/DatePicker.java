@@ -1,7 +1,8 @@
 package com.doomonafireball.betterpickers.datepicker;
 
-import com.doomonafireball.betterpickers.R;
-import com.viewpagerindicator.UnderlinePageIndicator;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,6 +17,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import com.doomonafireball.betterpickers.R;
+import com.viewpagerindicator.UnderlinePageIndicator;
 
 
 public class DatePicker extends LinearLayout implements Button.OnClickListener,
@@ -55,9 +59,17 @@ public class DatePicker extends LinearLayout implements Button.OnClickListener,
     public DatePicker(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        mMonthAbbreviations = mContext.getResources().getStringArray(R.array.month_abbreviations);
-        LayoutInflater layoutInflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        
+        ArrayList<String> months = new ArrayList<String>();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
+        for(int i = 0; i < 12; i++) {
+        	months.add(sdf.format(new GregorianCalendar(2012, i, 1).getTime()).substring(0, 3).toUpperCase());
+        }
+        
+        mMonthAbbreviations = new String[]{};
+        mMonthAbbreviations = (String[]) months.toArray(mMonthAbbreviations);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(getLayoutId(), this);
     }
 
@@ -80,8 +92,7 @@ public class DatePicker extends LinearLayout implements Button.OnClickListener,
         mKeyboardIndicator.setFades(false);
         mKeyboardPager = (ViewPager) findViewById(R.id.keyboard_pager);
         mKeyboardPager.setOffscreenPageLimit(2);
-        mKeyboardPagerAdapter = new KeyboardPagerAdapter(
-                (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+        mKeyboardPagerAdapter = new KeyboardPagerAdapter((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
         mKeyboardPager.setAdapter(mKeyboardPagerAdapter);
         mKeyboardIndicator.setViewPager(mKeyboardPager);
 

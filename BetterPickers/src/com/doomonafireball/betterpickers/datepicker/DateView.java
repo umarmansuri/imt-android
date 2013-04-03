@@ -14,7 +14,7 @@ public class DateView extends LinearLayout {
     private ZeroTopPaddingTextView mYearLabel;
     private final Typeface mAndroidClockMonoThin;
     private Typeface mOriginalNumberTypeface;
-    private final int mWhiteColor, mGrayColor;
+    private final int mBlackColor, mGrayColor;
 
     public DateView(Context context) {
         this(context, null);
@@ -23,9 +23,8 @@ public class DateView extends LinearLayout {
     public DateView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mAndroidClockMonoThin =
-                Typeface.createFromAsset(context.getAssets(), "pickersFonts/AndroidClockMono-Thin.ttf");
-        mWhiteColor = context.getResources().getColor(R.color.clock_white);
+        mAndroidClockMonoThin = Typeface.createFromAsset(context.getAssets(), "pickersFonts/AndroidClockMono-Thin.ttf");
+        mBlackColor = context.getResources().getColor(R.color.clock_black);
         mGrayColor = context.getResources().getColor(R.color.clock_gray);
     }
 
@@ -60,7 +59,7 @@ public class DateView extends LinearLayout {
             } else {
                 mMonth.setText(month);
                 mMonth.setTypeface(mOriginalNumberTypeface);
-                mMonth.setTextColor(mWhiteColor);
+                mMonth.setTextColor(mBlackColor);
                 mMonth.updatePadding();
             }
         }
@@ -71,7 +70,7 @@ public class DateView extends LinearLayout {
                 mDate.updatePadding();
             } else {
                 mDate.setText(Integer.toString(dayOfMonth));
-                mDate.setTextColor(mWhiteColor);
+                mDate.setTextColor(mBlackColor);
                 mDate.updatePadding();
             }
         }
@@ -87,7 +86,7 @@ public class DateView extends LinearLayout {
                     yearString = "-" + yearString;
                 }
                 mYearLabel.setText(yearString);
-                mYearLabel.setTextColor(mWhiteColor);
+                mYearLabel.setTextColor(mBlackColor);
                 mYearLabel.updatePadding();
             }
         }

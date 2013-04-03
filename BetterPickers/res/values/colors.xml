@@ -4,4 +4,5 @@
     <color name="transparent_white">#66ffffff</color>
     <color name="clock_white">#ffffff</color>
     <color name="clock_gray">#80ffffff</color>
+    <color name="clock_black">#000000</color>
 </resources>

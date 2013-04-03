@@ -8,9 +8,6 @@
 package com.doomonafireball.betterpickers;
 
 public final class R {
-    public static final class array {
-        public static int month_abbreviations=0x7f0a0000;
-    }
     public static final class attr {
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
@@ -307,6 +304,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int default_underline_indicator_fades=0x7f060004;
     }
     public static final class color {
+        public static int clock_black=0x7f050015;
         public static int clock_gray=0x7f050014;
         public static int clock_white=0x7f050013;
         public static int default_circle_indicator_fill_color=0x7f050008;
@@ -328,8 +326,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int vpi__bright_foreground_holo_light=0x7f050003;
         public static int vpi__bright_foreground_inverse_holo_dark=0x7f050006;
         public static int vpi__bright_foreground_inverse_holo_light=0x7f050007;
-        public static int vpi__dark_theme=0x7f050015;
-        public static int vpi__light_theme=0x7f050016;
+        public static int vpi__dark_theme=0x7f050016;
+        public static int vpi__light_theme=0x7f050017;
     }
     public static final class dimen {
         public static int body_font_padding=0x7f080011;
@@ -439,23 +437,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int time_picker_view=0x7f03000c;
     }
     public static final class string {
-        public static int hours_label=0x7f0b0002;
-        public static int hours_label_description=0x7f0b0005;
-        public static int minutes_label=0x7f0b0003;
-        public static int minutes_label_description=0x7f0b0006;
-        public static int number_delete=0x7f0b000f;
-        public static int number_picker_minus_label=0x7f0b000d;
-        public static int number_picker_plus_minus=0x7f0b0010;
-        public static int number_picker_seperator=0x7f0b000e;
-        public static int picker_cancel=0x7f0b0000;
-        public static int picker_set=0x7f0b0001;
-        public static int seconds_label=0x7f0b0004;
-        public static int seconds_label_description=0x7f0b0007;
-        public static int time_picker_00_label=0x7f0b000b;
-        public static int time_picker_30_label=0x7f0b000c;
-        public static int time_picker_ampm_label=0x7f0b0009;
-        public static int time_picker_time_seperator=0x7f0b000a;
-        public static int timer_delete=0x7f0b0008;
+        public static int hours_label=0x7f0a0002;
+        public static int hours_label_description=0x7f0a0005;
+        public static int minutes_label=0x7f0a0003;
+        public static int minutes_label_description=0x7f0a0006;
+        public static int number_delete=0x7f0a000f;
+        public static int number_picker_minus_label=0x7f0a000d;
+        public static int number_picker_plus_minus=0x7f0a0010;
+        public static int number_picker_seperator=0x7f0a000e;
+        public static int picker_cancel=0x7f0a0000;
+        public static int picker_set=0x7f0a0001;
+        public static int seconds_label=0x7f0a0004;
+        public static int seconds_label_description=0x7f0a0007;
+        public static int time_picker_00_label=0x7f0a000b;
+        public static int time_picker_30_label=0x7f0a000c;
+        public static int time_picker_ampm_label=0x7f0a0009;
+        public static int time_picker_time_seperator=0x7f0a000a;
+        public static int timer_delete=0x7f0a0008;
     }
     public static final class style {
         /** 
