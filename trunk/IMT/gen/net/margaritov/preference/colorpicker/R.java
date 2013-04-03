@@ -17,19 +17,19 @@ public final class R {
 		public static final int COLOR_BLACK = 0x7f090006;
 	}
 	public static final class string {
-		public static final int hello = 0x7f0d0011;
-		public static final int pref_category = 0x7f0d0024;
-		public static final int color1_title = 0x7f0d0025;
-		public static final int color2_summary = 0x7f0d0028;
-		public static final int color2_title = 0x7f0d0027;
-		public static final int color4_summary = 0x7f0d002c;
-		public static final int dialog_color_picker = 0x7f0d0022;
-		public static final int color1_summary = 0x7f0d0026;
-		public static final int color4_title = 0x7f0d002b;
-		public static final int press_color_to_apply = 0x7f0d0023;
-		public static final int app_name = 0x7f0d0012;
-		public static final int color3_title = 0x7f0d0029;
-		public static final int color3_summary = 0x7f0d002a;
+		public static final int hello = 0x7f0c0011;
+		public static final int pref_category = 0x7f0c0024;
+		public static final int color1_title = 0x7f0c0025;
+		public static final int color2_summary = 0x7f0c0028;
+		public static final int color2_title = 0x7f0c0027;
+		public static final int color4_summary = 0x7f0c002c;
+		public static final int dialog_color_picker = 0x7f0c0022;
+		public static final int color1_summary = 0x7f0c0026;
+		public static final int color4_title = 0x7f0c002b;
+		public static final int press_color_to_apply = 0x7f0c0023;
+		public static final int app_name = 0x7f0c0012;
+		public static final int color3_title = 0x7f0c0029;
+		public static final int color3_summary = 0x7f0c002a;
 	}
 	public static final class layout {
 		public static final int dialog_color_picker = 0x7f030033;

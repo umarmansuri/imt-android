@@ -155,36 +155,36 @@ public final class R {
 		public static final int abs__max_action_buttons = 0x7f090005;
 	}
 	public static final class color {
-		public static final int abs__bright_foreground_inverse_holo_light = 0x7f07001c;
-		public static final int abs__primary_text_disable_only_holo_light = 0x7f07002e;
-		public static final int abs__holo_blue_light = 0x7f07001d;
-		public static final int abs__bright_foreground_holo_dark = 0x7f070017;
-		public static final int abs__bright_foreground_holo_light = 0x7f070018;
-		public static final int abs__primary_text_holo_dark = 0x7f07002f;
-		public static final int abs__primary_text_disable_only_holo_dark = 0x7f07002d;
-		public static final int abs__bright_foreground_disabled_holo_dark = 0x7f070019;
-		public static final int abs__background_holo_light = 0x7f070016;
-		public static final int abs__bright_foreground_disabled_holo_light = 0x7f07001a;
-		public static final int abs__bright_foreground_inverse_holo_dark = 0x7f07001b;
-		public static final int abs__primary_text_holo_light = 0x7f070030;
-		public static final int abs__background_holo_dark = 0x7f070015;
+		public static final int abs__bright_foreground_inverse_holo_light = 0x7f07001d;
+		public static final int abs__primary_text_disable_only_holo_light = 0x7f07002f;
+		public static final int abs__holo_blue_light = 0x7f07001e;
+		public static final int abs__bright_foreground_holo_dark = 0x7f070018;
+		public static final int abs__bright_foreground_holo_light = 0x7f070019;
+		public static final int abs__primary_text_holo_dark = 0x7f070030;
+		public static final int abs__primary_text_disable_only_holo_dark = 0x7f07002e;
+		public static final int abs__bright_foreground_disabled_holo_dark = 0x7f07001a;
+		public static final int abs__background_holo_light = 0x7f070017;
+		public static final int abs__bright_foreground_disabled_holo_light = 0x7f07001b;
+		public static final int abs__bright_foreground_inverse_holo_dark = 0x7f07001c;
+		public static final int abs__primary_text_holo_light = 0x7f070031;
+		public static final int abs__background_holo_dark = 0x7f070016;
 	}
 	public static final class string {
-		public static final int abs__action_bar_up_description = 0x7f0d0014;
-		public static final int abs__searchview_description_clear = 0x7f0d001f;
-		public static final int abs__activity_chooser_view_dialog_title_default = 0x7f0d0018;
-		public static final int abs__action_mode_done = 0x7f0d0016;
-		public static final int abs__searchview_description_voice = 0x7f0d0021;
-		public static final int abs__searchview_description_query = 0x7f0d001e;
-		public static final int abs__shareactionprovider_share_with = 0x7f0d001b;
-		public static final int abs__action_bar_home_description = 0x7f0d0013;
-		public static final int abs__searchview_description_search = 0x7f0d001d;
-		public static final int abs__activity_chooser_view_see_all = 0x7f0d0017;
-		public static final int abs__activitychooserview_choose_application = 0x7f0d001a;
-		public static final int abs__share_action_provider_share_with = 0x7f0d0019;
-		public static final int abs__action_menu_overflow_description = 0x7f0d0015;
-		public static final int abs__searchview_description_submit = 0x7f0d0020;
-		public static final int abs__shareactionprovider_share_with_application = 0x7f0d001c;
+		public static final int abs__action_bar_up_description = 0x7f0c0014;
+		public static final int abs__searchview_description_clear = 0x7f0c001f;
+		public static final int abs__activity_chooser_view_dialog_title_default = 0x7f0c0018;
+		public static final int abs__action_mode_done = 0x7f0c0016;
+		public static final int abs__searchview_description_voice = 0x7f0c0021;
+		public static final int abs__searchview_description_query = 0x7f0c001e;
+		public static final int abs__shareactionprovider_share_with = 0x7f0c001b;
+		public static final int abs__action_bar_home_description = 0x7f0c0013;
+		public static final int abs__searchview_description_search = 0x7f0c001d;
+		public static final int abs__activity_chooser_view_see_all = 0x7f0c0017;
+		public static final int abs__activitychooserview_choose_application = 0x7f0c001a;
+		public static final int abs__share_action_provider_share_with = 0x7f0c0019;
+		public static final int abs__action_menu_overflow_description = 0x7f0c0015;
+		public static final int abs__searchview_description_submit = 0x7f0c0020;
+		public static final int abs__shareactionprovider_share_with_application = 0x7f0c001c;
 	}
 	public static final class layout {
 		public static final int abs__list_menu_item_radio = 0x7f03000e;
