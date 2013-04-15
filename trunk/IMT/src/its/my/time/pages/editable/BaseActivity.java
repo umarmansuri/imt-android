@@ -30,17 +30,16 @@ public abstract class BaseActivity extends MyTimeActivity {
 	private final OnClickListener mOnIconeClickLIstener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.menu_edit:
+			if (v.getId() == R.id.menu_edit) {
 				launchEdit();
 				return;
-			case R.id.menu_cancel:
+			} else if (v.getId() == R.id.menu_cancel) {
 				launchCancel();
 				return;
-			case R.id.menu_save:
+			} else if (v.getId() == R.id.menu_save) {
 				launchSave();
 				return;
-			default:
+			} else {
 				finish();
 				return;
 			}
