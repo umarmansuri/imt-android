@@ -47,10 +47,27 @@ public abstract class BaseEventActivity extends BaseActivity {
 		if (this.event == null) {
 			this.event = new EventBaseBean();
 			this.event.setTypeId(Types.Event.BASE);
-			this.event.sethDeb(DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME)));
-			this.event.sethFin((Calendar) this.event.gethDeb().clone());
-			this.event.gethFin().add(Calendar.HOUR_OF_DAY, 2);
-			this.event.setAllDay(bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false));
+			
+			boolean isAllDay = bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false);
+			Calendar hDeb = DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME));
+			Calendar hFin;
+			if(isAllDay) {
+				hDeb.set(Calendar.HOUR_OF_DAY, 0);
+				hDeb.set(Calendar.HOUR, 0);
+				hDeb.set(Calendar.MINUTE, 0);
+				hDeb.set(Calendar.SECOND, 0);
+				hFin = (Calendar)hDeb.clone();
+				hFin.set(Calendar.HOUR, 23);
+				hFin.set(Calendar.MINUTE, 59);
+				hFin.set(Calendar.SECOND, 59);
+			} else {
+				hFin = (Calendar)hDeb.clone();
+				hFin.add(Calendar.HOUR, 2);
+			}
+			this.event.sethDeb(hDeb);
+			this.event.sethFin(hFin);
+			
+			this.event.setAllDay(isAllDay);
 			isNew = true;
 		}
 		fragments = getPages();

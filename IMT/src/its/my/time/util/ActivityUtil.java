@@ -88,8 +88,7 @@ public class ActivityUtil {
 		context.startActivity(intent);
 	}
 
-	public static void startEventActivity(final Context context,
-			final Calendar calHeure, final boolean isAllDay) {
+	public static void startEventActivity(final Context context, final Calendar calHeure, final boolean isAllDay) {
 		final String[] labels = new String[] {
 				context.getResources().getString(R.string.label_event_base),
 				context.getResources().getString(R.string.label_event_meeting),
@@ -111,8 +110,7 @@ public class ActivityUtil {
 		alert.show();
 	}
 
-	private static void startEventActivity(Context context, Calendar calHeure,
-			int typeEvent, boolean isAllDay) {
+	private static void startEventActivity(Context context, Calendar calHeure,int typeEvent, boolean isAllDay) {
 		final Intent intent = getEventIntentFromType(context, typeEvent);
 		intent.putExtra(KEY_EXTRA_ID, -1);
 		intent.putExtra(KEY_EXTRA_ISO_TIME, DateUtil.getTimeInIso(calHeure));
