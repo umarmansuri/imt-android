@@ -200,8 +200,7 @@ public class DetailsFragment extends BasePluginFragment {
 		.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
-		this.mSwitchAllDay
-		.setOnStateChangedListener(new OnStateChangedListener() {
+		this.mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
 			@Override
 			public void onStateCHangedListener(Switcher switcher,
 					boolean isChecked) {
