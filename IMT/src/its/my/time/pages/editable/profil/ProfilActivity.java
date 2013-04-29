@@ -65,9 +65,9 @@ public class ProfilActivity extends BaseActivity {
 	@Override
 	protected void onViewCreated() {
 		initialiseFields();
-		if (PreferencesUtil.getCurrentUid(this) >= 0) {
+		if (PreferencesUtil.getCurrentUid() >= 0) {
 			isNew = false;
-			user = new UtilisateurRepository(this).getById(PreferencesUtil.getCurrentUid(this));
+			user = new UtilisateurRepository(this).getById(PreferencesUtil.getCurrentUid());
 			if(state == null) {
 				initialiseValuesFromBean();
 			} else {

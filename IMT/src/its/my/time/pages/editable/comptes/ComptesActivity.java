@@ -49,8 +49,7 @@ public class ComptesActivity extends MyTimeActivity {
 
 	@Override
 	protected void onResume() {
-		comptes = new CompteRepository(this)
-		.getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
+		comptes = new CompteRepository(this).getAllCompteByUid(PreferencesUtil.getCurrentUid());
 		this.adapter = new ComptesAdapter(comptes);
 		this.mMainListe.setAdapter(this.adapter);
 		this.mMainListe.setOnItemClickListener(new OnItemClickListener() {

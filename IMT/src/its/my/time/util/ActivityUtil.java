@@ -31,7 +31,7 @@ public class ActivityUtil {
 		
 		final Intent i = new Intent(ACTION_FINISH);
 		i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
-		PreferencesUtil.setCurrentUid(context, -1);
+		PreferencesUtil.setCurrentUid(-1);
 		context.sendBroadcast(i);
 		startSplashActivity(context);
 	}

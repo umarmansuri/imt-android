@@ -1,3 +1,4 @@
+
 package its.my.time.data.bdd.events.eventBase;
 
 import its.my.time.data.bdd.DatabaseHandler;
@@ -149,9 +150,7 @@ public class EventBaseRepository extends DatabaseHandler {
 	public List<EventBaseBean> getAllEvent() {
 		open();
 		final CompteRepository compteRepo = new CompteRepository(this.context);
-		final List<CompteBean> comptes = compteRepo
-				.getVisibleCompteByUid(PreferencesUtil
-						.getCurrentUid(this.context));
+		final List<CompteBean> comptes = compteRepo.getVisibleCompteByUid(PreferencesUtil.getCurrentUid());
 		final ArrayList<EventBaseBean> res = new ArrayList<EventBaseBean>();
 		for (final CompteBean compteBean : comptes) {
 			final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr,

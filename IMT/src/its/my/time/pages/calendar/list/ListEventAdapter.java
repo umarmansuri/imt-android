@@ -48,7 +48,7 @@ public class ListEventAdapter extends SeparatedListAdapter {
 	@Override
 	public void loadData() {
 
-		List<EventBaseBean> events = new EventBaseRepository(getContext()).getAllNextFromNow(PreferencesUtil.getCurrentUid(getContext()));
+		List<EventBaseBean> events = new EventBaseRepository(getContext()).getAllNextFromNow(PreferencesUtil.getCurrentUid());
 		if(events.size() > 0) {
 			Calendar lastCal = events.get(0).gethDeb();
 			List<Map<String,?>> day = new LinkedList<Map<String,?>>();

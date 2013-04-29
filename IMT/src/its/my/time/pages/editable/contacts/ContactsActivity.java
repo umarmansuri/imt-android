@@ -49,7 +49,7 @@ public class ContactsActivity extends MyTimeActivity {
 
 	@Override
 	protected void onResume() {
-		this.contacts = new CompteRepository(this).getAllCompteByUid(PreferencesUtil.getCurrentUid(this));
+		this.contacts = new CompteRepository(this).getAllCompteByUid(PreferencesUtil.getCurrentUid());
 
 		this.adapter = new ContactsAdapter(this.contacts);
 		this.mMainListe.setAdapter(this.adapter);

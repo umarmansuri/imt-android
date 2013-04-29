@@ -153,8 +153,7 @@ public class DetailsFragment extends BasePluginFragment {
 	}
 
 	public void initialiseActions() {
-		this.mListCompte = new CompteRepository(getActivity())
-		.getAllCompteByUid(PreferencesUtil.getCurrentUid(getActivity()));
+		this.mListCompte = new CompteRepository(getActivity()).getAllCompteByUid(PreferencesUtil.getCurrentUid());
 		this.mListCompteLabels = new ArrayList<String>();
 		int comptePosition = 0;
 		int i = 0;
