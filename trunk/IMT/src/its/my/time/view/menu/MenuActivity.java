@@ -88,7 +88,7 @@ OnClickListener {
 		mActionBar.setLogo(icone.getIconeDrawable());
 	}
 
-	private boolean isMenuShowed = false;
+	private static boolean isMenuShowed;
 	private int mMainMenuWidth;
 	private ArrayList<MenuGroupe> menuGroupes;
 	private final OnChildClickListener onMenuChildClickListener = new OnChildClickListener() {
@@ -204,6 +204,9 @@ OnClickListener {
 		this.mMainMenu.setOnChildClickListener(this.onMenuChildClickListener);
 		this.mMainMenu.setOnGroupClickListener(this.onMenuGroupClickListener);
 		this.mMainMenu.setOnGroupExpandListener(this.onGroupExpandListener);
+		if(isMenuShowed) {
+			enableDisableViewGroup(this.mMainContent, false);
+		}
 	}
 
 	/**
