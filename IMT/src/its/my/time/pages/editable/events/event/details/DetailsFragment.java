@@ -120,8 +120,7 @@ public class DetailsFragment extends BasePluginFragment {
 		this.mTextTitle.setText(getParentActivity().getEvent().getTitle());
 		this.mTextJourDeb.setDate(getParentActivity().getEvent().gethDeb());
 		this.mTextHeureDeb.setDate(getParentActivity().getEvent().gethDeb());
-		this.mTextJourFin = (DateButton) this.view
-				.findViewById(R.id.activity_event_details_text_dfin);
+		this.mTextJourFin = (DateButton) this.view.findViewById(R.id.activity_event_details_text_dfin);
 
 		if (getParentActivity().getEvent().gethFin() != null) {
 			this.mTextHeureFin.setDate(getParentActivity().getEvent().gethFin());
@@ -147,12 +146,10 @@ public class DetailsFragment extends BasePluginFragment {
 
 		this.mTextDetails.setText(state.getString(KEY_BUNDLE_DETAILS));
 		if (getParentActivity().getEvent().isAllDay()) {
-			this.mSwitchAllDay.changeState(
-					state.getBoolean(KEY_BUNDLE_ALL_DAY), false);
+			this.mSwitchAllDay.changeState(state.getBoolean(KEY_BUNDLE_ALL_DAY), false);
 		}
 		this.mSpinnerCompte.setSelection(state.getInt(KEY_BUNDLE_COMPTE));
-		this.mSpinnerRecurrence.setSelection(state
-				.getInt(KEY_BUNDLE_RECURRENCE));
+		this.mSpinnerRecurrence.setSelection(state.getInt(KEY_BUNDLE_RECURRENCE));
 	}
 
 	public void initialiseActions() {
@@ -207,16 +204,21 @@ public class DetailsFragment extends BasePluginFragment {
 				if (isChecked == true) {
 					DetailsFragment.this.mTextJourDeb.setEnabled(false);
 					DetailsFragment.this.mTextJourFin.setEnabled(false);
-					DetailsFragment.this.mTextHeureDeb
-					.setEnabled(false);
-					DetailsFragment.this.mTextHeureFin
-					.setEnabled(false);
+					DetailsFragment.this.mTextHeureDeb.setEnabled(false);
+					DetailsFragment.this.mTextHeureFin.setEnabled(false);
 
-					DetailsFragment.this.mTextJourFin
-					.setText(DetailsFragment.this.mTextJourDeb
-							.getText());
-					DetailsFragment.this.mTextHeureDeb.setText("00:00");
-					DetailsFragment.this.mTextHeureFin.setText("23:59");
+					DetailsFragment.this.mTextJourFin.setText(DetailsFragment.this.mTextJourDeb.getText());
+					Calendar calDeb = getParentActivity().getEvent().gethDeb();
+					calDeb.set(Calendar.HOUR_OF_DAY, 0);
+					calDeb.set(Calendar.MINUTE, 0);
+					calDeb.set(Calendar.SECOND, 0);
+					DetailsFragment.this.mTextHeureDeb.setDate(calDeb);
+					
+					Calendar calFin = getParentActivity().getEvent().gethFin();
+					calFin.set(Calendar.HOUR_OF_DAY, 23);
+					calFin.set(Calendar.MINUTE, 59);
+					calFin.set(Calendar.SECOND, 59);
+					DetailsFragment.this.mTextHeureFin.setDate(calFin);
 				} else {
 					DetailsFragment.this.mTextJourDeb.setEnabled(true);
 					DetailsFragment.this.mTextHeureDeb.setEnabled(true);

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.ExpandableListView;
@@ -53,6 +54,7 @@ public abstract class MyTimeActivity extends MenuActivity{
 		menuGroupeDeconnexion = new MenuGroupe("Déconnexion", MooncakeIcone.icon_off);
 		menuGroupes.add(menuGroupeDeconnexion);
 		
+		
 		return menuGroupes; 
 	}
 
@@ -62,6 +64,7 @@ public abstract class MyTimeActivity extends MenuActivity{
 		if(group == menuGroupeDeconnexion) {
 			ActivityUtil.logout(this);
 		} else if(group == menuGroupePropos) {
+		
 		}
 	}
 

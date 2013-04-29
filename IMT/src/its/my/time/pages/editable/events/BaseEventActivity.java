@@ -9,11 +9,14 @@ import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.Types;
 import its.my.time.view.ControledViewPager;
+import its.my.time.view.menu.MenuGroupe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,10 +24,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
+import com.fonts.mooncake.MooncakeIcone;
 
 public abstract class BaseEventActivity extends BaseActivity {
 
@@ -32,6 +37,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 	private static ArrayList<BasePluginFragment> fragments;
 	private boolean isNew;
 	protected EventBaseBean event;
+	private MenuGroupe menuSuppression;
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
@@ -93,6 +99,45 @@ public abstract class BaseEventActivity extends BaseActivity {
 						this.navigationListener);
 	}
 
+	@Override
+	protected ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes) {
+		menuSuppression = new MenuGroupe("Supp. événement", MooncakeIcone.icon_remove);
+		menuGroupes.add(menuSuppression);
+		return super.onCreateMenu(menuGroupes);
+	}
+	
+	@Override
+	protected void onMenuGroupClick(ExpandableListView parent,
+			MenuGroupe group, long id) {
+		if(group==menuSuppression) {
+			AlertDialog.Builder alertSupperssion = new AlertDialog.Builder(this);
+			alertSupperssion.setTitle("Supprimer l'événement ?");
+			
+			DialogInterface.OnClickListener listenerButon = new DialogInterface.OnClickListener() {	
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (which == DialogInterface.BUTTON_POSITIVE) { 
+						EventBaseRepository evRepo = new EventBaseRepository(getApplicationContext());
+						evRepo.deleteEvent(getEvent().getId());
+						dialog.dismiss();
+						finish();
+				    }
+				    else { 
+				        dialog.cancel();
+				        
+				    }
+					
+				}
+			};
+			alertSupperssion.setPositiveButton("Oui", listenerButon);
+			alertSupperssion.setNeutralButton("Non", listenerButon);
+			alertSupperssion.show();
+			
+		} else {
+			super.onMenuGroupClick(parent, group, id);
+		}
+	}
+	
 	public abstract ArrayList<BasePluginFragment> getPages();
 
 	@Override
