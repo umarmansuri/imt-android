@@ -228,7 +228,7 @@ public class MonthView extends BaseView implements OnCompteChangedListener, OnDa
 					textView.setText(" ");
 
 
-					textView.setBackground(createCompteDrawable(entry1.getKey()));		
+					textView.setBackgroundDrawable(createCompteDrawable(entry1.getKey()));		
 					textView.setPadding(5, 5, 5, 5);
 					textView.setTextColor(Color.WHITE);
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
