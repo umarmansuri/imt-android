@@ -9,6 +9,7 @@ import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
+import its.my.time.data.ws.WSManager;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.ContactsUtil;
 import its.my.time.util.PreferencesUtil;
@@ -43,9 +44,8 @@ public class SplashActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		overridePendingTransition(android.R.anim.fade_in,
-				android.R.anim.fade_out);
-		setTheme(android.R.style.Theme_Black_NoTitleBar);
+		//overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+		//setTheme(android.R.style.Theme_Black_NoTitleBar);
 		super.onCreate(savedInstanceState);
 				
 		setContentView(R.layout.activity_splash);
@@ -72,7 +72,8 @@ public class SplashActivity extends Activity {
 		this.pseudo = (EditText) findViewById(R.id.splash_login);
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
-		//temp();
+		PreferencesUtil.init(this);
+		temp();
 	}
 
 	private void temp() {
@@ -87,7 +88,7 @@ public class SplashActivity extends Activity {
 		user.setPseudo("");
 		user.setMdp("");
 		long resUser = userRepo.insertUtilisateur(user);
-		PreferencesUtil.setCurrentUid(SplashActivity.this, resUser);
+		PreferencesUtil.setCurrentUid(resUser);
 
 		CompteRepository repoCompte = new CompteRepository(SplashActivity.this); 
 		CompteBean compte = new CompteBean(); 
@@ -112,6 +113,7 @@ public class SplashActivity extends Activity {
 		Calendar calDeb2; 
 		Calendar calFin2; 
 		bean = new EventBaseBean();
+		bean.setId(1);
 		bean.setCid(resCompte1); 
 		bean.setTitle("Voicin un évènement");
 		calDeb2 = Calendar.getInstance(); 
@@ -124,10 +126,11 @@ public class SplashActivity extends Activity {
 		adapter.insertEvent(bean);
 
 		bean.setTitle("Deuxième"); 
+		bean.setId(2);
 		adapter.insertEvent(bean);
 
 		bean.setTitle("Et un petit dernier..."); 
-		bean.setId(2); 
+		bean.setId(3); 
 		adapter.insertEvent(bean);
 
 
@@ -158,7 +161,7 @@ public class SplashActivity extends Activity {
 	}
 
 	private void connexion() {
-		if (PreferencesUtil.getCurrentUid(SplashActivity.this) != -1) {
+		if (PreferencesUtil.getCurrentUid() != -1) {
 			new LoadMainActivity().execute();
 		} else {
 			UtilisateurBean user = new UtilisateurBean();
@@ -167,7 +170,7 @@ public class SplashActivity extends Activity {
 			user = connexion.getConnexion(this.pseudo.getText().toString(),
 					this.mdp.getText().toString());
 			if (user != null) {
-				PreferencesUtil.setCurrentUid(this,user.getId());
+				PreferencesUtil.setCurrentUid(user.getId());
 				starAnimation();
 				new LoadMainActivity().execute();
 			} else {
@@ -232,7 +235,8 @@ public class SplashActivity extends Activity {
 				infos.add(info);
 				
 				contact.setInfos(infos);
-				
+			
+				WSManager.init(SplashActivity.this);
 				//ContentProviderResult[] results = ContactsUtil.addContact(SplashActivity.this, account, contact);
 				
 			} catch (Exception e) {

@@ -1,7 +1,6 @@
 package its.my.time.view.menu;
 
 import its.my.time.R;
-import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.ELVAdapter.MenuChildViewHolder;
 import its.my.time.view.menu.ELVAdapter.OnItemSwitchedListener;
 
@@ -17,7 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -29,18 +27,19 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.fonts.mooncake.MooncakeIcone;
 
-public abstract class MenuActivity extends SherlockFragmentActivity implements
-OnClickListener {
+public abstract class MenuActivity extends SherlockFragmentActivity implements OnClickListener {
 
 	private static final long ANIMATION_DURATION = 200;
-	private FrameLayout mMainContent;
+	private RelativeLayout mMainContent;
 	private ExpandableListView mMainMenu;
+	private View mBlanck;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -54,7 +53,10 @@ OnClickListener {
 
 		initialiseActionBar();
 
-		this.mMainContent = (FrameLayout) findViewById(R.id.content);
+		this.mMainContent = (RelativeLayout) findViewById(R.id.content);
+		mBlanck = new View(this);
+		mBlanck.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		mBlanck.setOnTouchListener(onMenuShowedTouchListener);
 
 		final Display display = getWindowManager().getDefaultDisplay();
 		this.mMainContent.getLayoutParams().width = display.getWidth();
@@ -148,8 +150,8 @@ OnClickListener {
 			MenuActivity.this.mMainMenu.setVisibility(View.VISIBLE);
 			MenuActivity.this.mMainContent.bringToFront();
 			if(MenuActivity.this.isMenuShowed) {
-				  InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		          imm.hideSoftInputFromWindow(mMainContent.getApplicationWindowToken(), 0);
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(mMainContent.getApplicationWindowToken(), 0);
 			}
 		}
 
@@ -161,8 +163,11 @@ OnClickListener {
 		public void onAnimationEnd(Animation animation) {
 			if (MenuActivity.this.isMenuShowed) {
 				MenuActivity.this.mMainMenu.bringToFront();
+				mBlanck.setVisibility(View.VISIBLE);
+				mBlanck.bringToFront();
 			} else {
 				MenuActivity.this.mMainContent.bringToFront();
+				mBlanck.setVisibility(View.GONE);
 			}
 			if (MenuActivity.this.hasSwitcherValueChanged) {
 				new Handler().postDelayed(new Runnable() {
@@ -183,7 +188,7 @@ OnClickListener {
 		if (this.menuGroupes == null) {
 			this.menuGroupes = new ArrayList<MenuGroupe>();
 		}
-		
+
 
 		menuAdapter = new ELVAdapter(this, this.menuGroupes);
 		menuAdapter.setOnItemSwitchedListener(new OnItemSwitchedListener() {
@@ -204,9 +209,6 @@ OnClickListener {
 		this.mMainMenu.setOnChildClickListener(this.onMenuChildClickListener);
 		this.mMainMenu.setOnGroupClickListener(this.onMenuGroupClickListener);
 		this.mMainMenu.setOnGroupExpandListener(this.onGroupExpandListener);
-		if(isMenuShowed) {
-			enableDisableViewGroup(this.mMainContent, false);
-		}
 	}
 
 	/**
@@ -221,17 +223,15 @@ OnClickListener {
 			this.mMainMenu.setSelectedChild(groupPosition, childPosition, true);
 		}
 	}
-	
+
 
 	public void changeMainMenuVisibility(boolean showed, boolean withAnimation) {
 		this.isMenuShowed = showed;
 		Animation animMainMenu;
 		if (showed) {
 			animMainMenu = new TranslateAnimation(0, this.mMainMenuWidth, 0, 0);
-			enableDisableViewGroup(this.mMainContent, false);
 		} else {
 			animMainMenu = new TranslateAnimation(this.mMainMenuWidth, 0, 0, 0);
-			enableDisableViewGroup(this.mMainContent, true);
 		}
 		animMainMenu.setFillAfter(true);
 		if (withAnimation) {
@@ -248,37 +248,19 @@ OnClickListener {
 		public boolean onTouch(View v, MotionEvent event) {
 			if (event.getAction() == MotionEvent.ACTION_UP) {
 				changeMainMenuVisibility(false, true);
-				return true;
 			}
 			return true;
 		}
 	};
 
-	public void enableDisableViewGroup(ViewGroup viewGroup, boolean enabled) {
-		final int childCount = viewGroup.getChildCount();
-		for (int i = 0; i < childCount; i++) {
-			final View view = viewGroup.getChildAt(i);
-			if (view instanceof ViewGroup) {
-				enableDisableViewGroup((ViewGroup) view, enabled);
-			}
-			if (view instanceof ControledViewPager) {
-				((ControledViewPager) view).setPagingEnabled(enabled);
-			}
-			if (enabled) {
-				view.setOnTouchListener(null);
-			} else {
-				view.setOnTouchListener(this.onMenuShowedTouchListener);
-			}
-		}
-	}
 
 	protected abstract void onMenuGroupSwitch(MenuGroupe group,boolean isChecked);
 	protected abstract void onMenuChildSwitch(MenuGroupe group, MenuObjet objet, boolean isChecked);
 	protected abstract void onMenuGroupClick(ExpandableListView parent, MenuGroupe group, long id);
 	protected abstract void onMenuChildClick(ExpandableListView parent, MenuGroupe group,  MenuObjet objet, long id);
-	
-	
-	
+
+
+
 	protected abstract ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes);
 	protected abstract void reload();
 
@@ -305,21 +287,23 @@ OnClickListener {
 
 	@Override
 	public void setContentView(View view) {
-		this.mMainContent.removeAllViews();
-		this.mMainContent.addView(view);
+		this.setContentView(view,null);
 	}
 
 	@Override
 	public void setContentView(int layoutResId) {
-		this.mMainContent.removeAllViews();
-		final View view = getLayoutInflater().inflate(layoutResId, null);
-		setContentView(view);
+		this.setContentView(getLayoutInflater().inflate(layoutResId, null), null);
 	}
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		this.mMainContent.removeAllViews();
-		this.mMainContent.addView(view, params);
+		if(params != null) {
+			this.mMainContent.addView(view, params);
+		} else {
+			this.mMainContent.addView(view);
+		}
+		mMainContent.addView(mBlanck);
 	}
 
 	protected abstract boolean onBackButtonPressed();

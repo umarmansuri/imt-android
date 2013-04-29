@@ -24,7 +24,7 @@ public class NoteFragment extends BasePluginFragment {
 		mRichEditText.setEnabled(false);
 		
 		int eid = getParentActivity().getEvent().getId();
-		long uid = PreferencesUtil.getCurrentUid(getActivity());
+		long uid = PreferencesUtil.getCurrentUid();
 		
 		noteRepo = new NoteRepository(getActivity());
 		noteBean = noteRepo.getAllByUidEid(eid, uid);

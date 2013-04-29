@@ -22,7 +22,7 @@
     </style>
 
     <style name="Btn.Yellow" parent="@style/Btn">
-        <item name="android:background">@drawable/btn_green</item>
+        <item name="android:background">@drawable/btn_yellow</item>
     </style>
 
     <style name="champs_texte" parent="android:Widget.EditText">

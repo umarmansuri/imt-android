@@ -147,7 +147,7 @@ public class ContactActivity extends BaseActivity implements OnClickListener, Te
 		changeState(false);
 		compte.setType(Types.Comptes.getIdFromLabel((String)mFieldTypeSpinner.getSelectedItem()));
 		compte.setTitle(mFieldTitleEdit.getText().toString());
-		compte.setUid(PreferencesUtil.getCurrentUid(this));
+		compte.setUid(PreferencesUtil.getCurrentUid());
 		compte.setColor(color);
 		if (this.isNew) {
 			new CompteRepository(this).insertCompte(this.compte);

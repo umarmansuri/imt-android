@@ -49,8 +49,7 @@ public abstract class BaseView extends FrameLayout {
 			addView(result);
 			nbPageLoading--;
 			if (nbPageLoading == 0) {
-				((CalendarActivity) getContext())
-						.setSupportProgressBarIndeterminateVisibility(false);
+				((CalendarActivity) getContext()).setSupportProgressBarIndeterminateVisibility(false);
 			}
 		}
 	}

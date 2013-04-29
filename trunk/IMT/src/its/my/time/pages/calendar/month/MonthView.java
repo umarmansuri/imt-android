@@ -59,7 +59,7 @@ public class MonthView extends BaseView implements OnCompteChangedListener, OnDa
 			compteRepo = new CompteRepository(getContext());
 		}
 		compteRepo.addOnCompteCHangedListener(this);
-		List<CompteBean> listComptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid(getContext()));
+		List<CompteBean> listComptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid());
 		compteRepo.addOnCompteCHangedListener(this);
 		if(comptes == null) {
 			comptes = new SparseArray<CompteBean>();
