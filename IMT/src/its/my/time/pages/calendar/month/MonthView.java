@@ -197,6 +197,7 @@ public class MonthView extends BaseView implements OnObjectChangedListener<Compt
 		reloadEvents();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void reloadEvents() {
 		for(Entry<ViewGroup, List<EventBaseBean>> entry : mapEventByDay.entrySet()) {
 			ViewGroup v = entry.getKey();
