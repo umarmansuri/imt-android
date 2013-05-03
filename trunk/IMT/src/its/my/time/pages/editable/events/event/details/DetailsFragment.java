@@ -5,6 +5,8 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.data.bdd.events.plugins.participation.ParticipationBean;
+import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
@@ -19,12 +21,14 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -41,6 +45,7 @@ public class DetailsFragment extends BasePluginFragment {
 	private static final String KEY_BUNDLE_ALL_DAY = "KEY_BUNDLE_ALL_DAY";
 	private static final String KEY_BUNDLE_COMPTE = "KEY_BUNDLE_COMPTE";
 	private static final String KEY_BUNDLE_RECURRENCE = "KEY_BUNDLE_RECURRENCE";
+	private static final String KEY_BUNDLE_PARTICIPATION = "KEY_BUNDLE_PARTICIPATION";
 
 	private TimeButton mTextHeureDeb;
 	private TimeButton mTextHeureFin;
@@ -50,8 +55,11 @@ public class DetailsFragment extends BasePluginFragment {
 	private ArrayList<String> mListCompteLabels;
 	private Spinner mSpinnerCompte;
 	private Spinner mSpinnerRecurrence;
+	private Spinner mSpinnerParticipation;
 	private TextView mTextDetails;
 	private String[] array_recurrence;
+	private ParticipationBean participationBean;
+	private ParticipationRepository participationRepo;
 
 	private List<CompteBean> mListCompte;
 
@@ -72,7 +80,28 @@ public class DetailsFragment extends BasePluginFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+		Bundle savedInstanceState) {
+		
+		participation = new Participation[] {
+				new Participation(0, getResources().getString(R.string.invite)),
+				new Participation(1, getResources().getString(R.string.participe)),
+				new Participation(2, getResources().getString(R.string.participe_pas)),
+				new Participation(3, getResources().getString(R.string.participe_nsp))
+		};
+		
+		int eid = getParentActivity().getEvent().getId();
+		long uid = PreferencesUtil.getCurrentUid(getActivity());
+		
+		participationRepo = new ParticipationRepository(getActivity());
+		participationBean = participationRepo.getPartByUidEid(eid, uid);
+		
+		if(participationBean == null) {
+			participationBean = new ParticipationBean();
+			participationBean.setParticipation(-1);
+			participationBean.setEid(eid);
+			participationBean.setUid(uid);
+		}
+
 		this.view = inflater.inflate(R.layout.activity_event_details, null);
 		this.view.setBackgroundColor(Color.WHITE);
 
@@ -81,20 +110,18 @@ public class DetailsFragment extends BasePluginFragment {
 			((FrameLayout) this.view.findViewById(R.id.include)).addView(customView);
 		}
 
-		this.mTextTitle = (EditText) this.view
-				.findViewById(R.id.activity_event_details_text_title);
-		this.mTextJourDeb = (DateButton) this.view
-				.findViewById(R.id.activity_event_details_text_ddeb);
-		this.mTextJourFin = (DateButton) this.view
-				.findViewById(R.id.activity_event_details_text_dfin);
-		this.mTextHeureDeb = (TimeButton) this.view
-				.findViewById(R.id.activity_event_details_text_hdeb);
+		this.mTextTitle = (EditText) this.view.findViewById(R.id.activity_event_details_text_title);
+		this.mTextJourDeb = (DateButton) this.view.findViewById(R.id.activity_event_details_text_ddeb);
+		this.mTextJourFin = (DateButton) this.view.findViewById(R.id.activity_event_details_text_dfin);
+		this.mTextHeureDeb = (TimeButton) this.view				.findViewById(R.id.activity_event_details_text_hdeb);
 		this.mTextHeureFin = (TimeButton) this.view
 				.findViewById(R.id.activity_event_details_text_hfin);
 		this.mSpinnerCompte = (Spinner) this.view
 				.findViewById(R.id.activity_event_details_spinner_compte);
 		this.mSpinnerRecurrence = (Spinner) this.view
 				.findViewById(R.id.activity_event_details_spinner_recurrence);
+		this.mSpinnerParticipation = (Spinner) this.view
+				.findViewById(R.id.activity_event_details_spinner_participation);
 		this.mTextDetails = (TextView) this.view
 				.findViewById(R.id.activity_event_details_text_details);
 		this.mSwitchAllDay = (Switcher) this.view
@@ -108,7 +135,7 @@ public class DetailsFragment extends BasePluginFragment {
 		initialiseActions();
 
 		ViewUtil.enableAllView(view, false);
-		
+
 		return this.view;
 	}
 
@@ -150,6 +177,7 @@ public class DetailsFragment extends BasePluginFragment {
 		}
 		this.mSpinnerCompte.setSelection(state.getInt(KEY_BUNDLE_COMPTE));
 		this.mSpinnerRecurrence.setSelection(state.getInt(KEY_BUNDLE_RECURRENCE));
+		this.mSpinnerParticipation.setSelection(state.getInt(KEY_BUNDLE_PARTICIPATION));
 	}
 
 	public void initialiseActions() {
@@ -158,26 +186,22 @@ public class DetailsFragment extends BasePluginFragment {
 		int comptePosition = 0;
 		int i = 0;
 		for (final CompteBean compte : this.mListCompte) {
-			if (compte.getId() != getParentActivity().getEvent().getCid()) {
+			if (compte.getId() == getParentActivity().getEvent().getCid()) {
 				comptePosition = i;
 			}
 			i++;
 			this.mListCompteLabels.add(compte.getTitle());
 		}
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				getActivity(), android.R.layout.simple_spinner_item,
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
 				this.mListCompteLabels);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.mSpinnerCompte.setAdapter(adapter);
 		this.mSpinnerCompte.setSelection(comptePosition);
-		this.mSpinnerCompte
-		.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
+		this.mSpinnerCompte.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
 			public void onItemSelected(AdapterView<?> container,
 					View view, int position, long id) {
-				getParentActivity().getEvent()
-				.setCid(DetailsFragment.this.mListCompte.get(
-						position).getId());
+				getParentActivity().getEvent().setCid(DetailsFragment.this.mListCompte.get(position).getId());
 			}
 
 			@Override
@@ -186,15 +210,46 @@ public class DetailsFragment extends BasePluginFragment {
 			}
 		});
 
-		this.array_recurrence = getResources().getStringArray(
+		array_recurrence = getResources().getStringArray(
 				R.array.array_recurrence);
-
 		final ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(
 				getActivity(), android.R.layout.simple_spinner_item,
 				this.array_recurrence);
-		adapter_recurrence
-		.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapter_recurrence.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.mSpinnerRecurrence.setAdapter(adapter_recurrence);
+		
+		
+		final ArrayAdapter<Participation> adapter_participation = new CustomArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,
+				participation) {
+		 public View getDropDownView(int position, View convertView, ViewGroup parent)
+		    {
+		        View v = null;
+		        if (position == 0) {
+		            TextView tv = new TextView(getContext());
+		            tv.setHeight(0);
+		            tv.setVisibility(View.GONE);
+		            v = tv;
+		        }
+		        else {
+		            v = super.getDropDownView(position, null, parent);
+		        }
+		        parent.setVerticalScrollBarEnabled(false);
+		        return v;
+		    }
+		};
+		adapter_participation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mSpinnerParticipation.setAdapter(adapter_participation);
+		mSpinnerParticipation.setSelection((int)participationBean.getParticipation());
+		mSpinnerParticipation.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> container, View view, int position, long id) {
+				participationBean.setParticipation(id);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> container) {}
+		});
+		
 
 		this.mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
 			@Override
@@ -212,7 +267,7 @@ public class DetailsFragment extends BasePluginFragment {
 					calDeb.set(Calendar.MINUTE, 0);
 					calDeb.set(Calendar.SECOND, 0);
 					DetailsFragment.this.mTextHeureDeb.setDate(calDeb);
-					
+
 					Calendar calFin = getParentActivity().getEvent().gethFin();
 					calFin.set(Calendar.HOUR_OF_DAY, 23);
 					calFin.set(Calendar.MINUTE, 59);
@@ -258,11 +313,9 @@ public class DetailsFragment extends BasePluginFragment {
 		outState.putString(KEY_BUNDLE_DETAILS, this.mTextDetails.getText()
 				.toString());
 		outState.putBoolean(KEY_BUNDLE_ALL_DAY, this.mSwitchAllDay.isChecked());
-		outState.putInt(KEY_BUNDLE_COMPTE,
-				this.mSpinnerCompte.getSelectedItemPosition());
-		outState.putInt(KEY_BUNDLE_RECURRENCE,
-				this.mSpinnerRecurrence.getSelectedItemPosition());
-
+		outState.putInt(KEY_BUNDLE_COMPTE,this.mSpinnerCompte.getSelectedItemPosition());
+		outState.putInt(KEY_BUNDLE_RECURRENCE, mSpinnerRecurrence.getSelectedItemPosition());
+		outState.putInt(KEY_BUNDLE_PARTICIPATION, mSpinnerParticipation.getSelectedItemPosition());
 		state = outState;
 
 	}
@@ -310,9 +363,11 @@ public class DetailsFragment extends BasePluginFragment {
 		getParentActivity().getEvent().setTitle(this.mTextTitle.getText().toString());
 		if(getParentActivity().getEvent().getId() == -1) {
 			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insertEvent(getParentActivity().getEvent()));
+			participationBean.setEid(getParentActivity().getEvent().getId());
+			participationRepo.insertParticipant(participationBean);
 		} else {
 			new EventBaseRepository(getActivity()).updateEvent(getParentActivity().getEvent());
-		}
+			participationRepo.updateParticipation(participationBean);		}
 		getParentActivity().setEvent(getParentActivity().getEvent());
 		super.launchSave();
 	}
@@ -341,5 +396,50 @@ public class DetailsFragment extends BasePluginFragment {
 	@Override
 	public boolean isSavable() {
 		return true;
+	}
+	
+	
+	private Participation[] participation;
+	
+	public class Participation {
+		private int id;
+		private String label;
+		public Participation(int id, String label) {
+			super();
+			this.id = id;
+			this.label = label;
+		}
+		public int getId() {
+			return id;
+		}
+		public void setId(int id) {
+			this.id = id;
+		}
+		public String getLabel() {
+			return label;
+		}
+		public void setLabel(String label) {
+			this.label = label;
+		}
+		
+		@Override
+		public String toString() {
+			return label;
+		}
+	}
+	
+	private class CustomArrayAdapter extends ArrayAdapter<Participation> {
+
+		public CustomArrayAdapter(Context context,int simpleSpinnerItem, Participation[] participation) {
+			super(context, simpleSpinnerItem, participation);
+		}
+		
+		@Override public boolean hasStableIds() {return true;}
+		
+		@Override
+		public long getItemId(int position) {
+			return getItem(position).getId();
+		}
+		
 	}
 }

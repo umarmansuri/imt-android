@@ -162,6 +162,27 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7" />
             </LinearLayout>
+            
+           <LinearLayout
+                android:id="@+id/activity_event_details_spinner_bis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp" >
+
+                <TextView
+                    android:id="@+id/activity_event_details_lib_participation"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="4"
+                    android:hint="@string/view_event_detail_participation" />
+
+                <Spinner
+                    android:id="@+id/activity_event_details_spinner_participation"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6" />
+            </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/include"

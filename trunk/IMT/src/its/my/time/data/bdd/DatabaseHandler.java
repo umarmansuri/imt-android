@@ -6,6 +6,7 @@ import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.note.NoteRepository;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
 import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
+import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import android.content.Context;
@@ -51,6 +52,7 @@ public class DatabaseHandler {
 			db.execSQL(EventBaseRepository.CREATE_TABLE);
 			db.execSQL(CommentRepository.CREATE_TABLE);
 			db.execSQL(ParticipantRepository.CREATE_TABLE);
+			db.execSQL(ParticipationRepository.CREATE_TABLE);
 			db.execSQL(PjRepository.CREATE_TABLE);
 			db.execSQL(OdjRepository.CREATE_TABLE);
 			db.execSQL(NoteRepository.CREATE_TABLE);
