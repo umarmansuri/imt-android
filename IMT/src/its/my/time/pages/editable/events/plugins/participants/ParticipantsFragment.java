@@ -8,6 +8,7 @@ import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.ContactsUtil;
+import its.my.time.util.PreferencesUtil;
 import its.my.time.util.StringUtil;
 
 import java.util.ArrayList;
@@ -206,7 +207,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 				view.setOnDeleteClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						repo.deleteParticipant(getParentActivity().getEvent().getId(), participants.get(position).getIdContactInfo());
+						repo.deleteParticipant(getParentActivity().getEvent().getId(), PreferencesUtil.getCurrentUid(getActivity()), participants.get(position).getIdContactInfo());
 						participants.remove(position);
 						ParticipantsFragment.this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), true));
 					}
