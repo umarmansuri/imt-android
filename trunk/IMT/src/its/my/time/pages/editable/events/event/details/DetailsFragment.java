@@ -90,7 +90,7 @@ public class DetailsFragment extends BasePluginFragment {
 		};
 		
 		int eid = getParentActivity().getEvent().getId();
-		long uid = PreferencesUtil.getCurrentUid(getActivity());
+		long uid = PreferencesUtil.getCurrentUid();
 		
 		participationRepo = new ParticipationRepository(getActivity());
 		participationBean = participationRepo.getPartByUidEid(eid, uid);

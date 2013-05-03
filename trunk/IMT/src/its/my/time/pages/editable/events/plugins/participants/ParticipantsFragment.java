@@ -207,7 +207,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 				view.setOnDeleteClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						repo.deleteParticipant(getParentActivity().getEvent().getId(), PreferencesUtil.getCurrentUid(getActivity()), participants.get(position).getIdContactInfo());
+						repo.deleteParticipant(getParentActivity().getEvent().getId(), PreferencesUtil.getCurrentUid(), participants.get(position).getIdContactInfo());
 						participants.remove(position);
 						ParticipantsFragment.this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), true));
 					}
