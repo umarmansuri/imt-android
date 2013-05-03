@@ -38,24 +38,22 @@ public class DatabaseHandler {
 		this.DBHelper.close();
 	}
 
-	private static class DatabaseHelper extends SQLiteOpenHelper {
+	private class DatabaseHelper extends SQLiteOpenHelper {
 		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL(UtilisateurRepository.CREATE_TABLE);
-		
-			
-			db.execSQL(CompteRepository.CREATE_TABLE);
-			db.execSQL(EventBaseRepository.CREATE_TABLE);
-			db.execSQL(CommentRepository.CREATE_TABLE);
-			db.execSQL(ParticipantRepository.CREATE_TABLE);
-			db.execSQL(ParticipationRepository.CREATE_TABLE);
-			db.execSQL(PjRepository.CREATE_TABLE);
-			db.execSQL(OdjRepository.CREATE_TABLE);
-			db.execSQL(NoteRepository.CREATE_TABLE);
+			db.execSQL(new UtilisateurRepository(context).getCreateRequest());		
+			db.execSQL(new CompteRepository(context).getCreateRequest());
+			db.execSQL(new EventBaseRepository(context).getCreateRequest());		
+			db.execSQL(new CommentRepository(context).getCreateRequest());
+			db.execSQL(new ParticipantRepository(context).getCreateRequest());		
+			db.execSQL(new PjRepository(context).getCreateRequest());
+			db.execSQL(new OdjRepository(context).getCreateRequest());		
+			db.execSQL(new NoteRepository(context).getCreateRequest());		
+			db.execSQL(new ParticipationRepository(context).getCreateRequest());		
 		}
 
 		@Override

@@ -33,10 +33,10 @@ public class ParticipantsView extends EditableLittleView {
 		((TextView) findViewById(R.id.event_participant_mail)).setText(contactInfo.getValue());
 		
 		ViewGroup imageParent = (ViewGroup)findViewById(R.id.event_participant_icone);
-		if(contact.getImage()!= null) {
+		if(false/* TODO contact.getImage()!= null*/) {
 			ImageView imageView = new ImageView(getContext());
 			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			imageView.setImageBitmap(contact.getImage());
+			//TODO imageView.setImageBitmap(contact.getImage());
 
 			imageParent.removeAllViews();
 			imageParent.addView(imageView);

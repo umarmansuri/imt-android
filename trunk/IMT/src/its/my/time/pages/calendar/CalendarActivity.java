@@ -145,7 +145,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		menuCompte = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
 		final CompteRepository compteRepo = new CompteRepository(this);
-		this.comptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid());
+		this.comptes = compteRepo.getAllByUid(PreferencesUtil.getCurrentUid());
 		for (final CompteBean compteBean : this.comptes) {
 			donnees.add(new MenuObjet(menuCompte, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), compteBean.getColor()));
 		}

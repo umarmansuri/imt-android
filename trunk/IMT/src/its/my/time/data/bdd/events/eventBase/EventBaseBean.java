@@ -1,101 +1,109 @@
 package its.my.time.data.bdd.events.eventBase;
 
+import its.my.time.data.bdd.base.BaseBean;
+import its.my.time.data.bdd.base.TableAttribut;
+import its.my.time.util.DateUtil;
+
 import java.util.Calendar;
+import java.util.List;
 
-public class EventBaseBean {
+public class EventBaseBean extends BaseBean{
 
-	private String details;
-	private Calendar hDeb;
-	private Calendar hFin;
-	private int id;
-	private String title;
-	private int cid;
-	private int typeId;
-	private int detailsId;
-	private boolean isAllDay;
+	private TableAttribut<String> details;
+	private TableAttribut<Calendar> hDeb;
+	private TableAttribut<Calendar> hFin;
+	private TableAttribut<String> title;
+	private TableAttribut<Integer> cid;
+	private TableAttribut<Integer> typeId;
+	private TableAttribut<Integer> detailsId;
+	private TableAttribut<Integer> isAllDay;
 
 	public EventBaseBean() {
 		super();
-		this.details = "";
-		this.hDeb = null;
-		this.hFin = null;
-		this.id = -1;
-		this.title = "";
-		this.cid = -1;
-		this.typeId = -1;
-		this.detailsId = -1;
-		this.isAllDay = false;
+		this.details = new TableAttribut<String>("details", "");
+		this.hDeb  = new TableAttribut<Calendar>("hDeb", DateUtil.createCalendar());
+		this.hFin = new TableAttribut<Calendar>("hFin", DateUtil.createCalendar());
+		this.title = new TableAttribut<String>("title", "");
+		this.cid = new TableAttribut<Integer>("cid", -1);
+		this.typeId = new TableAttribut<Integer>("typeId", -1);
+		this.detailsId = new TableAttribut<Integer>("detailsId", -1);
+		this.isAllDay = new TableAttribut<Integer>("isAllDay", -1);
 	}
 
 	public boolean isAllDay() {
-		return this.isAllDay;
+		return this.isAllDay.getValue() == 1 ? true : false;
 	}
 
 	public void setAllDay(boolean isAllDay) {
-		this.isAllDay = isAllDay;
+		this.isAllDay.setValue(isAllDay == true ? 1 : 0);
 	}
 
 	public String getDetails() {
-		return this.details;
+		return this.details.getValue();
 	}
 
 	public Calendar gethDeb() {
-		return this.hDeb;
+		return this.hDeb.getValue();
 	}
 
 	public Calendar gethFin() {
-		return this.hFin;
-	}
-
-	public int getId() {
-		return this.id;
+		return this.hFin.getValue();
 	}
 
 	public String getTitle() {
-		return this.title;
+		return this.title.getValue();
 	}
 
 	public void setDetails(String details) {
-		this.details = details;
+		this.details.setValue(details);
 	}
 
 	public void sethDeb(Calendar hDeb) {
-		this.hDeb = hDeb;
+		this.hDeb.setValue(hDeb);
 	}
 
 	public void sethFin(Calendar hFin) {
-		this.hFin = hFin;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		this.hFin.setValue(hFin);
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.title.setValue(title);
 	}
 
 	public int getCid() {
-		return this.cid;
+		return this.cid.getValue();
 	}
 
 	public void setCid(int cid) {
-		this.cid = cid;
+		this.cid.setValue(cid);
 	}
 
 	public int getTypeId() {
-		return this.typeId;
+		return this.typeId.getValue();
 	}
 
 	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+		this.typeId.setValue(typeId);
 	}
 
 	public int getDetailsId() {
-		return this.detailsId;
+		return this.detailsId.getValue();
 	}
 
 	public void setDetailsId(int detailsId) {
-		this.detailsId = detailsId;
+		this.detailsId.setValue(detailsId);
+	}
+	
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(details);
+		list.add(hDeb);
+		list.add(hFin);
+		list.add(title);
+		list.add(cid);
+		list.add(typeId);
+		list.add(detailsId);
+		list.add(isAllDay);
+		return list;
 	}
 }

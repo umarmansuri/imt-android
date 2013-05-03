@@ -28,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -80,21 +79,21 @@ public class DetailsFragment extends BasePluginFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
-		
+			Bundle savedInstanceState) {
+
 		participation = new Participation[] {
 				new Participation(0, getResources().getString(R.string.invite)),
 				new Participation(1, getResources().getString(R.string.participe)),
 				new Participation(2, getResources().getString(R.string.participe_pas)),
 				new Participation(3, getResources().getString(R.string.participe_nsp))
 		};
-		
+
 		int eid = getParentActivity().getEvent().getId();
 		long uid = PreferencesUtil.getCurrentUid();
-		
+
 		participationRepo = new ParticipationRepository(getActivity());
-		participationBean = participationRepo.getPartByUidEid(eid, uid);
-		
+		participationBean = participationRepo.getByUidEid(eid, uid);
+
 		if(participationBean == null) {
 			participationBean = new ParticipationBean();
 			participationBean.setParticipation(-1);
@@ -181,7 +180,7 @@ public class DetailsFragment extends BasePluginFragment {
 	}
 
 	public void initialiseActions() {
-		this.mListCompte = new CompteRepository(getActivity()).getAllCompteByUid(PreferencesUtil.getCurrentUid());
+		this.mListCompte = new CompteRepository(getActivity()).getAllByUid(PreferencesUtil.getCurrentUid());
 		this.mListCompteLabels = new ArrayList<String>();
 		int comptePosition = 0;
 		int i = 0;
@@ -198,7 +197,7 @@ public class DetailsFragment extends BasePluginFragment {
 		this.mSpinnerCompte.setAdapter(adapter);
 		this.mSpinnerCompte.setSelection(comptePosition);
 		this.mSpinnerCompte.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
+
 			public void onItemSelected(AdapterView<?> container,
 					View view, int position, long id) {
 				getParentActivity().getEvent().setCid(DetailsFragment.this.mListCompte.get(position).getId());
@@ -217,25 +216,25 @@ public class DetailsFragment extends BasePluginFragment {
 				this.array_recurrence);
 		adapter_recurrence.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.mSpinnerRecurrence.setAdapter(adapter_recurrence);
-		
-		
+
+
 		final ArrayAdapter<Participation> adapter_participation = new CustomArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,
 				participation) {
-		 public View getDropDownView(int position, View convertView, ViewGroup parent)
-		    {
-		        View v = null;
-		        if (position == 0) {
-		            TextView tv = new TextView(getContext());
-		            tv.setHeight(0);
-		            tv.setVisibility(View.GONE);
-		            v = tv;
-		        }
-		        else {
-		            v = super.getDropDownView(position, null, parent);
-		        }
-		        parent.setVerticalScrollBarEnabled(false);
-		        return v;
-		    }
+			public View getDropDownView(int position, View convertView, ViewGroup parent)
+			{
+				View v = null;
+				if (position == 0) {
+					TextView tv = new TextView(getContext());
+					tv.setHeight(0);
+					tv.setVisibility(View.GONE);
+					v = tv;
+				}
+				else {
+					v = super.getDropDownView(position, null, parent);
+				}
+				parent.setVerticalScrollBarEnabled(false);
+				return v;
+			}
 		};
 		adapter_participation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mSpinnerParticipation.setAdapter(adapter_participation);
@@ -243,13 +242,13 @@ public class DetailsFragment extends BasePluginFragment {
 		mSpinnerParticipation.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> container, View view, int position, long id) {
-				participationBean.setParticipation(id);
+				participationBean.setParticipation((int)id);
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> container) {}
 		});
-		
+
 
 		this.mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
 			@Override
@@ -362,12 +361,13 @@ public class DetailsFragment extends BasePluginFragment {
 		getParentActivity().getEvent().sethFin(cal);
 		getParentActivity().getEvent().setTitle(this.mTextTitle.getText().toString());
 		if(getParentActivity().getEvent().getId() == -1) {
-			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insertEvent(getParentActivity().getEvent()));
+			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insert(getParentActivity().getEvent()));
 			participationBean.setEid(getParentActivity().getEvent().getId());
-			participationRepo.insertParticipant(participationBean);
+			participationRepo.insert(participationBean);
 		} else {
-			new EventBaseRepository(getActivity()).updateEvent(getParentActivity().getEvent());
-			participationRepo.updateParticipation(participationBean);		}
+			new EventBaseRepository(getActivity()).update(getParentActivity().getEvent());
+			participationRepo.update(participationBean);		
+		}
 		getParentActivity().setEvent(getParentActivity().getEvent());
 		super.launchSave();
 	}
@@ -397,10 +397,10 @@ public class DetailsFragment extends BasePluginFragment {
 	public boolean isSavable() {
 		return true;
 	}
-	
-	
+
+
 	private Participation[] participation;
-	
+
 	public class Participation {
 		private int id;
 		private String label;
@@ -421,25 +421,25 @@ public class DetailsFragment extends BasePluginFragment {
 		public void setLabel(String label) {
 			this.label = label;
 		}
-		
+
 		@Override
 		public String toString() {
 			return label;
 		}
 	}
-	
+
 	private class CustomArrayAdapter extends ArrayAdapter<Participation> {
 
 		public CustomArrayAdapter(Context context,int simpleSpinnerItem, Participation[] participation) {
 			super(context, simpleSpinnerItem, participation);
 		}
-		
+
 		@Override public boolean hasStableIds() {return true;}
-		
+
 		@Override
 		public long getItemId(int position) {
 			return getItem(position).getId();
 		}
-		
+
 	}
 }

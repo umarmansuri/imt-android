@@ -49,7 +49,7 @@ public class ComptesActivity extends MyTimeActivity {
 
 	@Override
 	protected void onResume() {
-		comptes = new CompteRepository(this).getAllCompteByUid(PreferencesUtil.getCurrentUid());
+		comptes = new CompteRepository(this).getAllByUid(PreferencesUtil.getCurrentUid());
 		this.adapter = new ComptesAdapter(comptes);
 		this.mMainListe.setAdapter(this.adapter);
 		this.mMainListe.setOnItemClickListener(new OnItemClickListener() {
@@ -109,7 +109,7 @@ public class ComptesActivity extends MyTimeActivity {
 				new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int index) {
-				new CompteRepository(ComptesActivity.this).deleteCompte(comptes.get(which));
+				new CompteRepository(ComptesActivity.this).delete(comptes.get(which));
 				comptes.remove(which);
 				mMainListe.setAdapter(adapter);
 			}

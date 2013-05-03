@@ -3,23 +3,17 @@ package its.my.time;
 import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.contacts.ContactBean;
-import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.data.ws.WSManager;
 import its.my.time.util.ActivityUtil;
-import its.my.time.util.ContactsUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -80,14 +74,15 @@ public class SplashActivity extends Activity {
 		deleteDatabase(DatabaseHandler.DATABASE_NAME);
 		UtilisateurRepository userRepo = new
 				UtilisateurRepository(SplashActivity.this); 
-		UtilisateurBean user = new UtilisateurBean(); user.setAdresse("42 rue du charpenet");
+		UtilisateurBean user = new UtilisateurBean(); 
+		user.setAdresse("42 rue du charpenet");
 		user.setCodePostal("69890"); user.setMail("ad.hugon@gmail.com");
 		user.setNom("Hugon"); user.setPays("France");
 		user.setPrenom("Adrien"); user.setTel("0617454462");
 		user.setVille("La Tour de salvagny");
 		user.setPseudo("");
 		user.setMdp("");
-		long resUser = userRepo.insertUtilisateur(user);
+		long resUser = userRepo.insert(user);
 		PreferencesUtil.setCurrentUid(resUser);
 
 		CompteRepository repoCompte = new CompteRepository(SplashActivity.this); 
@@ -97,14 +92,14 @@ public class SplashActivity extends Activity {
 		compte.setTitle(Types.Comptes.MYTIME.label); 
 		compte.setType(Types.Comptes.MYTIME.id);
 		compte.setUid(resUser); 
-		int resCompte1 =  (int)repoCompte.insertCompte(compte);
+		int resCompte1 =  (int)repoCompte.insert(compte);
 
 		compte = new CompteBean(); compte.setColor(Color.BLUE);
 		compte.setShowed(true); 
 		compte.setTitle("Compte 2");
 		compte.setType(2); 
 		compte.setUid(resUser); 
-		int resCompte2 = (int)repoCompte.insertCompte(compte);
+		int resCompte2 = (int)repoCompte.insert(compte);
 
 
 
@@ -123,15 +118,15 @@ public class SplashActivity extends Activity {
 		bean.sethFin(calFin2);
 		bean.setTypeId(Types.Event.MEETING);
 		bean.setDetailsId(0); 
-		adapter.insertEvent(bean);
+		adapter.insert(bean);
 
 		bean.setTitle("Deuxième"); 
 		bean.setId(2);
-		adapter.insertEvent(bean);
+		adapter.insert(bean);
 
 		bean.setTitle("Et un petit dernier..."); 
 		bean.setId(3); 
-		adapter.insertEvent(bean);
+		adapter.insert(bean);
 
 
 
@@ -145,19 +140,19 @@ public class SplashActivity extends Activity {
 		bean.sethFin(calFin2);
 		bean.setTypeId(Types.Event.CALL);
 		bean.setDetailsId(0); 
-		adapter.insertEvent(bean);
+		adapter.insert(bean);
 
 		bean.setTitle("Deuxième"); 
-		adapter.insertEvent(bean); 
+		adapter.insert(bean); 
 		bean.setTitle("Troisieme...");
 		bean.setId(5); 
-		adapter.insertEvent(bean);
+		adapter.insert(bean);
 		bean.setTitle("Un autre");
 		bean.setId(6); 
-		adapter.insertEvent(bean);
+		adapter.insert(bean);
 		bean.setTitle("Et le dernier!!!!!!!!!!"); 
 		bean.setId(7); 
-		adapter.insertEvent(bean);
+		adapter.insert(bean);
 	}
 
 	private void connexion() {
@@ -167,7 +162,7 @@ public class SplashActivity extends Activity {
 			UtilisateurBean user = new UtilisateurBean();
 			final UtilisateurRepository connexion = new UtilisateurRepository(
 					SplashActivity.this);
-			user = connexion.getConnexion(this.pseudo.getText().toString(),
+			user = connexion.getUser(this.pseudo.getText().toString(),
 					this.mdp.getText().toString());
 			if (user != null) {
 				PreferencesUtil.setCurrentUid(user.getId());
@@ -208,34 +203,6 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				Account account = new Account("a", getString(R.string.ACCOUNT_TYPE));
-				AccountManager am = AccountManager.get(SplashActivity.this);
-				accountCreated = am.addAccountExplicitly(account, "a", null);
-				
-				ContactsUtil.getAll(getApplicationContext());
-				
-				ContactBean contact = new ContactBean();
-				contact.setPrenom("Adrien");
-				contact.setNom("Queriaud");
-				
-				ArrayList<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
-				ContactInfoBean info = new ContactInfoBean();
-				info.setType(ContactInfoBean.TYPE_MAIL);
-				info.setValue("ad.hugon@gmail.com");
-				infos.add(info);
-
-				info = new ContactInfoBean();
-				info.setType(ContactInfoBean.TYPE_PHONE);
-				info.setValue("06 17 45 44 62");
-				infos.add(info);
-
-				info = new ContactInfoBean();
-				info.setType(ContactInfoBean.TYPE_MAIL);
-				info.setValue("a.hugon@sciences-u-lyon.fr");
-				infos.add(info);
-				
-				contact.setInfos(infos);
-			
 				WSManager.init(SplashActivity.this);
 				//ContentProviderResult[] results = ContactsUtil.addContact(SplashActivity.this, account, contact);
 				

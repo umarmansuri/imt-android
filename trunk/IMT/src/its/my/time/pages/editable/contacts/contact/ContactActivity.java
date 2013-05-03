@@ -150,7 +150,7 @@ public class ContactActivity extends BaseActivity implements OnClickListener, Te
 		compte.setUid(PreferencesUtil.getCurrentUid());
 		compte.setColor(color);
 		if (this.isNew) {
-			new CompteRepository(this).insertCompte(this.compte);
+			new CompteRepository(this).insert(this.compte);
 			isNew = false;
 		} else {
 			new CompteRepository(this).update(this.compte);

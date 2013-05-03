@@ -117,8 +117,7 @@ public class DayView extends BaseView {
 				calDeb.get(Calendar.HOUR_OF_DAY), calDeb.get(Calendar.MINUTE),
 				calDeb.get(Calendar.SECOND));
 		calFin.add(Calendar.DAY_OF_MONTH, 1);
-		this.events = new EventBaseRepository(getContext()).getAllEvents(
-				calDeb, calFin);
+		this.events = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
 
 		for (final EventBaseBean event : this.events) {
 			if (this.firstCal == null || event.gethDeb().before(this.firstCal)) {
@@ -178,7 +177,7 @@ public class DayView extends BaseView {
 	private void reloadEventLittleView(EventLittleView eventView) {
 		ColumnEvent column;
 		final EventBaseBean event = eventView.getEvent();
-		new EventBaseRepository(getContext()).updateEvent(event);
+		new EventBaseRepository(getContext()).update(event);
 		for (int i = 0; i < this.llEvent.getChildCount(); i++) {
 			column = (ColumnEvent) this.llEvent.getChildAt(i);
 			if (column.unload(eventView)) {

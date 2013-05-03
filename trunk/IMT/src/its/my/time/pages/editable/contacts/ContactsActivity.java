@@ -49,7 +49,7 @@ public class ContactsActivity extends MyTimeActivity {
 
 	@Override
 	protected void onResume() {
-		this.contacts = new CompteRepository(this).getAllCompteByUid(PreferencesUtil.getCurrentUid());
+		this.contacts = new CompteRepository(this).getAllByUid(PreferencesUtil.getCurrentUid());
 
 		this.adapter = new ContactsAdapter(this.contacts);
 		this.mMainListe.setAdapter(this.adapter);
@@ -107,7 +107,7 @@ public class ContactsActivity extends MyTimeActivity {
 		builder.setPositiveButton("Supprimer",new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int index) {
-				new CompteRepository(ContactsActivity.this).deleteCompte(ContactsActivity.this.contacts.get(which));
+				new CompteRepository(ContactsActivity.this).delete(ContactsActivity.this.contacts.get(which));
 				contacts.remove(which);
 				mMainListe.setAdapter(adapter);
 			}

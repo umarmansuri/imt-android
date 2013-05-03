@@ -1,67 +1,54 @@
 package its.my.time.data.bdd.events.plugins.comment;
 
+import its.my.time.data.bdd.base.TableAttribut;
+import its.my.time.data.bdd.events.plugins.PluginBaseBean;
+import its.my.time.util.DateUtil;
+
 import java.util.Calendar;
+import java.util.List;
 
-public class CommentBean {
+public class CommentBean extends PluginBaseBean{
 
-	private long id;
-	private String comment;
-	private Calendar date;
-	private long uid;
-	private long eid;
-
-	public CommentBean(int id, String title, String comment, int uid, int eid) {
-		super();
-		this.id = id;
-		this.comment = comment;
-		this.uid = uid;
-		this.eid = eid;
-	}
+	private TableAttribut<String> comment;
+	private TableAttribut<Calendar> date;
+	private TableAttribut<Long> uid;
 
 	public CommentBean() {
-		this.id = -1;
-		this.comment = "";
-		this.uid = -1;
-		this.eid = -1;
-	}
-
-	public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+		super();
+		this.comment = new TableAttribut<String>("", "");
+		this.date = new TableAttribut<Calendar>("date", DateUtil.createCalendar());
+		this.uid = new TableAttribut<Long>("uid", -1l);
 	}
 
 	public String getComment() {
-		return this.comment;
+		return this.comment.getValue();
 	}
 
 	public void setComment(String comment) {
-		this.comment = comment;
+		this.comment.setValue(comment);
 	}
 
 	public long getUid() {
-		return this.uid;
+		return this.uid.getValue();
 	}
 
 	public void setUid(long uid) {
-		this.uid = uid;
-	}
-
-	public long getEid() {
-		return this.eid;
-	}
-
-	public void setEid(int eid) {
-		this.eid = eid;
+		this.uid.setValue(uid);
 	}
 
 	public Calendar getDate() {
-		return this.date;
+		return this.date.getValue();
 	}
 
 	public void setDate(Calendar date) {
-		this.date = date;
+		this.date.setValue(date);
+	}
+	
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(comment);
+		list.add(date);
+		list.add(uid);
+		return super.getAttributs(list);
 	}
 }

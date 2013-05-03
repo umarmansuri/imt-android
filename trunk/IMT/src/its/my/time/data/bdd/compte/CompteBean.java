@@ -1,60 +1,74 @@
 package its.my.time.data.bdd.compte;
 
-public class CompteBean {
+import java.util.List;
 
-	private int id;
-	private String title;
-	private int color;
-	private int type = -1;
-	private boolean isShowed;
-	private long uid;
+import its.my.time.data.bdd.base.BaseBean;
+import its.my.time.data.bdd.base.TableAttribut;
 
-	public int getId() {
-		return this.id;
-	}
+public class CompteBean extends BaseBean{
 
-	public void setId(int id) {
-		this.id = id;
+	private TableAttribut<String> title;
+	private TableAttribut<Integer> color;
+	private TableAttribut<Integer> type;
+	private TableAttribut<Integer> isShowed;
+	private TableAttribut<Long> uid;
+
+	public CompteBean() {
+		super();
+		title = new TableAttribut<String>("title", "");
+		color = new TableAttribut<Integer>("color", -1);
+		type = new TableAttribut<Integer>("type", -1);
+		isShowed = new TableAttribut<Integer>("isShowed", 0);
+		uid = new TableAttribut<Long>("uid", -1l);
 	}
 
 	public String getTitle() {
-		return this.title;
+		return this.title.getValue();
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.title.setValue(title);
 	}
 
 	public int getColor() {
-		return this.color;
+		return this.color.getValue();
 	}
 
 	public void setColor(int color) {
-		this.color = color;
+		this.color.setValue(color);
 	}
 
 	public int getType() {
-		return this.type;
+		return this.type.getValue();
 	}
 
 	public void setType(int type) {
-		this.type = type;
+		this.type.setValue(type);
 	}
 
 	public boolean isShowed() {
-		return this.isShowed;
+		return this.isShowed.getValue() == 1 ? true : false;
 	}
 
 	public void setShowed(boolean isShowed) {
-		this.isShowed = isShowed;
+		this.isShowed.setValue(isShowed == true ? 1 : 0);
 	}
 
 	public long getUid() {
-		return this.uid;
+		return this.uid.getValue();
 	}
 
 	public void setUid(long uid) {
-		this.uid = uid;
+		this.uid.setValue(uid);
 	}
 
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(title);
+		list.add(color);
+		list.add(type);
+		list.add(isShowed);
+		list.add(uid);
+		return list;
+	}
 }

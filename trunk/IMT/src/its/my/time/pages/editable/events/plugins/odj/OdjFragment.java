@@ -25,7 +25,7 @@ import com.mobeta.android.dslv.DragSortListView;
 public class OdjFragment extends BasePluginFragment {
 
 	protected List<OdjBean> odjs;
-	protected ArrayList<Long> removedOdjsId;
+	protected ArrayList<OdjBean> removedOdjs;
 	private Button mButtonSend;
 	private DragSortListView mListOdj;
 	private EditText mTextOdj;
@@ -112,16 +112,16 @@ public class OdjFragment extends BasePluginFragment {
 			odj = odjs.get(i);
 			odj.setOrder(i);
 			if(odj.getId() == -1) {
-				repo.insertOdj(odj);
+				repo.insert(odj);
 			} else {
-				repo.updateOdj(odj);
+				repo.update(odj);
 			}
 		}
-		if(removedOdjsId != null) {
-			for (long id : removedOdjsId) {
-				repo.deleteOdj(id);
+		if(removedOdjs != null) {
+			for (OdjBean deleted : removedOdjs) {
+				repo.delete(deleted);
 			}
-			removedOdjsId = null;
+			removedOdjs = null;
 		}
 		mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),true));
 		odjs = null;
@@ -179,10 +179,10 @@ public class OdjFragment extends BasePluginFragment {
 			view.setOnDeleteClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if(removedOdjsId == null) {
-						removedOdjsId = new ArrayList<Long>();
+					if(removedOdjs == null) {
+						removedOdjs = new ArrayList<OdjBean>();
 					}
-					removedOdjsId.add(odjs.get(position).getId());
+					removedOdjs.add(odjs.get(position));
 					odjs.remove(position);
 					mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(), true));
 				}

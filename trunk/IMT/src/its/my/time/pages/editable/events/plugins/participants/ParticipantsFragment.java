@@ -8,7 +8,6 @@ import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.ContactsUtil;
-import its.my.time.util.PreferencesUtil;
 import its.my.time.util.StringUtil;
 
 import java.util.ArrayList;
@@ -70,7 +69,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 				ContactInfoBean contatcInfo = adapterContact.getContactInfoAt(position);
 				participant.setIdContactInfo(contatcInfo.getId());
 				participant.setEid(getParentActivity().getEvent().getId());
-				repo.insertParticipant(participant);
+				repo.insert(participant);
 				mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
 				mEditSearch.setText("");
 				((BaseActivity)getActivity()).launchEdit();
@@ -93,7 +92,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 				
 				List<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
 				infos.add(infoBean);
-				contactBean.setInfos(infos);
+				//TODO contactBean.setInfos(infos);
 				contactBean.setNom("");
 				contactBean.setPrenom("");
 				
@@ -207,7 +206,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 				view.setOnDeleteClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						repo.deleteParticipant(getParentActivity().getEvent().getId(), PreferencesUtil.getCurrentUid(), participants.get(position).getIdContactInfo());
+						repo.delete(participants.get(position));
 						participants.remove(position);
 						ParticipantsFragment.this.mListParticipant.setAdapter(new ParticipantsAdapter(getActivity(),getParentActivity().getEvent().getId(), true));
 					}

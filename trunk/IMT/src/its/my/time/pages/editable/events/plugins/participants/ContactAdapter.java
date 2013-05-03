@@ -38,7 +38,7 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 	public int getCount() {
 		int total = 0;
 		for (ContactBean contactBean : contacts) {
-			total+= contactBean.getInfos().size();
+			//TODO total+= contactBean.getInfos().size();
 		}
 		return total;
 	}
@@ -50,12 +50,12 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 				return contact;
 			} else {
 				res++;
-				for (int i = 1; i < contact.getInfos().size(); i++) {
+				/*TODO for (int i = 1; i < contact.getInfos().size(); i++) {
 					if(res == position) {
 						return contact;
 					}
 					res++;
-				}
+				}*/
 			}
 		}
 		return null;
@@ -65,15 +65,15 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 		int res = 0;
 		for (ContactBean contact : contacts) {
 			if(res == position) {
-				return contact.getInfos().get(0);
+				return null; //TODO contact.getInfos().get(0);
 			} else {
 				res++;
-				for (int i = 1; i < contact.getInfos().size(); i++) {
+				/*TODO for (int i = 1; i < contact.getInfos().size(); i++) {
 					if(res == position) {
 						return contact.getInfos().get(i);
 					}
 					res++;
-				}
+				}*/
 			}
 		}
 		return null;
@@ -87,12 +87,12 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 				return contact;
 			} else {
 				res++;
-				for (int i = 1; i < contact.getInfos().size(); i++) {
+				/*TODO for (int i = 1; i < contact.getInfos().size(); i++) {
 					if(res == position) {
 						return contact.getInfos().get(i);
 					}
 					res++;
-				}
+				}*/
 			}
 		}
 		return null;
@@ -125,10 +125,10 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 	private View getContactView(int position, View convertView, ViewGroup parent, ContactBean contact) {
 		View v = View.inflate(parent.getContext(), R.layout.complex_dropdown_item_image, null);
 		ViewGroup imageParent = (ViewGroup)v.findViewById(R.id.flag);
-		if(contact.getImage()!= null) {
+		if(false){//TODO contact.getImage()!= null) {
 			ImageView imageView = new ImageView(parent.getContext());
 			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			imageView.setImageBitmap(contact.getImage());
+			//TODO imageView.setImageBitmap(contact.getImage());
 
 			imageParent.removeAllViews();
 			imageParent.addView(imageView);
@@ -137,7 +137,7 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 			imageView.setIconeRes(MooncakeIcone.icon_user);
 		}
 		((TextView)v.findViewById(R.id.text1)).setText(contact.getNom());
-		((TextView)v.findViewById(R.id.text2)).setText(contact.getInfos().get(0).getValue());
+		//TODO ((TextView)v.findViewById(R.id.text2)).setText(contact.getInfos().get(0).getValue());
 		return v;
 	}
 
@@ -186,11 +186,11 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 				if (data.getNom().toLowerCase().startsWith(constraint.toString())) {
 					return true;
 				} else {
-					for (ContactInfoBean info : data.getInfos()) {
+					/* TODO for (ContactInfoBean info : data.getInfos()) {
 						if (info.getValue().toLowerCase().startsWith(constraint.toString())) {
 							return true;
 						}
-					}
+					}*/
 				}
 				return false;
 			}

@@ -85,7 +85,7 @@ public class PjFragment extends BasePluginFragment {
 				// TODO utilisateur désactivé
 				// pj.setUid(PreferencesUtil.getCurrentUid(getActivity()));
 				pj.setUid(1);
-				final long res = new PjRepository(getActivity()).insertpj(pj);
+				final long res = new PjRepository(getActivity()).insert(pj);
 				if (res < 0) {
 					Toast.makeText(getActivity(),
 							"Votre pièce jointe n'a pu être envoyée.",
@@ -174,8 +174,7 @@ public class PjFragment extends BasePluginFragment {
 			view.setOnDeleteClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					new PjRepository(getActivity()).deletepj(PjAdapter.this.pjs
-							.get(position).getId());
+					new PjRepository(getActivity()).delete(PjAdapter.this.pjs.get(position));
 					PjFragment.this.mListPj.setAdapter(new PjAdapter(
 							getActivity(), getParentActivity().getEvent().getId(), true));
 				}
