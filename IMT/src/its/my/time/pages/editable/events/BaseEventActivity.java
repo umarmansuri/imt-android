@@ -118,7 +118,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					if (which == DialogInterface.BUTTON_POSITIVE) { 
 						EventBaseRepository evRepo = new EventBaseRepository(getApplicationContext());
-						evRepo.deleteEvent(getEvent().getId());
+						evRepo.delete(getEvent());
 						dialog.dismiss();
 						finish();
 				    }

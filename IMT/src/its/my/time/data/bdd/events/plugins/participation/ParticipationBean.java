@@ -1,41 +1,40 @@
 package its.my.time.data.bdd.events.plugins.participation;
 
+import java.util.List;
 
-public class ParticipationBean {
+import its.my.time.data.bdd.base.TableAttribut;
+import its.my.time.data.bdd.events.plugins.PluginBaseBean;
 
-	private long id;
-	private long eid;
-	private long uid;
-	private long participation;
+
+public class ParticipationBean extends PluginBaseBean{
+
+	private TableAttribut<Long> uid;
+	private TableAttribut<Integer> participation;
 	
-	
-	
-	public long getId() {
-		return id;
+	public ParticipationBean() {
+		uid = new TableAttribut<Long>("uid", -1l);
+		participation = new TableAttribut<Integer>("participation", -1);
 	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
+	
 	public long getUid() {
-		return uid;
+		return uid.getValue();
 	}
 	
 	public void setUid(long uid) {
-		this.uid = uid;
+		this.uid.setValue(uid);
 	}
 	
 	public long getParticipation() {
-		return participation;
+		return participation.getValue();
 	}
-	public void setParticipation(long participation) {
-		this.participation = participation;
+	public void setParticipation(int participation) {
+		this.participation.setValue(participation);
 	}
-	public long getEid() {
-		return eid;
-	}
-	public void setEid(long eid) {
-		this.eid = eid;
+	
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(uid);
+		list.add(participation);
+		return super.getAttributs(list);
 	}
 }

@@ -26,7 +26,6 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -304,6 +303,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 			this.mMainContent.addView(view);
 		}
 		mMainContent.addView(mBlanck);
+		mBlanck.setVisibility(View.GONE);
 	}
 
 	protected abstract boolean onBackButtonPressed();

@@ -48,8 +48,7 @@ public class CommentairesFragment extends BasePluginFragment {
 				commentaire.setDate(Calendar.getInstance());
 				commentaire.setEid(getParentActivity().getEvent().getId());
 				commentaire.setUid(PreferencesUtil.getCurrentUid());
-				final long res = new CommentRepository(getActivity())
-						.insertComment(commentaire);
+				final long res = new CommentRepository(getActivity()).insert(commentaire);
 				if (res < 0) {
 					Toast.makeText(getActivity(),
 							"Votre commentaire n'a pu être envoyé.",
@@ -120,8 +119,7 @@ public class CommentairesFragment extends BasePluginFragment {
 			if (this.comments == null) {
 				this.comments = new ArrayList<CommentBean>();
 			}
-			this.comments = new CommentRepository(getActivity())
-					.getAllByEid(getParentActivity().getEvent().getId());
+			this.comments = new CommentRepository(getActivity()).getAllByEid(getParentActivity().getEvent().getId());
 		}
 
 		@Override
@@ -141,8 +139,8 @@ public class CommentairesFragment extends BasePluginFragment {
 				@Override
 				public void onClick(View v) {
 					new CommentRepository(getActivity())
-							.deletecomment(CommentairesAdapter.this.comments
-									.get(position).getId());
+							.delete(CommentairesAdapter.this.comments
+									.get(position));
 					CommentairesFragment.this.mListComment
 							.setAdapter(new CommentairesAdapter(getActivity(),
 									getParentActivity().getEvent().getId(), true));

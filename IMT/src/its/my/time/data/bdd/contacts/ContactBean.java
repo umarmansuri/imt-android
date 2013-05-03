@@ -1,50 +1,47 @@
 package its.my.time.data.bdd.contacts;
 
-import its.my.time.data.bdd.contacts.ContactInfo.ContactInfoBean;
+import its.my.time.data.bdd.base.BaseBean;
+import its.my.time.data.bdd.base.TableAttribut;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Bitmap;
+public class ContactBean extends BaseBean{
 
-public class ContactBean {
+	private TableAttribut<Integer> rawContactId;
+	private TableAttribut<String> nom;
+	private TableAttribut<String> prenom;
 
-	private int rawContactId;
-	private String nom;
-	private String prenom;
-	private Bitmap image;
-	private List<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
-	
-	
+	public ContactBean() {
+		super();
+		rawContactId = new TableAttribut<Integer>("rawContactId", -1);
+		nom = new TableAttribut<String>("nom", "");
+		prenom = new TableAttribut<String>("prenmo", "");
+	}
+
 	public int getRawContactId() {
-		return rawContactId;
+		return rawContactId.getValue();
 	}
 	public void setRawContactId(int rawContactId) {
-		this.rawContactId = rawContactId;
+		this.rawContactId.setValue(rawContactId);
 	}
 	public String getNom() {
-		return nom;
+		return nom.getValue();
 	}
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.nom.setValue(nom);
 	}
 	public String getPrenom() {
-		return prenom;
+		return prenom.getValue();
 	}
 	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-	public Bitmap getImage() {
-		return image;
-	}
-	public void setImage(Bitmap image) {
-		this.image = image;
-	}
-	public List<ContactInfoBean> getInfos() {
-		return infos;
-	}
-	public void setInfos(List<ContactInfoBean> infos) {
-		this.infos = infos;
+		this.prenom.setValue(prenom);
 	}
 
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(rawContactId);
+		list.add(nom);
+		list.add(prenom);
+		return list;
+	}
 }

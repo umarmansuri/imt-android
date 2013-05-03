@@ -27,7 +27,7 @@ public class NoteFragment extends BasePluginFragment {
 		long uid = PreferencesUtil.getCurrentUid();
 		
 		noteRepo = new NoteRepository(getActivity());
-		noteBean = noteRepo.getAllByUidEid(eid, uid);
+		noteBean = noteRepo.getByUidEid(eid, uid);
 		
 		if(noteBean == null) {
 			noteBean = new NoteBean();
@@ -57,9 +57,9 @@ public class NoteFragment extends BasePluginFragment {
 	public void launchSave() {
 		noteBean.setHtml(mRichEditText.getTextHtml());
 		if(noteBean.getId() > -1) {
-			noteRepo.updateNote(noteBean);	
+			noteRepo.update(noteBean);	
 		} else {
-			noteRepo.insertnote(noteBean);
+			noteRepo.insert(noteBean);
 		}
 		mRichEditText.setEnabled(false);
 		super.launchSave();

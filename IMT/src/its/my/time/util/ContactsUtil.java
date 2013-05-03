@@ -62,7 +62,9 @@ public class ContactsUtil {
 		builder.withValue(ContactsContract.Data.DATA3, context.getString(R.string.contacts_view_profil));
 		operationList.add(builder.build());
 
-		for (ContactInfoBean info : contact.getInfos()) {
+		/*TODO voir pour remettre avec la nouvelle BDD
+		 for (ContactInfoBean info : contact.getInfos()) {
+		 
 			builder = ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI);
 			builder.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0);
 			if(info.getType() == ContactInfoBean.TYPE_MAIL) {
@@ -74,6 +76,7 @@ public class ContactsUtil {
 			}
 			operationList.add(builder.build());
 		}
+		*/
 
 		try {
 			mContentResolver = context.getContentResolver();
@@ -138,7 +141,7 @@ public class ContactsUtil {
 			if(emails.getCount() > 0) {
 				ContactBean contact = new ContactBean();
 				contact.setNom(contactName);
-				contact.setImage(image);
+				//TODO contact.setImage(image);
 				contact.setRawContactId((int) contactId);
 				List<ContactInfoBean> infos = new ArrayList<ContactInfoBean>();
 				while (emails.moveToNext()) {
@@ -151,7 +154,7 @@ public class ContactsUtil {
 					bean.setId((int) emailId);
 					infos.add(bean);
 				}
-				contact.setInfos(infos);
+				//TODO contact.setInfos(infos);
 				result.add(contact);
 			}
 			emails.close();
@@ -187,7 +190,7 @@ public class ContactsUtil {
 			cursor.moveToNext();
 			ContactBean contact = new ContactBean();
 			contact.setNom(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
-			contact.setImage(loadContactPhoto(context, id));
+			//TODO contact.setImage(loadContactPhoto(context, id));
 			return contact;
 		} else {
 			return null;

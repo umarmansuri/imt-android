@@ -263,4 +263,13 @@ public class DateUtil {
 	  }
 	  return yeardiff;
 	}
+	
+	
+	/**
+	 * 
+	 * @return une nouvelle instance d'un Calendar, initialisé au 1 janvier 1970 à 0h00:00
+	 */
+	public static Calendar createCalendar() {
+		return new GregorianCalendar(1970, 0, 1,0,0,0);
+	}
 }

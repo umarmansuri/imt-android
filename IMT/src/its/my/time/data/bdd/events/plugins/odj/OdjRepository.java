@@ -1,129 +1,49 @@
 package its.my.time.data.bdd.events.plugins.odj;
 
-import its.my.time.data.bdd.DatabaseHandler;
+import its.my.time.data.bdd.events.plugins.PluginBaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 
-public class OdjRepository extends DatabaseHandler {
-
-	public static final int KEY_INDEX_ID = 0;
-	public static final int KEY_INDEX_VALUE = 1;
-	public static final int KEY_INDEX_ORDER = 2;
-	public static final int KEY_INDEX_EID = 3;
-
-	public static final String KEY_ID = "KEY_ID";
-	public static final String KEY_VALUE = "KEY_VALUE";
-	public static final String KEY_ORDER = "KEY_ORDER";
-	public static final String KEY_EID = "KEY_EID";
-
-	public static final String DATABASE_TABLE = "odj ";
-
-	public static final String CREATE_TABLE = "create table " + DATABASE_TABLE
-			+ " (" + KEY_ID + " integer primary key autoincrement," + KEY_VALUE
-			+ " text not null," + KEY_ORDER + " integer not null," + KEY_EID
-			+ " INTEGER not null);";
-
-	private final String[] allAttr = new String[] { KEY_ID, KEY_VALUE,
-			KEY_ORDER, KEY_EID };
+public class OdjRepository extends PluginBaseRepository<OdjBean> {
 
 	public OdjRepository(Context context) {
-		super(context);
+		super(context, OdjBean.class);
 	}
 
-	public List<OdjBean> convertCursorToListObject(Cursor c) {
-		final List<OdjBean> liste = new ArrayList<OdjBean>();
-		if (c.getCount() == 0) {
-			return liste;
+	@Override
+	public String getTableName() {
+		return "odj";
+	}
+
+
+	protected void objectAdded(OdjBean object) {
+		for (OnObjectChangedListener<OdjBean> listener: onObjectChangedListeners) {
+			listener.onObjectAdded(object);
 		}
-		c.moveToFirst();
-		do {
-			final OdjBean odj = convertCursorToObject(c);
-			liste.add(odj);
-		} while (c.moveToNext());
-		c.close();
-		return liste;
 	}
 
-	public OdjBean convertCursorToObject(Cursor c) {
-		final OdjBean odj = new OdjBean();
-		odj.setId(c.getInt(KEY_INDEX_ID));
-		odj.setValue(c.getString(KEY_INDEX_VALUE));
-		odj.setOrder(c.getInt(KEY_INDEX_ORDER));
-		odj.setEid(c.getInt(KEY_INDEX_EID));
-		return odj;
-	}
-
-	public OdjBean convertCursorToOneObject(Cursor c) {
-		if (c.getCount() <= 0) {
-			return null;
+	protected void objectUpdated(OdjBean object) {
+		for (OnObjectChangedListener<OdjBean> listener: onObjectChangedListeners) {
+			listener.onObjectUpdated(object);
 		}
-		c.moveToFirst();
-		final OdjBean odj = convertCursorToObject(c);
-		c.close();
-		return odj;
 	}
 
-	public long insertOdj(OdjBean odj) {
-		final ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_VALUE, odj.getValue());
-		initialValues.put(KEY_ORDER, odj.getOrder());
-		initialValues.put(KEY_EID, odj.getEid());
-		open();
-		final long res = this.db.insert(DATABASE_TABLE, null, initialValues);
-		close();
-		return res;
-	}
-	
-	public long updateOdj(OdjBean odj) {
-		final ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_VALUE, odj.getValue());
-		initialValues.put(KEY_ORDER, odj.getOrder());
-		initialValues.put(KEY_EID, odj.getEid());
-		final long id = odj.getId();
-		open();
-		final long res = this.db.update(DATABASE_TABLE, initialValues, KEY_ID
-				+ "=?", new String[] { "" + id });
-		close();
-		return res;
+	protected void objectDeleted(OdjBean object) {
+		for (OnObjectChangedListener<OdjBean> listener: onObjectChangedListeners) {
+			listener.onObjectDeleted(object);
+		}
 	}
 
-	public boolean deleteOdj(long rowId) {
-		open();
-		final boolean res = this.db.delete(DATABASE_TABLE,
-				KEY_ID + "=" + rowId, null) > 0;
-		close();
-		return res;
-	}
 
-	public OdjBean getAllOdj() {
-		open();
-		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, null,
-				null, null, null, null);
-		final OdjBean res = convertCursorToOneObject(c);
-		close();
-		return res;
-	}
+	private static List<OnObjectChangedListener<OdjBean>> onObjectChangedListeners = new ArrayList<OnObjectChangedListener<OdjBean>>();
 
-	public OdjBean getById(long id) {
-		open();
-		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, KEY_ID
-				+ "=?", new String[] { "" + id }, null, null, null);
-		close();
-		final OdjBean res = convertCursorToOneObject(c);
-		return res;
+	public void addOnObjectChangedListener(OnObjectChangedListener<OdjBean> listener) {
+		onObjectChangedListeners.add(listener);
 	}
-
-	public List<OdjBean> getAllByEid(int eid) {
-		open();
-		final Cursor c = this.db.query(DATABASE_TABLE, this.allAttr, KEY_EID
-				+ "=?", new String[] { "" + eid }, null, null, KEY_ORDER);
-		final List<OdjBean> res = convertCursorToListObject(c);
-		close();
-		return res;
+	public void removeOnObjectChangedListener(OnObjectChangedListener<OdjBean> listener) {
+		onObjectChangedListeners.remove(listener);
 	}
 }

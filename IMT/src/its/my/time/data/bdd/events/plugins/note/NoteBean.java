@@ -1,71 +1,54 @@
 package its.my.time.data.bdd.events.plugins.note;
 
+import its.my.time.data.bdd.base.TableAttribut;
+import its.my.time.data.bdd.events.plugins.PluginBaseBean;
 
-public class NoteBean {
+import java.util.List;
 
-	private int id;
-	private String name;
-	private String html;
-	private long uid;
-	private long eid;
 
-	public NoteBean(int id, String name, String type, String link,
-			long uid, long eid) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.html = link;
-		this.uid = uid;
-		this.eid = eid;
-	}
+public class NoteBean extends PluginBaseBean{
+
+	private TableAttribut<String> name;
+	private TableAttribut<String> html;
+	private TableAttribut<Integer> uid;
 
 	public NoteBean() {
-		this.id = -1;
-		this.name = "";
-		this.html = "";
-		this.uid = -1;
-		this.eid = -1;
+		super();
+		this.name = new TableAttribut<String>("name", "");
+		this.html = new TableAttribut<String>("html", "");
+		this.uid = new TableAttribut<Integer>("uid", -1);
 	}
 
 
 	public String getName() {
-		return this.name;
+		return this.name.getValue();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name.setValue(name);
 	}
 
 	public String getHtml() {
-		return this.html;
+		return this.html.getValue();
 	}
 
-	public void setHtml(String link) {
-		this.html = link;
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void setHtml(String html) {
+		this.html.setValue(html);
 	}
 
 	public long getUid() {
-		return this.uid;
+		return this.uid.getValue();
 	}
 
 	public void setUid(long uid) {
-		this.uid = uid;
+		this.uid.setValue(uid);
 	}
 
-	public long getEid() {
-		return this.eid;
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(name);
+		list.add(html);
+		list.add(uid);
+		return super.getAttributs(list);
 	}
-
-	public void setEid(long eid) {
-		this.eid = eid;
-	}
-
 }

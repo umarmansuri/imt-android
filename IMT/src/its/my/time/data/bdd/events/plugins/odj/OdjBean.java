@@ -1,56 +1,41 @@
 package its.my.time.data.bdd.events.plugins.odj;
 
-public class OdjBean {
+import its.my.time.data.bdd.base.TableAttribut;
+import its.my.time.data.bdd.events.plugins.PluginBaseBean;
 
-	private long id;
-	private String value;
-	private int order;
-	private long eid;
+import java.util.List;
+
+public class OdjBean extends PluginBaseBean{
+
+	private TableAttribut<String> value;
+	private TableAttribut<Integer> order;
 
 	public OdjBean() {
-		this.id = -1;
-		this.value = "";
-		this.eid = -1;
-		this.order = -1;
-	}
-
-	public OdjBean(long id, String value, long eid, int order) {
 		super();
-		this.id = id;
-		this.value = value;
-		this.eid = eid;
-		this.order = order;
-	}
-
-	public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+		this.value = new TableAttribut<String>("val", "");
+		this.order = new TableAttribut<Integer>("ordre", -1);
 	}
 
 	public String getValue() {
-		return this.value;
+		return this.value.getValue();
 	}
 
 	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public long getEid() {
-		return this.eid;
-	}
-
-	public void setEid(long eid) {
-		this.eid = eid;
+		this.value.setValue(value);
 	}
 
 	public int getOrder() {
-		return this.order;
+		return this.order.getValue();
 	}
 
 	public void setOrder(int order) {
-		this.order = order;
+		this.order.setValue(order);
+	}
+
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(value);
+		list.add(order);
+		return super.getAttributs(list);
 	}
 }

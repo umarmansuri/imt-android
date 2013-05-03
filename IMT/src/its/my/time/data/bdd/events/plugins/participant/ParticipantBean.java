@@ -1,29 +1,29 @@
 package its.my.time.data.bdd.events.plugins.participant;
 
+import its.my.time.data.bdd.base.TableAttribut;
+import its.my.time.data.bdd.events.plugins.PluginBaseBean;
 
-public class ParticipantBean {
+import java.util.List;
 
-	private long eid;
-	private long uid;
-	private int idContactInfo;
-	
-	public long getUid() {
-		return uid;
-	}
-	
-	public void setUid(long uid) {
-		this.uid = uid;
-	}
-	public long getEid() {
-		return eid;
-	}
-	public void setEid(long eid) {
-		this.eid = eid;
+
+public class ParticipantBean extends PluginBaseBean{
+
+	private TableAttribut<Integer> idContactInfo;
+
+	public ParticipantBean() {
+		super();
+		idContactInfo = new TableAttribut<Integer>("uid", -1);
 	}
 	public int getIdContactInfo() {
-		return idContactInfo;
+		return idContactInfo.getValue();
 	}
 	public void setIdContactInfo(int idContactInfo) {
-		this.idContactInfo = idContactInfo;
+		this.idContactInfo.setValue(idContactInfo);
+	}
+
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(idContactInfo);
+		return super.getAttributs(list);
 	}
 }

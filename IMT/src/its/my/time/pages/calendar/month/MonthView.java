@@ -1,9 +1,9 @@
 package its.my.time.pages.calendar.month;
 
 import its.my.time.R;
+import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.compte.CompteRepository.OnCompteChangedListener;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.calendar.base.BaseView;
@@ -38,7 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MonthView extends BaseView implements OnCompteChangedListener, OnDayClickListener {
+public class MonthView extends BaseView implements OnObjectChangedListener<CompteBean>, OnDayClickListener {
 
 	private final MonthDisplayHelper helper;
 	private final OnDayClickListener externListener;
@@ -58,9 +58,9 @@ public class MonthView extends BaseView implements OnCompteChangedListener, OnDa
 		if(compteRepo == null) {
 			compteRepo = new CompteRepository(getContext());
 		}
-		compteRepo.addOnCompteCHangedListener(this);
-		List<CompteBean> listComptes = compteRepo.getAllCompteByUid(PreferencesUtil.getCurrentUid());
-		compteRepo.addOnCompteCHangedListener(this);
+		compteRepo.addOnObjectChangedListener(this);
+		List<CompteBean> listComptes = compteRepo.getAllByUid(PreferencesUtil.getCurrentUid());
+		compteRepo.addOnObjectChangedListener(this);
 		if(comptes == null) {
 			comptes = new SparseArray<CompteBean>();
 			for (CompteBean compteBean : listComptes) {
@@ -186,11 +186,12 @@ public class MonthView extends BaseView implements OnCompteChangedListener, OnDa
 		reloadEvents();
 	}
 
-	@Override public void onCompteAdded(CompteBean compte) {}
-	@Override public void onCompteRemoved(CompteBean compte) {}
+	
+	@Override public void onObjectAdded(CompteBean compte) {}
+	@Override public void onObjectDeleted(CompteBean compte) {}
 
 	@Override
-	public void onCompteUpdated(CompteBean compte) {
+	public void onObjectUpdated(CompteBean compte) {
 		comptes.remove(compte.getId());
 		comptes.put(compte.getId(), compte);
 		reloadEvents();

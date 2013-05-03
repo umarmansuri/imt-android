@@ -1,93 +1,122 @@
 package its.my.time.data.bdd.utilisateur;
 
+import its.my.time.data.bdd.base.BaseBean;
+import its.my.time.data.bdd.base.TableAttribut;
+import its.my.time.util.DateUtil;
+
 import java.util.Calendar;
+import java.util.List;
 
-public class UtilisateurBean {
+public class UtilisateurBean extends BaseBean{
 
-	private int id;
-	private String nom;
-	private String prenom;
-	private String pseudo;
-	private Calendar dateAniv;
-	private String mdp;
-	private String tel;
-	private String mail;
-	private String adresse;
-	private String codePostal;
-	private String ville;
-	private String pays;
-	public int getId() {
-		return id;
+	private TableAttribut<String> nom;
+	private TableAttribut<String> prenom;
+	private TableAttribut<String> pseudo;
+	private TableAttribut<Calendar> dateAniv;
+	private TableAttribut<String> mdp;
+	private TableAttribut<String> tel;
+	private TableAttribut<String> mail;
+	private TableAttribut<String> adresse;
+	private TableAttribut<String> codePostal;
+	private TableAttribut<String> ville;
+	private TableAttribut<String> pays;
+	
+	public UtilisateurBean() {
+		super();
+		nom = new TableAttribut<String>("nom", "");
+		prenom = new TableAttribut<String>("prenom", "");
+		pseudo = new TableAttribut<String>("pseudo", "");
+		dateAniv = new TableAttribut<Calendar>("dateAniv", DateUtil.createCalendar());
+		mdp = new TableAttribut<String>("mdp", "");
+		tel = new TableAttribut<String>("tel", "");
+		mail = new TableAttribut<String>("mail", "");
+		adresse = new TableAttribut<String>("adresse", "");
+		codePostal = new TableAttribut<String>("codePostal", "");
+		ville = new TableAttribut<String>("ville", "");
+		pays= new TableAttribut<String>("pays", "");
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public String getNom() {
-		return nom;
+		return nom.getValue();
 	}
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.nom.setValue(nom);
 	}
 	public String getPrenom() {
-		return prenom;
+		return prenom.getValue();
 	}
 	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+		this.prenom.setValue(prenom);
 	}
 	public String getPseudo() {
-		return pseudo;
+		return pseudo.getValue();
 	}
 	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
+		this.pseudo.setValue(pseudo);
 	}
 	public Calendar getDateAniv() {
-		return dateAniv;
+		return dateAniv.getValue();
 	}
 	public void setDateAniv(Calendar dateAniv) {
-		this.dateAniv = dateAniv;
+		this.dateAniv.setValue(dateAniv);
 	}
 	public String getMdp() {
-		return mdp;
+		return mdp.getValue();
 	}
 	public void setMdp(String mdp) {
-		this.mdp = mdp;
+		this.mdp.setValue(mdp);
 	}
 	public String getTel() {
-		return tel;
+		return tel.getValue();
 	}
 	public void setTel(String tel) {
-		this.tel = tel;
+		this.tel.setValue(tel);
 	}
 	public String getMail() {
-		return mail;
+		return mail.getValue();
 	}
 	public void setMail(String mail) {
-		this.mail = mail;
+		this.mail.setValue(mail);
 	}
 	public String getAdresse() {
-		return adresse;
+		return adresse.getValue();
 	}
 	public void setAdresse(String adresse) {
-		this.adresse = adresse;
+		this.adresse.setValue(adresse);
 	}
 	public String getCodePostal() {
-		return codePostal;
+		return codePostal.getValue();
 	}
 	public void setCodePostal(String codePostal) {
-		this.codePostal = codePostal;
+		this.codePostal.setValue(codePostal);
 	}
 	public String getVille() {
-		return ville;
+		return ville.getValue();
 	}
 	public void setVille(String ville) {
-		this.ville = ville;
+		this.ville.setValue(ville);
 	}
 	public String getPays() {
-		return pays;
+		return pays.getValue();
 	}
 	public void setPays(String pays) {
-		this.pays = pays;
+		this.pays.setValue(pays);
 	}
 
+	@Override
+	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
+		list.add(nom);
+		list.add(prenom);
+		list.add(pseudo);
+		list.add(dateAniv);
+		list.add(mdp);
+		list.add(tel);
+		list.add(mail);
+		list.add(adresse);
+		list.add(codePostal);
+		list.add(ville);
+		list.add(pays);
+		return list;
+	}
 	
 }

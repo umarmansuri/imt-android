@@ -193,14 +193,14 @@ public class ProfilActivity extends BaseActivity {
 		if (!isNew) {
 			new UtilisateurRepository(this).update(user);
 		} else {
-			long id_user = new UtilisateurRepository(this).insertUtilisateur(user);
+			long id_user = new UtilisateurRepository(this).insert(user);
 			if (id_user >=0){
 				CompteBean compte_default = new CompteBean();
 				compte_default.setShowed(true);
 				compte_default.setTitle("My Time");
 				compte_default.setType(Types.Comptes.MYTIME.id);
 				compte_default.setUid(id_user);
-				long id_compte = new CompteRepository(this).insertCompte(compte_default);
+				long id_compte = new CompteRepository(this).insert(compte_default);
 				if(id_compte == -1) {Toast.makeText(this, "Erreur Création Compte My Time", Toast.LENGTH_LONG).show();}
 			}else {Toast.makeText(this, "Erreur Création Utilisateur", Toast.LENGTH_LONG).show();}
 		}
