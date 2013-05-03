@@ -47,7 +47,7 @@ public class SendLocationUpdate extends AsyncTask<Void, Void, Void> {
 				HttpPost httppost = new HttpPost(Consts.URL_UPDATE_LOCATION);
 				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				HttpResponse response = httpclient.execute(httppost);
-				String result = EntityUtils.toString(response.getEntity());
+				EntityUtils.toString(response.getEntity());
 			}
 		}
 		catch(Exception e)

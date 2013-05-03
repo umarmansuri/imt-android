@@ -225,7 +225,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 
 
 	public void changeMainMenuVisibility(boolean showed, boolean withAnimation) {
-		this.isMenuShowed = showed;
+		isMenuShowed = showed;
 		Animation animMainMenu;
 		if (showed) {
 			animMainMenu = new TranslateAnimation(0, this.mMainMenuWidth, 0, 0);
@@ -242,7 +242,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		this.mMainContent.startAnimation(animMainMenu);
 	}
 
-	OnTouchListener onMenuShowedTouchListener = new OnTouchListener() {
+	private OnTouchListener onMenuShowedTouchListener = new OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			if (event.getAction() == MotionEvent.ACTION_UP) {
