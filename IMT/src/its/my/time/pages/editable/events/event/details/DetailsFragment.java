@@ -211,31 +211,15 @@ public class DetailsFragment extends BasePluginFragment {
 
 		array_recurrence = getResources().getStringArray(
 				R.array.array_recurrence);
-		final ArrayAdapter<String> adapter_recurrence = new ArrayAdapter<String>(
+		final ArrayAdapter<Object> adapter_recurrence = new CustomAdapter(
 				getActivity(), android.R.layout.simple_spinner_item,
-				this.array_recurrence);
+				this.array_recurrence, 0);
 		adapter_recurrence.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
 
-		final ArrayAdapter<Participation> adapter_participation = new CustomArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,
-				participation) {
-			public View getDropDownView(int position, View convertView, ViewGroup parent)
-			{
-				View v = null;
-				if (position == 0) {
-					TextView tv = new TextView(getContext());
-					tv.setHeight(0);
-					tv.setVisibility(View.GONE);
-					v = tv;
-				}
-				else {
-					v = super.getDropDownView(position, null, parent);
-				}
-				parent.setVerticalScrollBarEnabled(false);
-				return v;
-			}
-		};
+		final ArrayAdapter<Object> adapter_participation = new CustomAdapter(getActivity(), android.R.layout.simple_spinner_item,
+				participation, 0);
 		adapter_participation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mSpinnerParticipation.setAdapter(adapter_participation);
 		mSpinnerParticipation.setSelection((int)participationBean.getParticipation());
