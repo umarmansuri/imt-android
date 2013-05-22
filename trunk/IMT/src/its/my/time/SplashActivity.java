@@ -7,7 +7,9 @@ import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
-import its.my.time.data.ws.WSManager;
+import its.my.time.data.ws.GCMManager;
+import its.my.time.data.ws.WSLogin;
+import its.my.time.data.ws.WSSendEvent;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
@@ -47,7 +49,8 @@ public class SplashActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (v == SplashActivity.this.btnConnexion) {
-					connexion();
+					//connexion();
+					new WSSendEvent(SplashActivity.this, null).execute();
 				} else if (v == SplashActivity.this.btnInscription) {
 					ActivityUtil.startProfilActivity(SplashActivity.this);
 				}
@@ -203,7 +206,7 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				WSManager.init(SplashActivity.this);
+				GCMManager.init(SplashActivity.this);
 				//ContentProviderResult[] results = ContactsUtil.addContact(SplashActivity.this, account, contact);
 				
 			} catch (Exception e) {

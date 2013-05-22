@@ -1,11 +1,9 @@
 package its.my.time.data.ws;
 
 import its.my.time.Consts;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -24,7 +22,7 @@ import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
 //import android.util.Log;
 
-public class WSManager {
+public class GCMManager {
 
 
 	public static void init(Context context) {
@@ -49,12 +47,6 @@ public class WSManager {
 		updateGcmId(gcmId, null);
 	}
 
-	public interface Callback {
-		public void done(Exception e);
-	}
-	public interface LoadEventInfoCallback {
-		public void done(EventBaseBean event, Exception e);
-	}
 
 	public static void uploadPicture(Bitmap bitmap, int uid) {
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
@@ -76,23 +68,6 @@ public class WSManager {
 	}
 
 	public static void updateGcmId(String gcmId, Callback callback) {
-		new SendGcmUpdate(gcmId,callback).execute();
-	}
-
-
-	public static void login(String pseudo, String pass, Callback callback) {
-		new SendLogin(pseudo, pass, callback).execute();
-	}
-
-	public static void subscribe(int uid, String pseudo, String nom2, String prenom, String pass, Calendar date, String sexe, Bitmap bitmap, Callback callback) {
-		new SendSubscribe(uid, bitmap, nom2, prenom, pseudo, pass, date, sexe, callback).execute();
-	}
-
-	public static void logout(Callback callback) {
-		new SendLogout(callback).execute();
-	}
-
-	public static void loadInfo(int uid, LoadEventInfoCallback callback) {
-		new LoadInfo(uid, callback).execute();
+		new SendGcmUpdate(null, gcmId,callback).execute();
 	}
 }

@@ -20,6 +20,8 @@ public class PreferencesUtil {
 
 	public static final String PREF_NAME = "IMT";
 	public static final int MODE = Context.MODE_PRIVATE;
+	private static final String SHPREF_KEY_REFRESH_TOKEN = "SHPREF_KEY_REFRESH_TOKEN";
+	private static final String SHPREF_KEY_ACCESS_TOKEN = "SHPREF_KEY_ACCESS_TOKEN";
 
 	public static void writeBoolean(String key, boolean value) {
 		getEditor(context).putBoolean(key, value).commit();
@@ -98,5 +100,16 @@ public class PreferencesUtil {
 	public static void clearAll(Context context) {
 		getEditor(context).remove(KEY_CURRENT_TOKEN);
 		getEditor(context).remove(KEY_CURRENT_UID);
+	}
+
+	public static String getCurrentRefreshToken() {
+		return getPreferences(context).getString(SHPREF_KEY_REFRESH_TOKEN, null);
+	}
+
+	public static void setCurrentToken(String refreshToken, String accessToken) {
+		Editor e = getEditor(context);
+		e.putString(SHPREF_KEY_ACCESS_TOKEN, accessToken);
+		e.putString(SHPREF_KEY_REFRESH_TOKEN, refreshToken);
+		e.commit();
 	}
 }
