@@ -1,5 +1,6 @@
 package its.my.time.data.ws;
 
+
 import java.security.KeyStore;
 
 import org.apache.http.HttpVersion;
@@ -22,14 +23,15 @@ import android.os.AsyncTask;
 public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 
 
-	public static final String URL_BASE = "https://app.my-time.fr/";
-	public static final String CLIENT_ID = "3_51ubfhpw9w084owsk0oogskgs840w0wg0g0scsgc4o08wk8w0k";
-	public static final String CLIENT_SECRET = "4vhi2ovg66g4ww0kg480ocscsgosscwkocggowo44swgkccw0g";
+	//public static final String URL_BASE = "https://app.my-time.fr/";
+	//public static final String CLIENT_ID = "3_51ubfhpw9w084owsk0oogskgs840w0wg0g0scsgc4o08wk8w0k";
+	//public static final String CLIENT_SECRET = "4vhi2ovg66g4ww0kg480ocscsgosscwkocggowo44swgkccw0g";
+	//public static final String URL_REDIRECT = "http://5.135.156.82/connexion/login";
 
-	//public static final String URL_BASE = "http://192.168.1.20/my-time/web/app_dev.php/";
-	//public static final String CLIENT_ID = "1_4df992bsjim8kc0kko4wkkwgwogssw0s0gc0k4wcos0sgsg0wc";
-	//public static final String CLIENT_SECRET = "65vs583ttm4owg8040cccsogs04g0kkgs0w080ogwg0kw4cogg";
-	//public static final String URL_REDIRECT = "http://localhost";
+	public static final String URL_BASE = "http://192.168.43.133/my-time/web/app_dev.php/";
+	public static final String CLIENT_ID = "1_4df992bsjim8kc0kko4wkkwgwogssw0s0gc0k4wcos0sgsg0wc";
+	public static final String CLIENT_SECRET = "65vs583ttm4owg8040cccsogs04g0kkgs0w080ogwg0kw4cogg";
+	public static final String URL_REDIRECT = "http://localhost";
 
 	public static final String URL_ACCESS = URL_BASE + "oauth/v2/auth";
 
@@ -37,10 +39,12 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 	public static final String URL_FORM_ACCEPT = URL_BASE + "oauth/v2/auth?client_id";
 
 	public static final String URL_REFRESH = URL_BASE + "oauth/v2/token";
-	public static final String URL_REDIRECT = "http://5.135.156.82/connexion/login";
 
-	public static final String URL_API_GET = URL_BASE + "api/events/1.json";
-	public static final String URL_API_POST = URL_BASE + "api/events.json";
+	public static final String URL_API_EVENT_GET = URL_BASE + "api/events/1.json";
+	public static final String URL_API_EVENT_POST = URL_BASE + "api/events.json";
+
+	public static final String URL_API_ACCOUNT_GET = URL_BASE + "api/accounts/3.json";
+	public static final String URL_API_ACCOUNT_POST = URL_BASE + "api/account.json";
 
 
 	private Callback callBack;

@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.http.SslError;
 import android.os.AsyncTask;
@@ -113,6 +114,7 @@ public class WSLogin {
 		};
 	};
 
+	@SuppressLint("SetJavaScriptEnabled")
 	public static void launchOAuth(final Activity context, Callback callBack) {
 		WSLogin.callBack = callBack;
 		context.runOnUiThread(new Runnable() {
