@@ -50,20 +50,15 @@ public class EventLittleView extends FrameLayout {
 			}
 		});
 
-		this.ligneHeight = getResources().getDimension(
-				R.dimen.view_day_height_ligne_heure);
-		this.height = (int) (DateUtil.getNbHeure(ev.gethDeb(), ev.gethFin(),
-				day) * this.ligneHeight);
-		final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT, this.height);
+		this.ligneHeight = getResources().getDimension(R.dimen.view_day_height_ligne_heure);
+		this.height = (int) (DateUtil.getNbHeure(ev.gethDeb(), ev.gethFin(),day) * this.ligneHeight);
+		final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, this.height);
 		if (DateUtil.isInDay(ev.gethDeb(), day)) {
-			params.topMargin = ((int) (ev.gethDeb().get(Calendar.HOUR_OF_DAY)
-					* this.ligneHeight + (((float) ev.gethDeb().get(
-							Calendar.MINUTE) / 60) * this.ligneHeight)));
+			params.topMargin = ((int) (ev.gethDeb().get(Calendar.HOUR_OF_DAY)* this.ligneHeight + (((float) ev.gethDeb().get(Calendar.MINUTE) / 60) * this.ligneHeight)));
 		}
 		setLayoutParams(params);
-
 		initialiseBackground();
+		invalidate();
 	}
 
 	private void initialiseBackground() {
@@ -83,6 +78,7 @@ public class EventLittleView extends FrameLayout {
 		GradientDrawable dContent = (GradientDrawable)ld.findDrawableByLayerId(R.id.drawable_day_event_little_content);
 		dContent.setColor(color);
 
+		setBackground(ld);
 	}
 
 	public EventBaseBean getEvent() {
