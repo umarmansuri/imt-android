@@ -272,10 +272,8 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	}
 
 	private void gotoDate(Calendar cal) {
-		((BasePagerAdapter) ((ViewPager) this.mMainFramePager.getChildAt(0))
-				.getAdapter()).setCurrentCalendar(cal);
-		((ViewPager) this.mMainFramePager.getChildAt(0))
-		.setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+		((BasePagerAdapter) ((ViewPager) this.mMainFramePager.getChildAt(0)).getAdapter()).setCurrentCalendar(cal);
+		((ViewPager) this.mMainFramePager.getChildAt(0)).setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
 	}
 
 	private void changeTitle(final String title) {
@@ -297,8 +295,9 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 
 	@Override
 	public void onPageSelected(final int position) {
-		changeTitle(((BasePagerAdapter) this.mViewPager.getAdapter())
-				.getTitle(position));
+		BasePagerAdapter currentAdapter = ((BasePagerAdapter) this.mViewPager.getAdapter()); 
+		changeTitle(currentAdapter.getTitle(position));
+		curentCal = currentAdapter.getCalendarAtPosition(position);
 	}
 
 	private class ChangePageTask extends AsyncTask<Integer, Void, View> {

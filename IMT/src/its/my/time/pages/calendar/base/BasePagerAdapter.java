@@ -1,7 +1,5 @@
 package its.my.time.pages.calendar.base;
 
-import its.my.time.pages.calendar.CalendarActivity;
-
 import java.util.Calendar;
 
 import android.support.v4.app.Fragment;
@@ -36,22 +34,23 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 		return getCustomTitle(incrementation);
 	}
 
-	private int getIncrementation(int position) {
+	public int getIncrementation(int position) {
 		return position - NB_PAGE / 2;
 	}
-
+	
+	public Calendar getCalendarAtPosition(int position) {
+		return getCalendarAtIncrementation(getIncrementation(position));
+	}
+	
 	protected abstract String getCustomTitle(int incrementation);
-
+	protected abstract Calendar getCalendarAtIncrementation(int incrementation);
 	protected abstract Fragment getView(int incrementation);
 
-	public Calendar getCurrentCalendar() {
-		this.cal = CalendarActivity.curentCal;
-		return this.cal;
+	public void setCurrentCalendar(Calendar cal2) {
+		this.cal = cal2;
 	}
-
-	public void setCurrentCalendar(Calendar cal) {
-		this.cal = cal;
-		notifyDataSetChanged();
+	public Calendar getCurrentCalendar() {
+		return cal;
 	}
 
 }
