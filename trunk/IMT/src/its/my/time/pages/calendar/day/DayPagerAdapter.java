@@ -16,15 +16,20 @@ public class DayPagerAdapter extends BasePagerAdapter {
 
 	@Override
 	protected Fragment getView(int incrementation) {
-		final Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
-		displayedDay.add(Calendar.DAY_OF_MONTH, incrementation);
+		Calendar displayedDay = getCalendarAtIncrementation(incrementation);
 		return new DayFragment(displayedDay);
 	}
 
 	@Override
 	protected String getCustomTitle(int incrementation) {
-		final Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
-		displayedDay.add(Calendar.DAY_OF_MONTH, incrementation);
+		Calendar displayedDay = getCalendarAtIncrementation(incrementation);
 		return DateUtil.getLongDate(displayedDay);
+	}
+	
+	@Override
+	protected Calendar getCalendarAtIncrementation(int incrementation) {
+		Calendar displayedDay = (Calendar) getCurrentCalendar().clone();
+		displayedDay.add(Calendar.DAY_OF_MONTH, incrementation);
+		return displayedDay;
 	}
 }

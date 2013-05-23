@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,8 +40,7 @@ public class ColumnEvent extends RelativeLayout {
 				return null;
 			}
 		}
-		final EventLittleView view = new EventLittleView(getContext(), newEv,
-				day);
+		final EventLittleView view = new EventLittleView(getContext(), newEv,day);
 		this.eventViews.add(view);
 		this.events.add(newEv);
 		addView(view);
@@ -63,9 +63,11 @@ public class ColumnEvent extends RelativeLayout {
 		if (this.events.contains(view.getEvent())) {
 			this.events.remove(view.getEvent());
 			removeView(view);
+			refreshDrawableState();
 			if (this.events.size() == 0) {
 				((ViewGroup) getParent()).removeView(this);
 			}
+			invalidate();
 			return true;
 		}
 		return false;

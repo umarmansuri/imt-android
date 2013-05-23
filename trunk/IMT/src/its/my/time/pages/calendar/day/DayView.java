@@ -16,6 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -44,11 +47,9 @@ public class DayView extends BaseView {
 
 	@Override
 	protected View createView() {
-		this.view = (LinearLayout) inflate(getContext(),
-				R.layout.activity_calendar_day, null);
+		this.view = (LinearLayout) inflate(getContext(),R.layout.activity_calendar_day, null);
 
-		final ViewGroup lignes = ((ViewGroup) this.view
-				.findViewById(R.id.activity_calendar_day_layoutHeure));
+		final ViewGroup lignes = ((ViewGroup) this.view.findViewById(R.id.activity_calendar_day_layoutHeure));
 		for (int i = 0; i < lignes.getChildCount(); i++) {
 			if (lignes.getChildAt(i).getClass().isAssignableFrom(Ligne.class)) {
 				lignes.getChildAt(i).setOnLongClickListener(
@@ -136,10 +137,8 @@ public class DayView extends BaseView {
 			if (eventView != null) {
 				final ListenerMoveEvent moveEventListener = new ListenerMoveEvent();
 				eventView.setOnLongClickListener(moveEventListener);
-				final ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(
-						eventView);
-				eventView.getBottomDraggable().setOnLongClickListener(
-						changeEventDurationLIstener);
+				final ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(eventView);
+				eventView.getBottomDraggable().setOnLongClickListener(changeEventDurationLIstener);
 				return eventView;
 			}
 		}
@@ -148,43 +147,21 @@ public class DayView extends BaseView {
 
 		final ListenerMoveEvent moveEventListener = new ListenerMoveEvent();
 		eventView.setOnLongClickListener(moveEventListener);
-		final ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(
-				eventView);
-		eventView.getBottomDraggable().setOnLongClickListener(
-				changeEventDurationLIstener);
+		final ListenerChangeEventDuration changeEventDurationLIstener = new ListenerChangeEventDuration(eventView);
+		eventView.getBottomDraggable().setOnLongClickListener(changeEventDurationLIstener);
 
 		this.llEvent.addView(column);
 		return eventView;
 	}
-
-	private EventLittleView addEventView(EventLittleView view) {
-		ColumnEvent column;
-		for (int i = 0; i < this.llEvent.getChildCount(); i++) {
-			column = (ColumnEvent) this.llEvent.getChildAt(i);
-			final EventLittleView eventView = column.addEvent(view);
-
-			if (eventView != null) {
-				return eventView;
-			}
-		}
-		column = new ColumnEvent(getContext());
-		final EventLittleView eventView = column.addEvent(view);
-
-		this.llEvent.addView(column);
-		return eventView;
-	}
-
+	
 	private void reloadEventLittleView(EventLittleView eventView) {
-		ColumnEvent column;
 		final EventBaseBean event = eventView.getEvent();
 		new EventBaseRepository(getContext()).update(event);
-		for (int i = 0; i < this.llEvent.getChildCount(); i++) {
-			column = (ColumnEvent) this.llEvent.getChildAt(i);
-			if (column.unload(eventView)) {
-				addEventView(eventView);
-				return;
-			}
-		}
+		
+		ColumnEvent column = ((ColumnEvent)eventView.getParent());
+		column.unload(eventView);
+
+		addEventView(event);
 	}
 
 	public class ListenerMoveEvent implements OnTouchListener,
@@ -244,13 +221,14 @@ public class DayView extends BaseView {
 									(layout.topMargin) - 10);
 							layout.topMargin -= 30;
 						}
-						this.draggedView.updateFromLayout(layout);
+						this.draggedView.setLayoutParams(layout);
 						this.lastY = (int) event.getRawY();
 					}
 				} else {
 					this.lastY = (int) event.getRawY();
 				}
 			} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				this.draggedView.updateFromLayout(layout);
 				this.draggedView.changeDragged(false);
 				this.draggedView.setOnTouchListener(null);
 				this.lastY = -100000;
@@ -325,18 +303,18 @@ public class DayView extends BaseView {
 							layout.height = (int) (DayView.this.ligneHeight / 2);
 						}
 						this.lastY = (int) event.getRawY();
-						this.parent.updateFromLayout(layout);
+						this.parent.setLayoutParams(layout);
 					}
 				} else {
 					this.lastY = (int) event.getRawY();
 				}
 			}
 			if (event.getAction() == MotionEvent.ACTION_UP) {
+				this.parent.updateFromLayout(layout);
 				v.setOnTouchListener(null);
 				this.lastY = -100000;
 				this.lastLigne = -1;
-				DayView.this.mainScroll
-						.requestDisallowInterceptTouchEvent(false);
+				DayView.this.mainScroll.requestDisallowInterceptTouchEvent(false);
 				reloadEventLittleView(this.parent);
 			}
 			return true;
