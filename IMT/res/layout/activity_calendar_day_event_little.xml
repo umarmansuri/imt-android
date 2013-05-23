@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/form_activity_day_event_little"
     android:minHeight="@dimen/day_event_little_min_height" >
 
     <TextView
@@ -24,7 +23,7 @@
         android:layout_above="@+id/activity_calendar_day_event_little_bottom"
         android:layout_below="@+id/activity_calendar_day_event_little_hour"
         android:textColor="#fff" />
-
+    
     <TextView
         android:id="@+id/activity_calendar_day_event_little_bottom"
         android:layout_width="match_parent"

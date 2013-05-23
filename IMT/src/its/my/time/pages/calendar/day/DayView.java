@@ -173,6 +173,7 @@ public class DayView extends BaseView {
 
 		@Override
 		public boolean onLongClick(View v) {
+			v.setOnLongClickListener(null);
 			this.draggedView = (EventLittleView) v;
 			this.draggedView.changeDragged(true);
 			DayView.this.mainScroll.requestDisallowInterceptTouchEvent(true);
