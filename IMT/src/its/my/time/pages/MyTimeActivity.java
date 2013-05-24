@@ -1,24 +1,27 @@
 package its.my.time.pages;
 
+import its.my.time.R;
 import its.my.time.util.ActivityUtil;
 import its.my.time.view.menu.MenuActivity;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
-import its.my.time.view.menu.item.RefreshView;
 
 import java.util.ArrayList;
 
-import android.R;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.fonts.mooncake.MooncakeIcone;
 
-public abstract class MyTimeActivity extends MenuActivity{
+public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemClickListener{
 
 	private final BroadcastReceiver LOGOUT_Receiver = new BroadcastReceiver() {
 		@Override
@@ -33,6 +36,44 @@ public abstract class MyTimeActivity extends MenuActivity{
 	};
 	private MenuGroupe menuGroupePropos;
 	private MenuGroupe menuGroupeDeconnexion;
+	private MenuItem menuItemMaj;
+	private ProgressBar mProgressBar;
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menuItemMaj = menu.add("Mise à jour");
+		menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
+		mProgressBar = new ProgressBar(this);
+		mProgressBar.setIndeterminate(true);
+		menuItemMaj.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		menuItemMaj.setOnMenuItemClickListener(this);
+		return super.onCreateOptionsMenu(menu);		
+	}
+	
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		if(item == menuItemMaj) {
+			onMajCalled();
+			return true;
+		}
+		return false;
+	}
+	
+	public void onMajCalled() {
+		menuItemMaj.setActionView(mProgressBar);
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				majFinished(null);
+			}
+		}, 3000);
+	}
+	
+	public final void majFinished(Exception e) {
+		menuItemMaj.setActionView(null);
+		menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
+	}
 	
 	@Override
 	protected void onDestroy() {
@@ -75,5 +116,4 @@ public abstract class MyTimeActivity extends MenuActivity{
 	@Override protected void onMenuChildClick(ExpandableListView parent, MenuGroupe group, MenuObjet objet,long id) {}
 	@Override protected boolean onBackButtonPressed() {return false;}
 	@Override protected void reload() {}
-	
 }

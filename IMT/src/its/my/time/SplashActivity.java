@@ -7,8 +7,6 @@ import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
-import its.my.time.data.ws.GCMManager;
-import its.my.time.data.ws.comptes.WSGetAccount;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
@@ -68,7 +66,7 @@ public class SplashActivity extends Activity {
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
 		PreferencesUtil.init(this);
-		//temp();
+		temp();
 	}
 
 	private void temp() {
@@ -161,8 +159,10 @@ public class SplashActivity extends Activity {
 			new LoadMainActivity().execute();
 		} else {
 			UtilisateurBean user = new UtilisateurBean();
-			final UtilisateurRepository connexion = new UtilisateurRepository(SplashActivity.this);
-			user = connexion.getUser(this.pseudo.getText().toString(),this.mdp.getText().toString());
+			final UtilisateurRepository connexion = new UtilisateurRepository(
+					SplashActivity.this);
+			user = connexion.getUser(this.pseudo.getText().toString(),
+					this.mdp.getText().toString());
 			if (user != null) {
 				PreferencesUtil.setCurrentUid(user.getId());
 				starAnimation();

@@ -34,6 +34,7 @@ public class ProfilActivity extends BaseActivity {
 	private boolean isNew;
 	private Bundle state;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstance) {
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
