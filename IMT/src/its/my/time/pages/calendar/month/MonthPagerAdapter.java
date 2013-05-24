@@ -17,7 +17,16 @@ public class MonthPagerAdapter extends BasePagerAdapter {
 	@Override
 	protected Fragment getView(int incrementation) {
 		Calendar displayedMonth = getCalendarAtIncrementation(incrementation);
-		return new MonthFragment(displayedMonth);
+		Calendar calDeb = (Calendar) displayedMonth.clone();
+		calDeb.set(Calendar.DAY_OF_MONTH,0);
+		calDeb.set(Calendar.HOUR_OF_DAY,0);
+		calDeb.set(Calendar.MINUTE,0);
+		calDeb.set(Calendar.SECOND,0);
+		calDeb.set(Calendar.MILLISECOND,0);
+		Calendar calFin = (Calendar) calDeb.clone();
+		calFin.add(Calendar.MONTH,1);
+		calFin.add(Calendar.MILLISECOND, -1);
+		return new MonthFragment(calDeb, calFin);
 	}
 
 	@Override

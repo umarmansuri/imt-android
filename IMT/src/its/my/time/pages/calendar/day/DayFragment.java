@@ -1,30 +1,23 @@
 package its.my.time.pages.calendar.day;
 
+import its.my.time.pages.calendar.base.BaseFragment;
+import its.my.time.pages.calendar.base.BaseView;
+
 import java.util.Calendar;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+public class DayFragment extends BaseFragment {
 
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class DayFragment extends SherlockFragment {
+	private Calendar calDeb;
 
-	private final Calendar cal;
 
-	public DayFragment() {
-		this(Calendar.getInstance());
-	}
-
-	public DayFragment(Calendar cal) {
-		this.cal = cal;
+	public DayFragment(Calendar calDeb, Calendar calFin) {
+		super(calDeb, calFin);
+		this.calDeb = calDeb;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return new DayView(getSherlockActivity(), this.cal);
+	protected BaseView createView(OnViewCreated onViewCreated) {
+		return new DayView(getSherlockActivity(), calDeb, onViewCreated);
 	}
-
 }

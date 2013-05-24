@@ -2,36 +2,30 @@ package its.my.time.pages.calendar.month;
 
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.pages.calendar.CalendarActivity;
+import its.my.time.pages.calendar.base.BaseFragment;
+import its.my.time.pages.calendar.base.BaseView;
 import its.my.time.util.ActivityUtil;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.SherlockFragment;
+public class MonthFragment extends BaseFragment {
 
-public class MonthFragment extends SherlockFragment {
 
-	private final Calendar cal;
+	private Calendar calDeb;
 
-	public MonthFragment() {
-		this(Calendar.getInstance());
-	}
 
-	public MonthFragment(Calendar cal) {
-		super();
-		this.cal = cal;
+	public MonthFragment(Calendar calDeb, Calendar calFin) {
+		super(calDeb, calFin);
+		this.calDeb = calDeb;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return new MonthView(getSherlockActivity(), this.cal, this.dayListener);
+	protected BaseView createView(OnViewCreated onViewCreated) {
+		return new MonthView(getSherlockActivity(), calDeb, this.dayListener, onViewCreated);
 	}
 
 	private final OnDayClickListener dayListener = new OnDayClickListener() {

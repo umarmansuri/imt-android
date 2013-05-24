@@ -1,57 +1,48 @@
 package its.my.time.pages.calendar.base;
 
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.CalendarActivity;
+import its.my.time.pages.calendar.base.BaseFragment.OnViewCreated;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
 public abstract class BaseView extends FrameLayout {
 
 	protected static int nbPageLoading = 0;
+	private OnViewCreated onViewCreated;
 
-	public BaseView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+	public BaseView(Context context, OnViewCreated onViewCreated) {
+		super(context);
+		init();
+		this.onViewCreated = onViewCreated;
+	}
+
+	protected void onViewCreated(){
+		if(onViewCreated != null) {
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					onViewCreated.onViewCreated(BaseView.this);
+				}
+			});
+
+		}
+	}
+	
+	private void init() {
 		((CalendarActivity) getContext()).setSupportProgressBarVisibility(true);
-		new LoadView().execute();
 	}
 
-	public BaseView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
+
+	public MyTimeActivity getActivity() {
+		return (MyTimeActivity)getContext();
 	}
 
-	public BaseView(Context context) {
-		this(context, null);
-	}
-
-	protected abstract View createView();
 
 	protected abstract String getTopBarText();
 
-	private class LoadView extends AsyncTask<Void, Void, View> {
-
-		@Override
-		protected void onPreExecute() {
-			nbPageLoading++;
-			((CalendarActivity) getContext()).setSupportProgressBarIndeterminateVisibility(true);
-		}
-
-		@Override
-		protected View doInBackground(Void... params) {
-			final View view = createView();
-			return view;
-		}
-
-		@Override
-		protected void onPostExecute(View result) {
-			removeAllViews();
-			addView(result);
-			nbPageLoading--;
-			if (nbPageLoading == 0) {
-				((CalendarActivity) getContext()).setSupportProgressBarIndeterminateVisibility(false);
-			}
-		}
-	}
+	public abstract View addEvent(EventBaseBean eventBaseBean, int color, int visibility);
 
 }
