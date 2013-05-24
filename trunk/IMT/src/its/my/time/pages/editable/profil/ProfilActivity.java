@@ -49,6 +49,9 @@ public class ProfilActivity extends BaseActivity {
 		}
 	}
 
+	public boolean isUpdatable() {
+		return false;
+	}
 	private String KEY_NOM = "KEY_NOM";
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {

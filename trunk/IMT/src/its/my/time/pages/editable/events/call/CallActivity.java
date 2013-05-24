@@ -33,4 +33,9 @@ public class CallActivity extends BaseEventActivity {
 		return fragments;
 	}
 
+	@Override
+	public boolean isUpdatable() {
+		return false;
+	}
+
 }

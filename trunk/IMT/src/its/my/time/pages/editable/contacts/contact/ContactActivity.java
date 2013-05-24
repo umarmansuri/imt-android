@@ -188,4 +188,9 @@ public class ContactActivity extends BaseActivity implements OnClickListener, Te
 		this.color = color;
 		updateColorButton();
 	}
+
+	@Override
+	public boolean isUpdatable() {
+		return false;
+	}
 }

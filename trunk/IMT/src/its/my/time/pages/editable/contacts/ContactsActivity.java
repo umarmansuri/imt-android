@@ -220,4 +220,9 @@ public class ContactsActivity extends MyTimeActivity {
 			return true;
 		}
 	}
+
+	@Override
+	public boolean isUpdatable() {
+		return false;
+	}
 }

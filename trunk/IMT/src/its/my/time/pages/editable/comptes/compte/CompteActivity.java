@@ -189,4 +189,9 @@ public class CompteActivity extends BaseActivity implements OnClickListener, Tex
 		this.color = color;
 		updateColorButton();
 	}
+
+	@Override
+	public boolean isUpdatable() {
+		return false;
+	}
 }

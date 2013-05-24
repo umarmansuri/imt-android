@@ -59,12 +59,16 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private MenuGroupe menuProfil;
 	private MenuGroupe menuAgenda;
 	private MenuGroupe menuCompte;
-	private MenuGroupe menuLibelles;
+	private MenuGroupe menuReporting;
 	private MenuGroupe menuReglages;
 
 	private MenuObjet menuAgendaToday;
 	private MenuObjet menuAgendaJour;
 	private MenuObjet menuAgendaMois;
+	
+	private MenuObjet menuReportingCompte;
+	private MenuObjet menuReportingEvent;
+	private MenuObjet menuReportingDate;
 
 	private MenuObjet menuAgendaListe;
 	public static Calendar curentCal;
@@ -151,14 +155,16 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		menuCompte.setObjets(donnees);
 		menuGroupes.add(menuCompte);
 
-		menuLibelles = new MenuGroupe("Libellés", MooncakeIcone.icon_tags);
+		menuReporting = new MenuGroupe("Reporting", MooncakeIcone.icon_stats);
 		donnees = new ArrayList<MenuObjet>();
-		donnees.add(new MenuObjet(menuLibelles, "Libellé 1",MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuLibelles, "Libellé 2",MooncakeIcone.icon_tag, true, false, Color.BLUE));
-		donnees.add(new MenuObjet(menuLibelles, "Libellé 3",MooncakeIcone.icon_tag, true));
-		donnees.add(new MenuObjet(menuLibelles, "Gérer", MooncakeIcone.icon_cog));
-		menuLibelles.setObjets(donnees);
-		menuGroupes.add(menuLibelles);
+		menuReportingCompte = new MenuObjet(menuReporting, "Comptes",MooncakeIcone.icon_stats, false);
+		donnees.add(menuReportingCompte);
+		menuReportingEvent = new MenuObjet(menuReporting, "Evénements",MooncakeIcone.icon_stats, false);
+		donnees.add(menuReportingEvent);
+		menuReportingDate = new MenuObjet(menuReporting, "Dates",MooncakeIcone.icon_stats, false);
+		donnees.add(menuReportingDate);
+		menuReporting.setObjets(donnees);
+		menuGroupes.add(menuReporting);
 
 		menuReglages = new MenuGroupe("Réglages", MooncakeIcone.icon_settings);
 		menuGroupes.add(menuReglages);
@@ -352,5 +358,10 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 			anim.setDuration(ANIM_DURATION);
 			CalendarActivity.this.mMainFramePager.startAnimation(anim);
 		}
+	}
+
+	@Override
+	public boolean isUpdatable() {
+		return false;
 	}
 }
