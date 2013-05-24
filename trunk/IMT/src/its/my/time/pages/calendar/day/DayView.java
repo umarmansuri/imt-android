@@ -39,9 +39,7 @@ public class DayView extends BaseView {
 
 	public DayView(Context context, Calendar cal) {
 		super(context);
-		this.cal = new GregorianCalendar(cal.get(Calendar.YEAR),
-				cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0,
-				0);
+		this.cal = new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0,0);
 		this.firstCal = new GregorianCalendar(0, 0, 0, 8, 0);
 	}
 
