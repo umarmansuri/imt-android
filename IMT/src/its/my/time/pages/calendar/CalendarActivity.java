@@ -16,11 +16,11 @@ import its.my.time.view.menu.MenuObjet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
 import android.view.View;
@@ -36,9 +36,10 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.doomonafireball.betterpickers.BetterPickerUtils;
+import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment.DatePickerDialogHandler;
 import com.fonts.mooncake.MooncakeIcone;
 
-public class CalendarActivity extends MyTimeActivity implements OnPageChangeListener {
+public class CalendarActivity extends MyTimeActivity implements OnPageChangeListener, DatePickerDialogHandler {
 
 	public static final long ANIM_DURATION = 200;
 
@@ -109,10 +110,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		mTextTitle.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                int m = 3;
-                int d = 18;
-                int y = 1988;
-                BetterPickerUtils.showDateEditDialog(getSupportFragmentManager(), m, d, y);
+                BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
 			}
 		});
 	}
@@ -168,6 +166,11 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		return  super.onCreateMenu(menuGroupes);
 	}
 
+	@Override
+	public void onDialogDateSet(int year, int monthOfYear, int dayOfMonth) {
+		gotoDate(new GregorianCalendar(year, monthOfYear, dayOfMonth));
+	}
+	
 	@Override
 	protected void onMenuGroupClick(ExpandableListView parent,MenuGroupe group, long id) {
 		if(group == menuProfil) {
@@ -272,8 +275,8 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	}
 
 	private void gotoDate(Calendar cal) {
-		((BasePagerAdapter) ((ViewPager) this.mMainFramePager.getChildAt(0)).getAdapter()).setCurrentCalendar(cal);
-		((ViewPager) this.mMainFramePager.getChildAt(0)).setCurrentItem(BasePagerAdapter.NB_PAGE / 2);
+		curentCal = cal;
+		reload();
 	}
 
 	private void changeTitle(final String title) {

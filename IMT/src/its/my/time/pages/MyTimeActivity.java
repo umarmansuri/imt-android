@@ -4,15 +4,18 @@ import its.my.time.util.ActivityUtil;
 import its.my.time.view.menu.MenuActivity;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
+import its.my.time.view.menu.item.RefreshView;
 
 import java.util.ArrayList;
 
+import android.R;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.ExpandableListView;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.fonts.mooncake.MooncakeIcone;
 
 public abstract class MyTimeActivity extends MenuActivity{
