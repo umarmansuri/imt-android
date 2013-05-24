@@ -33,5 +33,9 @@ public class EventActivity extends BaseEventActivity {
 		fragments.add(fragment);
 		return fragments;
 	}
+	
+	public boolean isUpdatable() {
+		return false;
+	}
 
 }

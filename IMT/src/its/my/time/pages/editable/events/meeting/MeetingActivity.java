@@ -37,4 +37,8 @@ public class MeetingActivity extends BaseEventActivity {
 		return fragments;
 	}
 
+	public boolean isUpdatable() {
+		return false;
+	}
+	
 }

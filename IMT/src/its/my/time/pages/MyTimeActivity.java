@@ -38,18 +38,22 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 	private MenuGroupe menuGroupeDeconnexion;
 	private MenuItem menuItemMaj;
 	private ProgressBar mProgressBar;
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menuItemMaj = menu.add("Mise à jour");
-		menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
-		mProgressBar = new ProgressBar(this);
-		mProgressBar.setIndeterminate(true);
-		menuItemMaj.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		menuItemMaj.setOnMenuItemClickListener(this);
+		if(isUpdatable()) {
+			menuItemMaj = menu.add("Mise à jour");
+			menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
+			mProgressBar = new ProgressBar(this);
+			mProgressBar.setIndeterminate(true);
+			menuItemMaj.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			menuItemMaj.setOnMenuItemClickListener(this);
+		}
 		return super.onCreateOptionsMenu(menu);		
 	}
-	
+
+	public abstract boolean isUpdatable();
+
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		if(item == menuItemMaj) {
@@ -58,7 +62,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 		}
 		return false;
 	}
-	
+
 	public void onMajCalled() {
 		menuItemMaj.setActionView(mProgressBar);
 
@@ -69,12 +73,12 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 			}
 		}, 3000);
 	}
-	
+
 	public final void majFinished(Exception e) {
 		menuItemMaj.setActionView(null);
 		menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		try {
@@ -82,32 +86,33 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 		} catch (Exception e) {}
 		super.onDestroy();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		registerReceiver(this.LOGOUT_Receiver, new IntentFilter(ActivityUtil.ACTION_FINISH));
 	}
-	
+
 	@Override
 	protected ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes) {
 		menuGroupePropos = new MenuGroupe("A propos",MooncakeIcone.icon_info_sign);
 		menuGroupes.add(menuGroupePropos);
-		
+
 		menuGroupeDeconnexion = new MenuGroupe("Déconnexion", MooncakeIcone.icon_off);
 		menuGroupes.add(menuGroupeDeconnexion);
-		
-		
+
+
 		return menuGroupes; 
 	}
 
-	
+
 	@Override
 	protected void onMenuGroupClick(ExpandableListView parent,MenuGroupe group, long id) {
 		if(group == menuGroupeDeconnexion) {
 			ActivityUtil.logout(this);
 		} else if(group == menuGroupePropos) {
-		
+			Intent myIntent = new Intent(MyTimeActivity.this, AboutActivity.class);
+			startActivity(myIntent);
 		}
 	}
 
