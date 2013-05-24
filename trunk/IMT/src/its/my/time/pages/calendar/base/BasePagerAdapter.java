@@ -12,6 +12,7 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	private Calendar cal;
 
+
 	public BasePagerAdapter(FragmentManager fm, Calendar cal) {
 		super(fm);
 		this.cal = cal;
@@ -19,8 +20,8 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		final int incrementation = getIncrementation(position);
-		final Fragment fr = getView(incrementation);
+		int incrementation = getIncrementation(position);
+		Fragment fr = getView(incrementation);
 		return fr;
 	}
 
@@ -37,11 +38,11 @@ public abstract class BasePagerAdapter extends FragmentStatePagerAdapter {
 	public int getIncrementation(int position) {
 		return position - NB_PAGE / 2;
 	}
-	
+
 	public Calendar getCalendarAtPosition(int position) {
 		return getCalendarAtIncrementation(getIncrementation(position));
 	}
-	
+
 	protected abstract String getCustomTitle(int incrementation);
 	protected abstract Calendar getCalendarAtIncrementation(int incrementation);
 	protected abstract Fragment getView(int incrementation);

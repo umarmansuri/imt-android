@@ -28,8 +28,6 @@ public class CallActivity extends BaseEventActivity {
 		fragments.add(fragment);
 		fragment = new PjFragment();
 		fragments.add(fragment);
-		fragment = new NoteFragment();
-		fragments.add(fragment);
 		return fragments;
 	}
 

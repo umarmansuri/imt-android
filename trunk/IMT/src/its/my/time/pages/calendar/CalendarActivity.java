@@ -1,8 +1,11 @@
 package its.my.time.pages.calendar;
 
 import its.my.time.R;
+import its.my.time.SplashActivity;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
+import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
@@ -10,6 +13,7 @@ import its.my.time.pages.calendar.list.ListEventAdapter;
 import its.my.time.pages.calendar.month.MonthPagerAdapter;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.util.Types;
 import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
@@ -21,7 +25,12 @@ import java.util.List;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,10 +80,16 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private MenuObjet menuReportingDate;
 
 	private MenuObjet menuAgendaListe;
+
+	private SparseBooleanArray accountVisibility;
+
+	private CompteRepository compteRepo;
+
+	private EventBaseRepository eventRepo;
 	public static Calendar curentCal;
 	private static boolean isWaitingEnd;
 
-	
+
 	@Override
 	protected void onStart() {
 		isWaitingEnd = false;
@@ -114,7 +129,23 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		mTextTitle.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
+				/*EventBaseRepository adapter = new EventBaseRepository(CalendarActivity.this); 
+				EventBaseBean bean;
+				Calendar calDeb2; 
+				Calendar calFin2; 
+				bean = new EventBaseBean();
+				bean.setId(1);
+				bean.setCid(1); 
+				bean.setTitle("Héhé!!");
+				calDeb2 = Calendar.getInstance(); 
+				bean.sethDeb(calDeb2); 
+				calFin2 = Calendar.getInstance(); 
+				calFin2.add(Calendar.HOUR, 2);
+				bean.sethFin(calFin2);
+				bean.setTypeId(Types.Event.MEETING);
+				bean.setDetailsId(0); 
+				adapter.insert(bean);*/
+				BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
 			}
 		});
 	}
@@ -146,10 +177,12 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 
 		menuCompte = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
-		final CompteRepository compteRepo = new CompteRepository(this);
+		compteRepo = new CompteRepository(this);
+		accountVisibility = new SparseBooleanArray();
 		this.comptes = compteRepo.getAllByUid(PreferencesUtil.getCurrentUid());
 		for (final CompteBean compteBean : this.comptes) {
 			donnees.add(new MenuObjet(menuCompte, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), compteBean.getColor()));
+			accountVisibility.put(compteBean.getId(), compteBean.isShowed());
 		}
 		donnees.add(new MenuObjet(menuCompte, "Gérer", MooncakeIcone.icon_cog));
 		menuCompte.setObjets(donnees);
@@ -176,7 +209,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	public void onDialogDateSet(int year, int monthOfYear, int dayOfMonth) {
 		gotoDate(new GregorianCalendar(year, monthOfYear, dayOfMonth));
 	}
-	
+
 	@Override
 	protected void onMenuGroupClick(ExpandableListView parent,MenuGroupe group, long id) {
 		if(group == menuProfil) {
@@ -260,10 +293,10 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void reload() {
-		new ChangePageTask().execute(this.indexCurrentPager);
+
 	}
 
 	public void showDays(Calendar cal) {
@@ -295,7 +328,8 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	}
 
 	@Override
-	public void onPageScrollStateChanged(int arg0) {
+	public void onPageScrollStateChanged(int state) {
+		
 	}
 
 	@Override
@@ -324,8 +358,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		@Override
 		protected View doInBackground(Integer... params) {
 			this.indexNextPage = params[0];
-			CalendarActivity.this.mViewPager = new ControledViewPager(
-					getApplicationContext());
+			CalendarActivity.this.mViewPager = new ControledViewPager(getApplicationContext());
 			CalendarActivity.this.mViewPager.setId(ID_PAGER);
 			switch (this.indexNextPage) {
 			case INDEX_MENU_AGENDA_DAY:
