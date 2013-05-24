@@ -78,8 +78,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 
 	protected void initialiseActionBar() {
 		final ActionBar mActionBar = getSupportActionBar();
-		mActionBar.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.background_header));
+		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_header));
 		mActionBar.setHomeButtonEnabled(true);
 		mActionBar.setDisplayShowHomeEnabled(true);
 		final MooncakeIcone icone = new MooncakeIcone(MenuActivity.this);
@@ -95,8 +94,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	private final OnChildClickListener onMenuChildClickListener = new OnChildClickListener() {
 		@Override
 		public boolean onChildClick(final ExpandableListView parent,final View v, final int groupPosition, final int childPosition,final long id) {
-			if (!MenuActivity.this.menuGroupes.get(groupPosition).getObjets()
-					.get(childPosition).isSwitcher()) {
+			if (!MenuActivity.this.menuGroupes.get(groupPosition).getObjets().get(childPosition).isSwitcher()) {
 				MenuActivity.this.hasSwitcherValueChanged = false;
 				changeMainMenuVisibility(false, true);
 				new Handler().postDelayed(new Runnable() {
@@ -148,7 +146,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		public void onAnimationStart(Animation animation) {
 			MenuActivity.this.mMainMenu.setVisibility(View.VISIBLE);
 			MenuActivity.this.mMainContent.bringToFront();
-			if(MenuActivity.this.isMenuShowed) {
+			if(isMenuShowed) {
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(mMainContent.getApplicationWindowToken(), 0);
 			}
@@ -160,7 +158,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 
 		@Override
 		public void onAnimationEnd(Animation animation) {
-			if (MenuActivity.this.isMenuShowed) {
+			if (isMenuShowed) {
 				MenuActivity.this.mMainMenu.bringToFront();
 				mBlanck.setVisibility(View.VISIBLE);
 				mBlanck.bringToFront();
@@ -269,7 +267,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
-			if (this.isMenuShowed == false) {
+			if (isMenuShowed == false) {
 				changeMainMenuVisibility(true, true);
 			} else {
 				changeMainMenuVisibility(false, true);
@@ -313,14 +311,14 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		boolean res = false;
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			if (this.isMenuShowed) {
+			if (isMenuShowed) {
 				changeMainMenuVisibility(false, true);
 				return true;
 			}
 			res = onBackButtonPressed();
 			break;
 		case KeyEvent.KEYCODE_MENU:
-			changeMainMenuVisibility(!this.isMenuShowed, true);
+			changeMainMenuVisibility(!isMenuShowed, true);
 			res = true;
 			break;
 		}

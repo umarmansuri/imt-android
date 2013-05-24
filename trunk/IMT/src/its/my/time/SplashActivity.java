@@ -161,10 +161,8 @@ public class SplashActivity extends Activity {
 			new LoadMainActivity().execute();
 		} else {
 			UtilisateurBean user = new UtilisateurBean();
-			final UtilisateurRepository connexion = new UtilisateurRepository(
-					SplashActivity.this);
-			user = connexion.getUser(this.pseudo.getText().toString(),
-					this.mdp.getText().toString());
+			final UtilisateurRepository connexion = new UtilisateurRepository(SplashActivity.this);
+			user = connexion.getUser(this.pseudo.getText().toString(),this.mdp.getText().toString());
 			if (user != null) {
 				PreferencesUtil.setCurrentUid(user.getId());
 				starAnimation();

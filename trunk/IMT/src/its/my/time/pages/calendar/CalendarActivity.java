@@ -254,7 +254,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 
 	@Override
 	public void reload() {
-		//new ChangePageTask().execute(this.indexCurrentPager);
+		new ChangePageTask().execute(this.indexCurrentPager);
 	}
 
 	public void showDays(Calendar cal) {
