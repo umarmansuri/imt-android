@@ -87,8 +87,7 @@ public class DatePickerDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 final Activity activity = getActivity();
                 if (activity instanceof DatePickerDialogHandler) {
-                    final DatePickerDialogHandler act =
-                            (DatePickerDialogHandler) activity;
+                    final DatePickerDialogHandler act = (DatePickerDialogHandler) activity;
                     act.onDialogDateSet(mPicker.getYear(), mPicker.getMonthOfYear(), mPicker.getDayOfMonth());
                 } else {
                     //Log.e("Error! Activities that use DatePickerDialogFragment must implement "
