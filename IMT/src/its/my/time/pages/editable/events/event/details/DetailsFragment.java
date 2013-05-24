@@ -70,11 +70,11 @@ public class DetailsFragment extends BasePluginFragment {
 	private static Bundle state;
 
 	public DetailsFragment() {
-		//this.typeEvent = Types.Event.BASE;
+		//typeEvent = Types.Event.BASE;
 	}
 
 	public DetailsFragment(int typeEvent) {
-		//this.typeEvent = typeEvent;
+		//typeEvent = typeEvent;
 	}
 
 	@Override
@@ -101,29 +101,29 @@ public class DetailsFragment extends BasePluginFragment {
 			participationBean.setUid(uid);
 		}
 
-		this.view = inflater.inflate(R.layout.activity_event_details, null);
-		this.view.setBackgroundColor(Color.WHITE);
+		view = inflater.inflate(R.layout.activity_event_details, null);
+		view.setBackgroundColor(Color.WHITE);
 
 		final View customView = getCustomView();
 		if (customView != null) {
-			((FrameLayout) this.view.findViewById(R.id.include)).addView(customView);
+			((FrameLayout) view.findViewById(R.id.include)).addView(customView);
 		}
 
-		this.mTextTitle = (EditText) this.view.findViewById(R.id.activity_event_details_text_title);
-		this.mTextJourDeb = (DateButton) this.view.findViewById(R.id.activity_event_details_text_ddeb);
-		this.mTextJourFin = (DateButton) this.view.findViewById(R.id.activity_event_details_text_dfin);
-		this.mTextHeureDeb = (TimeButton) this.view				.findViewById(R.id.activity_event_details_text_hdeb);
-		this.mTextHeureFin = (TimeButton) this.view
+		mTextTitle = (EditText) view.findViewById(R.id.activity_event_details_text_title);
+		mTextJourDeb = (DateButton) view.findViewById(R.id.activity_event_details_text_ddeb);
+		mTextJourFin = (DateButton) view.findViewById(R.id.activity_event_details_text_dfin);
+		mTextHeureDeb = (TimeButton) view				.findViewById(R.id.activity_event_details_text_hdeb);
+		mTextHeureFin = (TimeButton) view
 				.findViewById(R.id.activity_event_details_text_hfin);
-		this.mSpinnerCompte = (Spinner) this.view
+		mSpinnerCompte = (Spinner) view
 				.findViewById(R.id.activity_event_details_spinner_compte);
-		this.mSpinnerRecurrence = (Spinner) this.view
+		mSpinnerRecurrence = (Spinner) view
 				.findViewById(R.id.activity_event_details_spinner_recurrence);
-		this.mSpinnerParticipation = (Spinner) this.view
+		mSpinnerParticipation = (Spinner) view
 				.findViewById(R.id.activity_event_details_spinner_participation);
-		this.mTextDetails = (TextView) this.view
+		mTextDetails = (TextView) view
 				.findViewById(R.id.activity_event_details_text_details);
-		this.mSwitchAllDay = (Switcher) this.view
+		mSwitchAllDay = (Switcher) view
 				.findViewById(R.id.activity_event_details_switcher_allDay);
 
 		if (state == null) {
@@ -135,7 +135,7 @@ public class DetailsFragment extends BasePluginFragment {
 
 		ViewUtil.enableAllView(view, false);
 
-		return this.view;
+		return view;
 	}
 
 	private View getCustomView() {
@@ -143,64 +143,63 @@ public class DetailsFragment extends BasePluginFragment {
 	}
 
 	public void initialiseValuesFromEvent() {
-		this.mTextTitle.setText(getParentActivity().getEvent().getTitle());
-		this.mTextJourDeb.setDate(getParentActivity().getEvent().gethDeb());
-		this.mTextHeureDeb.setDate(getParentActivity().getEvent().gethDeb());
-		this.mTextJourFin = (DateButton) this.view.findViewById(R.id.activity_event_details_text_dfin);
+		mTextTitle.setText(getParentActivity().getEvent().getTitle());
+		mTextJourDeb.setDate(getParentActivity().getEvent().gethDeb());
+		mTextHeureDeb.setDate(getParentActivity().getEvent().gethDeb());
+		mTextJourFin = (DateButton) view.findViewById(R.id.activity_event_details_text_dfin);
 
 		if (getParentActivity().getEvent().gethFin() != null) {
-			this.mTextHeureFin.setDate(getParentActivity().getEvent().gethFin());
-			this.mTextJourFin.setDate(getParentActivity().getEvent().gethFin());
+			mTextHeureFin.setDate(getParentActivity().getEvent().gethFin());
+			mTextJourFin.setDate(getParentActivity().getEvent().gethFin());
 		}
-		this.mTextDetails.setText(getParentActivity().getEvent().getDetails());
+		mTextDetails.setText(getParentActivity().getEvent().getDetails());
 		if (getParentActivity().getEvent().isAllDay()) {
-			this.mSwitchAllDay.changeState(getParentActivity().getEvent().isAllDay(), true);
+			mSwitchAllDay.changeState(getParentActivity().getEvent().isAllDay(), true);
 		}
 	}
 
 	public void initialiseValueFromInstance() {
-		this.mTextTitle.setText(state.getString(KEY_BUNDLE_TITLE));
+		mTextTitle.setText(state.getString(KEY_BUNDLE_TITLE));
 
 		Calendar cal = DateUtil.getDateFromISO(state
 				.getString(KEY_BUNDLE_DATE_DEB));
-		this.mTextJourDeb.setDate(cal);
-		this.mTextHeureDeb.setDate(cal);
+		mTextJourDeb.setDate(cal);
+		mTextHeureDeb.setDate(cal);
 
 		cal = DateUtil.getDateFromISO(state.getString(KEY_BUNDLE_DATE_FIN));
-		this.mTextHeureFin.setDate(cal);
-		this.mTextJourFin.setDate(cal);
+		mTextHeureFin.setDate(cal);
+		mTextJourFin.setDate(cal);
 
-		this.mTextDetails.setText(state.getString(KEY_BUNDLE_DETAILS));
+		mTextDetails.setText(state.getString(KEY_BUNDLE_DETAILS));
 		if (getParentActivity().getEvent().isAllDay()) {
-			this.mSwitchAllDay.changeState(state.getBoolean(KEY_BUNDLE_ALL_DAY), false);
+			mSwitchAllDay.changeState(state.getBoolean(KEY_BUNDLE_ALL_DAY), false);
 		}
-		this.mSpinnerCompte.setSelection(state.getInt(KEY_BUNDLE_COMPTE));
-		this.mSpinnerRecurrence.setSelection(state.getInt(KEY_BUNDLE_RECURRENCE));
-		this.mSpinnerParticipation.setSelection(state.getInt(KEY_BUNDLE_PARTICIPATION));
+		mSpinnerCompte.setSelection(state.getInt(KEY_BUNDLE_COMPTE));
+		mSpinnerRecurrence.setSelection(state.getInt(KEY_BUNDLE_RECURRENCE));
+		mSpinnerParticipation.setSelection(state.getInt(KEY_BUNDLE_PARTICIPATION));
 	}
 
 	public void initialiseActions() {
-		this.mListCompte = new CompteRepository(getActivity()).getAllByUid(PreferencesUtil.getCurrentUid());
-		this.mListCompteLabels = new ArrayList<String>();
+		mListCompte = new CompteRepository(getActivity()).getAllByUid(PreferencesUtil.getCurrentUid());
+		mListCompteLabels = new ArrayList<String>();
 		int comptePosition = 0;
 		int i = 0;
-		for (final CompteBean compte : this.mListCompte) {
+		for (final CompteBean compte : mListCompte) {
 			if (compte.getId() == getParentActivity().getEvent().getCid()) {
 				comptePosition = i;
 			}
 			i++;
-			this.mListCompteLabels.add(compte.getTitle());
+			mListCompteLabels.add(compte.getTitle());
 		}
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
-				this.mListCompteLabels);
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,mListCompteLabels);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		this.mSpinnerCompte.setAdapter(adapter);
-		this.mSpinnerCompte.setSelection(comptePosition);
-		this.mSpinnerCompte.setOnItemSelectedListener(new OnItemSelectedListener() {
+		mSpinnerCompte.setAdapter(adapter);
+		mSpinnerCompte.setSelection(comptePosition);
+		mSpinnerCompte.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> container,
 					View view, int position, long id) {
-				getParentActivity().getEvent().setCid(DetailsFragment.this.mListCompte.get(position).getId());
+				getParentActivity().getEvent().setCid(mListCompte.get(position).getId());
 			}
 
 			@Override
@@ -213,9 +212,9 @@ public class DetailsFragment extends BasePluginFragment {
 				R.array.array_recurrence);
 		final ArrayAdapter<Object> adapter_recurrence = new CustomAdapter(
 				getActivity(), android.R.layout.simple_spinner_item,
-				this.array_recurrence, 0);
+				array_recurrence, 0);
 		adapter_recurrence.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		this.mSpinnerRecurrence.setAdapter(adapter_recurrence);
+		mSpinnerRecurrence.setAdapter(adapter_recurrence);
 
 
 		final ArrayAdapter<Object> adapter_participation = new CustomAdapter(getActivity(), android.R.layout.simple_spinner_item,
@@ -234,33 +233,33 @@ public class DetailsFragment extends BasePluginFragment {
 		});
 
 
-		this.mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
+		mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
 			@Override
 			public void onStateCHangedListener(Switcher switcher,
 					boolean isChecked) {
 				if (isChecked == true) {
-					DetailsFragment.this.mTextJourDeb.setEnabled(false);
-					DetailsFragment.this.mTextJourFin.setEnabled(false);
-					DetailsFragment.this.mTextHeureDeb.setEnabled(false);
-					DetailsFragment.this.mTextHeureFin.setEnabled(false);
+					mTextJourDeb.setEnabled(false);
+					mTextJourFin.setEnabled(false);
+					mTextHeureDeb.setEnabled(false);
+					mTextHeureFin.setEnabled(false);
 
-					DetailsFragment.this.mTextJourFin.setText(DetailsFragment.this.mTextJourDeb.getText());
+					mTextJourFin.setText(mTextJourDeb.getText());
 					Calendar calDeb = getParentActivity().getEvent().gethDeb();
 					calDeb.set(Calendar.HOUR_OF_DAY, 0);
 					calDeb.set(Calendar.MINUTE, 0);
 					calDeb.set(Calendar.SECOND, 0);
-					DetailsFragment.this.mTextHeureDeb.setDate(calDeb);
+					mTextHeureDeb.setDate(calDeb);
 
 					Calendar calFin = getParentActivity().getEvent().gethFin();
 					calFin.set(Calendar.HOUR_OF_DAY, 23);
 					calFin.set(Calendar.MINUTE, 59);
 					calFin.set(Calendar.SECOND, 59);
-					DetailsFragment.this.mTextHeureFin.setDate(calFin);
+					mTextHeureFin.setDate(calFin);
 				} else {
-					DetailsFragment.this.mTextJourDeb.setEnabled(true);
-					DetailsFragment.this.mTextHeureDeb.setEnabled(true);
-					DetailsFragment.this.mTextJourFin.setEnabled(true);
-					DetailsFragment.this.mTextHeureFin.setEnabled(true);
+					mTextJourDeb.setEnabled(true);
+					mTextHeureDeb.setEnabled(true);
+					mTextJourFin.setEnabled(true);
+					mTextHeureFin.setEnabled(true);
 				}
 			}
 		});
@@ -275,28 +274,28 @@ public class DetailsFragment extends BasePluginFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		Calendar cal = new GregorianCalendar(this.mTextJourDeb.getDate().get(
+		Calendar cal = new GregorianCalendar(mTextJourDeb.getDate().get(
 				Calendar.YEAR),
-				this.mTextJourDeb.getDate().get(Calendar.MONTH),
-				this.mTextJourDeb.getDate().get(Calendar.DAY_OF_MONTH),
-				this.mTextHeureDeb.getDate().get(Calendar.HOUR_OF_DAY),
-				this.mTextHeureDeb.getDate().get(Calendar.MINUTE));
+				mTextJourDeb.getDate().get(Calendar.MONTH),
+				mTextJourDeb.getDate().get(Calendar.DAY_OF_MONTH),
+				mTextHeureDeb.getDate().get(Calendar.HOUR_OF_DAY),
+				mTextHeureDeb.getDate().get(Calendar.MINUTE));
 		outState.putString(KEY_BUNDLE_DATE_DEB, DateUtil.getTimeInIso(cal));
 
-		cal = new GregorianCalendar(this.mTextJourFin.getDate().get(
+		cal = new GregorianCalendar(mTextJourFin.getDate().get(
 				Calendar.YEAR),
-				this.mTextJourFin.getDate().get(Calendar.MONTH),
-				this.mTextJourFin.getDate().get(Calendar.DAY_OF_MONTH),
-				this.mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
-				this.mTextHeureFin.getDate().get(Calendar.MINUTE));
+				mTextJourFin.getDate().get(Calendar.MONTH),
+				mTextJourFin.getDate().get(Calendar.DAY_OF_MONTH),
+				mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
+				mTextHeureFin.getDate().get(Calendar.MINUTE));
 		outState.putString(KEY_BUNDLE_DATE_FIN, DateUtil.getTimeInIso(cal));
 
-		outState.putString(KEY_BUNDLE_TITLE, this.mTextTitle.getText()
+		outState.putString(KEY_BUNDLE_TITLE, mTextTitle.getText()
 				.toString());
-		outState.putString(KEY_BUNDLE_DETAILS, this.mTextDetails.getText()
+		outState.putString(KEY_BUNDLE_DETAILS, mTextDetails.getText()
 				.toString());
-		outState.putBoolean(KEY_BUNDLE_ALL_DAY, this.mSwitchAllDay.isChecked());
-		outState.putInt(KEY_BUNDLE_COMPTE,this.mSpinnerCompte.getSelectedItemPosition());
+		outState.putBoolean(KEY_BUNDLE_ALL_DAY, mSwitchAllDay.isChecked());
+		outState.putInt(KEY_BUNDLE_COMPTE,mSpinnerCompte.getSelectedItemPosition());
 		outState.putInt(KEY_BUNDLE_RECURRENCE, mSpinnerRecurrence.getSelectedItemPosition());
 		outState.putInt(KEY_BUNDLE_PARTICIPATION, mSpinnerParticipation.getSelectedItemPosition());
 		state = outState;
@@ -325,25 +324,25 @@ public class DetailsFragment extends BasePluginFragment {
 	@Override
 	public void launchSave() {
 		ViewUtil.enableAllView(view, false);
-		getParentActivity().getEvent().setAllDay(this.mSwitchAllDay.isChecked());
-		getParentActivity().getEvent().setCid(this.mListCompte.get(this.mSpinnerCompte.getSelectedItemPosition()).getId());
-		getParentActivity().getEvent().setDetails(this.mTextDetails.getText().toString());
+		getParentActivity().getEvent().setAllDay(mSwitchAllDay.isChecked());
+		getParentActivity().getEvent().setCid(mListCompte.get(mSpinnerCompte.getSelectedItemPosition()).getId());
+		getParentActivity().getEvent().setDetails(mTextDetails.getText().toString());
 
-		Calendar cal = new GregorianCalendar(this.mTextJourDeb.getDate().get(
+		Calendar cal = new GregorianCalendar(mTextJourDeb.getDate().get(
 				Calendar.YEAR),
-				this.mTextJourDeb.getDate().get(Calendar.MONTH),
-				this.mTextJourDeb.getDate().get(Calendar.DAY_OF_MONTH),
-				this.mTextHeureDeb.getDate().get(Calendar.HOUR_OF_DAY),
-				this.mTextHeureDeb.getDate().get(Calendar.MINUTE));
+				mTextJourDeb.getDate().get(Calendar.MONTH),
+				mTextJourDeb.getDate().get(Calendar.DAY_OF_MONTH),
+				mTextHeureDeb.getDate().get(Calendar.HOUR_OF_DAY),
+				mTextHeureDeb.getDate().get(Calendar.MINUTE));
 		getParentActivity().getEvent().sethDeb(cal);
-		cal = new GregorianCalendar(this.mTextJourFin.getDate().get(
+		cal = new GregorianCalendar(mTextJourFin.getDate().get(
 				Calendar.YEAR),
-				this.mTextJourFin.getDate().get(Calendar.MONTH),
-				this.mTextJourFin.getDate().get(Calendar.DAY_OF_MONTH),
-				this.mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
-				this.mTextHeureFin.getDate().get(Calendar.MINUTE));
+				mTextJourFin.getDate().get(Calendar.MONTH),
+				mTextJourFin.getDate().get(Calendar.DAY_OF_MONTH),
+				mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
+				mTextHeureFin.getDate().get(Calendar.MINUTE));
 		getParentActivity().getEvent().sethFin(cal);
-		getParentActivity().getEvent().setTitle(this.mTextTitle.getText().toString());
+		getParentActivity().getEvent().setTitle(mTextTitle.getText().toString());
 		if(getParentActivity().getEvent().getId() == -1) {
 			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insert(getParentActivity().getEvent()));
 			participationBean.setEid(getParentActivity().getEvent().getId());
@@ -390,20 +389,20 @@ public class DetailsFragment extends BasePluginFragment {
 		private String label;
 		public Participation(int id, String label) {
 			super();
-			this.id = id;
-			this.label = label;
+			id = id;
+			label = label;
 		}
 		public int getId() {
 			return id;
 		}
 		public void setId(int id) {
-			this.id = id;
+			id = id;
 		}
 		public String getLabel() {
 			return label;
 		}
 		public void setLabel(String label) {
-			this.label = label;
+			label = label;
 		}
 
 		@Override
