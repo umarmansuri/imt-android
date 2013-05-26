@@ -20,7 +20,7 @@ public class WSSendEvent extends WSPostBase<EventBaseBean>{
 
 	@Override
 	public String getUrl() {
-		return URL_API_EVENT_POST;
+		return "api/events/json";
 	}
 
 	@Override
