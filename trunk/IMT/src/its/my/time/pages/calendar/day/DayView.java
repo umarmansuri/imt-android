@@ -185,7 +185,7 @@ public class DayView extends BaseView {
 			mainScroll.requestDisallowInterceptTouchEvent(true);
 			draggedView.setOnTouchListener(this);
 			draggedView.bringToFront();
-			return false;
+			return true;
 		}
 
 		@Override
@@ -193,10 +193,8 @@ public class DayView extends BaseView {
 			final RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams) v.getLayoutParams();
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				if (lastY != -100000) {
-					final float topMargin = layout.topMargin + event.getRawY()
-							- lastY;
-					final int nextLigne = Math.round(topMargin
-							/ (ligneHeight / 2));
+					final float topMargin = layout.topMargin + event.getRawY()- lastY;
+					final int nextLigne = Math.round(topMargin / (ligneHeight / 2));
 					if (lastLigne != nextLigne) {
 						lastLigne = nextLigne;
 
@@ -204,16 +202,10 @@ public class DayView extends BaseView {
 						if (layout.topMargin < 0) {
 							layout.topMargin = 0;
 						}
-						if (layout.topMargin + layout.height > mainScroll
-								.getChildAt(0).getMeasuredHeight()) {
-							layout.topMargin = mainScroll
-									.getChildAt(0).getMeasuredHeight()
-									- layout.height - 30;
+						if (layout.topMargin + layout.height > mainScroll .getChildAt(0).getMeasuredHeight()) {
+							layout.topMargin = mainScroll.getChildAt(0).getMeasuredHeight() - layout.height - 30;
 						}
-						if (layout.topMargin + layout.height > mainScroll
-								.getScrollY()
-								+ mainScroll.getMeasuredHeight()
-								+ 10) {
+						if (layout.topMargin + layout.height > mainScroll.getScrollY()+ mainScroll.getMeasuredHeight() + 10) {
 							mainScroll.smoothScrollTo(
 									0,
 									layout.topMargin
@@ -222,10 +214,8 @@ public class DayView extends BaseView {
 									+ layout.height + 10);
 							layout.topMargin += 30;
 						}
-						if (layout.topMargin < mainScroll
-								.getScrollY() - 10) {
-							mainScroll.smoothScrollTo(0,
-									(layout.topMargin) - 10);
+						if (layout.topMargin < mainScroll.getScrollY() - 10) {
+							mainScroll.smoothScrollTo(0,(layout.topMargin) - 10);
 							layout.topMargin -= 30;
 						}
 						draggedView.setLayoutParams(layout);
@@ -273,25 +263,15 @@ public class DayView extends BaseView {
 					.getLayoutParams();
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				if (lastY != -100000) {
-					final float height = layout.height + event.getRawY()
-							- lastY;
-					final int nextLigne = Math
-							.round((layout.topMargin + height)
-									/ (ligneHeight / 2));
+					final float height = layout.height + event.getRawY() - lastY;
+					final int nextLigne = Math.round((layout.topMargin + height) / (ligneHeight / 2));
 					if (lastLigne != nextLigne) {
 						lastLigne = nextLigne;
-						layout.height = (int) (lastLigne
-								* (ligneHeight / 2) - layout.topMargin);
-						if (layout.topMargin + layout.height > mainScroll
-								.getChildAt(0).getMeasuredHeight()) {
-							layout.height = mainScroll.getChildAt(
-									0).getMeasuredHeight()
-									- layout.topMargin - 30;
+						layout.height = (int) (lastLigne * (ligneHeight / 2) - layout.topMargin);
+						if (layout.topMargin + layout.height > mainScroll.getChildAt(0).getMeasuredHeight()) {
+							layout.height = mainScroll.getChildAt(0).getMeasuredHeight() - layout.topMargin - 30;
 						}
-						if (layout.topMargin + layout.height > mainScroll
-								.getScrollY()
-								+ mainScroll.getMeasuredHeight()
-								+ 10) {
+						if (layout.topMargin + layout.height > mainScroll.getScrollY()+ mainScroll.getMeasuredHeight()+ 10) {
 							mainScroll.smoothScrollTo(
 									0,
 									layout.topMargin

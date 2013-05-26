@@ -16,16 +16,13 @@ public class DraggedAnim extends Animation {
 
 	@Override
 	protected void applyTransformation(float interpolatedTime, Transformation t) {
-		final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) this.view
-				.getLayoutParams();
-		params.width = (int) (this.view.getMeasuredWidth() + this.paddingWidth
-				* interpolatedTime);
+		final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) this.view .getLayoutParams();
+		params.width = (int) (this.view.getMeasuredWidth() + this.paddingWidth * interpolatedTime);
 		this.view.setLayoutParams(params);
 	}
 
 	@Override
-	public void initialize(int width, int height, int parentWidth,
-			int parentHeight) {
+	public void initialize(int width, int height, int parentWidth, int parentHeight) {
 		super.initialize(width, height, parentWidth, parentHeight);
 	}
 
