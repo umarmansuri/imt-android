@@ -41,7 +41,6 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	private View mBlanck;
 
 	@SuppressWarnings("deprecation")
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

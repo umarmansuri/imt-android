@@ -1,19 +1,18 @@
-package its.my.time.data.ws.contacts;
+package its.my.time.data.ws.participant;
 
 import its.my.time.data.bdd.contacts.ContactBean;
 import its.my.time.data.ws.WSGetBase;
 import android.app.Activity;
 
-public class WSGetContact extends WSGetBase<ContactBean>{
+public class WSGetParticipant extends WSGetBase<ContactBean>{
 
-	public WSGetContact(Activity context, GetCallback<ContactBean> callBack) {
+	public WSGetParticipant(Activity context, GetCallback<ContactBean> callBack) {
 		super(context, callBack);
 	}
 
 	@Override
 	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/api/participants/1.json";
 	}
 
 	@Override
