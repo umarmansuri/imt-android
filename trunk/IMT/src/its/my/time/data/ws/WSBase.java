@@ -40,13 +40,6 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 
 	public static final String URL_REFRESH = URL_BASE + "oauth/v2/token";
 
-	public static final String URL_API_EVENT_GET = URL_BASE + "api/events/1.json";
-	public static final String URL_API_EVENT_POST = URL_BASE + "api/events.json";
-
-	public static final String URL_API_ACCOUNT_GET = URL_BASE + "api/accounts/3.json";
-	public static final String URL_API_ACCOUNT_POST = URL_BASE + "api/account.json";
-
-
 	private Callback callBack;
 	private Activity context;
 

@@ -12,7 +12,7 @@ public class WSGetEvent extends WSGetBase<EventBaseBean>{
 
 	@Override
 	public String getUrl() {
-		return URL_API_EVENT_GET;
+		return "api/events/1.json";
 	}
 
 	@Override
