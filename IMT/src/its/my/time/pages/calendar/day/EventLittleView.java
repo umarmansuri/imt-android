@@ -21,7 +21,6 @@ import android.widget.TextView;
 public class EventLittleView extends FrameLayout {
 
 	private EventBaseBean event;
-	private final View mainView;
 	private final View mBottom;
 	private final float ligneHeight;
 	private final TextView mTitle;
@@ -32,8 +31,8 @@ public class EventLittleView extends FrameLayout {
 		super(context);
 		this.event = ev;
 
-		this.mainView = inflate(getContext(),R.layout.activity_calendar_day_event_little, null);
-		addView(this.mainView);
+		View mainView = inflate(getContext(),R.layout.activity_calendar_day_event_little, null);
+		addView(mainView);
 
 		this.mTitle = (TextView) findViewById(R.id.activity_calendar_day_event_little_hour);
 		this.mTitle.setText(DateUtil.getHourLabel(ev.gethDeb(), ev.gethFin()));
@@ -96,15 +95,9 @@ public class EventLittleView extends FrameLayout {
 	public void changeDragged(boolean dragged) {
 		final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
 		if (dragged) {
-			this.mainView.getBackground().setAlpha(100);
-			final DraggedAnim anim = new DraggedAnim(this, -10);
-			anim.setDuration(50);
-			startAnimation(anim);
+			getBackground().setAlpha(100);
 		} else {
-			this.mainView.getBackground().setAlpha(255);
-			final DraggedAnim anim = new DraggedAnim(this, 10);
-			anim.setDuration(50);
-			startAnimation(anim);
+			getBackground().setAlpha(255);
 		}
 		setLayoutParams(params);
 	}
