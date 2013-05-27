@@ -1,4 +1,4 @@
-package its.my.time.data.ws.participant;
+package its.my.time.data.ws.contact;
 
 import its.my.time.data.bdd.contacts.ContactBean;
 import its.my.time.data.ws.WSPostBase;
@@ -10,15 +10,15 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 
-public class WSSendParticipant extends WSPostBase<ContactBean>{
+public class WSSendContact extends WSPostBase<ContactBean>{
 
-	public WSSendParticipant(Activity context, PostCallback<ContactBean> callBack) {
-		super(context, callBack);
+	public WSSendContact(Activity context, ContactBean contact, PostCallback<ContactBean> callBack) {
+		super(context, contact, callBack);
 	}
 
 	@Override
 	public String getUrl() {
-		return "/api/participant.json";
+		return "";
 	}
 
 	@Override
@@ -29,10 +29,10 @@ public class WSSendParticipant extends WSPostBase<ContactBean>{
 
 	@Override
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
-        nameValuePairs.add(new BasicNameValuePair("idParticipant", "1"));
-        nameValuePairs.add(new BasicNameValuePair("idAccount", "1"));
-        nameValuePairs.add(new BasicNameValuePair("idContact", "1"));
-        nameValuePairs.add(new BasicNameValuePair("idEvent", "1"));
+        nameValuePairs.add(new BasicNameValuePair("", ""));
+        nameValuePairs.add(new BasicNameValuePair("", ""));
+        nameValuePairs.add(new BasicNameValuePair("", ""));
+        nameValuePairs.add(new BasicNameValuePair("", ""));
 		return nameValuePairs;
 	}
 }

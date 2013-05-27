@@ -11,6 +11,15 @@ public class Types {
 		public static final int TASK = 1;
 		public static final int MEETING = 2;
 		public static final int CALL = 3;
+
+	public static String getLabelBy(int id) {
+		if(id==0) return "event";
+		else if (id == 1) return "task";
+		else if (id == 2) return "metting";
+		else if (id ==3) return "call";
+		else return null;
+	}
+		
 	}
 
 	public static class Comptes {

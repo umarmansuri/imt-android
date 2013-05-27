@@ -15,10 +15,17 @@ import android.app.Activity;
 
 public abstract class WSPostBase<T> extends WSBase{
 
-	public WSPostBase(Activity context, PostCallback<T> callBack) {
+	private T object;
+
+	public WSPostBase(Activity context, T object, PostCallback<T> callBack) {
 		super(context, callBack);
+		this.object = object;
 	}
 
+	public T getObject() {
+		return object;
+	}
+	
 	@Override
 	public Exception run() {
 		try {

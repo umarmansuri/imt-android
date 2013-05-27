@@ -11,8 +11,8 @@ import android.app.Activity;
 
 public class WSSendPj extends WSPostBase<PjBean>{
 
-	public WSSendPj(Activity context, PostCallback<PjBean> callBack) {
-		super(context, callBack);
+	public WSSendPj(Activity context, PjBean pj, PostCallback<PjBean> callBack) {
+		super(context, pj, callBack);
 	}
 
 	@Override

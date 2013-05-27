@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSSendCallDetails extends WSSendEvent{
 
-	public WSSendCallDetails(Activity context, PostCallback<EventBaseBean> callBack) {
-		super(context, callBack);
+	public WSSendCallDetails(Activity context, EventBaseBean event, PostCallback<EventBaseBean> callBack) {
+		super(context, event, callBack);
 	}
 
 }

@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSGetCallDetails extends WSGetEvent{
 
-	public WSGetCallDetails(Activity context, GetCallback<EventBaseBean> callBack) {
-		super(context, callBack);
+	public WSGetCallDetails(Activity context, int id, GetCallback<EventBaseBean> callBack) {
+		super(context, id, callBack);
 	}
 
 }

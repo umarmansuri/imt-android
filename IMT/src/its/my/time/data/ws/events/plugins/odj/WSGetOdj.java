@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSGetOdj extends WSGetBase<OdjBean>{
 
-	public WSGetOdj(Activity context, GetCallback<OdjBean> callBack) {
-		super(context, callBack);
+	public WSGetOdj(Activity context, int id, GetCallback<OdjBean> callBack) {
+		super(context, id, callBack);
 	}
 
 	@Override

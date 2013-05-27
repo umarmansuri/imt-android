@@ -1,10 +1,8 @@
 package its.my.time.data.ws.user;
 
-import its.my.time.data.bdd.compte.CompteBean;
+import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.ws.WSPostBase;
-import its.my.time.util.DateUtil;
 
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -12,10 +10,10 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 
-public class WSSendUser extends WSPostBase<CompteBean>{
+public class WSSendUser extends WSPostBase<UtilisateurBean>{
 
-	public WSSendUser(Activity context, PostCallback<CompteBean> callBack) {
-		super(context, callBack);
+	public WSSendUser(Activity context, UtilisateurBean user, PostCallback<UtilisateurBean> callBack) {
+		super(context, user, callBack);
 	}
 
 	@Override
@@ -24,16 +22,19 @@ public class WSSendUser extends WSPostBase<CompteBean>{
 	}
 
 	@Override
-	public CompteBean createObjectFromJson(String json) {
+	public UtilisateurBean createObjectFromJson(String json) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
-        nameValuePairs.add(new BasicNameValuePair("gcm_id", "gsm_id"));
-        nameValuePairs.add(new BasicNameValuePair("name", "nom"));
-        nameValuePairs.add(new BasicNameValuePair("firstname", "prenom"));
+
+		UtilisateurBean user = getObject();
+		//TODO Récupérer GSM ID !!!!!
+        //nameValuePairs.add(new BasicNameValuePair("gcm_id", GCMManager.));
+        nameValuePairs.add(new BasicNameValuePair("name", user.getNom()));
+        nameValuePairs.add(new BasicNameValuePair("firstname", user.getPrenom()));
 		return nameValuePairs;
 	}
 
