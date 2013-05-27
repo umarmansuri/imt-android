@@ -11,8 +11,8 @@ import android.app.Activity;
 
 public class WSSendCommentaire extends WSPostBase<CommentBean>{
 
-	public WSSendCommentaire(Activity context, PostCallback<CommentBean> callBack) {
-		super(context, callBack);
+	public WSSendCommentaire(Activity context, CommentBean coment, PostCallback<CommentBean> callBack) {
+		super(context, coment, callBack);
 	}
 
 	@Override

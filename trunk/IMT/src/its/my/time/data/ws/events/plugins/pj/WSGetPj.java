@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSGetPj extends WSGetBase<PjBean>{
 
-	public WSGetPj(Activity context, GetCallback<PjBean> callBack) {
-		super(context, callBack);
+	public WSGetPj(Activity context, int id, GetCallback<PjBean> callBack) {
+		super(context, id, callBack);
 	}
 
 	@Override

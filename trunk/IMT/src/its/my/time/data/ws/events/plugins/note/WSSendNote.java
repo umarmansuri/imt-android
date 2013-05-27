@@ -11,8 +11,8 @@ import android.app.Activity;
 
 public class WSSendNote extends WSPostBase<NoteBean>{
 
-	public WSSendNote(Activity context, PostCallback<NoteBean> callBack) {
-		super(context, callBack);
+	public WSSendNote(Activity context, NoteBean note, PostCallback<NoteBean> callBack) {
+		super(context, note, callBack);
 	}
 
 	@Override

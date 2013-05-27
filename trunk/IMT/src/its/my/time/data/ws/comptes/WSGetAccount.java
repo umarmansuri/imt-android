@@ -6,13 +6,13 @@ import android.app.Activity;
 
 public class WSGetAccount extends WSGetBase<CompteBean>{
 
-	public WSGetAccount(Activity context, GetCallback<CompteBean> callBack) {
-		super(context, callBack);
+	public WSGetAccount(Activity context, int id, GetCallback<CompteBean> callBack) {
+		super(context, id, callBack);
 	}
 
 	@Override
 	public String getUrl() {
-		return "/api/accounts/1.json";
+		return "/api/accounts/";
 	}
 
 	@Override

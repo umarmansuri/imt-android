@@ -11,8 +11,8 @@ import android.app.Activity;
 
 public class WSSendOdj extends WSPostBase<OdjBean>{
 
-	public WSSendOdj(Activity context, PostCallback<OdjBean> callBack) {
-		super(context, callBack);
+	public WSSendOdj(Activity context, OdjBean odj, PostCallback<OdjBean> callBack) {
+		super(context, odj, callBack);
 	}
 
 	@Override

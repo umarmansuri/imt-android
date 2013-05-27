@@ -6,13 +6,13 @@ import android.app.Activity;
 
 public class WSGetEvent extends WSGetBase<EventBaseBean>{
 
-	public WSGetEvent(Activity context, GetCallback<EventBaseBean> callBack) {
-		super(context, callBack);
+	public WSGetEvent(Activity context, int id, GetCallback<EventBaseBean> callBack) {
+		super(context, id, callBack);
 	}
 
 	@Override
 	public String getUrl() {
-		return "api/events/1.json";
+		return "api/events/";
 	}
 
 	@Override

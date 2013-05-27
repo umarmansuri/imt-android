@@ -14,15 +14,27 @@ import android.app.Activity;
 
 public abstract class WSGetBase<T> extends WSBase{
 
-	public WSGetBase(Activity context, GetCallback<T> callBack) {
+	private int id;
+
+	public WSGetBase(Activity context, int id, GetCallback<T> callBack) {
 		super(context, callBack);
+		this.id = id;
 	}
 
 	@Override
 	public Exception run() {
 		try {
 			HttpClient client = createClient();
-			URI website = new URI(getUrl());
+			String urlStr = getUrl();
+			URI website;
+			if(urlStr.startsWith("/")) {
+				urlStr = urlStr.substring(1);
+			}
+			if(!urlStr.endsWith("/")) {
+				urlStr = urlStr + "/";
+			}
+			website = new URI(URL_BASE + urlStr + id + ".json");	
+
 			HttpGet request = new HttpGet();
 			String accessToken = PreferencesUtil.getCurrentAccessToken();
 			request.setHeader("Authorization", "Bearer "+accessToken);
@@ -38,7 +50,7 @@ public abstract class WSGetBase<T> extends WSBase{
 
 	public abstract String getUrl();
 	public abstract T createObjectFromJson(String json);
-	
+
 	public interface GetCallback<T> extends Callback {
 		public void done(Exception e);
 		public void onGetObject(T object);

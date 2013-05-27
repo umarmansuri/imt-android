@@ -9,10 +9,12 @@ import java.util.List;
 public class ParticipantBean extends PluginBaseBean{
 
 	private TableAttribut<Integer> idContactInfo;
+	private TableAttribut<Integer> cid;
 
 	public ParticipantBean() {
 		super();
 		idContactInfo = new TableAttribut<Integer>("uid", -1);
+		cid = new TableAttribut<Integer>("cid", -1);
 	}
 	public int getIdContactInfo() {
 		return idContactInfo.getValue();
@@ -20,10 +22,16 @@ public class ParticipantBean extends PluginBaseBean{
 	public void setIdContactInfo(int idContactInfo) {
 		this.idContactInfo.setValue(idContactInfo);
 	}
-
+	public TableAttribut<Integer> getCid() {
+		return cid;
+	}
+	public void setCid(TableAttribut<Integer> cid) {
+		this.cid = cid;
+	}
 	@Override
 	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
 		list.add(idContactInfo);
+		list.add(cid);
 		return super.getAttributs(list);
 	}
 }

@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSGetNote extends WSGetBase<NoteBean>{
 
-	public WSGetNote(Activity context, GetCallback<NoteBean> callBack) {
-		super(context, callBack);
+	public WSGetNote(Activity context, int id, GetCallback<NoteBean> callBack) {
+		super(context, id, callBack);
 	}
 
 	@Override

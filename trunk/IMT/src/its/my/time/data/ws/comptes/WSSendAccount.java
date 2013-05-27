@@ -14,8 +14,8 @@ import android.app.Activity;
 
 public class WSSendAccount extends WSPostBase<CompteBean>{
 
-	public WSSendAccount(Activity context, PostCallback<CompteBean> callBack) {
-		super(context, callBack);
+	public WSSendAccount(Activity context, CompteBean compte, PostCallback<CompteBean> callBack) {
+		super(context, compte, callBack);
 	}
 
 	@Override
@@ -31,11 +31,13 @@ public class WSSendAccount extends WSPostBase<CompteBean>{
 
 	@Override
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
-        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype_idAccount", "1"));
-        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype_type", "imt"));
-        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype[title]", "compte depuis le mobile"));
-        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype[color]", "fc-event-orange"));
-        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype[active]", "true"));
+		CompteBean compte = getObject();
+        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype_idAccount", String.valueOf(compte.getId())));
+        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype_type", String.valueOf(compte.getType())));
+        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype[title]", compte.getTitle()));
+        //TODO Attendre le retour de Yann sur les couleurs de Gay-Queer-PD-BoucheAPipe-Negre
+        //nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype[color]", "fc-event-orange"));
+        nameValuePairs.add(new BasicNameValuePair("imt_accountbundle_accountimttype[active]", "1"));
 		return nameValuePairs;
 	}
 

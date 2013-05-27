@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSGetMeetingDetails extends WSGetEvent{
 
-	public WSGetMeetingDetails(Activity context, GetCallback<EventBaseBean> callBack) {
-		super(context, callBack);
+	public WSGetMeetingDetails(Activity context, int id, GetCallback<EventBaseBean> callBack) {
+		super(context, id, callBack);
 	}
 
 }

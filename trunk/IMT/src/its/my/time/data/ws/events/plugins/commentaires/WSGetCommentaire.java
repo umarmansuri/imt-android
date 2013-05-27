@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSGetCommentaire extends WSGetBase<CommentBean>{
 
-	public WSGetCommentaire(Activity context, GetCallback<CommentBean> callBack) {
-		super(context, callBack);
+	public WSGetCommentaire(Activity context, int id, GetCallback<CommentBean> callBack) {
+		super(context, id, callBack);
 	}
 
 	@Override

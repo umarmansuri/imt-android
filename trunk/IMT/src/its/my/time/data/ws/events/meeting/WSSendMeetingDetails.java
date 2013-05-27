@@ -6,8 +6,8 @@ import android.app.Activity;
 
 public class WSSendMeetingDetails extends WSSendEvent{
 
-	public WSSendMeetingDetails(Activity context, PostCallback<EventBaseBean> callBack) {
-		super(context, callBack);
+	public WSSendMeetingDetails(Activity context, EventBaseBean event, PostCallback<EventBaseBean> callBack) {
+		super(context, event, callBack);
 	}
 
 }
