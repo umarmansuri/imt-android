@@ -1,19 +1,17 @@
 package its.my.time.pages.calendar;
 
 import its.my.time.R;
-import its.my.time.SplashActivity;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
 import its.my.time.pages.calendar.list.ListEventAdapter;
 import its.my.time.pages.calendar.month.MonthPagerAdapter;
+import its.my.time.pages.reporting.ReportingActivity;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
-import its.my.time.util.Types;
 import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
@@ -23,13 +21,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
-import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
@@ -74,10 +67,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private MenuObjet menuAgendaToday;
 	private MenuObjet menuAgendaJour;
 	private MenuObjet menuAgendaMois;
-	
-	private MenuObjet menuReportingCompte;
-	private MenuObjet menuReportingEvent;
-	private MenuObjet menuReportingDate;
 
 	private MenuObjet menuAgendaListe;
 
@@ -189,14 +178,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		menuGroupes.add(menuCompte);
 
 		menuReporting = new MenuGroupe("Reporting", MooncakeIcone.icon_stats);
-		donnees = new ArrayList<MenuObjet>();
-		menuReportingCompte = new MenuObjet(menuReporting, "Comptes",MooncakeIcone.icon_stats, false);
-		donnees.add(menuReportingCompte);
-		menuReportingEvent = new MenuObjet(menuReporting, "Evénements",MooncakeIcone.icon_stats, false);
-		donnees.add(menuReportingEvent);
-		menuReportingDate = new MenuObjet(menuReporting, "Dates",MooncakeIcone.icon_stats, false);
-		donnees.add(menuReportingDate);
-		menuReporting.setObjets(donnees);
 		menuGroupes.add(menuReporting);
 
 		menuReglages = new MenuGroupe("Réglages", MooncakeIcone.icon_settings);
@@ -216,6 +197,8 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 			ActivityUtil.startProfilActivity(this);
 		}else if(group == menuReglages) {
 			Toast.makeText(this, "Réglages...", Toast.LENGTH_SHORT).show();
+		}else if(group == menuReporting) {
+			ReportingActivity.showChoiceDialog(this);
 		}
 		super.onMenuGroupClick(parent, group, id);
 	}
