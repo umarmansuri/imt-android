@@ -7,6 +7,7 @@ import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
+import its.my.time.manager.sip.CallManager;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
@@ -66,10 +67,12 @@ public class SplashActivity extends Activity {
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
 		PreferencesUtil.init(this);
+		CallManager.initializeManager(this);
 		temp();
 	}
 
 	private void temp() {
+		CallManager.initializeManager(getApplicationContext());
 		deleteDatabase(DatabaseHandler.DATABASE_NAME);
 		UtilisateurRepository userRepo = new
 				UtilisateurRepository(SplashActivity.this); 

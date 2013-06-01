@@ -4,8 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="7"/>
+    <uses-sdk android:minSdkVersion="9" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,6 +18,17 @@
     <uses-permission android:name="its.my.time.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_SIP" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature
+        android:name="android.hardware.sip.voip"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="true" />
 
     <permission
         android:name="its.my.time.permission.C2D_MESSAGE"
@@ -28,6 +38,21 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppTheme" >
+        <receiver 
+            android:name="its.my.time.receivers.GCMBroadcastReceiver" 
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="its.my.time" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver
+            android:name="its.my.time.manager.sip.IncomingCallReceiver"
+            android:label="Call Receiver" />
+        
         <service
             android:name="its.my.time.data.account.ContactsSyncAdapterService"
             android:exported="true"
@@ -56,16 +81,7 @@
                 android:resource="@xml/authenticator" />
         </service>
 
-        <receiver
-            android:name="its.my.time.receivers.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="its.my.time" />
-            </intent-filter>
-        </receiver>
+        
 
         <service android:name="its.my.time.receivers.GCMIntentService" />
 
@@ -151,8 +167,13 @@
             android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
+            android:name="its.my.time.pages.SettingsActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
             android:name="its.my.time.pages.reporting.ReportingActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
         </activity>
     </application>
 
