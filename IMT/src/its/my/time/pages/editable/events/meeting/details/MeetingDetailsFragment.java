@@ -36,10 +36,12 @@ public class MeetingDetailsFragment extends DetailsFragment {
 	
 	public void initialiseValuesFromEvent() {
 		mEditAddress.setText(getParentActivity().getMeetingDetails().getAddress());
+		super.initialiseValuesFromEvent();
 	}
 
 	public void initialiseValueFromInstance() {
 		mEditAddress.setText(state.getString(KEY_BUNDLE_ADDRESS));
+		super.initialiseValueFromInstance();
 	}
 
 	@Override
