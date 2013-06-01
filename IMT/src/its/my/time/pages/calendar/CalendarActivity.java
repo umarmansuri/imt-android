@@ -62,7 +62,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private MenuGroupe menuAgenda;
 	private MenuGroupe menuCompte;
 	private MenuGroupe menuReporting;
-	private MenuGroupe menuReglages;
 
 	private MenuObjet menuAgendaToday;
 	private MenuObjet menuAgendaJour;
@@ -180,9 +179,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		menuReporting = new MenuGroupe("Reporting", MooncakeIcone.icon_stats);
 		menuGroupes.add(menuReporting);
 
-		menuReglages = new MenuGroupe("Réglages", MooncakeIcone.icon_settings);
-		menuGroupes.add(menuReglages);
-
 		return  super.onCreateMenu(menuGroupes);
 	}
 
@@ -195,8 +191,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	protected void onMenuGroupClick(ExpandableListView parent,MenuGroupe group, long id) {
 		if(group == menuProfil) {
 			ActivityUtil.startProfilActivity(this);
-		}else if(group == menuReglages) {
-			Toast.makeText(this, "Réglages...", Toast.LENGTH_SHORT).show();
 		}else if(group == menuReporting) {
 			ReportingActivity.showChoiceDialog(this);
 		}

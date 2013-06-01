@@ -15,6 +15,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -38,6 +39,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 	private MenuGroupe menuGroupeDeconnexion;
 	private MenuItem menuItemMaj;
 	private ProgressBar mProgressBar;
+	private MenuGroupe menuReglages;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,6 +97,11 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 
 	@Override
 	protected ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes) {
+
+		menuReglages = new MenuGroupe("Réglages", MooncakeIcone.icon_settings);
+		menuGroupes.add(menuReglages);
+
+		
 		menuGroupePropos = new MenuGroupe("A propos",MooncakeIcone.icon_info_sign);
 		menuGroupes.add(menuGroupePropos);
 
@@ -112,6 +119,9 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 			ActivityUtil.logout(this);
 		} else if(group == menuGroupePropos) {
 			Intent myIntent = new Intent(MyTimeActivity.this, AboutActivity.class);
+			startActivity(myIntent);
+		}else if(group == menuReglages) {
+			Intent myIntent = new Intent(this, SettingsActivity.class);
 			startActivity(myIntent);
 		}
 	}

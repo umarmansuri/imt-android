@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory android:title="Synchronisation" >
+        
+        <CheckBoxPreference
+            android:key="synchro_auto"
+            android:title="Synchronisation automatique" />
+        <ListPreference
+            android:dialogTitle="Interval de synchronisation"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference"
+            android:key="synchro_interval"
+            android:summary="Définit l'interval de temps maximum entre deux synchronisation"
+            android:title="Interval de synchronisation" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="Gestion des appels" >
+        <CheckBoxPreference
+            android:key="voip_notification"
+            android:summary="Indique si la notification My-Time doit être affichée lorsque les appels sont disponibles"
+            android:title="Afficher la notification" />
+        <CheckBoxPreference
+            android:key="voip_network"
+            android:title="Autoriser sur le réseau mobile" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
