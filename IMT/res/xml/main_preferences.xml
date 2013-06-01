@@ -23,5 +23,12 @@
             android:key="voip_network"
             android:title="Autoriser sur le réseau mobile" />
     </PreferenceCategory>
+    
+    
+    <PreferenceCategory android:title="Divers" >
+        <CheckBoxPreference
+            android:key="location_enable"
+            android:title="Autoriser la géolocalisation" />
+        </PreferenceCategory>
 
 </PreferenceScreen>
