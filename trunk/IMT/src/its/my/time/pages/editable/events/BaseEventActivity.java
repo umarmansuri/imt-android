@@ -4,7 +4,7 @@ import its.my.time.R;
 import its.my.time.data.bdd.events.eventBase.EventBaseBean;
 import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
 import its.my.time.pages.editable.BaseActivity;
-import its.my.time.pages.editable.events.plugins.BasePluginFragment;
+import its.my.time.pages.editable.events.plugins.PluginFragment;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.Types;
@@ -34,7 +34,7 @@ import com.fonts.mooncake.MooncakeIcone;
 public abstract class BaseEventActivity extends BaseActivity {
 
 	protected ControledViewPager mPager;
-	private static ArrayList<BasePluginFragment> fragments;
+	private static ArrayList<PluginFragment> fragments;
 	private boolean isNew;
 	protected EventBaseBean event;
 	private MenuGroupe menuSuppression;
@@ -78,7 +78,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 		fragments = getPages();
 		if(fragments == null) {
-			fragments = new ArrayList<BasePluginFragment>();
+			fragments = new ArrayList<PluginFragment>();
 		}
 		this.mPager = (ControledViewPager) findViewById(R.id.event_pager);
 		this.mPager.setAdapter(new EventPagerAdapter(getSupportFragmentManager()));
@@ -88,7 +88,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
 		final List<String> titles = new ArrayList<String>();
-		for (final BasePluginFragment fragment : fragments) {
+		for (final PluginFragment fragment : fragments) {
 			titles.add(fragment.getTitle());
 		}
 
@@ -138,7 +138,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 	}
 	
-	public abstract ArrayList<BasePluginFragment> getPages();
+	public abstract ArrayList<PluginFragment> getPages();
 
 	@Override
 	protected void initialiseActionBar() {
@@ -181,16 +181,16 @@ public abstract class BaseEventActivity extends BaseActivity {
 	};
 	
 	
-	public BasePluginFragment getActiveFragment() {
+	public PluginFragment getActiveFragment() {
 		if (this.mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
 			final FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) this.mPager
 					.getAdapter();
-			return (BasePluginFragment) a.instantiateItem(this.mPager,
+			return (PluginFragment) a.instantiateItem(this.mPager,
 					this.mPager.getCurrentItem());
 		} else {
 			final String name = makeFragmentName(this.mPager.getId(),
 					this.mPager.getCurrentItem());
-			return (BasePluginFragment) getSupportFragmentManager()
+			return (PluginFragment) getSupportFragmentManager()
 					.findFragmentByTag(name);
 		}
 	}
@@ -233,7 +233,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 	
 	@Override
 	protected boolean onBackButtonPressed() {
-		for (BasePluginFragment fragment : fragments) {
+		for (PluginFragment fragment : fragments) {
 			if(fragment.isInEditMode()) {
 				Toast.makeText(this, "Attention, certaines modifications n'ont pas été enregistrées.", Toast.LENGTH_SHORT).show();
 				return true;
@@ -249,7 +249,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			return fragments.get(position);
+			return (Fragment)fragments.get(position);
 		}
 
 		@Override

@@ -6,12 +6,15 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
+import android.util.Log;
 
 public abstract class WSPostBase<T> extends WSBase{
 
@@ -27,10 +30,19 @@ public abstract class WSPostBase<T> extends WSBase{
 	}
 	
 	@Override
-	public Exception run() {
+	protected Exception run() {
 		try {
 			HttpClient client = createClient();
-			URI website = new URI(getUrl()); 
+			String urlStr = getUrl();
+			URI website;
+			if(urlStr.startsWith("/")) {
+				urlStr = urlStr.substring(1);
+			}
+			if(urlStr.endsWith("/")) {
+				urlStr = urlStr.substring(0, urlStr.length() - 1);
+			}
+			website = new URI(URL_BASE + urlStr + ".json");	
+			
 			HttpPost request = new HttpPost();
 			String accessToken = PreferencesUtil.getCurrentAccessToken();
 			request.setHeader("Authorization", "Bearer "+accessToken);
@@ -38,7 +50,9 @@ public abstract class WSPostBase<T> extends WSBase{
 			nameValuePairs = intitialiseParams(nameValuePairs);
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			request.setURI(website);
-			client.execute(request);
+			HttpResponse response = client.execute(request);
+			String result = EntityUtils.toString(response.getEntity());
+			Log.d("WS",result);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

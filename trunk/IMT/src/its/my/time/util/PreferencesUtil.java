@@ -1,5 +1,8 @@
 package its.my.time.util;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -7,7 +10,6 @@ import android.content.SharedPreferences.Editor;
 public class PreferencesUtil {
 
 	private static final String KEY_CURRENT_UID = "KEY_CURRENT_UID";
-	private static final String KEY_CURRENT_TOKEN = "KEY_CURRENT_TOKEN";
 
 	private static long uid = -1;
 	private static String accesToken = null;
@@ -22,6 +24,8 @@ public class PreferencesUtil {
 	public static final int MODE = Context.MODE_PRIVATE;
 	private static final String SHPREF_KEY_REFRESH_TOKEN = "SHPREF_KEY_REFRESH_TOKEN";
 	private static final String SHPREF_KEY_ACCESS_TOKEN = "SHPREF_KEY_ACCESS_TOKEN";
+
+	private static final String SHPREF_KEY_LAST_REFRESH = "SHPREF_KEY_LAST_REFRESH";
 
 	public static void writeBoolean(String key, boolean value) {
 		getEditor(context).putBoolean(key, value).commit();
@@ -86,24 +90,37 @@ public class PreferencesUtil {
 	}
 
 	public static void setAccesToken(String accesToken) {
-		writeString(KEY_CURRENT_TOKEN, accesToken);
+		writeString(SHPREF_KEY_ACCESS_TOKEN, accesToken);
 		PreferencesUtil.accesToken = accesToken;
+	}
+
+	public static void clearAll(Context context) {
+		getEditor(context).remove(SHPREF_KEY_ACCESS_TOKEN);
+		getEditor(context).remove(KEY_CURRENT_UID);
 	}
 
 	public static String getCurrentAccessToken() {
 		if (accesToken == null) {
-			accesToken = readString(KEY_CURRENT_TOKEN, null);
+			accesToken = readString(SHPREF_KEY_ACCESS_TOKEN, null);
 		}
 		return accesToken;
 	}
 
-	public static void clearAll(Context context) {
-		getEditor(context).remove(KEY_CURRENT_TOKEN);
-		getEditor(context).remove(KEY_CURRENT_UID);
-	}
-
 	public static String getCurrentRefreshToken() {
 		return getPreferences(context).getString(SHPREF_KEY_REFRESH_TOKEN, null);
+	}
+
+
+	public static void setLastTokenRefresh(Calendar calendar) {
+		writeString(SHPREF_KEY_LAST_REFRESH, DateUtil.getTimeInIso(calendar));
+	}
+
+	public static Calendar getLastTokenRefresh() {
+		try {
+			return DateUtil.getDateFromISO(readString(SHPREF_KEY_LAST_REFRESH, null));
+		} catch (Exception e) {
+			return new GregorianCalendar(1900, 0, 1);
+		}
 	}
 
 	public static void setCurrentToken(String refreshToken, String accessToken) {

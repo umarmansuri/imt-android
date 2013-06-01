@@ -3,6 +3,7 @@ package its.my.time.data.ws;
 import its.my.time.util.PreferencesUtil;
 
 import java.net.URI;
+import java.util.Calendar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -26,12 +27,12 @@ public class WSLogin {
 	private static String refreshToken;
 	private static String accessToken;
 	private static WebView webview;
-	
+
 	private static boolean isConnected = false;
 	public static boolean isConnected() {
 		return isConnected;
 	}
-	
+
 	private static Callback callBack;
 
 	private static class RefreshToken extends AsyncTask<Void, Void, Void> {
@@ -39,46 +40,56 @@ public class WSLogin {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				HttpClient client = WSBase.createClient();
+				Calendar lastRefresh = PreferencesUtil.getLastTokenRefresh();
+				lastRefresh.add(Calendar.MINUTE, 50);
+				if(true) {
+					HttpClient client = WSBase.createClient();
 
-				refreshToken = PreferencesUtil.getCurrentRefreshToken();
+					refreshToken = PreferencesUtil.getCurrentRefreshToken();
 
-				StringBuilder redirectUri = new StringBuilder();
-				redirectUri.append(WSBase.URL_REFRESH + "?");
-				redirectUri.append("client_id=" + WSBase.CLIENT_ID);
-				redirectUri.append("&client_secret=" + WSBase.CLIENT_SECRET);
-				redirectUri.append("&redirect_uri=" + WSBase.URL_REDIRECT);
-				if(refreshToken != null && refreshToken != "") {
-					redirectUri.append("&grant_type=refresh_token");
-					redirectUri.append("&refresh_token=" + refreshToken);
-				} else {
-					redirectUri.append("&grant_type=authorization_code");
-					redirectUri.append("&code=" + accessToken);
+					StringBuilder redirectUri = new StringBuilder();
+					redirectUri.append(WSBase.URL_REFRESH + "?");
+					redirectUri.append("client_id=" + WSBase.CLIENT_ID);
+					redirectUri.append("&client_secret=" + WSBase.CLIENT_SECRET);
+					redirectUri.append("&redirect_uri=" + WSBase.URL_REDIRECT);
+					if(refreshToken != null && refreshToken != "") {
+						redirectUri.append("&grant_type=refresh_token");
+						redirectUri.append("&refresh_token=" + refreshToken);
+					} else {
+						redirectUri.append("&grant_type=authorization_code");
+						redirectUri.append("&code=" + accessToken);
+					}
+
+
+					URI website = new URI(redirectUri.toString());
+					HttpGet request = new HttpGet();
+					request.setURI(website);
+					HttpResponse response = client.execute(request);
+					String result = EntityUtils.toString(response.getEntity());
+
+					accessToken = retreiveAccessToken(result);
+					refreshToken = retreiveRefreshToken(result);
+
+					PreferencesUtil.setCurrentToken(refreshToken, accessToken);
+					PreferencesUtil.setLastTokenRefresh(Calendar.getInstance());
+					Log.d("WS","Refresh done!");
 				}
-
-
-				URI website = new URI(redirectUri.toString());
-				HttpGet request = new HttpGet();
-				request.setURI(website);
-				HttpResponse response = client.execute(request);
-				String result = EntityUtils.toString(response.getEntity());
-				Log.d("event","refresh result = " + result);
-				accessToken = retreiveAccessToken(result);
-				refreshToken = retreiveRefreshToken(result);
-
-				PreferencesUtil.setCurrentToken(refreshToken, accessToken);
-				
 				isConnected = true;
 				if(callBack != null) {
 					callBack.done(null);
 				}
-				new Handler().postDelayed(new Runnable() {				
-					@Override public void run() {isConnected = false;}
-				}, 3000000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			new Handler().postDelayed(new Runnable() {				
+				@Override public void run() {isConnected = false;}
+			}, 3000000);
+			super.onPostExecute(result);
 		}
 	}
 

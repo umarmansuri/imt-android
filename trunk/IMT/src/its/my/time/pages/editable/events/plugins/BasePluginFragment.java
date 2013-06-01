@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public abstract class BasePluginFragment extends SherlockFragment {
+public abstract class BasePluginFragment extends SherlockFragment implements PluginFragment{
 
 
 	private BaseEventActivity parentActivity;

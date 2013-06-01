@@ -23,15 +23,15 @@ import android.os.AsyncTask;
 public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 
 
-	//public static final String URL_BASE = "https://app.my-time.fr/";
-	//public static final String CLIENT_ID = "3_51ubfhpw9w084owsk0oogskgs840w0wg0g0scsgc4o08wk8w0k";
-	//public static final String CLIENT_SECRET = "4vhi2ovg66g4ww0kg480ocscsgosscwkocggowo44swgkccw0g";
-	//public static final String URL_REDIRECT = "http://5.135.156.82/connexion/login";
+	public static final String URL_BASE = "https://app.my-time.fr/";
+	public static final String CLIENT_ID = "3_51ubfhpw9w084owsk0oogskgs840w0wg0g0scsgc4o08wk8w0k";
+	public static final String CLIENT_SECRET = "4vhi2ovg66g4ww0kg480ocscsgosscwkocggowo44swgkccw0g";
+	public static final String URL_REDIRECT = "http://5.135.156.82/connexion/login";
 
-	public static final String URL_BASE = "http://192.168.43.133/my-time/web/app_dev.php/";
-	public static final String CLIENT_ID = "1_4df992bsjim8kc0kko4wkkwgwogssw0s0gc0k4wcos0sgsg0wc";
-	public static final String CLIENT_SECRET = "65vs583ttm4owg8040cccsogs04g0kkgs0w080ogwg0kw4cogg";
-	public static final String URL_REDIRECT = "http://localhost";
+	//public static final String URL_BASE = "http://192.168.43.133/my-time/web/app_dev.php/";
+	//public static final String CLIENT_ID = "1_4df992bsjim8kc0kko4wkkwgwogssw0s0gc0k4wcos0sgsg0wc";
+	//public static final String CLIENT_SECRET = "65vs583ttm4owg8040cccsogs04g0kkgs0w080ogwg0kw4cogg";
+	//public static final String URL_REDIRECT = "http://localhost";
 
 	public static final String URL_ACCESS = URL_BASE + "oauth/v2/auth";
 
@@ -91,7 +91,7 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 return null;
 }
 
-public abstract Exception run();
+protected abstract Exception run();
 
 }
 

@@ -20,7 +20,7 @@ public class WSSendAccount extends WSPostBase<CompteBean>{
 
 	@Override
 	public String getUrl() {
-		return "/api/account.json";
+		return "/api/account";
 	}
 
 	@Override

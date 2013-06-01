@@ -3,7 +3,9 @@ package its.my.time.pages.editable.events.meeting;
 import its.my.time.pages.editable.events.BaseEventActivity;
 import its.my.time.pages.editable.events.meeting.details.MeetingDetailsFragment;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
+import its.my.time.pages.editable.events.plugins.PluginFragment;
 import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
+import its.my.time.pages.editable.events.plugins.map.MapFragment;
 import its.my.time.pages.editable.events.plugins.note.NoteFragment;
 import its.my.time.pages.editable.events.plugins.odj.OdjFragment;
 import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
@@ -19,10 +21,12 @@ public class MeetingActivity extends BaseEventActivity {
 	}
 
 	@Override
-	public ArrayList<BasePluginFragment> getPages() {
-		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
+	public ArrayList<PluginFragment> getPages() {
+		final ArrayList<PluginFragment> fragments = new ArrayList<PluginFragment>();
 
-		BasePluginFragment fragment = new MeetingDetailsFragment();
+		PluginFragment fragment = new MeetingDetailsFragment();
+		fragments.add(fragment);
+		fragment = new MapFragment();
 		fragments.add(fragment);
 		fragment = new OdjFragment();
 		fragments.add(fragment);
