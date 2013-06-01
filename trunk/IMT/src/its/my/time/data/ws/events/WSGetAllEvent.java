@@ -1,6 +1,6 @@
 package its.my.time.data.ws.events;
 
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.ws.WSGetBase;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package its.my.time.pages.editable.events;
 
 import its.my.time.R;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.data.bdd.events.event.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.PluginFragment;
 import its.my.time.util.ActivityUtil;

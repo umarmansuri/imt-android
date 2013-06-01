@@ -3,7 +3,7 @@ package its.my.time.pages.calendar.day;
 import its.my.time.R;
 import its.my.time.anim.DraggedAnim;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.ColorUtil;
 import its.my.time.util.DateUtil;

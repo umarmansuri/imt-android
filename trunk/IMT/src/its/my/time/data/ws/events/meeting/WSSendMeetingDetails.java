@@ -1,6 +1,6 @@
 package its.my.time.data.ws.events.meeting;
 
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.ws.events.WSSendEvent;
 import android.app.Activity;
 
