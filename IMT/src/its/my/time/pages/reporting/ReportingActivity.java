@@ -20,6 +20,7 @@ public class ReportingActivity extends Activity{
 	protected static final String FILTER_DATE = "FILTER_DATE";
 	protected static final String FILTER_TYPE = "FILTER_TYPE";
 
+	private static final String URL = "http://app.my-time.fr/IMT/reporting/mobile";
 	public static void showChoiceDialog(final Context context) {
 		AlertDialog.Builder builder = new Builder(context);
 		final View dialogView = View.inflate(context, R.layout.activity_reporting_choice, null);

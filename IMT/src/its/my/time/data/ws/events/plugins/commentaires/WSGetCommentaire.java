@@ -12,8 +12,7 @@ public class WSGetCommentaire extends WSGetBase<CommentBean>{
 
 	@Override
 	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/api/commentaires/";
 	}
 
 	@Override

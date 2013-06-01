@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/buttonCompte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Compte" />
+
+    <Button
+        android:id="@+id/buttonEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttonCompte"
+        android:text="Event" />
+
+    <Button
+        android:id="@+id/buttonUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttonEvent"
+        android:text="User" />
+
+        <Button
+        android:id="@+id/buttonParticipant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonUser"
+        android:layout_centerHorizontal="true"
+        android:text="Participants" />
+
+    <Button
+        android:id="@+id/buttonComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonParticipant"
+        android:layout_centerHorizontal="true"
+        android:text="Commentaire" />
+
+    <Button
+        android:id="@+id/buttonNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/buttonEvent"
+        android:layout_below="@+id/buttonComment"
+        android:text="Note" />
+
+    <Button
+        android:id="@+id/buttonPj"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonNote"
+        android:layout_centerHorizontal="true"
+        android:text="Pj" />
+
+    <Button
+        android:id="@+id/buttonOdj"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonPj"
+        android:layout_below="@+id/buttonPj"
+        android:text="Odj" />
+
+</RelativeLayout>

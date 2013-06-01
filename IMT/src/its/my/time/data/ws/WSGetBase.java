@@ -1,6 +1,5 @@
 package its.my.time.data.ws;
 
-import its.my.time.data.ws.WSBase;
 import its.my.time.util.PreferencesUtil;
 
 import java.net.URI;
@@ -11,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
+import android.util.Log;
 
 public abstract class WSGetBase<T> extends WSBase{
 
@@ -22,7 +22,7 @@ public abstract class WSGetBase<T> extends WSBase{
 	}
 
 	@Override
-	public Exception run() {
+	protected Exception run() {
 		try {
 			HttpClient client = createClient();
 			String urlStr = getUrl();
@@ -40,7 +40,9 @@ public abstract class WSGetBase<T> extends WSBase{
 			request.setHeader("Authorization", "Bearer "+accessToken);
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
-			createObjectFromJson(EntityUtils.toString(response.getEntity()));
+			String result = EntityUtils.toString(response.getEntity());
+			Log.d("WS",result);
+			createObjectFromJson(result);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

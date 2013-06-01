@@ -9,7 +9,7 @@ public class SendGcmUpdate extends WSBase{
 	}
 
 	@Override
-	public Exception run() {
+	protected Exception run() {
 		try {
 			return null;
 		} catch (Exception e) {

@@ -21,7 +21,7 @@ public class WSSendEvent extends WSPostBase<EventBaseBean>{
 
 	@Override
 	public String getUrl() {
-		return "api/events/json";
+		return "api/events";
 	}
 
 	@Override

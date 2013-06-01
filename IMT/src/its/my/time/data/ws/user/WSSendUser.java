@@ -18,7 +18,7 @@ public class WSSendUser extends WSPostBase<UtilisateurBean>{
 
 	@Override
 	public String getUrl() {
-		return "/api/user.json";
+		return "/api/user";
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import its.my.time.util.Types;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -162,10 +163,8 @@ public class SplashActivity extends Activity {
 			new LoadMainActivity().execute();
 		} else {
 			UtilisateurBean user = new UtilisateurBean();
-			final UtilisateurRepository connexion = new UtilisateurRepository(
-					SplashActivity.this);
-			user = connexion.getUser(this.pseudo.getText().toString(),
-					this.mdp.getText().toString());
+			final UtilisateurRepository connexion = new UtilisateurRepository(SplashActivity.this);
+			user = connexion.getUser(this.pseudo.getText().toString(),this.mdp.getText().toString());
 			if (user != null) {
 				PreferencesUtil.setCurrentUid(user.getId());
 				starAnimation();
@@ -206,7 +205,6 @@ public class SplashActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			try {
 				//GCMManager.init(SplashActivity.this);
-				//ContentProviderResult[] results = ContactsUtil.addContact(SplashActivity.this, account, contact);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -217,6 +215,8 @@ public class SplashActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			finish();
+
+			//startActivity(new Intent(SplashActivity.this, TestWSActivity.class));
 			ActivityUtil.startCalendarActivity(SplashActivity.this);
 		}
 	}

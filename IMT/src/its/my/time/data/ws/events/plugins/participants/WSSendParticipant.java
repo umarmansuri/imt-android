@@ -18,7 +18,7 @@ public class WSSendParticipant extends WSPostBase<ParticipantBean>{
 
 	@Override
 	public String getUrl() {
-		return "/api/participant.json";
+		return "/api/participant";
 	}
 
 	@Override

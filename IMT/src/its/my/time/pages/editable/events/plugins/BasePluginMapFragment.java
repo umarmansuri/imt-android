@@ -3,9 +3,9 @@ package its.my.time.pages.editable.events.plugins;
 import its.my.time.pages.editable.events.BaseEventActivity;
 import android.os.Bundle;
 
-import com.actionbarsherlock.app.SherlockFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 
-public abstract class BasePluginFragment extends SherlockFragment implements PluginFragment{
+public abstract class BasePluginMapFragment extends SupportMapFragment implements PluginFragment{
 
 
 	private BaseEventActivity parentActivity;

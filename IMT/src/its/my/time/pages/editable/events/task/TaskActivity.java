@@ -2,8 +2,8 @@ package its.my.time.pages.editable.events.task;
 
 import its.my.time.pages.editable.events.BaseEventActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
+import its.my.time.pages.editable.events.plugins.PluginFragment;
 import its.my.time.pages.editable.events.plugins.commentaires.CommentairesFragment;
-import its.my.time.pages.editable.events.plugins.note.NoteFragment;
 import its.my.time.pages.editable.events.plugins.participants.ParticipantsFragment;
 import its.my.time.pages.editable.events.plugins.pj.PjFragment;
 import its.my.time.pages.editable.events.task.details.TaskDetailsFragment;
@@ -18,8 +18,8 @@ public class TaskActivity extends BaseEventActivity {
 	}
 
 	@Override
-	public ArrayList<BasePluginFragment> getPages() {
-		final ArrayList<BasePluginFragment> fragments = new ArrayList<BasePluginFragment>();
+	public ArrayList<PluginFragment> getPages() {
+		final ArrayList<PluginFragment> fragments = new ArrayList<PluginFragment>();
 
 		BasePluginFragment fragment = new TaskDetailsFragment();
 		fragments.add(fragment);
