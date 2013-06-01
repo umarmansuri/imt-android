@@ -1,7 +1,12 @@
 package its.my.time.pages.editable.events.plugins.map;
 
+import its.my.time.util.DateUtil;
+
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -48,39 +53,42 @@ public class GMapV2Direction {
 	}
 
 	public String getDurationText (Document doc) {
-		NodeList nl1 = doc.getElementsByTagName("duration");
-		Node node1 = nl1.item(0);
-		NodeList nl2 = node1.getChildNodes();
-		Node node2 = nl2.item(getNodeIndex(nl2, "text"));
-		Log.i("DurationText", node2.getTextContent());
-		return node2.getTextContent();
+		int second = getDurationValue(doc);
+		Calendar calendar = new GregorianCalendar(0, 0, 0, 0, 0, 0);
+		calendar.add(Calendar.SECOND, second);
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("HH'h' mm'min'");
+		return dateFormat.format(calendar.getTime());
 	}
 
-	public int getDurationValue (Document doc) {
+	private int getDurationValue (Document doc) {
 		NodeList nl1 = doc.getElementsByTagName("duration");
-		Node node1 = nl1.item(0);
-		NodeList nl2 = node1.getChildNodes();
-		Node node2 = nl2.item(getNodeIndex(nl2, "value"));
-		Log.i("DurationValue", node2.getTextContent());
-		return Integer.parseInt(node2.getTextContent());
+		int result = 0;
+		for(int i = 0; i < nl1.getLength(); i++) {
+			Node node1 = nl1.item(i);
+			NodeList nl2 = node1.getChildNodes();
+			Node node2 = nl2.item(getNodeIndex(nl2, "value"));
+			result+= Integer.parseInt(node2.getTextContent());
+		}
+		return result;
 	}
 
 	public String getDistanceText (Document doc) {
-		NodeList nl1 = doc.getElementsByTagName("distance");
-		Node node1 = nl1.item(0);
-		NodeList nl2 = node1.getChildNodes();
-		Node node2 = nl2.item(getNodeIndex(nl2, "text"));
-		Log.i("DistanceText", node2.getTextContent());
-		return node2.getTextContent();
+		int meter = getDistanceValue(doc);
+		float km = meter / 1000;
+		String result = Math.round(km) + "km";
+		return  result;
 	}
 
 	public int getDistanceValue (Document doc) {
 		NodeList nl1 = doc.getElementsByTagName("distance");
-		Node node1 = nl1.item(0);
-		NodeList nl2 = node1.getChildNodes();
-		Node node2 = nl2.item(getNodeIndex(nl2, "value"));
-		Log.i("DistanceValue", node2.getTextContent());
-		return Integer.parseInt(node2.getTextContent());
+		int result = 0;
+		for(int i = 0; i < nl1.getLength(); i++) {
+			Node node1 = nl1.item(i);
+			NodeList nl2 = node1.getChildNodes();
+			Node node2 = nl2.item(getNodeIndex(nl2, "value"));
+			result+= Integer.parseInt(node2.getTextContent());
+		}
+		return result;
 	}
 
 	public String getStartAddress (Document doc) {
