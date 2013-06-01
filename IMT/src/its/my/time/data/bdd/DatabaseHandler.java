@@ -1,7 +1,9 @@
 package its.my.time.data.bdd;
 
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.data.bdd.events.details.call.CallDetailsRepository;
+import its.my.time.data.bdd.events.details.meeting.MeetingDetailsRepository;
+import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.note.NoteRepository;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
@@ -54,6 +56,9 @@ public class DatabaseHandler {
 			db.execSQL(new OdjRepository(context).getCreateRequest());		
 			db.execSQL(new NoteRepository(context).getCreateRequest());		
 			db.execSQL(new ParticipationRepository(context).getCreateRequest());		
+
+			db.execSQL(new MeetingDetailsRepository(context).getCreateRequest());		
+			db.execSQL(new CallDetailsRepository(context).getCreateRequest());		
 		}
 
 		@Override

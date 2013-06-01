@@ -3,7 +3,7 @@ package its.my.time.pages.calendar;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;

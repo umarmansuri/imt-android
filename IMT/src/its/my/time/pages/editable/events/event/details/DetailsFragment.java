@@ -3,8 +3,8 @@ package its.my.time.pages.editable.events.event.details;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.data.bdd.events.event.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationBean;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
@@ -67,7 +67,7 @@ public class DetailsFragment extends BasePluginFragment {
 	private EditText mTextTitle;
 
 	//private int typeEvent;
-	private static Bundle state;
+	protected static Bundle state;
 
 	public DetailsFragment() {
 		//typeEvent = Types.Event.BASE;
@@ -138,7 +138,7 @@ public class DetailsFragment extends BasePluginFragment {
 		return view;
 	}
 
-	private View getCustomView() {
+	protected View getCustomView() {
 		return null;
 	}
 

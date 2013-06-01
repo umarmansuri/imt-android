@@ -1,6 +1,6 @@
 package its.my.time.pages.calendar.day;
 
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.util.EventUtil;
 
 import java.util.ArrayList;

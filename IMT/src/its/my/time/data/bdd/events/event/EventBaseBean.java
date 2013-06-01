@@ -1,4 +1,4 @@
-package its.my.time.data.bdd.events.eventBase;
+package its.my.time.data.bdd.events.event;
 
 import its.my.time.data.bdd.base.BaseBean;
 import its.my.time.data.bdd.base.TableAttribut;

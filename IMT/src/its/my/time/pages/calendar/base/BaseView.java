@@ -1,6 +1,6 @@
 package its.my.time.pages.calendar.base;
 
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.calendar.base.BaseFragment.OnViewCreated;

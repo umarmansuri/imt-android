@@ -3,8 +3,8 @@ package its.my.time.pages.calendar.base;
 import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
-import its.my.time.data.bdd.events.eventBase.EventBaseRepository;
+import its.my.time.data.bdd.events.event.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.util.PreferencesUtil;
 
 import java.util.ArrayList;

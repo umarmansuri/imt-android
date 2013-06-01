@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import its.my.time.data.bdd.compte.CompteBean;
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.plugins.comment.CommentBean;
 import its.my.time.data.bdd.events.plugins.note.NoteBean;
 import its.my.time.data.bdd.events.plugins.odj.OdjBean;

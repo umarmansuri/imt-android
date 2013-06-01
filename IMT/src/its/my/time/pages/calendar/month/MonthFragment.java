@@ -1,6 +1,6 @@
 package its.my.time.pages.calendar.month;
 
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.calendar.base.BaseFragment;
 import its.my.time.pages.calendar.base.BaseView;

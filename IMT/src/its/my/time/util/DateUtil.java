@@ -1,6 +1,6 @@
 package its.my.time.util;
 
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 
 import java.text.DateFormat;
 import java.text.ParseException;

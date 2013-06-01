@@ -1,6 +1,6 @@
 package its.my.time.data.ws;
 
-import its.my.time.data.bdd.events.eventBase.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

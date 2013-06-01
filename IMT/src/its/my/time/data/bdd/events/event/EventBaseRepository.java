@@ -1,5 +1,5 @@
 
-package its.my.time.data.bdd.events.eventBase;
+package its.my.time.data.bdd.events.event;
 
 import its.my.time.data.bdd.base.BaseRepository;
 import its.my.time.data.bdd.compte.CompteBean;
