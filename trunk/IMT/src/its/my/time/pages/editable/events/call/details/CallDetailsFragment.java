@@ -75,16 +75,20 @@ OnClickListener, OnCorrespondantChange {
 	public void launchSave() {
 		getParentActivity().getEvent().setTypeId(Types.Event.CALL);
 
+		super.launchSave();
+		
+		getParentActivity().getCallDetails().setEid(getParentActivity().getEvent().getId());
 		getParentActivity().getCallDetails().setDuration(duration);
 		getParentActivity().getCallDetails().setIdentifiant(identifiant);
 		getParentActivity().getCallDetails().setPhone(phone);
 		getParentActivity().getCallDetails().setUser(user);
 
-		getParentActivity().getCallDetailsRepo().update(
-				getParentActivity().getCallDetails());
-
-		super.launchSave();
-		
+		if(getParentActivity().getCallDetails().getId() <= 0) {
+			long id = getParentActivity().getCallDetailsRepo().insert(getParentActivity().getCallDetails());
+			getParentActivity().getCallDetails().setId((int)id);
+		} else {
+			getParentActivity().getCallDetailsRepo().update(getParentActivity().getCallDetails());
+		}
 		mButtonCall.setEnabled(true);
 	}
 
@@ -93,13 +97,13 @@ OnClickListener, OnCorrespondantChange {
 		super.launchCancel();
 		mButtonCall.setEnabled(false);
 	}
-	
+
 	@Override
 	public void launchEdit() {
 		super.launchEdit();
 		mButtonCall.setEnabled(false);
 	}
-	
+
 	public void initialiseValuesFromEvent() {
 		CallDetailsBean details = getParentActivity().getCallDetails();
 		user = details.getUser();
@@ -144,8 +148,11 @@ OnClickListener, OnCorrespondantChange {
 			dialog.setOnCorrespondantChange(this);
 			dialog.show();
 		} else if (v == mButtonCall) {
-			if (phone != null && !phone.equals("") && identifiant != null
-					&& !identifiant.equals("")) {
+			if(currentCall != null) {
+				closeCall();
+				return;
+			}
+			if (phone != null && !phone.equals("") && identifiant != null && !identifiant.equals("")) {
 				new CallChoiceDialog(getActivity()).show();
 			} else if (phone != null && !phone.equals("")) {
 				launchPhoneCall(phone);
@@ -221,7 +228,7 @@ OnClickListener, OnCorrespondantChange {
 		mButtonCall.setText("Lancer l'appel");
 		mButtonCall.setOnClickListener(CallDetailsFragment.this);
 		mButtonCall.setLayoutParams(layoutParamBtnCall);
-	
+
 		CallManager.removeListener(sipAudioCallListener);
 	}
 
@@ -237,6 +244,7 @@ OnClickListener, OnCorrespondantChange {
 			mTextCount.setText(getDurationLabel(duration));
 			launchTime = 0;
 		}
+		launchSave();
 	}
 
 	@Override
@@ -249,7 +257,7 @@ OnClickListener, OnCorrespondantChange {
 
 	private class CallListener extends PhoneStateListener {
 		private boolean isStarted = false;
-	
+
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
 			if (TelephonyManager.CALL_STATE_RINGING == state) {
@@ -268,13 +276,13 @@ OnClickListener, OnCorrespondantChange {
 			}
 		}
 	}
-	
+
 	private class CallChoiceDialog extends AlertDialog implements android.view.View.OnClickListener {
 
 		public CallChoiceDialog(Context context) {
 			super(context);
 		}
-		
+
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
