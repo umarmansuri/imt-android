@@ -43,6 +43,6 @@ public abstract class BaseView extends FrameLayout {
 
 	protected abstract String getTopBarText();
 
-	public abstract View addEvent(EventBaseBean eventBaseBean, int color, int visibility);
+	public abstract View addEvent(EventBaseBean eventBaseBean, String color, int visibility);
 
 }

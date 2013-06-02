@@ -24,18 +24,14 @@ public class Types {
 
 	public static class Comptes {
 
-		public final static Compte GOOGLE = new Compte(0, "Google");
-		public final static Compte ERP1 = new Compte(1, "Erp 1");
-		public final static Compte ERP2 = new Compte(2, "Erp 2");
+		public final static Compte GOOGLE = new Compte(0, "Google", "gmail");
 
 
-		public final static Compte MYTIME = new Compte(3, "My Time");
+		public final static Compte MYTIME = new Compte(1, "My Time", "imt");
 
 		public static List<Compte> getAllCompte() {
 			List<Compte> all = new ArrayList<Types.Comptes.Compte>();
 			all.add(GOOGLE);
-			all.add(ERP1);
-			all.add(ERP2);
 			all.add(MYTIME);
 			return all;
 		}
@@ -44,8 +40,6 @@ public class Types {
 		public static List<Compte> getAllCompteEditable() {
 			List<Compte> all = new ArrayList<Types.Comptes.Compte>();
 			all.add(GOOGLE);
-			all.add(ERP1);
-			all.add(ERP2);
 			return all;
 		}
 
@@ -70,18 +64,24 @@ public class Types {
 		public static int getIdFromLabel(String label) {
 			if(label == MYTIME.label) {return MYTIME.id;}
 			if(label == GOOGLE.label) {return GOOGLE.id;}
-			if(label == ERP1.label) {return ERP1.id;}
-			if(label == ERP2.label) {return ERP2.id;}
 			return 0;
+		}
+
+		public static String geWsLabelFromId(int type) {
+			if(type == MYTIME.id) {return MYTIME.wsLabel;}
+			if(type == GOOGLE.id) {return GOOGLE.wsLabel;}
+			return "";
 		}
 
 		public static class Compte {
 			public int id;
 			public String label;
-			public Compte(int id, String label) {
+			public String wsLabel;
+			public Compte(int id, String label, String wsLabel) {
 				super();
 				this.id = id;
 				this.label = label;
+				this.wsLabel = wsLabel;
 			}
 		}
 

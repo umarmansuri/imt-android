@@ -1,12 +1,14 @@
 package its.my.time.view.menu;
 
+import android.graphics.drawable.Drawable;
+
 public class MenuObjet {
 
 	private MenuGroupe menuGroupe;
 	private String nom;
 	private int iconeRes = -1;
 	private boolean isSwitcher;
-	private int switcherOnColor = -1;
+	private Drawable switcherOnColor = null;
 	private boolean firstState;
 
 	public MenuGroupe getMenuGroupe() {
@@ -41,7 +43,7 @@ public class MenuObjet {
 		this.isSwitcher = isSwitcher;
 	}
 
-	public int getSwitcherOnColor() {
+	public Drawable getSwitcherOnColor() {
 		return this.switcherOnColor;
 	}
 
@@ -51,7 +53,7 @@ public class MenuObjet {
 
 	public MenuObjet(MenuGroupe menuGroupe, String nom, int iconeRes,
 			boolean isSwitcher) {
-		this(menuGroupe, nom, iconeRes, isSwitcher, false, -1);
+		this(menuGroupe, nom, iconeRes, isSwitcher, false, null);
 	}
 
 	public boolean getFirstState() {
@@ -63,13 +65,13 @@ public class MenuObjet {
 	}
 
 	public MenuObjet(MenuGroupe menuGroupe, String nom, int iconeRes,
-			boolean isSwitcher, boolean firstState, int switcherOnColor) {
+			boolean isSwitcher, boolean firstState, Drawable drawable) {
 		super();
 		this.menuGroupe = menuGroupe;
 		this.nom = nom;
 		this.iconeRes = iconeRes;
 		this.isSwitcher = isSwitcher;
-		this.switcherOnColor = switcherOnColor;
+		this.switcherOnColor = drawable;
 		this.firstState = firstState;
 	}
 

@@ -11,6 +11,7 @@ import its.my.time.pages.calendar.list.ListEventAdapter;
 import its.my.time.pages.calendar.month.MonthPagerAdapter;
 import its.my.time.pages.reporting.ReportingActivity;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.ColorUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.MenuGroupe;
@@ -169,7 +170,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		accountVisibility = new SparseBooleanArray();
 		this.comptes = compteRepo.getAllByUid(PreferencesUtil.getCurrentUid());
 		for (final CompteBean compteBean : this.comptes) {
-			donnees.add(new MenuObjet(menuCompte, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), compteBean.getColor()));
+			donnees.add(new MenuObjet(menuCompte, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), getResources().getDrawable(ColorUtil.getDrawableRes(compteBean.getColor()))));
 			accountVisibility.put(compteBean.getId(), compteBean.isShowed());
 		}
 		donnees.add(new MenuObjet(menuCompte, "Gérer", MooncakeIcone.icon_cog));

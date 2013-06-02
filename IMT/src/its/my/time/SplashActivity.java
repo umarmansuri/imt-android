@@ -9,6 +9,8 @@ import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.manager.sip.CallManager;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.ColorUtil;
+import its.my.time.util.ColorUtil.ColorMyTime;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 
@@ -90,14 +92,14 @@ public class SplashActivity extends Activity {
 
 		CompteRepository repoCompte = new CompteRepository(SplashActivity.this); 
 		CompteBean compte = new CompteBean(); 
-		compte.setColor(Color.RED); 
+		compte.setColor(ColorUtil.RED.label); 
 		compte.setShowed(true);
 		compte.setTitle(Types.Comptes.MYTIME.label); 
 		compte.setType(Types.Comptes.MYTIME.id);
 		compte.setUid(resUser); 
 		int resCompte1 =  (int)repoCompte.insert(compte);
 
-		compte = new CompteBean(); compte.setColor(Color.BLUE);
+		compte = new CompteBean(); compte.setColor(ColorUtil.BLUE.label);
 		compte.setShowed(true); 
 		compte.setTitle("Compte 2");
 		compte.setType(2); 

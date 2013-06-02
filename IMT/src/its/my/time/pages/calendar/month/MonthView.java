@@ -5,6 +5,7 @@ import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.pages.calendar.base.BaseFragment.OnViewCreated;
 import its.my.time.pages.calendar.base.BaseView;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.ColorUtil;
 import its.my.time.util.DateUtil;
 import its.my.time.util.IdUtil;
 
@@ -22,10 +23,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.MonthDisplayHelper;
 import android.util.SparseArray;
-import android.util.SparseIntArray;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,7 @@ public class MonthView extends BaseView implements OnDayClickListener {
 	private OnDayClickListener externListener;
 
 	private SparseArray<ViewGroup> daysViews;
-	private SparseIntArray accountsColors;
+	private SparseArray<String> accountsColors;
 
 	public MonthView(Context context, Calendar cal, OnDayClickListener listener) {
 		this(context, cal, listener, null);
@@ -187,10 +186,10 @@ public class MonthView extends BaseView implements OnDayClickListener {
 			List<ActionItem> items = quickAction.getActionItems();
 			int i = 0;
 			for (EventBaseBean eventBaseBean : events) {
-				ShapeDrawable background = createCompteDrawable(accountsColors.get(eventBaseBean.getCid()));
 				Resources r = getResources();
 				int height = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30, r.getDisplayMetrics());
 				int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics());
+				ShapeDrawable background = (ShapeDrawable) getResources().getDrawable(ColorUtil.getDrawableRes(accountsColors.get(eventBaseBean.getCid())));
 				background.setIntrinsicHeight(height);
 				background.setIntrinsicWidth(width);
 				ActionItem item = new ActionItem(i,eventBaseBean.getTitle(), background);
@@ -233,10 +232,10 @@ public class MonthView extends BaseView implements OnDayClickListener {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public View addEvent(EventBaseBean event, int color, int visibility) {
+	public View addEvent(EventBaseBean event, String color, int visibility) {
 		View res = null;
 		if(accountsColors == null) {
-			accountsColors = new SparseIntArray();
+			accountsColors = new SparseArray<String>();
 		}
 		accountsColors.put(event.getCid(), color);
 		for(int i = 0; i< daysViews.size(); i++) {
@@ -267,7 +266,7 @@ public class MonthView extends BaseView implements OnDayClickListener {
 					TextView textView = new TextView(getContext());
 					textView.setText(" ");
 					textView.setVisibility(visibility);
-					textView.setBackgroundDrawable(createCompteDrawable(color));		
+					textView.setBackgroundResource(ColorUtil.getDrawableRes(color));		
 					textView.setPadding(5, 5, 5, 5);
 					textView.setTextColor(Color.WHITE);
 					textView.setTag(event.getCid());
@@ -302,22 +301,6 @@ public class MonthView extends BaseView implements OnDayClickListener {
 				return false;
 			}
 		});
-	}
-
-	private ShapeDrawable createCompteDrawable(int color) {
-		ShapeDrawable background = new ShapeDrawable();
-		float[] radii = new float[8];
-		radii[0] = 5;
-		radii[1] = 5;
-		radii[2] = 5;
-		radii[3] = 5;
-		radii[4] = 5;
-		radii[5] = 5;
-		radii[6] = 5;
-		radii[7] = 5;
-		background.setShape(new RoundRectShape(radii, null, null));
-		background.getPaint().setColor(color);
-		return background;
 	}
 
 }

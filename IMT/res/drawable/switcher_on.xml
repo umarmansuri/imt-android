@@ -7,4 +7,5 @@
         />
     <gradient android:startColor="@color/switcher_on_background" android:endColor="@color/switcher_on_background"/>
 
+    
 </shape>
