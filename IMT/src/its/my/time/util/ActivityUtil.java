@@ -92,10 +92,12 @@ public class ActivityUtil {
 		final String[] labels = new String[] {
 				context.getResources().getString(R.string.label_event_base),
 				context.getResources().getString(R.string.label_event_meeting),
-				context.getResources().getString(R.string.label_event_task),
+				//context.getResources().getString(R.string.label_event_task),
 				context.getResources().getString(R.string.label_event_call) };
-		final Integer[] types = new Integer[] { Types.Event.BASE,
-				Types.Event.MEETING, Types.Event.TASK,
+		final Integer[] types = new Integer[] { 
+				Types.Event.BASE,
+				Types.Event.MEETING, 
+				//Types.Event.TASK,
 				Types.Event.CALL };
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(context);

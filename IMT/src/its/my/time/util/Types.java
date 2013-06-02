@@ -13,10 +13,10 @@ public class Types {
 		public static final int CALL = 3;
 
 	public static String getLabelBy(int id) {
-		if(id==0) return "event";
-		else if (id == 1) return "task";
-		else if (id == 2) return "metting";
-		else if (id ==3) return "call";
+		if(id==BASE) return "event";
+		else if (id == TASK) return "task";
+		else if (id == MEETING) return "metting";
+		else if (id ==CALL) return "call";
 		else return null;
 	}
 		

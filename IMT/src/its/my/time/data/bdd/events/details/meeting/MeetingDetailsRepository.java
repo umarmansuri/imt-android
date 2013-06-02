@@ -1,13 +1,13 @@
 package its.my.time.data.bdd.events.details.meeting;
 
-import its.my.time.data.bdd.events.details.DetailsBaseRepository;
+import its.my.time.data.bdd.events.details.BaseDetailsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 
-public class MeetingDetailsRepository extends DetailsBaseRepository<MeetingDetailsBean> {
+public class MeetingDetailsRepository extends BaseDetailsRepository<MeetingDetailsBean> {
 
 	public MeetingDetailsRepository(Context context) {
 		super(context, MeetingDetailsBean.class);

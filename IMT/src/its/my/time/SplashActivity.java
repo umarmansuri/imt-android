@@ -70,15 +70,13 @@ public class SplashActivity extends Activity {
 		this.mdp = (EditText) findViewById(R.id.splash_mdp);
 
 		PreferencesUtil.init(this);
-		CallManager.initializeManager(this);
+		CallManager.initializeManager(getBaseContext());
 		temp();
 	}
 
 	private void temp() {
-		CallManager.initializeManager(getApplicationContext());
 		deleteDatabase(DatabaseHandler.DATABASE_NAME);
-		UtilisateurRepository userRepo = new
-				UtilisateurRepository(SplashActivity.this); 
+		UtilisateurRepository userRepo = new UtilisateurRepository(SplashActivity.this); 
 		UtilisateurBean user = new UtilisateurBean(); 
 		user.setAdresse("42 rue du charpenet");
 		user.setCodePostal("69890"); user.setMail("ad.hugon@gmail.com");

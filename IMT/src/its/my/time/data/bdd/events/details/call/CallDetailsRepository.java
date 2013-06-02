@@ -1,13 +1,13 @@
 package its.my.time.data.bdd.events.details.call;
 
-import its.my.time.data.bdd.base.BaseRepository;
+import its.my.time.data.bdd.events.details.BaseDetailsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 
-public class CallDetailsRepository extends BaseRepository<CallDetailsBean> {
+public class CallDetailsRepository extends BaseDetailsRepository<CallDetailsBean> {
 
 	public CallDetailsRepository(Context context) {
 		super(context, CallDetailsBean.class);

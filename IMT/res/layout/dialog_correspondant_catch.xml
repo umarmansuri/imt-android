@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|top"
+    android:layout_margin="15dp"
+    android:background="@color/dark_grey"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <EditText
+        android:id="@+id/correspondant_catch_edit"
+        style="@style/champs_texte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:singleLine="true" />
+    
+    
+    <TextView
+        android:id="@+id/correspondant_catch_valider"
+        style="@style/Btn.Green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Valider"
+        android:layout_marginTop="10dp" 
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/correspondant_catch_edit"/>
+
+    
+    <ListView
+        android:id="@+id/correspondant_catch_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/correspondant_catch_edit"
+        android:layout_alignParentBottom="true" >
+    </ListView>
+
+    <ProgressBar
+        android:id="@+id/correspondant_catch_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/correspondant_catch_edit"/>
+    
+</RelativeLayout>
