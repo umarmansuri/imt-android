@@ -1,5 +1,7 @@
 package its.my.time.manager.sip;
 
+import java.util.ArrayList;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -16,28 +18,43 @@ public class CallManager {
 
 	protected static final String TAG = "SIP";
 
-	private static final String USERNAME = "appmytime-100";
-	private static final String SERVER_ADRESSE = "pbxes.org";
-	private static final String PASSWORD = "azerazer";
+	private static final String USERNAME = "102";
+	private static final String SERVER_ADRESSE = "192.168.1.28";
+	private static final String PASSWORD = "123123";
 	private static SipManager manager;
 	private static SipProfile me;
 	private static SipAudioCall call;
 	private static Listener callListener = new SipAudioCall.Listener() {
+		public void onCalling(SipAudioCall call) {
+			for (SipAudioCall.Listener listener : listeners) {
+				listener.onCalling(call);	
+			}
+		};
+		
 		@Override
 		public void onCallEstablished(SipAudioCall call) {
 			CallManager.call = call;
 			call.startAudio();
 			Log.d(TAG, "appel etablie");
+			for (SipAudioCall.Listener listener : listeners) {
+				listener.onCallEstablished(call);	
+			}
 		}
 
 		@Override
 		public void onCallEnded(SipAudioCall call) {
 			CallManager.call = null;
 			Log.d(TAG, "appel finit");
+			for (SipAudioCall.Listener listener : listeners) {
+				listener.onCallEnded(call);	
+			}
 		}
 	};
 
-	public static void initializeManager(Context context) {
+	private static Context context;
+
+	public static void initializeManager(Context con) {
+		CallManager.context = con;
 		if(manager == null) {
 			manager = SipManager.newInstance(context);
 		}
@@ -79,9 +96,8 @@ public class CallManager {
 					Log.d(TAG, "connecté");
 				}
 
-				public void onRegistrationFailed(String localProfileUri, int errorCode,
-						String errorMessage) {
-					Log.d(TAG, "connxion erreur");
+				public void onRegistrationFailed(String localProfileUri, int errorCode, String errorMessage) {
+					Log.d(TAG, "connxion erreur: " + errorMessage);
 				}
 			});
 		} catch (Exception e) {
@@ -154,6 +170,16 @@ public class CallManager {
 		} catch (SipException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static ArrayList<SipAudioCall.Listener> listeners = new ArrayList<SipAudioCall.Listener>();
+	public static void addListener(SipAudioCall.Listener listener) {
+		listeners.add(listener);
+	}
+
+
+	public static void removeListener(SipAudioCall.Listener listener) {
+		listeners.remove(listener);
 	}
 
 

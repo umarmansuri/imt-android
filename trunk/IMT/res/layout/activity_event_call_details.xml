@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <EditText
+        android:id="@+id/activity_event_details_text_correspondant"
+        style="@style/champs_texte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:hint="Correspondant" />
+
+    <Button
+        android:id="@+id/activity_event_details_button_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Btn.Green"
+		android:layout_alignParentRight="true"
+        android:layout_below="@+id/activity_event_details_text_correspondant"
+        android:layout_marginTop="15dp"
+        android:text="Lancer l'appel" />
+
+    <TextView
+        android:id="@+id/activity_event_details_text_count_label"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/activity_event_details_button_call"
+        android:layout_alignBottom="@+id/activity_event_details_button_call"
+        android:gravity="center_vertical"
+        android:text="Durée: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/activity_event_details_text_count"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignTop="@+id/activity_event_details_button_call"
+        android:layout_alignBottom="@+id/activity_event_details_button_call"
+        android:layout_toRightOf="@+id/activity_event_details_text_count_label"
+        android:layout_toLeftOf="@+id/activity_event_details_button_call"
+        android:gravity="center_vertical"
+        android:text="0min"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

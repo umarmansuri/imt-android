@@ -154,17 +154,17 @@ public class ParticipantsFragment extends BasePluginFragment {
 
 	@Override
 	public boolean isEditable() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isCancelable() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isSavable() {
-		return true;
+		return false;
 	}
 
 	private class ParticipantsAdapter implements ListAdapter {

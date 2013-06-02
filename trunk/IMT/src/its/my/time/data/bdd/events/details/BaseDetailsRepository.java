@@ -4,10 +4,10 @@ import its.my.time.data.bdd.base.BaseRepository;
 import android.content.Context;
 import android.database.Cursor;
 
-public abstract class DetailsBaseRepository<T extends DetailsBaseBean> extends BaseRepository<T>{
+public abstract class BaseDetailsRepository<T extends DetailsBaseBean> extends BaseRepository<T>{
 	
 	
-	public DetailsBaseRepository(Context context, Class<T> type) {
+	public BaseDetailsRepository(Context context, Class<T> type) {
 		super(context, type);
 	}
 	

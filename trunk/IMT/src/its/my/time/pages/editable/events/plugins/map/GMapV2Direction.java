@@ -1,7 +1,5 @@
 package its.my.time.pages.editable.events.plugins.map;
 
-import its.my.time.util.DateUtil;
-
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/dark_grey"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/correspondant_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saisir numéro"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/grey" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:background="@color/grey" />
+
+    <TextView
+        android:id="@+id/correspondant_repertoire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact téléphone"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/grey" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:background="@color/grey" />
+
+    <TextView
+        android:id="@+id/correspondant_mytime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact My-Time"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/grey" />
+
+    <View
+        android:id="@+id/correspondant_last_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:background="@color/grey" />
+
+    <TextView
+        android:id="@+id/correspondant_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Effacer"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/grey" />
+
+</LinearLayout>
