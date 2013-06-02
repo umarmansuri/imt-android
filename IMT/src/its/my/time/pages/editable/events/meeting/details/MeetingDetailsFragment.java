@@ -27,11 +27,15 @@ public class MeetingDetailsFragment extends DetailsFragment {
 	@Override
 	public void launchSave() {
 		getParentActivity().getEvent().setTypeId(Types.Event.MEETING);
-		
-		getParentActivity().getMeetingDetails().setAddress(mEditAddress.getText().toString());
-		getParentActivity().getMeetingDetailsRepo().update(getParentActivity().getMeetingDetails());
-		
 		super.launchSave();
+		getParentActivity().getMeetingDetails().setEid(getParentActivity().getEvent().getId());
+		getParentActivity().getMeetingDetails().setAddress(mEditAddress.getText().toString());
+		if(getParentActivity().getMeetingDetails().getId() <= 0) {
+			long id = getParentActivity().getMeetingDetailsRepo().insert(getParentActivity().getMeetingDetails());
+			getParentActivity().getMeetingDetails().setId((int)id);
+		} else {
+			getParentActivity().getMeetingDetailsRepo().update(getParentActivity().getMeetingDetails());
+		}
 	}
 	
 	public void initialiseValuesFromEvent() {
