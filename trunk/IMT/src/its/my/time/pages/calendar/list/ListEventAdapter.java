@@ -34,7 +34,7 @@ public class ListEventAdapter extends SeparatedListAdapter {
 		super(context);
 	}
 
-	public Map<String, ?> createItem(EventBaseBean event, int color)  {
+	public Map<String, ?> createItem(EventBaseBean event, String color)  {
 		Map<String,Object> item = new HashMap<String,Object>();
 		item.put(EVENT_HOUR, (DateUtil.getHourLabelLong(event.gethDeb()).toString()));
 		item.put(EVENT_TITLE, event.getTitle());
@@ -58,7 +58,7 @@ public class ListEventAdapter extends SeparatedListAdapter {
 					lastCal = event.gethDeb();
 					day = new LinkedList<Map<String,?>>();
 				}
-				int color = new CompteRepository(getContext()).getById(event.getCid()).getColor();
+				String color = new CompteRepository(getContext()).getById(event.getCid()).getColor();
 				day.add(createItem(event, color));
 			}
 			addDay(day, lastCal);

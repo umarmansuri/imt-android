@@ -3,6 +3,7 @@ package its.my.time.view;
 import its.my.time.R;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -126,15 +127,11 @@ public class Switcher extends FrameLayout implements OnClickListener {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void changeOnColor(int color) {
-		GradientDrawable dr = (GradientDrawable) this.mOnView.getBackground().getConstantState().newDrawable();
-		dr = (GradientDrawable) dr.mutate();
-		dr.setColor(color);
-		
-		this.mOnView.setBackgroundDrawable(dr);
+	public void changeOnColor(Drawable drawable) {
+		this.mOnView.setBackgroundDrawable(drawable);
 		this.mOnView.setText(null);
 
-		dr = (GradientDrawable) this.mOffView.getBackground().getConstantState().newDrawable();
+		GradientDrawable dr = (GradientDrawable) this.mOffView.getBackground().getConstantState().newDrawable();
 		dr = (GradientDrawable) dr.mutate();
 		dr.setColor(getResources().getColor(R.color.grey));
 		this.mOffView.setBackgroundDrawable(dr);

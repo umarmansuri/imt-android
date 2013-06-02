@@ -4,17 +4,16 @@ import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.editable.BaseActivity;
+import its.my.time.pages.editable.comptes.compte.ColorPickerDialog.ColorChangeListener;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.ColorUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 import its.my.time.util.Types.Comptes.Compte;
 
 import java.util.Collection;
 
-import net.margaritov.preference.colorpicker.ColorPickerDialog;
-import net.margaritov.preference.colorpicker.ColorPickerDialog.OnColorChangedListener;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,7 +25,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 
-public class CompteActivity extends BaseActivity implements OnClickListener, TextWatcher, OnColorChangedListener {
+public class CompteActivity extends BaseActivity implements OnClickListener, TextWatcher, ColorChangeListener {
 
 	private CompteBean compte;
 
@@ -35,7 +34,7 @@ public class CompteActivity extends BaseActivity implements OnClickListener, Tex
 	private Spinner mFieldTypeSpinner;
 	private ImageButton mFieldColorButton;
 
-	private int color;
+	private String color;
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
@@ -46,7 +45,7 @@ public class CompteActivity extends BaseActivity implements OnClickListener, Tex
 			color = compte.getColor();
 		} else {
 			this.compte = new CompteBean();
-			color = Color.parseColor("#70b2cd");
+			color = ColorUtil.ORANGE.label;
 			this.isNew = true;
 		}
 
@@ -107,7 +106,7 @@ public class CompteActivity extends BaseActivity implements OnClickListener, Tex
 	}
 
 	private void updateColorButton() {
-		final ColorDrawable dr = new ColorDrawable(color);
+		Drawable dr = getResources().getDrawable(ColorUtil.getDrawableRes(color));
 		this.mFieldColorButton.setImageDrawable(dr);
 	}
 
@@ -171,10 +170,7 @@ public class CompteActivity extends BaseActivity implements OnClickListener, Tex
 	@Override
 	public void onClick(View v) {
 		if (v == this.mFieldColorButton) {
-			if(color == 0) {
-				color = compte.getColor();
-			}
-			final ColorPickerDialog dialog = new ColorPickerDialog(this,color);
+			final ColorPickerDialog dialog = new ColorPickerDialog(this);
 			dialog.show();
 			dialog.setOnColorChangedListener(this);
 		}
@@ -185,7 +181,7 @@ public class CompteActivity extends BaseActivity implements OnClickListener, Tex
 	@Override public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 
 	@Override
-	public void onColorChanged(int color) {
+	public void onColorChanged(String color) {
 		this.color = color;
 		updateColorButton();
 	}

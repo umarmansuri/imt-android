@@ -126,7 +126,7 @@ public class DayView extends BaseView {
 	}
 
 	@Override
-	public View addEvent(EventBaseBean event, int color, int visibility) {
+	public View addEvent(EventBaseBean event, String color, int visibility) {
 		for (int i = 0; i < llEvent.getChildCount(); i++) {
 			ColumnEvent column = (ColumnEvent) llEvent.getChildAt(i);
 			final EventLittleView eventView = column.addEvent(event, cal);

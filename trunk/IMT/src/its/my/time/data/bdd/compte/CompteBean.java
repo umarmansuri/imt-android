@@ -8,7 +8,7 @@ import its.my.time.data.bdd.base.TableAttribut;
 public class CompteBean extends BaseBean{
 
 	private TableAttribut<String> title;
-	private TableAttribut<Integer> color;
+	private TableAttribut<String> color;
 	private TableAttribut<Integer> type;
 	private TableAttribut<Integer> isShowed;
 	private TableAttribut<Long> uid;
@@ -16,7 +16,7 @@ public class CompteBean extends BaseBean{
 	public CompteBean() {
 		super();
 		title = new TableAttribut<String>("title", "");
-		color = new TableAttribut<Integer>("color", -1);
+		color = new TableAttribut<String>("color", "fc-event-orange");
 		type = new TableAttribut<Integer>("type", -1);
 		isShowed = new TableAttribut<Integer>("isShowed", 0);
 		uid = new TableAttribut<Long>("uid", -1l);
@@ -30,11 +30,11 @@ public class CompteBean extends BaseBean{
 		this.title.setValue(title);
 	}
 
-	public int getColor() {
+	public String getColor() {
 		return this.color.getValue();
 	}
 
-	public void setColor(int color) {
+	public void setColor(String color) {
 		this.color.setValue(color);
 	}
 

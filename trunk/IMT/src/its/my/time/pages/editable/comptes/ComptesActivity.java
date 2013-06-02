@@ -5,6 +5,7 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.ColorUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 import its.my.time.view.menu.MenuGroupe;
@@ -165,8 +166,7 @@ public class ComptesActivity extends MyTimeActivity {
 			final View v = getLayoutInflater().inflate(R.layout.activity_comptes_compte_little, null);
 			((TextView) v.findViewById(R.id.activity_comptes_compte_title)).setText(getItem(position).getTitle());
 
-			final GradientDrawable dr = new GradientDrawable();
-			dr.setColor(getItem(position).getColor());
+			final GradientDrawable dr = (GradientDrawable) getResources().getDrawable(ColorUtil.getDrawableRes(getItem(position).getColor()));
 			v.findViewById(R.id.activity_comptes_compte_color).setBackgroundDrawable(dr);
 			final MooncakeIcone icone = (MooncakeIcone) v.findViewById(R.id.delete);
 			icone.setIconeRes(MooncakeIcone.icon_minus_sign);
