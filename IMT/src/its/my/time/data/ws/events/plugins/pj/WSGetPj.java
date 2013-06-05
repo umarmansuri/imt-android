@@ -15,11 +15,4 @@ public class WSGetPj extends WSGetBase<PjBean>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public PjBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

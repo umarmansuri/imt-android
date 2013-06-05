@@ -156,11 +156,14 @@ public class WSLogin {
 				}
 			}
 			
-			for (Callback callBack : callBacks) {
-				callBack.done(resultEx);	
-				//callBacks.remove(callBack);
-			}
+
+			List<Callback> toRemove = new ArrayList<Callback>();
+			toRemove.addAll(callBacks);
 			refreshTask = null;
+			callBacks = new ArrayList<Callback>();
+			for (Callback callBack : toRemove) {
+				callBack.done(resultEx);	
+			}
 		}
 
 		private static String createAuthorizationRequestUri() {

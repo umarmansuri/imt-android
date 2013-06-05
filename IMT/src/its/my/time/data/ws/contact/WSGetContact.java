@@ -15,10 +15,4 @@ public class WSGetContact extends WSGetBase<ContactBean>{
 		return "";
 	}
 
-	@Override
-	public ContactBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

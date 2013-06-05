@@ -137,9 +137,11 @@ public abstract class BaseFragment extends SherlockFragment{
 
 	private OnObjectChangedListener<CompteBean> onCompteChangedListener = new OnObjectChangedListener<CompteBean>() {
 		@Override public void onObjectAdded(CompteBean object) {
-			
+			comptes.put(object.getId(), object);
 		}
-		@Override public void onObjectDeleted(CompteBean object) {}
+		@Override public void onObjectDeleted(CompteBean object) {
+			comptes.remove(object.getId());
+		}
 		@Override public void onObjectUpdated(final CompteBean object) {
 			List<View> alreadyDone = new ArrayList<View>();
 
@@ -190,31 +192,50 @@ public abstract class BaseFragment extends SherlockFragment{
 
 
 	private OnObjectChangedListener<EventBaseBean> onEventChangedListener = new OnObjectChangedListener<EventBaseBean>() {
-		@Override public void onObjectAdded(EventBaseBean object) {
-			CompteBean compte = comptes.get(object.getCid());
-			
-			int visibility = compte.isShowed() ? View.VISIBLE : View.INVISIBLE;
-			final View v = baseView.addEvent(object, compte.getColor(), visibility 	);
-			events.put(object.getId(), object);
-			eventViews.put(object.getId(), v);
-			if(compte.isShowed()) {
-				showView(v, true);
-			}
+		@Override public void onObjectAdded(final EventBaseBean object) {
+
+
+			getActivity().runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					CompteBean compte = comptes.get(object.getCid());
+					int visibility = compte.isShowed() ? View.VISIBLE : View.INVISIBLE;
+					final View v = baseView.addEvent(object, compte.getColor(), visibility 	);
+					events.put(object.getId(), object);
+					eventViews.put(object.getId(), v);
+					if(compte.isShowed()) {
+						showView(v, true);
+					}
+				}
+			});
 		}
-		@Override public void onObjectDeleted(EventBaseBean object) {
-			View v = eventViews.get(object.getId());
-			if(v != null) {
-				hideView(v, true);
-			}
+		@Override public void onObjectDeleted(final EventBaseBean object) {
+			getActivity().runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					View v = eventViews.get(object.getId());
+					if(v != null) {
+						hideView(v, true);
+					}
+				}
+			});
 		}
 		@Override public void onObjectUpdated(final EventBaseBean object) {
-			View lastView = eventViews.get(object.getId());
-			if(lastView != null) {
-				hideView(lastView, false);
-			}
-			View v = baseView.addEvent(object, comptes.get(object.getCid()).getColor(), View.INVISIBLE);
-			eventViews.put(object.getId(), v);
-			showView(v, true);
+			getActivity().runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					View lastView = eventViews.get(object.getId());
+					if(lastView != null) {
+						hideView(lastView, false);
+					}
+					View v = baseView.addEvent(object, comptes.get(object.getCid()).getColor(), View.INVISIBLE);
+					eventViews.put(object.getId(), v);
+					showView(v, true);
+				}
+			});
 		}
 	};
 

@@ -1,9 +1,11 @@
 package its.my.time.pages.calendar;
 
 import its.my.time.R;
+import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
+import its.my.time.data.ws.WSManager;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
@@ -42,7 +44,7 @@ import com.doomonafireball.betterpickers.BetterPickerUtils;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment.DatePickerDialogHandler;
 import com.fonts.mooncake.MooncakeIcone;
 
-public class CalendarActivity extends MyTimeActivity implements OnPageChangeListener, DatePickerDialogHandler {
+public class CalendarActivity extends MyTimeActivity implements OnPageChangeListener, DatePickerDialogHandler, OnObjectChangedListener<CompteBean> {
 
 	public static final long ANIM_DURATION = 200;
 
@@ -134,7 +136,10 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 				bean.setTypeId(Types.Event.MEETING);
 				bean.setDetailsId(0); 
 				adapter.insert(bean);*/
-				BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
+				
+				
+				//BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
+				WSManager.updateAllData(CalendarActivity.this, null);
 			}
 		});
 	}
@@ -167,6 +172,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		menuCompte = new MenuGroupe("Comptes", MooncakeIcone.icon_database);
 		donnees = new ArrayList<MenuObjet>();
 		compteRepo = new CompteRepository(this);
+		compteRepo.addOnObjectChangedListener(this);
 		accountVisibility = new SparseBooleanArray();
 		this.comptes = compteRepo.getAllByUid(PreferencesUtil.getCurrentUid());
 		for (final CompteBean compteBean : this.comptes) {
@@ -183,6 +189,23 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		return  super.onCreateMenu(menuGroupes);
 	}
 
+	@Override
+	public void onObjectAdded(CompteBean object) {
+
+	}
+	
+	@Override
+	public void onObjectDeleted(CompteBean object) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onObjectUpdated(CompteBean object) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void onDialogDateSet(int year, int monthOfYear, int dayOfMonth) {
 		gotoDate(new GregorianCalendar(year, monthOfYear, dayOfMonth));

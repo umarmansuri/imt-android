@@ -15,11 +15,4 @@ public class WSGetOdj extends WSGetBase<OdjBean>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public OdjBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

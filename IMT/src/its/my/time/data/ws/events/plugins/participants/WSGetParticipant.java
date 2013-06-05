@@ -1,12 +1,11 @@
 package its.my.time.data.ws.events.plugins.participants;
 
-import its.my.time.data.bdd.contacts.ContactBean;
 import its.my.time.data.ws.WSGetBase;
 import android.app.Activity;
 
-public class WSGetParticipant extends WSGetBase<ContactBean>{
+public class WSGetParticipant extends WSGetBase<ParticipantBeanWS>{
 
-	public WSGetParticipant(Activity context, int id, GetCallback<ContactBean> callBack) {
+	public WSGetParticipant(Activity context, int id, GetCallback<ParticipantBeanWS> callBack) {
 		super(context, id, callBack);
 	}
 
@@ -14,11 +13,4 @@ public class WSGetParticipant extends WSGetBase<ContactBean>{
 	public String getUrl() {
 		return "/api/participants/";
 	}
-
-	@Override
-	public ContactBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

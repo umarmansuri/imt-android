@@ -7,7 +7,6 @@ import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
-import its.my.time.data.ws.WSManager;
 import its.my.time.sip.CallManager;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.ColorUtil;
@@ -39,6 +38,7 @@ public class SplashActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		new CompteRepository(this);
 		//overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 		//setTheme(android.R.style.Theme_Black_NoTitleBar);
 		super.onCreate(savedInstanceState);
@@ -69,7 +69,9 @@ public class SplashActivity extends Activity {
 
 		PreferencesUtil.init(this);
 		CallManager.initializeManager(getBaseContext());
-		temp();
+
+		PreferencesUtil.setCurrentUid(1);
+		//temp();
 	}
 
 	private void temp() {

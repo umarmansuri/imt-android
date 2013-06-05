@@ -1,12 +1,11 @@
 package its.my.time.data.ws.comptes;
 
-import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.ws.WSGetBase;
 import android.app.Activity;
 
-public class WSGetAccount extends WSGetBase<CompteBean>{
+public class WSGetAccount extends WSGetBase<CompteBeanWS>{
 
-	public WSGetAccount(Activity context, int id, GetCallback<CompteBean> callBack) {
+	public WSGetAccount(Activity context, int id, GetCallback<CompteBeanWS> callBack) {
 		super(context, id, callBack);
 	}
 
@@ -14,11 +13,4 @@ public class WSGetAccount extends WSGetBase<CompteBean>{
 	public String getUrl() {
 		return "/api/accounts/";
 	}
-
-	@Override
-	public CompteBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
