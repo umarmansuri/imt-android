@@ -1,5 +1,7 @@
 package its.my.time.data.ws;
 
+import its.my.time.data.bdd.base.BaseBean;
+import its.my.time.data.bdd.base.BaseRepository;
 import its.my.time.util.PreferencesUtil;
 
 import java.net.URI;
@@ -12,15 +14,15 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import android.app.Activity;
-import android.util.Log;
 
-public abstract class WSPostBase<T> extends WSBase{
+public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 
 	private T object;
 
-	public WSPostBase(Activity context, T object, PostCallback<T> callBack) {
+	public WSPostBase(Activity context, T object, PostCallback<? extends BaseBean> callBack) {
 		super(context, callBack);
 		this.object = object;
 	}
@@ -52,7 +54,12 @@ public abstract class WSPostBase<T> extends WSBase{
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());
-			Log.d("WS",result);
+
+			JSONObject jsonObj = new JSONObject(result);
+			String idDistant = jsonObj.getString(getIdParam());
+			object.setIdDistant(idDistant);
+			getRepository().update(object);
+			
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,6 +68,8 @@ public abstract class WSPostBase<T> extends WSBase{
 	}
 
 
+	public abstract String getIdParam();
+	public abstract BaseRepository<T> getRepository();
 	public abstract String getUrl();
 	public abstract T createObjectFromJson(String json);
 	public abstract List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs);

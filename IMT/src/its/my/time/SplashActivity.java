@@ -7,18 +7,16 @@ import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
-import its.my.time.manager.sip.CallManager;
+import its.my.time.data.ws.WSManager;
+import its.my.time.sip.CallManager;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.ColorUtil;
-import its.my.time.util.ColorUtil.ColorMyTime;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 
 import java.util.Calendar;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -215,7 +213,7 @@ public class SplashActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			finish();
-
+			//WSManager.updateAllData(SplashActivity.this, null);
 			//startActivity(new Intent(SplashActivity.this, TestWSActivity.class));
 			ActivityUtil.startCalendarActivity(SplashActivity.this);
 		}

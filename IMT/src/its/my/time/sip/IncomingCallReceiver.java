@@ -1,4 +1,4 @@
-package its.my.time.manager.sip;
+package its.my.time.sip;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

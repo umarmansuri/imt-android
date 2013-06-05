@@ -126,6 +126,9 @@ public abstract class BaseRepository<T extends BaseBean> extends DatabaseHandler
 			if(label != "id") {
 				Object obj = attr.getValue();
 				if(obj instanceof Calendar) {
+					if(label == "dateModif") {
+						obj = Calendar.getInstance();
+					}
 					initialValues.put(label, DateUtil.getTimeInIso((Calendar)obj));
 				} else if(obj instanceof String) {
 					initialValues.put(label, (String)obj);
@@ -156,6 +159,9 @@ public abstract class BaseRepository<T extends BaseBean> extends DatabaseHandler
 			Object obj = attr.getValue();
 			String label = attr.getLabel();
 			if(obj instanceof Calendar) {
+				if(label == "dateModif") {
+					obj = Calendar.getInstance();
+				}
 				initialValues.put(label, DateUtil.getTimeInIso((Calendar)obj));
 			} else if(obj instanceof String) {
 				initialValues.put(label, (String)obj);
@@ -192,6 +198,18 @@ public abstract class BaseRepository<T extends BaseBean> extends DatabaseHandler
 		Cursor c = this.db.query(getTableName(), getAllAttr(), "id"
 				+ "=?", new String[] { "" + id }, null, null, null);
 		T res = convertCursorToOneObject(c);
+		close();
+		return res;
+	}
+	
+	public List<T> getAllUpdatable() {
+		open();
+		Cursor c = this.db.query(
+				getTableName(), 
+				getAllAttr(), 
+				"(dateModif > dateSync) OR dateSync IS NULL", 
+				null, null, null, null);
+		List<T> res = convertCursorToListObject(c);
 		close();
 		return res;
 	}
