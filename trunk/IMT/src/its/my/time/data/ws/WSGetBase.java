@@ -2,23 +2,27 @@ package its.my.time.data.ws;
 
 import its.my.time.util.PreferencesUtil;
 
+import java.lang.reflect.ParameterizedType;
 import java.net.URI;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.Activity;
 import android.util.Log;
 
 public abstract class WSGetBase<T> extends WSBase{
-
+	Class<T> persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	private int id;
+	private GetCallback<T> callback;
 
 	public WSGetBase(Activity context, int id, GetCallback<T> callBack) {
 		super(context, callBack);
 		this.id = id;
+		this.callback = callBack;
 	}
 
 	@Override
@@ -42,7 +46,11 @@ public abstract class WSGetBase<T> extends WSBase{
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());
 			Log.d("WS",result);
-			createObjectFromJson(result);
+			ObjectMapper mapper = new ObjectMapper();
+			T object = mapper.readValue(result, persistentClass);
+			if(callback != null) {
+				callback.onGetObject(object);
+			}
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,7 +59,6 @@ public abstract class WSGetBase<T> extends WSBase{
 	}
 
 	public abstract String getUrl();
-	public abstract T createObjectFromJson(String json);
 
 	public interface GetCallback<T> extends Callback {
 		public void done(Exception e);

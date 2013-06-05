@@ -55,10 +55,10 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());
 
-			JSONObject jsonObj = new JSONObject(result);
-			String idDistant = jsonObj.getString(getIdParam());
+			/*JSONObject jsonObj = new JSONObject(result);
+			int idDistant = jsonObj.getInt(getIdParam());
 			object.setIdDistant(idDistant);
-			getRepository().update(object);
+			getRepository().update(object);*/
 			
 			return null;
 		} catch (Exception e) {

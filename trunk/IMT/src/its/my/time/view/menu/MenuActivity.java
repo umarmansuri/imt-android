@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -179,6 +180,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	private ELVAdapter menuAdapter;
 
 	public void initialiseMenu() {
+		Log.d("Menu","initialise menu");
 		this.menuGroupes = new ArrayList<MenuGroupe>();
 		this.menuGroupes = onCreateMenu(this.menuGroupes);
 		if (this.menuGroupes == null) {
@@ -206,7 +208,6 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 		this.mMainMenu.setOnGroupClickListener(this.onMenuGroupClickListener);
 		this.mMainMenu.setOnGroupExpandListener(this.onGroupExpandListener);
 	}
-
 	/**
 	 * 
 	 * @param groupPosition le groupe actif

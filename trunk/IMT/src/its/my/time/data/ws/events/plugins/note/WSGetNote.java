@@ -16,10 +16,4 @@ public class WSGetNote extends WSGetBase<NoteBean>{
 		return null;
 	}
 
-	@Override
-	public NoteBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

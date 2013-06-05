@@ -15,10 +15,4 @@ public class WSGetCommentaire extends WSGetBase<CommentBean>{
 		return "/api/commentaires/";
 	}
 
-	@Override
-	public CommentBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

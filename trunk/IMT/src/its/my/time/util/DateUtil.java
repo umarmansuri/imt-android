@@ -16,7 +16,7 @@ public class DateUtil {
 	public static final int DATETIMESELECTOR_ID = 5;
 	public static final int DEFAULTDATESELECTOR_ID = 0;
 	public static final int FIRST_DAY = 2;
-	public static String FORMAT_DATE_ISO = "yyyy-MM-dd HH:mm:ss";
+	public static String FORMAT_DATE_ISO = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	public static final int MONTHYEARDATESELECTOR_ID = 3;
 
@@ -32,12 +32,13 @@ public class DateUtil {
 		return dateFormat.format(cal.getTime());
 	}
 
-	public static GregorianCalendar getDateFromISO(String strDate) {
+	public static Calendar getDateFromISO(String strDate) {
 		final DateFormat f = new SimpleDateFormat(FORMAT_DATE_ISO);
 		final GregorianCalendar res = new GregorianCalendar();
 		try {
 			res.setTime(f.parse(strDate));
 		} catch (final ParseException e) {
+			e.printStackTrace();
 		}
 		return res;
 	}

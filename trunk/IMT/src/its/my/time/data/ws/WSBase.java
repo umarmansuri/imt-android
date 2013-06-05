@@ -52,6 +52,9 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 		return context;
 	}
 	
+	public Callback getCallBack() {
+		return callBack;
+	}
 	
 	public static HttpClient createClient() {
 		try {

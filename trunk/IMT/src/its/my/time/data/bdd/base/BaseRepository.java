@@ -88,7 +88,7 @@ public abstract class BaseRepository<T extends BaseBean> extends DatabaseHandler
 
 	public T convertCursorToOneObject(Cursor c) {
 		if (c.getCount() <= 0) {
-			return null;
+			return getInstance();
 		}
 		c.moveToFirst();
 		T object = convertCursorToObject(c);
@@ -197,6 +197,17 @@ public abstract class BaseRepository<T extends BaseBean> extends DatabaseHandler
 		open();
 		Cursor c = this.db.query(getTableName(), getAllAttr(), "id"
 				+ "=?", new String[] { "" + id }, null, null, null);
+		T res = convertCursorToOneObject(c);
+		close();
+		return res;
+	}
+	
+
+
+	public T getByIdDistant(long idDistant) {
+		open();
+		Cursor c = this.db.query(getTableName(), getAllAttr(), "idDistant"
+				+ "=?", new String[] { "" + idDistant }, null, null, null);
 		T res = convertCursorToOneObject(c);
 		close();
 		return res;
