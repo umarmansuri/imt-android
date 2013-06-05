@@ -61,6 +61,11 @@ public class CompteRepository extends BaseRepository<CompteBean> {
 
 
 	public void addOnObjectChangedListener(OnObjectChangedListener<CompteBean> listener) {
+		for (OnObjectChangedListener l : onObjectChangedListeners) {
+			if(l.getClass() == listener.getClass()) {
+				return;
+			}
+		}
 		onObjectChangedListeners.add(listener);
 	}
 	public void removeOnObjectChangedListener(OnObjectChangedListener<CompteBean> listener) {

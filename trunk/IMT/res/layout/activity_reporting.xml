@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/reportingTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="Génération du reporting"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/reportingTextDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/reportingTextTitle"
+                android:layout_margin="10dp"
+                android:text="Période" />
+
+            <RelativeLayout
+                android:id="@+id/reportingLayoutDate"
+                style="@style/champs_texte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reportingTextDate"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp" >
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/reportingTextCompte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/reportingLayoutDate"
+                android:layout_margin="10dp"
+                android:text="Comptes" />
+
+            <LinearLayout
+                android:id="@+id/reportingLayoutCompte"
+                style="@style/champs_texte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reportingTextCompte"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/reportingTextType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/reportingLayoutCompte"
+                android:layout_margin="10dp"
+                android:text="Types d&apos;événement" />
+
+            <LinearLayout
+                android:id="@+id/reportingLayoutType"
+                style="@style/champs_texte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reportingTextType"
+                android:layout_margin="10dp"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reportingLayoutType"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:text="Générer le rapport" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</ViewSwitcher>

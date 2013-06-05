@@ -40,7 +40,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.doomonafireball.betterpickers.BetterPickerUtils;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment.DatePickerDialogHandler;
 import com.fonts.mooncake.MooncakeIcone;
 
@@ -140,6 +139,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 				
 				//BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
 				WSManager.updateAllData(CalendarActivity.this, null);
+				
 			}
 		});
 	}
@@ -190,8 +190,9 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	}
 
 	@Override
-	public void onObjectAdded(CompteBean object) {
-
+	public void onObjectAdded(CompteBean compteBean) {
+		MenuObjet object = new MenuObjet(menuCompte, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), getResources().getDrawable(ColorUtil.getDrawableRes(compteBean.getColor())));
+		menuCompte.getObjets().add(0, object);
 	}
 	
 	@Override
@@ -293,11 +294,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 			return true;
 		}
 		return false;
-	}
-	
-	@Override
-	public void reload() {
-
 	}
 
 	public void showDays(Calendar cal) {

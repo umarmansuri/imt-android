@@ -57,7 +57,7 @@ public class MonthView extends BaseView implements OnDayClickListener {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				helper = new MonthDisplayHelper(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH), DateUtil.FIRST_DAY);
+				helper = new MonthDisplayHelper(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH) + 1, DateUtil.FIRST_DAY);
 				externListener = listener;
 				daysViews = new SparseArray<ViewGroup>();
 				final View v = inflate(getContext(),R.layout.activity_calendar_month, null);
