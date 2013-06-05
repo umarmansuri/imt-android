@@ -1,6 +1,8 @@
 package its.my.time.data.ws.events.plugins.pj;
 
+import its.my.time.data.bdd.base.BaseRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
+import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.ws.WSPostBase;
 
 import java.util.List;
@@ -25,6 +27,17 @@ public class WSSendPj extends WSPostBase<PjBean>{
 	public PjBean createObjectFromJson(String json) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public String getIdParam() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public BaseRepository<PjBean> getRepository() {
+		return new PjRepository(getContext());
 	}
 
 	@Override

@@ -2,9 +2,9 @@ package its.my.time.pages.editable.events.call.details;
 
 import its.my.time.R;
 import its.my.time.data.bdd.events.details.call.CallDetailsBean;
-import its.my.time.manager.sip.CallManager;
 import its.my.time.pages.editable.events.call.CallActivity;
 import its.my.time.pages.editable.events.event.details.DetailsFragment;
+import its.my.time.sip.CallManager;
 import its.my.time.util.Types;
 
 import java.text.SimpleDateFormat;

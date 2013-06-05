@@ -9,15 +9,23 @@ import java.util.List;
 
 public abstract class BaseBean {
 	private TableAttribut<Integer> id;
+	private TableAttribut<String> idDistant;
 	private TableAttribut<Calendar> dateModif;
 	private TableAttribut<Calendar> dateSync;
 
 	public BaseBean() {
+		idDistant = new TableAttribut<String>("idDistant", "");
 		id = new TableAttribut<Integer>("id", -1);
 		dateModif = new TableAttribut<Calendar>("dateModif", DateUtil.createCalendar());
 		dateSync = new TableAttribut<Calendar>("dateSync", DateUtil.createCalendar());
 	}
 
+	public String getIdDistant() {
+		return idDistant.getValue();
+	}
+	public void setIdDistant(String idDistant) {
+		this.idDistant.setValue(idDistant);
+	}
 	public int getId() {
 		return id.getValue();
 	}
@@ -38,6 +46,7 @@ public abstract class BaseBean {
 	}
 
 	public List<TableAttribut<?>> getAllAttributs(List<TableAttribut<?>> res){
+		res.add(idDistant);
 		res.add(id);
 		res.add(dateModif);
 		res.add(dateSync);

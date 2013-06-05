@@ -24,8 +24,10 @@ public class PreferencesUtil {
 	public static final int MODE = Context.MODE_PRIVATE;
 	private static final String SHPREF_KEY_REFRESH_TOKEN = "SHPREF_KEY_REFRESH_TOKEN";
 	private static final String SHPREF_KEY_ACCESS_TOKEN = "SHPREF_KEY_ACCESS_TOKEN";
+	private static final String SHPREF_KEY_REQUEST_TOKEN = "SHPREF_KEY_REQUEST_TOKEN";
 
 	private static final String SHPREF_KEY_LAST_REFRESH = "SHPREF_KEY_LAST_REFRESH";
+	private static final String SHPREF_KEY_LAST_ACCESS = "SHPREF_KEY_LAST_ACCESS";
 
 	public static void writeBoolean(String key, boolean value) {
 		getEditor(context).putBoolean(key, value).commit();
@@ -111,6 +113,38 @@ public class PreferencesUtil {
 	}
 
 
+	public static void setCurrentToken(String refreshToken, String accessToken) {
+		Editor e = getEditor(context);
+		e.putString(SHPREF_KEY_ACCESS_TOKEN, accessToken);
+		e.putString(SHPREF_KEY_REFRESH_TOKEN, refreshToken);
+		e.commit();
+
+		setLastTokenAccess(Calendar.getInstance());
+		setLastTokenRefresh(Calendar.getInstance());
+	}
+	
+
+	public static String getCurrentRequestToken() {
+		return readString(SHPREF_KEY_REQUEST_TOKEN, null);
+	}
+
+
+	public static void setCurrentRequestToken(String refreshToken) {
+		writeString(SHPREF_KEY_REQUEST_TOKEN, refreshToken);
+	}
+
+	public static void setLastTokenAccess(Calendar calendar) {
+		writeString(SHPREF_KEY_LAST_ACCESS, DateUtil.getTimeInIso(calendar));
+	}
+
+	public static Calendar getLastTokenAccess() {
+		try {
+			return DateUtil.getDateFromISO(readString(SHPREF_KEY_LAST_ACCESS, null));
+		} catch (Exception e) {
+			return new GregorianCalendar(1970, 0, 1);
+		}
+	}
+
 	public static void setLastTokenRefresh(Calendar calendar) {
 		writeString(SHPREF_KEY_LAST_REFRESH, DateUtil.getTimeInIso(calendar));
 	}
@@ -119,14 +153,7 @@ public class PreferencesUtil {
 		try {
 			return DateUtil.getDateFromISO(readString(SHPREF_KEY_LAST_REFRESH, null));
 		} catch (Exception e) {
-			return new GregorianCalendar(1900, 0, 1);
+			return new GregorianCalendar(1970, 0, 1);
 		}
-	}
-
-	public static void setCurrentToken(String refreshToken, String accessToken) {
-		Editor e = getEditor(context);
-		e.putString(SHPREF_KEY_ACCESS_TOKEN, accessToken);
-		e.putString(SHPREF_KEY_REFRESH_TOKEN, refreshToken);
-		e.commit();
 	}
 }

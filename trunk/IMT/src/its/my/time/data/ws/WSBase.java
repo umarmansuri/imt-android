@@ -48,6 +48,11 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 		this.callBack = callBack;
 	}
 
+	public Activity getContext() {
+		return context;
+	}
+	
+	
 	public static HttpClient createClient() {
 		try {
 			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -74,7 +79,7 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		WSLogin.launchOAuth(context, new Callback() {			
+		WSLogin.checkConnexion(context, new Callback() {			
 			@Override
 			public void done(Exception e) {
 				final Exception exception = run();
@@ -88,10 +93,10 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 				}
 			}
 		});
-return null;
-}
+		return null;
+	}
 
-protected abstract Exception run();
+	protected abstract Exception run();
 
 }
 

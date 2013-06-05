@@ -1,6 +1,8 @@
 package its.my.time.data.ws.contact;
 
+import its.my.time.data.bdd.base.BaseRepository;
 import its.my.time.data.bdd.contacts.ContactBean;
+import its.my.time.data.bdd.contacts.ContactRepository;
 import its.my.time.data.ws.WSPostBase;
 
 import java.util.List;
@@ -27,6 +29,17 @@ public class WSSendContact extends WSPostBase<ContactBean>{
 		return null;
 	}
 
+	@Override
+	public String getIdParam() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public BaseRepository<ContactBean> getRepository() {
+		return new ContactRepository(getContext());
+	}
+	
 	@Override
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
         nameValuePairs.add(new BasicNameValuePair("", ""));
