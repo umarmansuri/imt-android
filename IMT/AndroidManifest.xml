@@ -61,7 +61,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="its.my.time.manager.sip.IncomingCallReceiver"
+            android:name="its.my.time.sip.IncomingCallReceiver"
             android:label="Call Receiver" />
 
         <service
