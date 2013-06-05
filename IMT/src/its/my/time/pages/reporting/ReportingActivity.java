@@ -57,7 +57,9 @@ public class ReportingActivity extends Activity{
 		boolean isByDate = extra.getBoolean(FILTER_DATE);
 		boolean isByType= extra.getBoolean(FILTER_TYPE);
 		
-		mWebView = new WebView(this);
+		setContentView(R.layout.activity_reporting);
+		
+		mWebView = (WebView) findViewById(R.id.webview);
 		mWebView.getSettings().setEnableSmoothTransition(true);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.loadUrl("https://google-developers.appspot.com/chart/interactive/docs/gallery/piechart#Example");

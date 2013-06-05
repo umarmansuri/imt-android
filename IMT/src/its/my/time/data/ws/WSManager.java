@@ -252,6 +252,7 @@ public class WSManager {
 			bean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
 			bean.setAllDay(object.getAll_day());
 			bean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
+			Log.d("WS","Compte ID EVENT = " + bean.getCid());
 			if(bean.getId() == -1) {
 				eventRepo.insert(bean);
 			} else {
