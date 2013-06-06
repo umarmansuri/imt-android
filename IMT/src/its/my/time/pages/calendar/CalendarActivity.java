@@ -5,6 +5,7 @@ import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
+import its.my.time.data.ws.Callback;
 import its.my.time.data.ws.WSManager;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
@@ -138,7 +140,13 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 				
 				
 				//BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
-				WSManager.updateAllData(CalendarActivity.this, null);
+				WSManager.updateAllData(CalendarActivity.this, new Callback() {
+					
+					@Override
+					public void done(Exception e) {
+						Log.d("WS","TERMIN2!!!!!!!!!!");
+					}
+				});
 				
 			}
 		});

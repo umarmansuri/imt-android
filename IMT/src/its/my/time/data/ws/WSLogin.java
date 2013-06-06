@@ -47,7 +47,7 @@ public class WSLogin {
 	private static class RefreshToken extends AsyncTask<Void, Void, Void> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		public Void doInBackground(Void... params) {
 			try {
 
 				Calendar lastAccess = PreferencesUtil.getLastTokenAccess();
