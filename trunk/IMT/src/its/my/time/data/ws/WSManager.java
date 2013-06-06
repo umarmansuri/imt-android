@@ -18,8 +18,6 @@ import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
-import its.my.time.data.ws.WSGetBase.GetCallback;
-import its.my.time.data.ws.WSPostBase.PostCallback;
 import its.my.time.data.ws.comptes.CompteBeanWS;
 import its.my.time.data.ws.comptes.Event;
 import its.my.time.data.ws.comptes.WSGetAccount;
@@ -32,30 +30,28 @@ import its.my.time.data.ws.events.WSSendEvent;
 import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
 import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
-import its.my.time.data.ws.events.plugins.participants.ParticipantBeanWS;
-import its.my.time.data.ws.events.plugins.participants.WSGetParticipant;
 import its.my.time.data.ws.events.plugins.participants.WSSendParticipant;
-import its.my.time.data.ws.events.plugins.pj.WSGetPj;
 import its.my.time.data.ws.events.plugins.pj.WSSendPj;
 import its.my.time.data.ws.user.Account;
 import its.my.time.data.ws.user.UtilisateurBeanWS;
 import its.my.time.data.ws.user.WSGetUser;
 import its.my.time.data.ws.user.WSSendUser;
-import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
 import android.util.Log;
 
 
-@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
+@SuppressWarnings({ "unused" })
 public class WSManager {
 
 	private static Activity context;
 	private static long uid;
-	private static int count = 0;
+
 	private static UtilisateurRepository utilisateurRepo;
 	private static CompteRepository compteRepo;
 	private static EventBaseRepository eventRepo;
@@ -79,224 +75,151 @@ public class WSManager {
 		participantRepo = new ParticipantRepository(context);
 		participationRepo = new ParticipationRepository(context);
 		uid = PreferencesUtil.getCurrentUid();
-		new Thread(new Runnable() {
+
+
+		WSLogin.checkConnexion(context, new Callback() {
 
 			@Override
-			public void run() {
-				sendLocalUpdate(
-						new PostCallback() {
-							@Override
-							public void done(Exception e) {
-								count--;
-								Log.d("WS","callback launch");
-								if(count==0){
-									Log.d("WS","retrieve distante");
-									getDistanteUpdate(new GetCallback() {
-										@Override public void onGetObject(Object object) {}
-										@Override
-										public void done(Exception e) {
-											if(callback != null) {
-												callback.done(e);
-											}	
-										}
-									}
-											);	
-								}
-							}
-							@Override public void onGetObject(Object object) {}
-						});	
-
+			public void done(Exception e) {
+				if(e == null) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							sendLocalUpdate();	
+							getDistanteUpdate();		
+						}
+					}).start();
+					
+					if(callback != null) {
+						callback.done(null);
+					}
+				}
 			}
+		});
 
-		}).start();
-	}
 
-	public static void sendLocalUpdate(PostCallback callback) {
-		sendUser(callback);
-		sendAllAccount(callback);
-		sendAllEvent(callback);
-		sendAllComment(callback);
-		sendAllNote(callback);
-		sendAllOdj(callback);
-		sendAllParticipant(callback);
-		sendAllParticipation(callback);
-		sendAllPj(callback);	
 	}
 
 
-	private static void sendUser(PostCallback callback) {
-		count ++;
-		new WSSendUser(
-				context,
-				utilisateurRepo.getById(uid), 
-				callback).execute();
-	}
 
-	private static void sendAllAccount(PostCallback callback) {
+	private static void sendLocalUpdate() {
+		new WSSendUser(context,utilisateurRepo.getById(uid),null).run();
 
 		List<CompteBean> comptes = compteRepo.getAllUpdatable();
 		for (CompteBean compte : comptes) {
-			count ++;
-			new WSSendAccount(context, compte, callback).execute();
+			new WSSendAccount(context, compte, null).run();
 		}
-	}
 
-	private static void sendAllEvent(PostCallback callback) {
+
 		List<EventBaseBean> events = eventRepo.getAllUpdatable();
 		for (EventBaseBean event : events) {
-			count ++;
-			new WSSendEvent(context, event, callback).execute();
+			new WSSendEvent(context, event, null).run();
 		}
-	}
 
-	private static void sendAllComment(PostCallback callback) {
+
 		List<CommentBean> comments = commentRepo.getAllUpdatable();
 		for (CommentBean comment : comments) {
-			count ++;
-			new WSSendCommentaire(context, comment, callback).execute();
+			new WSSendCommentaire(context, comment, null).run();
 		}
-	}
 
-	private static void sendAllNote(PostCallback callback) {
+
 		List<NoteBean> notes = noteRepo.getAllUpdatable();
 		for (NoteBean note : notes) {
-			count ++;
-			new WSSendNote(context, note, callback).execute();
+			new WSSendNote(context, note, null).run();
 		}
-	}
 
-	private static void sendAllOdj(PostCallback callback) {
+
 		List<OdjBean> odjs = odjRepo.getAllUpdatable();
 		for (OdjBean odj : odjs) {
-			count ++;
-			new WSSendOdj(context, odj, callback).execute();
+			new WSSendOdj(context, odj, null).run();
 		}
-	}
 
-	private static void sendAllParticipant(PostCallback callback) {
+
 		List<ParticipantBean> participants = participantRepo.getAllUpdatable();
 		for (ParticipantBean participant : participants) {
-			count ++;
-			new WSSendParticipant(context, participant, callback).execute();
+			new WSSendParticipant(context, participant, null).run();
 		}
-	}
 
-	private static void sendAllParticipation(PostCallback callback) {
+
 		List<ParticipationBean> participations = participationRepo.getAllUpdatable();
 		for (ParticipationBean participation : participations) {
-			count ++;
 			//TODO new WSSendParticipation(context, participation, callback).execute();
 		}
-	}
 
-	private static void sendAllPj(PostCallback callback) {
+
 		List<PjBean> pjs = pjRepo.getAllUpdatable();
 		for (PjBean pj : pjs) {
-			count ++;
-			new WSSendPj(context, pj, callback).execute();
+			new WSSendPj(context, pj, null).run();
 		}
+
 	}
 
-	public static void getDistanteUpdate(GetCallback callback) {
-		new WSGetUser(context, 1, userCallback).execute();
+	private static void getDistanteUpdate() {
+
+		UtilisateurBeanWS user = new WSGetUser(context, (int)uid, null).retreiveObject();	
+
+		UtilisateurBean bean = utilisateurRepo.getByIdDistant(user.getId());
+		bean .setIdDistant(user.getId());
+		bean.setNom(user.getUsername());
+		bean.setMail(user.getEmail());
+		if(bean.getId() == -1) {
+			utilisateurRepo.insert(bean);
+		} else {
+			utilisateurRepo.update(bean);
+		}
+
+		List<Event> eventsWs = new ArrayList<Event>();
+		for (Account account : user.getAccounts()) {
+			CompteBeanWS object = new WSGetAccount(context, account.getId(), null).retreiveObject();
+			if(object != null) {
+				CompteBean comtpeBean = compteRepo.getByIdDistant(object.getId());
+				comtpeBean.setIdDistant(object.getId());
+				comtpeBean.setTitle(object.getTitle());
+				comtpeBean.setColor(object.getColor());
+				comtpeBean.setShowed(true);
+				comtpeBean.setUid(uid);
+				if(comtpeBean.getId() == -1) {
+					compteRepo.insert(comtpeBean);
+				} else {
+					compteRepo.update(comtpeBean);
+				}
+				eventsWs.addAll(object.getEvents());
+			}
+		}
+
+
+		List<Participant> participantsWs = new ArrayList<Participant>();
+		List<Attachmants> attachementsWs = new ArrayList<Attachmants>();
+		for (Event event : eventsWs) {
+			EventBeanWS object = new WSGetEvent(context, event.getId(), null).retreiveObject();
+
+			EventBaseBean eventBean = eventRepo.getByIdDistant(object.getId());
+			eventBean.setIdDistant(object.getId());
+			eventBean.setTitle(object.getTitle());
+			eventBean.sethDeb(Calendar.getInstance());// DateUtil.getDateFromISO(object.getDate()));
+			eventBean.sethFin(Calendar.getInstance());//DateUtil.getDateFromISO(object.getDate_fin()));
+			eventBean.setAllDay(object.getAll_day());
+			eventBean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
+			Log.d("WS","Compte ID EVENT = " + eventBean.getCid());
+			if(eventBean.getId() == -1) {
+				eventRepo.insert(eventBean);
+			} else {
+				eventRepo.update(eventBean);
+			}		
+			participantsWs.addAll(object.getParticipants());
+			attachementsWs.addAll(object.getAttachments());
+		}
+
+
+		for (Attachmants attachmants : attachementsWs) {
+
+		}
+		for (Participant participant : participantsWs) {
+
+		}
+
+		//new WSGetUser(context, 1, userCallback).execute();
 	}
 
-	private static GetCallback<UtilisateurBeanWS> userCallback = new GetCallback<UtilisateurBeanWS>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(UtilisateurBeanWS object) {
-			UtilisateurBean bean = utilisateurRepo.getByIdDistant(object.getId());
-			bean.setIdDistant(object.getId());
-			bean.setNom(object.getUsername());
-			bean.setMail(object.getEmail());
-			if(bean.getId() == -1) {
-				utilisateurRepo.insert(bean);
-			} else {
-				utilisateurRepo.update(bean);
-			}
-			for (Account account : object.getAccounts()) {
-				new WSGetAccount(context, account.getId(), accountCallback).execute();
-			}
-		}
-
-	};
-
-	private static GetCallback<CompteBeanWS> accountCallback = new GetCallback<CompteBeanWS>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(CompteBeanWS object) {
-			CompteBean bean = compteRepo.getByIdDistant(object.getId());
-			bean.setIdDistant(object.getId());
-			bean.setTitle(object.getTitle());
-			bean.setColor(object.getColor());
-			bean.setShowed(true);
-			bean.setUid(uid);
-			if(bean.getId() == -1) {
-				compteRepo.insert(bean);
-			} else {
-				compteRepo.update(bean);
-			}
-			
-			for (Event event : object.getEvents()) {
-				new WSGetEvent(context, event.getId(), eventCallback).execute();
-			}
-		}
-
-	};
-
-	private static GetCallback<EventBeanWS> eventCallback = new GetCallback<EventBeanWS>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(EventBeanWS object) {
-			EventBaseBean bean = eventRepo.getByIdDistant(object.getId());
-			bean.setIdDistant(object.getId());
-			bean.setTitle(object.getTitle());
-			bean.sethDeb(DateUtil.getDateFromISO(object.getDate()));
-			bean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
-			bean.setAllDay(object.getAll_day());
-			bean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
-			Log.d("WS","Compte ID EVENT = " + bean.getCid());
-			if(bean.getId() == -1) {
-				eventRepo.insert(bean);
-			} else {
-				eventRepo.update(bean);
-			}
-
-			for (Participant participant : object.getParticipants()) {
-				new WSGetParticipant(context, 1, participantCallback).execute();
-			}	
-
-			for (Attachmants pj : object.getAttachments()) {
-				new WSGetPj(context, 1, pjCallback).execute();
-			}	
-		}
-	};
-
-	private static GetCallback<CommentBean> commentCallback = new GetCallback<CommentBean>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(CommentBean object) {}
-
-	};
-
-	private static GetCallback<PjBean> pjCallback = new GetCallback<PjBean>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(PjBean object) {}
-
-	};
-
-	private static GetCallback<OdjBean> odjCallback = new GetCallback<OdjBean>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(OdjBean object) {}
-
-	};
-
-	private static GetCallback<NoteBean> noteCallback = new GetCallback<NoteBean>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(NoteBean object) {}
-
-	};
-
-	private static GetCallback<ParticipantBeanWS> participantCallback = new GetCallback<ParticipantBeanWS>() {
-		@Override public void done(Exception e) {}
-		@Override public void onGetObject(ParticipantBeanWS object) {}
-
-	};
 
 }

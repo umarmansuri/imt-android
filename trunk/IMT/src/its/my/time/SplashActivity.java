@@ -202,7 +202,7 @@ public class SplashActivity extends Activity {
 		}
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		public Void doInBackground(Void... params) {
 			try {
 				//GCMManager.init(SplashActivity.this);
 				

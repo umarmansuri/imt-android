@@ -81,7 +81,7 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 	}
 
 	@Override
-	protected Void doInBackground(Void... params) {
+	public Void doInBackground(Void... params) {
 		WSLogin.checkConnexion(context, new Callback() {			
 			@Override
 			public void done(Exception e) {

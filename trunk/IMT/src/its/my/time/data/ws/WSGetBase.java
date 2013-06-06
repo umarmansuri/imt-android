@@ -27,6 +27,16 @@ public abstract class WSGetBase<T> extends WSBase{
 
 	@Override
 	protected Exception run() {
+		if(retreiveObject() != null){
+			return null;
+		} else {
+			return null;
+		}
+	}
+	
+	
+
+	public T retreiveObject() {
 		try {
 			HttpClient client = createClient();
 			String urlStr = getUrl();
@@ -51,10 +61,9 @@ public abstract class WSGetBase<T> extends WSBase{
 			if(callback != null) {
 				callback.onGetObject(object);
 			}
-			return null;
+			return object;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return e;
+			return null;
 		}
 	}
 
