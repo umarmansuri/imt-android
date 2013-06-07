@@ -1,22 +1,21 @@
 package its.my.time.pages.editable.profil;
 
 import its.my.time.R;
-import its.my.time.data.bdd.compte.CompteBean;
-import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
+import its.my.time.data.ws.Callback;
+import its.my.time.data.ws.user.WSCreateUser;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
-import its.my.time.util.Types;
 import its.my.time.view.date.DateButton;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-public class ProfilActivity extends BaseActivity {
+public class ProfilActivity extends BaseActivity implements Callback {
 
 	private UtilisateurBean user;
 	private EditText nom;
@@ -194,7 +193,9 @@ public class ProfilActivity extends BaseActivity {
 		user.setVille(ville.getText().toString());
 		user.setPays("France");
 
-		if (!isNew) {
+		
+		new WSCreateUser(this, user, this).execute();
+		/*if (!isNew) {
 			new UtilisateurRepository(this).update(user);
 		} else {
 			long id_user = new UtilisateurRepository(this).insert(user);
@@ -207,7 +208,7 @@ public class ProfilActivity extends BaseActivity {
 				long id_compte = new CompteRepository(this).insert(compte_default);
 				if(id_compte == -1) {Toast.makeText(this, "Erreur Création Compte My Time", Toast.LENGTH_LONG).show();}
 			}else {Toast.makeText(this, "Erreur Création Utilisateur", Toast.LENGTH_LONG).show();}
-		}
+		}*/
 		finish();
 	}
 
@@ -217,5 +218,9 @@ public class ProfilActivity extends BaseActivity {
 		finish();
 	}
 
+	@Override
+	public void done(Exception e) {
+		Log.d("WS","Exception = " + e);
+	}
 
 }

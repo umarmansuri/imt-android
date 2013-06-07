@@ -64,7 +64,8 @@
                             android:ellipsize="end"
                             android:hint="@string/view_profil_birthday"
                             android:inputType="datetime"
-                            android:textSize="@dimen/text_size_small" />
+                            android:textSize="@dimen/text_size_small"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/activity_profil_birthday_count"
@@ -73,7 +74,8 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_margin="6dp"
                             android:text="22 ans"
-                            android:textSize="@dimen/text_size_small" />
+                            android:textSize="@dimen/text_size_small"
+                            android:visibility="gone" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -181,7 +183,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/activity_profil_password_again"
                     android:layout_margin="4dp"
-                    android:background="@color/white" >
+                    android:background="@color/white"
+                    android:visibility="gone" >
 
                     <EditText
                         android:id="@+id/activity_profil_phone_value"
@@ -219,7 +222,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/activity_profil_mail"
                     android:layout_margin="4dp"
-                    android:background="@color/white" >
+                    android:background="@color/white"
+                    android:visibility="gone" >
 
                     <EditText
                         android:id="@+id/activity_profil_adresse_value"
@@ -238,7 +242,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/activity_profil_adresse"
                     android:layout_margin="4dp"
-                    android:background="@color/white" >
+                    android:background="@color/white"
+                    android:visibility="gone" >
 
                     <EditText
                         android:id="@+id/activity_profil_code_postal_value"
@@ -257,7 +262,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/activity_profil_code_postal"
                     android:layout_margin="4dp"
-                    android:background="@color/white" >
+                    android:background="@color/white"
+                    android:visibility="gone" >
 
                     <EditText
                         android:id="@+id/activity_profil_city_value"

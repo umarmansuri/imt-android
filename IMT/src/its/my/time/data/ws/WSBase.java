@@ -39,6 +39,7 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 	public static final String URL_FORM_ACCEPT = URL_BASE + "oauth/v2/auth?client_id";
 
 	public static final String URL_REFRESH = URL_BASE + "oauth/v2/token";
+	public static final String URL_FORM_CREATE = "https://app.my-time.fr/login";
 
 	private Callback callBack;
 	private Activity context;
