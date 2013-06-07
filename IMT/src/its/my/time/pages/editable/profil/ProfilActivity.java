@@ -9,8 +9,10 @@ import its.my.time.pages.editable.BaseActivity;
 import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.date.DateButton;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,7 +35,7 @@ public class ProfilActivity extends BaseActivity implements Callback {
 	private boolean isNew;
 	private Bundle state;
 
-	
+
 	@Override
 	public void onCreate(Bundle savedInstance) {
 		overridePendingTransition(R.anim.entry_in, R.anim.entry_out);
@@ -52,6 +54,7 @@ public class ProfilActivity extends BaseActivity implements Callback {
 		return false;
 	}
 	private String KEY_NOM = "KEY_NOM";
+	private ProgressDialog dialog;
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		/**
@@ -108,41 +111,41 @@ public class ProfilActivity extends BaseActivity implements Callback {
 		{
 			age.setText(DateUtil.getNbYears(user.getDateAniv())+ " ans");
 		}
-	
+
 		nom.setEnabled(false);
 		nom.setText(user.getNom());
-	
-	
+
+
 		prenom.setEnabled(false);
 		prenom.setText(user.getPrenom());
-	
+
 		pseudo.setEnabled(false);
 		pseudo.setText(user.getPseudo());
-	
+
 		mdp.setEnabled(false);
 		mdp.setText(user.getMdp());
-	
+
 		mdp2.setEnabled(false);
 		mdp2.setText(user.getMdp());
-	
+
 		dateAniv.setEnabled(false);
 		dateAniv.setDate(user.getDateAniv());
-	
+
 		tel.setEnabled(false);
 		tel.setText(user.getTel());
-	
+
 		mail.setEnabled(false);
 		mail.setText(user.getMail());
-	
+
 		adresse.setEnabled(false);
 		adresse.setText(user.getAdresse());
-	
+
 		codePostal.setEnabled(false);
 		codePostal.setText(user.getCodePostal());
-	
+
 		ville.setEnabled(false);
 		ville.setText(user.getVille());
-	
+
 	}
 
 	private void initialiseValuesFromState() {
@@ -193,23 +196,14 @@ public class ProfilActivity extends BaseActivity implements Callback {
 		user.setVille(ville.getText().toString());
 		user.setPays("France");
 
-		
+		if(dialog == null) {
+			dialog = new ProgressDialog(this);
+			dialog.setTitle("Patience");
+			dialog.setCancelable(false);
+			dialog.setMessage("Enregistrement en cours");
+		}
+		dialog.show();
 		new WSCreateUser(this, user, this).execute();
-		/*if (!isNew) {
-			new UtilisateurRepository(this).update(user);
-		} else {
-			long id_user = new UtilisateurRepository(this).insert(user);
-			if (id_user >=0){
-				CompteBean compte_default = new CompteBean();
-				compte_default.setShowed(true);
-				compte_default.setTitle("My Time");
-				compte_default.setType(Types.Comptes.MYTIME.id);
-				compte_default.setUid(id_user);
-				long id_compte = new CompteRepository(this).insert(compte_default);
-				if(id_compte == -1) {Toast.makeText(this, "Erreur Création Compte My Time", Toast.LENGTH_LONG).show();}
-			}else {Toast.makeText(this, "Erreur Création Utilisateur", Toast.LENGTH_LONG).show();}
-		}*/
-		finish();
 	}
 
 	@Override
@@ -220,7 +214,32 @@ public class ProfilActivity extends BaseActivity implements Callback {
 
 	@Override
 	public void done(Exception e) {
-		Log.d("WS","Exception = " + e);
+		dialog.hide();
+		if(e == null) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Confirmation");
+			builder.setMessage("Votre compte a été crée avec succès. Vous pouvez maintenant vous connecter.");
+			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					finish();
+				}
+			});
+			builder.show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Erreur");
+			builder.setMessage("L'identifiant sélectionné n'est pas disponible.");
+			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					launchEdit();
+				}
+			});
+			builder.show();
+		}
 	}
 
 }
