@@ -32,22 +32,7 @@ public class WSCreateUser extends AsyncTask<Void, Void, Void> {
 					public void onReceivedSslError(WebView view,SslErrorHandler handler, SslError error) {handler.proceed();}
 
 					@Override
-					public boolean shouldOverrideUrlLoading(WebView view,String url) {
-						if (url.startsWith("https://app.my-time.fr/register/confirmed")) {
-							if(callback != null) {
-								context.runOnUiThread(new Runnable() {
-
-									@Override
-									public void run() {
-										callback.done(null);
-									}
-								});
-							}
-						} else {
-							callback.done(new Exception());
-						}
-						return true;
-					}
+					public boolean shouldOverrideUrlLoading(WebView view,String url) {return false;}
 
 					public void onPageFinished(WebView webview, String url) {
 						if (url.startsWith(WSBase.URL_FORM_CREATE)) {
@@ -58,7 +43,20 @@ public class WSCreateUser extends AsyncTask<Void, Void, Void> {
 							webview.loadUrl("javascript: document.getElementsByTagName('form')[1].elements['fos_user_registration_form_plainPassword_first'].value = '" + user.getMdp() + "';");
 							webview.loadUrl("javascript: document.getElementsByTagName('form')[1].elements['fos_user_registration_form_plainPassword_second'].value = '" + user.getMdp() + "';");
 							webview.loadUrl("javascript: document.getElementsByTagName('form')[1].submit();");
+						} else if (url.startsWith("https://app.my-time.fr/register/confirmed")) {
+							if(callback != null) {
+								context.runOnUiThread(new Runnable() {
+
+									@Override
+									public void run() {
+										callback.done(null);
+									}
+								});
+							}
+						} else if (url.startsWith("https://app.my-time.fr/register")) {
+							callback.done(new Exception());
 						}
+					
 					};
 				};
 
