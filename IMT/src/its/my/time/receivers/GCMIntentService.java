@@ -16,12 +16,13 @@
 package its.my.time.receivers;
 
 import its.my.time.Consts;
-import its.my.time.R;
-import android.app.Activity;
+import its.my.time.data.bdd.events.event.EventBaseBean;
+import its.my.time.data.bdd.events.event.EventBaseRepository;
+import its.my.time.data.ws.events.WSGetEvent;
+
+import java.util.Calendar;
+
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
@@ -37,28 +38,19 @@ public class GCMIntentService extends GCMBaseIntentService {
 		super(Consts.GCM_PROJECT_ID);
 	}
 
-
 	@Override
 	protected void onMessage(Context context, Intent intent) {
+
 		int id = Integer.parseInt(intent.getStringExtra("id"));
-		generateNotification(context, "Nouvel évènement", id);
-	}
+		String type = intent.getStringExtra("type");
+		EventBaseBean event = new EventBaseRepository(context).getById(id);
 
-	public static void generateNotification(Context context, String message, int id) {
-		//TODO receuperer nouveau user, jouter dans WSManger.addUser();
-		long when = System.currentTimeMillis();
-		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification notification = new Notification(R.drawable.ic_launcher,message, when);
-		String title = context.getString(R.string.app_name);
-		Intent notificationIntent = new Intent(context,ValidateParticipationActivity.class);
-		notificationIntent.putExtra(Consts.EXTRA_EID, 1);
-		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		PendingIntent intent = PendingIntent.getActivity(context, 0,notificationIntent, 0);
-		notification.setLatestEventInfo(context, title, message, intent);
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		notificationManager.notify(0, notification);
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MINUTE, -10);
+		if(event == null || event.getId() <= 0 || event.getDateSync().before(cal)) {
+			new WSGetEvent(context, id, null).execute();
+		}
 	}
-
 
 	@Override protected void onError(Context arg0, String arg1) {}
 	@Override protected void onRegistered(Context arg0, String arg1) {}

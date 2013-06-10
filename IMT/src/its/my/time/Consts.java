@@ -10,7 +10,7 @@ public class Consts {
 	private static final String SHPREF_KEY_REFRESH_TOKEN = "SHPREF_KEY_REFRESH_TOKEN";
 
 
-	public static final String GCM_PROJECT_ID = "12416311649";
+	public static final String GCM_PROJECT_ID = "524363324427";
 	public static final String EXTRA_EID = "EXTRA_EID";
 	
 	public static final String URL_UPLOAD = "";

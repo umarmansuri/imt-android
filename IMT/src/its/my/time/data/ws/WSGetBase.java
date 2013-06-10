@@ -1,5 +1,6 @@
 package its.my.time.data.ws;
 
+import its.my.time.data.ws.events.EventBeanWS;
 import its.my.time.util.PreferencesUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -12,6 +13,7 @@ import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 public abstract class WSGetBase<T> extends WSBase{
@@ -20,6 +22,12 @@ public abstract class WSGetBase<T> extends WSBase{
 	private GetCallback<T> callback;
 
 	public WSGetBase(Activity context, int id, GetCallback<T> callBack) {
+		super(context, callBack);
+		this.id = id;
+		this.callback = callBack;
+	}
+
+	public WSGetBase(Context context, int id, GetCallback<T> callBack) {
 		super(context, callBack);
 		this.id = id;
 		this.callback = callBack;

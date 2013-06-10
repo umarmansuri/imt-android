@@ -19,8 +19,8 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.USE_SIP" />
-     <uses-permission android:name="android.permission.CALL_PHONE" />
-     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -60,8 +60,13 @@
                 <category android:name="its.my.time" />
             </intent-filter>
         </receiver>
+        <receiver android:name="its.my.time.BootStarter" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <receiver
-            android:name="its.my.time.sip.IncomingCallReceiver"
+            android:name="its.my.time.receivers.IncomingCallReceiver"
             android:label="Call Receiver" />
 
         <service
@@ -187,11 +192,18 @@
             android:name="its.my.time.TestWSActivity"
             android:label="@string/app_name" >
         </activity>
-        
+        <activity
+            android:name="its.my.time.pages.call.IncomingCallActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="its.my.time.pages.call.OnCallActivity"
+            android:label="@string/app_name" >
+        </activity>
         
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDlU0Wn35JBR8d9zMF7CSVXIjvvHnuL45A"/>
+            android:value="AIzaSyDlU0Wn35JBR8d9zMF7CSVXIjvvHnuL45A" />
     </application>
 
 </manifest>

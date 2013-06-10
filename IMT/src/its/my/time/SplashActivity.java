@@ -7,8 +7,11 @@ import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
-import its.my.time.sip.CallManager;
+import its.my.time.data.ws.GCMManager;
+import its.my.time.data.ws.WSLogin;
+import its.my.time.receivers.IncomingCallReceiver;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.CallManager;
 import its.my.time.util.ColorUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
@@ -16,8 +19,15 @@ import its.my.time.util.Types;
 import java.util.Calendar;
 
 import android.app.Activity;
-import android.os.AsyncTask;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -25,7 +35,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SplashActivity extends Activity {
 
@@ -35,6 +44,8 @@ public class SplashActivity extends Activity {
 	private EditText pseudo;
 	private EditText mdp;
 	private OnClickListener clickListener;
+	private ProgressDialog dialog;
+	private IncomingCallReceiver callReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,7 @@ public class SplashActivity extends Activity {
 				
 		setContentView(R.layout.activity_splash);
 		this.clickListener = new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				if (v == SplashActivity.this.btnConnexion) {
@@ -70,10 +82,19 @@ public class SplashActivity extends Activity {
 		PreferencesUtil.init(this);
 		CallManager.initializeManager(getBaseContext());
 
-		PreferencesUtil.setCurrentUid(1);
+		//PreferencesUtil.setCurrentUid(1);
 		//temp();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(CallManager.INTENT_FILTER);
+		callReceiver = new IncomingCallReceiver();
+		this.registerReceiver(callReceiver, filter);
+	}
 	private void temp() {
 		deleteDatabase(DatabaseHandler.DATABASE_NAME);
 		UtilisateurRepository userRepo = new UtilisateurRepository(SplashActivity.this); 
@@ -159,22 +180,85 @@ public class SplashActivity extends Activity {
 	}
 
 	private void connexion() {
-		if (PreferencesUtil.getCurrentUid() != -1) {
-			new LoadMainActivity().execute();
+		final UtilisateurRepository userRepo = new UtilisateurRepository(SplashActivity.this);
+		UtilisateurBean user = userRepo.getUser(this.pseudo.getText().toString(),this.mdp.getText().toString());
+		if (user.getId() > 0) {
+			PreferencesUtil.setCurrentUid(user.getId());
+			ActivityUtil.startCalendarActivity(SplashActivity.this);
+			GCMManager.initGcm(this);
 		} else {
-			UtilisateurBean user = new UtilisateurBean();
-			final UtilisateurRepository connexion = new UtilisateurRepository(SplashActivity.this);
-			user = connexion.getUser(this.pseudo.getText().toString(),this.mdp.getText().toString());
-			if (user != null) {
-				PreferencesUtil.setCurrentUid(user.getId());
-				starAnimation();
-				new LoadMainActivity().execute();
-			} else {
-				Toast.makeText(this, "Erreur de Connexion !", Toast.LENGTH_LONG).show();
-			}
+			logFromServer();
 		}
 	}
 
+	private void logFromServer() {
+		dialog = new ProgressDialog(this);
+		dialog.setTitle("Patience");
+		dialog.setMessage("Connexion en cours...");
+		dialog.setCancelable(true);
+		dialog.setOnCancelListener(new OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface arg0) {
+				if(threadConnection != null && threadConnection.isAlive()) {
+					threadConnection.stop();
+				}
+			}
+		});
+		dialog.show();
+		threadConnection = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					WSLogin.checkConnexion(
+							pseudo.getText().toString(), 
+							mdp.getText().toString(),
+							SplashActivity.this, 
+							new its.my.time.data.ws.Callback() {
+						
+						@Override
+						public void done(Exception e) {
+							if(e == null) {
+								handlerConnection.sendEmptyMessage(0);
+							} else {
+								handlerConnection.sendEmptyMessage(1);
+							}
+						}
+					});
+				}
+			});
+		threadConnection.start();
+		//startActivity(new Intent(SplashActivity.this, TestWSActivity.class));
+	}
+
+	private Thread threadConnection;
+	
+	private Handler handlerConnection = new Handler(new Callback() {
+		
+		@Override
+		public boolean handleMessage(Message message) {
+			dialog.hide();
+			if(message.what == 0) {
+				GCMManager.initGcm(SplashActivity.this);
+				ActivityUtil.startCalendarActivity(SplashActivity.this);
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+				builder.setTitle("Erreur");
+				builder.setMessage("L'identifiant ou le mot de passe sont incorrects.");
+				builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						//TODO enlever
+						ActivityUtil.startCalendarActivity(SplashActivity.this);
+					}
+				});
+				builder.show();
+			}
+			return false;
+		}
+	});
+	
 	public void starAnimation() {
 		Animation animClock = new RotateAnimation(0f, 35f,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
@@ -189,35 +273,5 @@ public class SplashActivity extends Activity {
 		pseudo.setEnabled(false);
 		mdp.setEnabled(false);
 		findViewById(R.id.splash_foreground).startAnimation(animClock);
-	}
-
-	private class LoadMainActivity extends AsyncTask<Void, Void, Void> {
-		@SuppressWarnings("unused")
-		private boolean accountCreated;
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			starAnimation();
-		}
-
-		@Override
-		public Void doInBackground(Void... params) {
-			try {
-				//GCMManager.init(SplashActivity.this);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			finish();
-			//WSManager.updateAllData(SplashActivity.this, null);
-			//startActivity(new Intent(SplashActivity.this, TestWSActivity.class));
-			ActivityUtil.startCalendarActivity(SplashActivity.this);
-		}
 	}
 }

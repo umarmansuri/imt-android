@@ -22,6 +22,6 @@ public class GCMBroadcastReceiver extends
 
     @Override
     protected String getGCMIntentServiceClassName(Context context) {
-        return "fr.adrienhugon.pld.services.push.GCMIntentService";
+        return "its.my.time.receivers.GCMIntentService";
     }
 }

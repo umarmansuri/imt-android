@@ -1,4 +1,4 @@
-package its.my.time.sip;
+package its.my.time.util;
 
 import java.util.ArrayList;
 
@@ -18,9 +18,12 @@ public class CallManager {
 
 	protected static final String TAG = "SIP";
 
-	private static final String USERNAME = "102";
-	private static final String SERVER_ADRESSE = "192.168.1.28";
-	private static final String PASSWORD = "123123";
+	public static final String INTENT_FILTER = "its.my.time.INCOMING_CALL";
+
+	private static final String USERNAME = "appmytime_android";
+	private static final String SERVER_ADRESSE = "sip2sip.info";
+	private static final String SERVER_PROXY = "proxy.sipthor.net";
+	private static final String PASSWORD = "azerazer";
 	private static SipManager manager;
 	private static SipProfile me;
 	private static SipAudioCall call;
@@ -30,7 +33,7 @@ public class CallManager {
 				listener.onCalling(call);	
 			}
 		};
-		
+
 		@Override
 		public void onCallEstablished(SipAudioCall call) {
 			CallManager.call = call;
@@ -66,7 +69,7 @@ public class CallManager {
 	 * Logs you into your SIP provider, registering this device as the location to
 	 * send SIP calls to for your SIP address.
 	 */
-	private static void initializeLocalProfile(Context context) {
+	private static void initializeLocalProfile(final Context context) {
 		if (manager == null) {
 			return;
 		}
@@ -79,25 +82,25 @@ public class CallManager {
 			SipProfile.Builder builder = new SipProfile.Builder(USERNAME, SERVER_ADRESSE);
 			builder.setPassword(PASSWORD);
 			builder.setDisplayName("Android");
+			builder.setOutboundProxy(SERVER_PROXY);
 			me = builder.build();
 
 			Intent i = new Intent();
-			i.setAction("android.SipDemo.INCOMING_CALL");
+			i.setAction(INTENT_FILTER);
 			PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, Intent.FILL_IN_DATA);
 			manager.open(me, pi, null);
 
 			manager.setRegistrationListener(me.getUriString(), new SipRegistrationListener() {
 				public void onRegistering(String localProfileUri) {
-
-					Log.d(TAG, "connexion en cours");
+					NotifManager.showNotifiaction(context, NotifManager.STATE_REGISTERING);
 				}
 
 				public void onRegistrationDone(String localProfileUri, long expiryTime) {
-					Log.d(TAG, "connecté");
+					NotifManager.showNotifiaction(context, NotifManager.STATE_REGISTERED);
 				}
 
 				public void onRegistrationFailed(String localProfileUri, int errorCode, String errorMessage) {
-					Log.d(TAG, "connxion erreur: " + errorMessage);
+					NotifManager.showNotifiaction(context, NotifManager.STATE_UNREGISTERED);
 				}
 			});
 		} catch (Exception e) {
