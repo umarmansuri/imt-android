@@ -1,16 +1,15 @@
 package its.my.time.data.ws;
 
+import its.my.time.data.bdd.utilisateur.UtilisateurBean;
+import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.util.PreferencesUtil;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
@@ -18,6 +17,7 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.net.http.SslError;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -29,14 +29,24 @@ public class WSLogin {
 
 	private static List<Callback> callBacks = new ArrayList<Callback>();
 
-	public static Activity context;
-	private static RefreshToken refreshTask = null;
-	public static void checkConnexion(Activity context, Callback callback) {
+	public static Context context;
+	private static LoadToken refreshTask = null;
+
+	public static void checkConnexion(Context context, Callback callback) {
+		UtilisateurBean bean = new UtilisateurRepository(context).getById(PreferencesUtil.getCurrentUid());
+		if(bean == null || bean.getId() <= 0) {
+			checkConnexion(bean.getPseudo(), bean.getMdp(), context, callback);
+		} else {
+			checkConnexion(bean.getPseudo(), bean.getMdp(), context, callback);	
+		}
+	}
+
+	public static void checkConnexion(String user, String pass, Context context, Callback callback) {
 		WSLogin.context = context ;
 		callBacks.add(callback);
 
 		if(refreshTask == null) {
-			refreshTask = new RefreshToken();
+			refreshTask = new LoadToken(user, pass);
 			refreshTask.execute();
 			Log.d("WS","task is null");
 		} else {
@@ -44,7 +54,15 @@ public class WSLogin {
 		}
 	}
 
-	private static class RefreshToken extends AsyncTask<Void, Void, Void> {
+	private static class LoadToken extends AsyncTask<Void, Void, Void> {
+
+		private static String username;
+		private static String pass;
+
+		public LoadToken(String username, String pass) {
+			LoadToken.username = username;
+			LoadToken.pass = pass;
+		}
 
 		@Override
 		public Void doInBackground(Void... params) {
@@ -65,53 +83,83 @@ public class WSLogin {
 
 		@SuppressLint("SetJavaScriptEnabled")
 		private static void askForToken() {
-			context.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					WebViewClient webViewClient =  new WebViewClient() {
+			try {
+				((Activity)context).runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						WebViewClient webViewClient =  new WebViewClient() {
 
-						public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){ handler.proceed(); } 
+							public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){ handler.proceed(); } 
 
-						@Override
-						public boolean shouldOverrideUrlLoading(WebView view, String url) {
-							if ( url.startsWith(WSBase.URL_REDIRECT) ) {
-								if ( url.indexOf("code=") != -1 ) {
-									PreferencesUtil.setCurrentRequestToken(retreiveRequestToken(url));
-									new Thread(new Runnable() {
-										@Override
-										public void run() {
-											askForRefresh();
-										}
-									}).start();
+							@Override
+							public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+								if ( url.startsWith(WSBase.URL_REDIRECT) ) {
+									if ( url.indexOf("code=") != -1 ) {
+										PreferencesUtil.setCurrentRequestToken(retreiveRequestToken(url));
+										new Thread(new Runnable() {
+											@Override
+											public void run() {
+												askForRefresh();
+											}
+										}).start();
+									}
+									return true;
 								}
-								return true;
+								return super.shouldOverrideUrlLoading(view, url); 
 							}
-							return super.shouldOverrideUrlLoading(view, url); 
-						}
+							private int count = 0;
+							public void onPageFinished(WebView webview, String url) { 
+								webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 
-						public void onPageFinished(WebView webview, String url) {
-							if ( url.startsWith(WSBase.URL_FORM_LOGIN) ) {
-								Log.d("JS","load JS!");
-								webview.loadUrl("javascript: document.forms['login'].elements['username'].value = 'admin';");
-								webview.loadUrl("javascript: document.forms['login'].elements['password'].value = 'azerazer';");
-								webview.loadUrl("javascript: document.forms['login'].submit();");
-							} else if ( url.startsWith(WSBase.URL_FORM_ACCEPT) ) {
-								Log.d("JS","load JS!");
-								webview.loadUrl("javascript: document.forms['login'].elements['imt_oauth_server_authorize_allowAccess'].checked = true;");
-								webview.loadUrl("javascript: document.forms['login'].submit();");
-							}
+								if ( url.startsWith(WSBase.URL_FORM_LOGIN) ) {
+									if(count >= 1) {
+										webview.stopLoading();
+										List<Callback> toRemove = new ArrayList<Callback>();
+										toRemove.addAll(callBacks);
+										refreshTask = null;
+										callBacks = new ArrayList<Callback>();
+										for (Callback callBack : toRemove) {
+											callBack.done(new Exception());	
+										}
+										return;
+									}
+									count++;
+									Log.d("JS","load JS!");
+									webview.loadUrl("javascript: document.forms['login'].elements['username'].value = '" + username + "';");
+									webview.loadUrl("javascript: document.forms['login'].elements['password'].value = '" + pass +"';");
+									//webview.loadUrl("javascript: document.forms['login'].elements['username'].value = 'ad.hugon';");
+									//webview.loadUrl("javascript: document.forms['login'].elements['password'].value = 'azerazer';");
+									webview.loadUrl("javascript: document.forms['login'].submit();");
+								} else if ( url.startsWith(WSBase.URL_FORM_ACCEPT) ) {
+									Log.d("JS","load JS!");
+									webview.loadUrl("javascript: document.forms['login'].elements['imt_oauth_server_authorize_allowAccess'].checked = true;");
+									webview.loadUrl("javascript: document.forms['login'].submit();");
+								}
+							};
 						};
-					};
 
-					WebView webview = new WebView(context);
-					webview.getSettings().setSavePassword(false);
-					webview.setWebViewClient(webViewClient);
-					webview.getSettings().setJavaScriptEnabled(true);
-					String authorizationUri = createAuthorizationRequestUri();
-					webview.loadUrl(authorizationUri);
-				}
-			});
+						WebView webview = new WebView(context);
+						webview.getSettings().setSavePassword(false);
+						webview.setWebViewClient(webViewClient);
+						webview.getSettings().setJavaScriptEnabled(true);
+						webview.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
+						String authorizationUri = createAuthorizationRequestUri();
+
+						webview.loadUrl(authorizationUri);
+					}
+				});
+			} catch (Exception e){}		
 		};
+
+		static class MyJavaScriptInterface
+		{
+			@SuppressWarnings("unused")
+			public void processHTML(String html)
+			{
+				Log.d("HTML",html);
+			}
+		}
 
 		private static void askForRefresh() {
 			Exception resultEx = null;
@@ -155,7 +203,7 @@ public class WSLogin {
 					resultEx = e;
 				}
 			}
-			
+
 
 			List<Callback> toRemove = new ArrayList<Callback>();
 			toRemove.addAll(callBacks);

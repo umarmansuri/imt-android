@@ -19,6 +19,10 @@ public class Types {
 		else if (id ==CALL) return "call";
 		else return null;
 	}
+	
+	public static String[] getAll() {
+		return new String[]{"Evènement", "Réunion","Appel"};
+	}
 		
 	}
 

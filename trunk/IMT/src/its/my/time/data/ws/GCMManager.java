@@ -1,7 +1,6 @@
 package its.my.time.data.ws;
 
 import its.my.time.Consts;
-import its.my.time.util.PreferencesUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -21,14 +20,8 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.google.android.gcm.GCMRegistrar;
-//import android.util.Log;
 
 public class GCMManager {
-
-
-	public static void init(Context context) {
-		initGcm(context);
-	}
 
 	public static void initGcm(Context context) {
 		String gcmId = null;
@@ -40,7 +33,6 @@ public class GCMManager {
 		String regId = GCMRegistrar.getRegistrationId(context);
 		if (regId.equals("")) {
 			GCMRegistrar.register(context, Consts.GCM_PROJECT_ID);
-			regId = GCMRegistrar.getRegistrationId(context);
 			gcmId = GCMRegistrar.getRegistrationId(context);
 		} else {
 			gcmId = regId;
@@ -69,6 +61,7 @@ public class GCMManager {
 	}
 
 	public static void updateGcmId(String gcmId, Callback callback) {
+		Log.d("GCM","id = " + gcmId);
 		new SendGcmUpdate(null, gcmId,callback).execute();
 	}
 }
