@@ -11,7 +11,6 @@ public class IncomingCallReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d("SIP","INcoming call!");
 		CallManager.loadCall(intent);
 		context.startActivity(new Intent(context, IncomingCallActivity.class));
 	}

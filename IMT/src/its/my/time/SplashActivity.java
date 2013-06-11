@@ -8,7 +8,12 @@ import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.data.ws.GCMManager;
+import its.my.time.data.ws.WSGetBase;
 import its.my.time.data.ws.WSLogin;
+import its.my.time.data.ws.WSPostBase;
+import its.my.time.data.ws.user.UtilisateurBeanWS;
+import its.my.time.data.ws.user.WSGetUser;
+import its.my.time.data.ws.user.WSSendUser;
 import its.my.time.receivers.IncomingCallReceiver;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.CallManager;
@@ -22,7 +27,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -195,16 +199,9 @@ public class SplashActivity extends Activity {
 		dialog = new ProgressDialog(this);
 		dialog.setTitle("Patience");
 		dialog.setMessage("Connexion en cours...");
-		dialog.setCancelable(true);
-		dialog.setOnCancelListener(new OnCancelListener() {
-			@Override
-			public void onCancel(DialogInterface arg0) {
-				if(threadConnection != null && threadConnection.isAlive()) {
-					threadConnection.stop();
-				}
-			}
-		});
+		dialog.setCancelable(false);
 		dialog.show();
+		
 		threadConnection = new Thread(new Runnable() {
 				
 				@Override
@@ -237,9 +234,27 @@ public class SplashActivity extends Activity {
 		@Override
 		public boolean handleMessage(Message message) {
 			dialog.hide();
+			
 			if(message.what == 0) {
+				new WSGetUser(SplashActivity.this, 1, new WSGetBase.GetCallback<UtilisateurBeanWS>() {
+					@Override public void done(Exception e) {					}
+					@Override public void onGetObject(UtilisateurBeanWS object) {
+						UtilisateurBean user = new UtilisateurRepository(SplashActivity.this).getByIdDistant(object.getId());
+						new WSSendUser(SplashActivity.this, user, new WSPostBase.PostCallback<UtilisateurBean>() {
+							@Override public void done(Exception e) {
+								ActivityUtil.startCalendarActivity(SplashActivity.this);;
+							}
+							@Override public void onGetObject(UtilisateurBean object) {}
+						}).execute();
+					}
+				}).execute();
+				dialog = new ProgressDialog(SplashActivity.this);
+				dialog.setTitle("Patience");
+				dialog.setMessage("Synchronisation en cours...");
+				dialog.setCancelable(true);
+				dialog.show();
 				GCMManager.initGcm(SplashActivity.this);
-				ActivityUtil.startCalendarActivity(SplashActivity.this);
+				
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
 				builder.setTitle("Erreur");
@@ -249,8 +264,6 @@ public class SplashActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
-						//TODO enlever
-						ActivityUtil.startCalendarActivity(SplashActivity.this);
 					}
 				});
 				builder.show();

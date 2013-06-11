@@ -43,10 +43,12 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 	public static final String URL_FORM_CREATE = "https://app.my-time.fr/login";
 
 	private Callback callBack;
-	private Context context;
+	public static Context context;
 
 	public WSBase(Context context, Callback callBack) {
-		this.context = context;
+		if(WSBase.context == null) { 
+			WSBase.context = context;
+		}
 		this.callBack = callBack;
 	}
 

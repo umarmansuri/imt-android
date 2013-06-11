@@ -53,6 +53,7 @@ public class ProfilActivity extends BaseActivity implements Callback {
 	public boolean isUpdatable() {
 		return false;
 	}
+	
 	private String KEY_NOM = "KEY_NOM";
 	private ProgressDialog dialog;
 	@Override

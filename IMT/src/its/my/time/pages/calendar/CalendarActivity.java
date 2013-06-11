@@ -183,6 +183,7 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		compteRepo = new CompteRepository(this);
 		compteRepo.addOnObjectChangedListener(this);
 		accountVisibility = new SparseBooleanArray();
+		compteRepo = new CompteRepository(this);
 		this.comptes = compteRepo.getAllByUid(PreferencesUtil.getCurrentUid());
 		for (final CompteBean compteBean : this.comptes) {
 			donnees.add(new MenuObjet(menuCompte, compteBean.getTitle(),MooncakeIcone.icon_business_card, true, compteBean.isShowed(), getResources().getDrawable(ColorUtil.getDrawableRes(compteBean.getColor()))));

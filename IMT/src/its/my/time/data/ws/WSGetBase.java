@@ -48,6 +48,7 @@ public abstract class WSGetBase<T> extends WSBase{
 		try {
 			HttpClient client = createClient();
 			String urlStr = getUrl();
+			
 			URI website;
 			if(urlStr.startsWith("/")) {
 				urlStr = urlStr.substring(1);

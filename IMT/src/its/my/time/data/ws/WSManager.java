@@ -86,13 +86,13 @@ public class WSManager {
 						@Override
 						public void run() {
 							sendLocalUpdate();	
-							getDistanteUpdate();		
+							getDistanteUpdate();	
+							
+							if(callback != null) {
+								callback.done(null);
+							}	
 						}
 					}).start();
-					
-					if(callback != null) {
-						callback.done(null);
-					}
 				}
 			}
 		});
@@ -156,7 +156,7 @@ public class WSManager {
 
 	private static void getDistanteUpdate() {
 
-		UtilisateurBeanWS user = new WSGetUser(context, (int)uid, null).retreiveObject();	
+		UtilisateurBeanWS user = new WSGetUser(context, 1, null).retreiveObject();	
 
 		UtilisateurBean bean = utilisateurRepo.getByIdDistant(user.getId());
 		bean .setIdDistant(user.getId());

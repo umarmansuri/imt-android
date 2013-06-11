@@ -61,7 +61,9 @@ public class GCMManager {
 	}
 
 	public static void updateGcmId(String gcmId, Callback callback) {
-		Log.d("GCM","id = " + gcmId);
-		new SendGcmUpdate(null, gcmId,callback).execute();
+		GCMManager.gcmId = gcmId;
 	}
+	
+	public static String gcmId = "";
 }
+
