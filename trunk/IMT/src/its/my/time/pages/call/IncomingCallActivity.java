@@ -5,16 +5,18 @@ import its.my.time.util.CallManager;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View.OnClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class IncomingCallActivity extends Activity implements OnClickListener{
 
 	private Button mBtnDec;
 	private Button mBtnRac;
+	private TextView mTxtCaller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,10 @@ public class IncomingCallActivity extends Activity implements OnClickListener{
 		mBtnRac = (Button)findViewById(R.id.btnRaccrocher);
 		mBtnDec.setOnClickListener(this);
 		mBtnRac.setOnClickListener(this);
+		mTxtCaller = (TextView)findViewById(R.id.textCaller);
+		
+		String caller = CallManager.getCallerLabel();
+		mTxtCaller.setText(caller);
 	}
 	
 	@Override

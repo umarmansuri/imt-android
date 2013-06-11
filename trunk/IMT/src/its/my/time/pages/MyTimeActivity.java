@@ -1,6 +1,9 @@
 package its.my.time.pages;
 
 import its.my.time.R;
+import its.my.time.data.bdd.DatabaseHandler;
+import its.my.time.data.ws.Callback;
+import its.my.time.data.ws.WSManager;
 import its.my.time.util.ActivityUtil;
 import its.my.time.view.menu.MenuActivity;
 import its.my.time.view.menu.MenuGroupe;
@@ -30,6 +33,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 			final String action_finish = arg1.getStringExtra("FINISH");
 
 			if (action_finish.equalsIgnoreCase("ACTION.FINISH.LOGOUT")) {
+				deleteDatabase(DatabaseHandler.DATABASE_NAME);
 				finish();
 				unregisterReceiver(MyTimeActivity.this.LOGOUT_Receiver);
 			}
@@ -43,7 +47,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if(isUpdatable()) {
+		if(true) {
 			menuItemMaj = menu.add("Mise à jour");
 			menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
 			mProgressBar = new ProgressBar(this);
@@ -67,18 +71,25 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 
 	public void onMajCalled() {
 		menuItemMaj.setActionView(mProgressBar);
-
-		new Handler().postDelayed(new Runnable() {
+		
+		WSManager.updateAllData(MyTimeActivity.this, new Callback() {
+			
 			@Override
-			public void run() {
-				majFinished(null);
+			public void done(Exception e) {
+				majFinished(e);
 			}
-		}, 3000);
+		});
 	}
 
 	public final void majFinished(Exception e) {
-		menuItemMaj.setActionView(null);
-		menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				menuItemMaj.setActionView(null);
+				menuItemMaj.setIcon(R.drawable.ic_menu_refresh);	
+			}
+		});
 	}
 
 	@Override

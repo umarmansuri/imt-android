@@ -3,6 +3,7 @@ package its.my.time.data.ws.user;
 import its.my.time.data.bdd.base.BaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
+import its.my.time.data.ws.GCMManager;
 import its.my.time.data.ws.WSPostBase;
 
 import java.util.List;
@@ -44,8 +45,7 @@ public class WSSendUser extends WSPostBase<UtilisateurBean>{
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
 
 		UtilisateurBean user = getObject();
-		//TODO Récupérer GSM ID !!!!!
-        //nameValuePairs.add(new BasicNameValuePair("gcm_id", GCMManager.));
+        nameValuePairs.add(new BasicNameValuePair("gcm_id", GCMManager.gcmId));
         nameValuePairs.add(new BasicNameValuePair("name", user.getNom()));
         nameValuePairs.add(new BasicNameValuePair("firstname", user.getPrenom()));
 		return nameValuePairs;

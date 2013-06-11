@@ -1,7 +1,9 @@
 package its.my.time.util;
 
+import its.my.time.Consts;
 import its.my.time.R;
 import its.my.time.pages.SettingsActivity;
+import its.my.time.receivers.ValidateParticipationActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -57,5 +59,20 @@ public class NotifManager {
 		Notification notif = mBuilder.build();
 		notif.flags = Notification.FLAG_ONGOING_EVENT;
 		mNotificationManager.notify(NOTIFICATION_ID, notif);
+	}
+	
+	
+	public static void generateNotification(Context context, String message, int id) {
+		long when = System.currentTimeMillis();
+		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		Notification notification = new Notification(R.drawable.ic_launcher,message, when);
+		String title = context.getString(R.string.app_name);
+		Intent notificationIntent = new Intent(context,ValidateParticipationActivity.class);
+		notificationIntent.putExtra(Consts.EXTRA_EID, 1);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent intent = PendingIntent.getActivity(context, 0,notificationIntent, 0);
+		notification.setLatestEventInfo(context, title, message, intent);
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		notificationManager.notify(0, notification);
 	}
 }

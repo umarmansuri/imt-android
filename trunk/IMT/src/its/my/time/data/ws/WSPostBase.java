@@ -7,6 +7,7 @@ import its.my.time.util.PreferencesUtil;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

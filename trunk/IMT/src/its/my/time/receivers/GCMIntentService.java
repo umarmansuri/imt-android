@@ -16,13 +16,19 @@
 package its.my.time.receivers;
 
 import its.my.time.Consts;
+import its.my.time.R;
 import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
+import its.my.time.data.ws.WSGetBase.GetCallback;
+import its.my.time.data.ws.events.EventBeanWS;
 import its.my.time.data.ws.events.WSGetEvent;
 
 import java.util.Calendar;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
@@ -39,15 +45,19 @@ public class GCMIntentService extends GCMBaseIntentService {
 	}
 
 	@Override
-	protected void onMessage(Context context, Intent intent) {
+	protected void onMessage(final Context context, Intent intent) {
 
 		int id = Integer.parseInt(intent.getStringExtra("id"));
 		String type = intent.getStringExtra("type");
-		EventBaseBean event = new EventBaseRepository(context).getById(id);
+		EventBaseBean event = new EventBaseRepository(context).getByIdDistant(id);
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MINUTE, -10);
-		if(event == null || event.getId() <= 0 || event.getDateSync().before(cal)) {
+		if(event != null && event.getId() >= 0) {
+			if(event.getDateSync().before(cal)) {
+				new WSGetEvent(context, id, null).execute();
+			}
+		} else {
 			new WSGetEvent(context, id, null).execute();
 		}
 	}

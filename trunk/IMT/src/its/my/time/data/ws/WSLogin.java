@@ -32,13 +32,27 @@ public class WSLogin {
 	public static Context context;
 	private static LoadToken refreshTask = null;
 
-	public static void checkConnexion(Context context, Callback callback) {
-		UtilisateurBean bean = new UtilisateurRepository(context).getById(PreferencesUtil.getCurrentUid());
-		if(bean == null || bean.getId() <= 0) {
-			checkConnexion(bean.getPseudo(), bean.getMdp(), context, callback);
-		} else {
-			checkConnexion(bean.getPseudo(), bean.getMdp(), context, callback);	
+	public static void checkConnexion(final Context context, final Callback callback) {
+		if(WSBase.context == null) {
+			WSBase.context = context;
 		}
+		Log.d("CTX"," context = " + WSBase.context);
+		try {
+			((Activity)WSBase.context).runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					UtilisateurBean bean = new UtilisateurRepository(WSBase.context).getById(PreferencesUtil.getCurrentUid());
+					if(bean == null || bean.getId() <= 0) {
+						checkConnexion(bean.getPseudo(), bean.getMdp(), WSBase.context, callback);
+					} else {
+						if(callback != null) {
+							callback.done(new Exception());
+						}
+					}	
+				}
+			});
+		} catch (Exception e) {}
 	}
 
 	public static void checkConnexion(String user, String pass, Context context, Callback callback) {

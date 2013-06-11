@@ -185,6 +185,13 @@ public class CallManager {
 		listeners.remove(listener);
 	}
 
+	public static String getCallerLabel() {
+		if(call != null) {
+			return call.getPeerProfile().getDisplayName();
+		}
+		return "";
+	}
+
 
 
 }
