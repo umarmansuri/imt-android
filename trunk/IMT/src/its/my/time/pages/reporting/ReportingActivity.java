@@ -4,10 +4,14 @@ import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.ws.WSBase;
+import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.view.date.DateButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.http.util.EncodingUtils;
@@ -46,7 +50,7 @@ public class ReportingActivity extends SherlockFragmentActivity {
 
 	private DateButton mTextJourDeb;
 	private DateButton mTextJourFin;
-	
+
 	private RadioGroup layoutType;
 	private List<CompteBean> comptes;
 	private String[] labels;
@@ -67,6 +71,9 @@ public class ReportingActivity extends SherlockFragmentActivity {
 		mSwitcher = (ViewSwitcher)View.inflate(this, R.layout.activity_reporting, null);
 		setContentView(mSwitcher);
 
+		mTextJourDeb = (DateButton)findViewById(R.id.ddeb);
+		mTextJourFin = (DateButton)findViewById(R.id.dfin);
+
 		mWebView = (WebView) findViewById(R.id.webview);
 		mWebView.getSettings().setEnableSmoothTransition(true);
 		mWebView.getSettings().setJavaScriptEnabled(true);
@@ -83,12 +90,22 @@ public class ReportingActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				if(selecteCid.size() == 0 || selectedType != null) {
-					selecteCid.add(1);
-					selectedType = "event";
-				}
 				if(selecteCid.size() > 0 && selectedType != null) {
-					loadReporting();
+					Calendar calDeb = mTextJourDeb.getDate();
+					Calendar calFin = mTextJourFin.getDate();
+					Calendar calFinTest = new GregorianCalendar(
+							calFin.get(Calendar.YEAR),
+							calFin.get(Calendar.MONTH),
+							calFin.get(Calendar.DAY_OF_MONTH),0,0,0);
+					calFinTest.add(Calendar.MONTH, -1);
+					calFinTest.add(Calendar.MINUTE, -1);
+					if(calDeb.after(calFin)) {
+						Toast.makeText(ReportingActivity.this, "La date de début de la période doit être antérieur à sa date de fin!", Toast.LENGTH_SHORT).show();
+					} else if(calDeb.before(calFinTest)) {
+						Toast.makeText(ReportingActivity.this, "La période est trop importante. (1 mois maximum)", Toast.LENGTH_SHORT).show();
+					} else {
+						loadReporting();	
+					}
 				} else {
 					Toast.makeText(ReportingActivity.this, "Tous les champs ne sont pas remplis!", Toast.LENGTH_SHORT).show();
 				}
@@ -141,7 +158,7 @@ public class ReportingActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	
+
 
 	@SuppressWarnings("deprecation")
 	private void loadReporting() {
@@ -193,11 +210,12 @@ public class ReportingActivity extends SherlockFragmentActivity {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		
+
+		String idsString = Arrays.toString(selecteCid.toArray(new Integer[]{})); 
 		mWebView.postUrl(WSBase.URL_REPORTING,EncodingUtils.getBytes(
-				"datedebut=01/06/2013" +
-						"&datefin=01/07/2013" +
-						"&account=[1]" +
+				"datedebut=" + DateUtil.getDayHourFrenchSlash(mTextJourDeb.getDate()) +
+						"&datefin=" + DateUtil.getDayHourFrenchSlash(mTextJourFin.getDate()) +
+						"&account=" + selecteCid.toArray().toString() +
 						"&imt_event_form_general_account=" + selectedType +
 						"&tailleecran=" + width,"BASE64"));
 
@@ -222,25 +240,25 @@ public class ReportingActivity extends SherlockFragmentActivity {
 			super.onBackPressed();
 		}
 	}
-	
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
-	
+
 	private void toggleFullscreen(boolean fullscreen)
 	{
-	    WindowManager.LayoutParams attrs = getWindow().getAttributes();
-	    if (fullscreen)
-	    {
-	        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-	        getSupportActionBar().hide();
-	    }
-	    else
-	    {
-	        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-	        getSupportActionBar().show();
-	    }
-	    getWindow().setAttributes(attrs);
+		WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		if (fullscreen)
+		{
+			attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			getSupportActionBar().hide();
+		}
+		else
+		{
+			attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			getSupportActionBar().show();
+		}
+		getWindow().setAttributes(attrs);
 	}
 }
