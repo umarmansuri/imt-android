@@ -22,15 +22,30 @@
                 android:layout_margin="10dp"
                 android:text="Période" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/reportingLayoutDate"
                 style="@style/champs_texte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/reportingTextDate"
                 android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
                 android:layout_margin="10dp" >
-            </RelativeLayout>
+
+                <its.my.time.view.date.DateButton
+                    android:id="@+id/ddeb"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1" />
+
+                <its.my.time.view.date.DateButton
+                    android:id="@+id/dfin"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/reportingTextCompte"
@@ -73,12 +88,12 @@
 
             <Button
                 android:id="@+id/buttonValidate"
+                style="@style/Btn.Green"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/reportingLayoutType"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                style="@style/Btn.Green"
                 android:text="Générer le rapport" />
         </RelativeLayout>
     </ScrollView>

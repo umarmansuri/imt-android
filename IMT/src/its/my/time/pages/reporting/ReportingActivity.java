@@ -5,6 +5,7 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.ws.WSBase;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.view.date.DateButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +31,22 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class ReportingActivity extends SherlockActivity{
+public class ReportingActivity extends SherlockFragmentActivity {
 
 
 	private WebView mWebView;
 	private LinearLayout layoutCompte;
-	private RelativeLayout layoutDate;
+
+	private DateButton mTextJourDeb;
+	private DateButton mTextJourFin;
+	
 	private RadioGroup layoutType;
 	private List<CompteBean> comptes;
 	private String[] labels;
@@ -112,7 +115,10 @@ public class ReportingActivity extends SherlockActivity{
 			layoutCompte.addView(checkBox);
 		}
 
-		layoutDate = (RelativeLayout)findViewById(R.id.reportingLayoutDate);
+
+		mTextJourDeb = (DateButton) findViewById(R.id.ddeb);
+		mTextJourFin = (DateButton) findViewById(R.id.dfin);
+
 		layoutType = (RadioGroup)findViewById(R.id.reportingLayoutType);
 
 		labels = new String[] {
@@ -135,6 +141,7 @@ public class ReportingActivity extends SherlockActivity{
 		}
 	}
 
+	
 
 	@SuppressWarnings("deprecation")
 	private void loadReporting() {

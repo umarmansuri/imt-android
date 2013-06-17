@@ -4,8 +4,6 @@ import its.my.time.R;
 import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.ws.Callback;
-import its.my.time.data.ws.WSManager;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
@@ -24,10 +22,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
@@ -35,6 +34,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -42,10 +42,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment.DatePickerDialogHandler;
 import com.fonts.mooncake.MooncakeIcone;
 
-public class CalendarActivity extends MyTimeActivity implements OnPageChangeListener, DatePickerDialogHandler, OnObjectChangedListener<CompteBean> {
+public class CalendarActivity extends MyTimeActivity implements OnPageChangeListener, OnObjectChangedListener<CompteBean>, OnDateSetListener {
 
 	public static final long ANIM_DURATION = 200;
 
@@ -137,19 +136,24 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 				bean.setDetailsId(0); 
 				adapter.insert(bean);*/
 				
-				
-				//BetterPickerUtils.showDateEditDialog(getSupportFragmentManager());
-				WSManager.updateAllData(CalendarActivity.this, new Callback() {
-					
-					@Override
-					public void done(Exception e) {
-						Log.d("WS","TERMIN2!!!!!!!!!!");
-					}
-				});
+				DatePickerDialog dialog = new DatePickerDialog(
+						CalendarActivity.this, 
+						CalendarActivity.this, 
+						curentCal.get(Calendar.YEAR),
+						curentCal.get(Calendar.MONTH),
+						curentCal.get(Calendar.DAY_OF_MONTH));
+				dialog.show();
 				
 			}
 		});
 	}
+	
+	@Override
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		gotoDate(new GregorianCalendar(year, monthOfYear, dayOfMonth));	
+	}
+	
+	
 	@Override
 	protected ArrayList<MenuGroupe> onCreateMenu(ArrayList<MenuGroupe> menuGroupes) {
 		final int iconeColor = getResources().getColor(R.color.grey);
@@ -213,11 +217,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	public void onObjectUpdated(CompteBean object) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
-	public void onDialogDateSet(int year, int monthOfYear, int dayOfMonth) {
-		gotoDate(new GregorianCalendar(year, monthOfYear, dayOfMonth));
 	}
 
 	@Override
