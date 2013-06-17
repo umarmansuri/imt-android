@@ -112,47 +112,47 @@
         <activity
             android:name="its.my.time.pages.editable.profil.ProfilActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.comptes.ComptesActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.comptes.compte.CompteActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="its.my.time.pages.calendar.CalendarActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.event.EventActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"  android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.meeting.MeetingActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.task.TaskActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.call.CallActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"  android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.data.ws.PrepareRequestTokenActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"  android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -172,12 +172,12 @@
         <activity
             android:name="its.my.time.receivers.ValidateParticipationActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog"  android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.AboutActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog"  android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.SettingsActivity"
@@ -186,19 +186,16 @@
         </activity>
         <activity
             android:name="its.my.time.pages.reporting.ReportingActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="its.my.time.TestWSActivity"
-            android:label="@string/app_name" >
+            android:label="Reporting" 
+            android:configChanges="orientation|keyboardHidden">
         </activity>
         <activity
             android:name="its.my.time.pages.call.IncomingCallActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="its.my.time.pages.call.OnCallActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:screenOrientation="portrait"  >
         </activity>
         
         <meta-data

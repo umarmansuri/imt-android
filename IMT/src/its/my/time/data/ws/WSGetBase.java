@@ -1,6 +1,5 @@
 package its.my.time.data.ws;
 
-import its.my.time.data.ws.events.EventBeanWS;
 import its.my.time.util.PreferencesUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -17,6 +16,7 @@ import android.content.Context;
 import android.util.Log;
 
 public abstract class WSGetBase<T> extends WSBase{
+	@SuppressWarnings("unchecked")
 	Class<T> persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	private int id;
 	private GetCallback<T> callback;
