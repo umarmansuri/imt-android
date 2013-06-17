@@ -14,7 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
 
 public class NotifManager {
 
-	private static final int NOTIFICATION_ID = 100;
+	private static final int NOTIF_ID_SIP = 100;
 
 	public static final int STATE_REGISTERING = 0;
 	public static final int STATE_REGISTERED = 1;
@@ -58,9 +58,15 @@ public class NotifManager {
 		// mId allows you to update the notification later on.
 		Notification notif = mBuilder.build();
 		notif.flags = Notification.FLAG_ONGOING_EVENT;
-		mNotificationManager.notify(NOTIFICATION_ID, notif);
+		mNotificationManager.notify(NOTIF_ID_SIP, notif);
 	}
-	
+
+
+
+	public static void hideNotifiaction(Context context) {
+		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager.cancel(NOTIF_ID_SIP);
+	}
 	
 	public static void generateNotification(Context context, String message, int id) {
 		long when = System.currentTimeMillis();

@@ -113,6 +113,8 @@ public class CallManager {
 			return;
 		}
 		try {
+			manager.setRegistrationListener(me.getUriString(), null);
+			NotifManager.hideNotifiaction(context);
 			if (me != null) {
 				manager.close(me.getUriString());
 			}

@@ -21,7 +21,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -389,20 +388,20 @@ public class DetailsFragment extends BasePluginFragment {
 		private String label;
 		public Participation(int id, String label) {
 			super();
-			id = id;
-			label = label;
+			this.id = id;
+			this.label = label;
 		}
 		public int getId() {
 			return id;
 		}
 		public void setId(int id) {
-			id = id;
+			this.id = id;
 		}
 		public String getLabel() {
 			return label;
 		}
 		public void setLabel(String label) {
-			label = label;
+			this.label = label;
 		}
 
 		@Override
@@ -411,18 +410,4 @@ public class DetailsFragment extends BasePluginFragment {
 		}
 	}
 
-	private class CustomArrayAdapter extends ArrayAdapter<Participation> {
-
-		public CustomArrayAdapter(Context context,int simpleSpinnerItem, Participation[] participation) {
-			super(context, simpleSpinnerItem, participation);
-		}
-
-		@Override public boolean hasStableIds() {return true;}
-
-		@Override
-		public long getItemId(int position) {
-			return getItem(position).getId();
-		}
-
-	}
 }

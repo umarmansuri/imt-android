@@ -4,7 +4,6 @@ import its.my.time.R;
 import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.ws.Callback;
 import its.my.time.data.ws.WSManager;
 import its.my.time.pages.MyTimeActivity;
@@ -78,7 +77,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 
 	private CompteRepository compteRepo;
 
-	private EventBaseRepository eventRepo;
 	public static Calendar curentCal;
 	private static boolean isWaitingEnd;
 

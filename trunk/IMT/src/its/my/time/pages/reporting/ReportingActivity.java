@@ -3,32 +3,26 @@ package its.my.time.pages.reporting;
 import its.my.time.R;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
-import its.my.time.data.ws.Callback;
-import its.my.time.data.ws.WSLogin;
+import its.my.time.data.ws.WSBase;
 import its.my.time.util.PreferencesUtil;
-import its.my.time.util.Types;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.util.EncodingUtils;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
+import android.content.res.Configuration;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -37,19 +31,21 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-public class ReportingActivity extends Activity{
+import com.actionbarsherlock.app.SherlockActivity;
 
-	private static final String URL = "http://app.my-time.fr/IMT/reporting/mobile/";
+@SuppressLint("SetJavaScriptEnabled")
+public class ReportingActivity extends SherlockActivity{
+
 
 	private WebView mWebView;
 	private LinearLayout layoutCompte;
 	private RelativeLayout layoutDate;
 	private RadioGroup layoutType;
 	private List<CompteBean> comptes;
-	private Integer[] types;
 	private String[] labels;
 	private String selectedType;
 	private List<Integer> selecteCid = new ArrayList<Integer>();
@@ -58,15 +54,12 @@ public class ReportingActivity extends Activity{
 
 	private ProgressDialog dialog;
 
-	private int width;
-
 	private ViewSwitcher mSwitcher;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		mSwitcher = (ViewSwitcher)View.inflate(this, R.layout.activity_reporting, null);
 		setContentView(mSwitcher);
@@ -75,6 +68,12 @@ public class ReportingActivity extends Activity{
 		mWebView.getSettings().setEnableSmoothTransition(true);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setSavePassword(false);
+		mWebView.getSettings().setSupportZoom(true);
+		mWebView.getSettings().setBuiltInZoomControls(true);
+		mWebView.getSettings().setLoadWithOverviewMode(true);
+		mWebView.getSettings().setUseWideViewPort(true);
+		mWebView.setInitialScale(100);
+		mWebView.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
 
 		mBtnValidate = (Button)findViewById(R.id.buttonValidate);
 		mBtnValidate.setOnClickListener(new OnClickListener() {
@@ -120,12 +119,8 @@ public class ReportingActivity extends Activity{
 				getResources().getString(R.string.label_event_base),
 				getResources().getString(R.string.label_event_meeting),
 				//context.getResources().getString(R.string.label_event_task),
-				getResources().getString(R.string.label_event_call) };
-		types = new Integer[] { 
-				Types.Event.BASE,
-				Types.Event.MEETING, 
-				//Types.Event.TASK,
-				Types.Event.CALL };
+				getResources().getString(R.string.label_event_call) 
+		};
 		for (int i = 0; i < labels.length; i++) {
 			final int j = i;
 			RadioButton radioButton = new RadioButton(this);
@@ -138,10 +133,10 @@ public class ReportingActivity extends Activity{
 			});
 			layoutType.addView(radioButton);
 		}
-		width = getWindowManager().getDefaultDisplay().getWidth();
 	}
 
 
+	@SuppressWarnings("deprecation")
 	private void loadReporting() {
 		dialog = new ProgressDialog(this);
 		dialog.setTitle("Patience");
@@ -149,51 +144,65 @@ public class ReportingActivity extends Activity{
 		dialog.setCancelable(false);
 		dialog.show();
 
-		WSLogin.checkConnexion(this, new Callback() {
+
+
+
+		WebViewClient webViewClient =  new WebViewClient() {
+			private int count = 0;
 
 			@Override
-			public void done(Exception e) {
-				if(e == null) {
-					mWebView.loadUrl(URL);
+			public void onPageFinished(WebView view, String url) {
+				if ( url.startsWith(WSBase.URL_LOGIN) ) {
+					if(count >= 1) {
+						mWebView.stopLoading();
+						return;
+					}
+					count++;
+					Log.d("JS","load JS!");
+					mWebView.loadUrl("javascript: document.getElementsByTagName('form')[0].elements['input-username'].value = 'ad.hugon';");
+					mWebView.loadUrl("javascript: document.getElementsByTagName('form')[0].elements['input-password'].value = 'azerazer';");
+					mWebView.loadUrl("javascript: document.getElementsByTagName('form')[0].submit();");
+				} else if ( url.startsWith(WSBase.URL_REPORTING) ) {
+					mWebView.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							dialog.hide();
+							mSwitcher.showNext();
+							toggleFullscreen(true);
+						}
+					});
+				} else {
+					super.onPageFinished(view, url);
 				}
 			}
-		});
+		};
+		mWebView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
+		mWebView.setWebViewClient(webViewClient);
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+		
+		mWebView.postUrl(WSBase.URL_REPORTING,EncodingUtils.getBytes(
+				"datedebut=01/06/2013" +
+						"&datefin=01/07/2013" +
+						"&account=[1]" +
+						"&imt_event_form_general_account=" + selectedType +
+						"&tailleecran=" + width,"BASE64"));
+
 	}
 
 
-	private class LoadReporting extends AsyncTask<Void, Void, String> {
-
-		@Override
-		protected String doInBackground(Void... params) {
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();  
-			nameValuePairs.add(new BasicNameValuePair("datedebut ", "01/06/2013"));  
-			nameValuePairs.add(new BasicNameValuePair("datefin", "01/07/2013"));  
-			nameValuePairs.add(new BasicNameValuePair("account ", "[1]"));  
-			nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_account ", selectedType));  
-			nameValuePairs.add(new BasicNameValuePair("tailleecran", String.valueOf(width)));
-
-			try {
-				HttpClient httpclient = new DefaultHttpClient();  
-				HttpPost httppost = new HttpPost(URL);  
-				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));  
-
-				HttpResponse response = httpclient.execute(httppost);
-				return EntityUtils.toString(response.getEntity());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if(result != null) {
-				mWebView.loadData(result, "text/html", "utf-8");
-				mSwitcher.showNext();
-			}
-			if(dialog != null) {
-				dialog.hide();
-			}
+	static class MyJavaScriptInterface
+	{
+		@SuppressWarnings("unused")
+		public void processHTML(String html)
+		{
+			Log.d("HTML",html);
 		}
 	}
 
@@ -201,8 +210,30 @@ public class ReportingActivity extends Activity{
 	public void onBackPressed() {
 		if(mSwitcher.getDisplayedChild() ==1) {
 			mSwitcher.showPrevious();
+			toggleFullscreen(false);
 		} else {
 			super.onBackPressed();
 		}
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+	}
+	
+	private void toggleFullscreen(boolean fullscreen)
+	{
+	    WindowManager.LayoutParams attrs = getWindow().getAttributes();
+	    if (fullscreen)
+	    {
+	        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+	        getSupportActionBar().hide();
+	    }
+	    else
+	    {
+	        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+	        getSupportActionBar().show();
+	    }
+	    getWindow().setAttributes(attrs);
 	}
 }

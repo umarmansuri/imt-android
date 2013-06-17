@@ -2,6 +2,7 @@ package its.my.time.util;
 
 import its.my.time.R;
 import its.my.time.SplashActivity;
+import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.pages.calendar.CalendarActivity;
 import its.my.time.pages.editable.comptes.ComptesActivity;
 import its.my.time.pages.editable.comptes.compte.CompteActivity;
@@ -14,6 +15,7 @@ import its.my.time.pages.editable.profil.ProfilActivity;
 import java.util.Calendar;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,8 +28,24 @@ public class ActivityUtil {
 
 	public static final String ACTION_FINISH = "ACTION_FINISH";
 
-	public static void logout(Context context) {
+	public static void logout(final Context context) {
 		PreferencesUtil.clearAll(context);
+
+		ProgressDialog dialog = new ProgressDialog(context);
+		dialog.setTitle("Patience");
+		dialog.setMessage("Déconnexion en cours...");
+		dialog.setCancelable(true);
+		dialog.show();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				CallManager.closeLocalProfile();
+				PreferencesUtil.setCurrentUid(-1);
+				context.deleteDatabase(DatabaseHandler.DATABASE_NAME);				
+			}
+		});
 		
 		final Intent i = new Intent(ACTION_FINISH);
 		i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");

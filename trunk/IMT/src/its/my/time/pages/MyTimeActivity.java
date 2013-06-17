@@ -5,20 +5,21 @@ import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.data.ws.Callback;
 import its.my.time.data.ws.WSManager;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.CallManager;
+import its.my.time.util.PreferencesUtil;
 import its.my.time.view.menu.MenuActivity;
 import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
 
 import java.util.ArrayList;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -27,15 +28,16 @@ import com.fonts.mooncake.MooncakeIcone;
 
 public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemClickListener{
 
-	private final BroadcastReceiver LOGOUT_Receiver = new BroadcastReceiver() {
+	private final BroadcastReceiver LOGOUT_RECEIVER = new BroadcastReceiver() {
+		private ProgressDialog dialog;
+
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
 			final String action_finish = arg1.getStringExtra("FINISH");
 
 			if (action_finish.equalsIgnoreCase("ACTION.FINISH.LOGOUT")) {
-				deleteDatabase(DatabaseHandler.DATABASE_NAME);
+				unregisterReceiver(MyTimeActivity.this.LOGOUT_RECEIVER);
 				finish();
-				unregisterReceiver(MyTimeActivity.this.LOGOUT_Receiver);
 			}
 		}
 	};
@@ -71,9 +73,9 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 
 	public void onMajCalled() {
 		menuItemMaj.setActionView(mProgressBar);
-		
+
 		WSManager.updateAllData(MyTimeActivity.this, new Callback() {
-			
+
 			@Override
 			public void done(Exception e) {
 				majFinished(e);
@@ -83,7 +85,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 
 	public final void majFinished(Exception e) {
 		runOnUiThread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				menuItemMaj.setActionView(null);
@@ -95,7 +97,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 	@Override
 	protected void onDestroy() {
 		try {
-			unregisterReceiver(this.LOGOUT_Receiver);
+			unregisterReceiver(this.LOGOUT_RECEIVER);
 		} catch (Exception e) {}
 		super.onDestroy();
 	}
@@ -103,7 +105,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 	@Override
 	protected void onResume() {
 		super.onResume();
-		registerReceiver(this.LOGOUT_Receiver, new IntentFilter(ActivityUtil.ACTION_FINISH));
+		registerReceiver(this.LOGOUT_RECEIVER, new IntentFilter(ActivityUtil.ACTION_FINISH));
 	}
 
 	@Override
@@ -112,7 +114,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 		menuReglages = new MenuGroupe("Réglages", MooncakeIcone.icon_settings);
 		menuGroupes.add(menuReglages);
 
-		
+
 		menuGroupePropos = new MenuGroupe("A propos",MooncakeIcone.icon_info_sign);
 		menuGroupes.add(menuGroupePropos);
 

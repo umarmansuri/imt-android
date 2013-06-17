@@ -7,7 +7,6 @@ import its.my.time.util.PreferencesUtil;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -15,7 +14,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 import android.app.Activity;
 
@@ -54,13 +52,7 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
-			String result = EntityUtils.toString(response.getEntity());
-
-			/*JSONObject jsonObj = new JSONObject(result);
-			int idDistant = jsonObj.getInt(getIdParam());
-			object.setIdDistant(idDistant);
-			getRepository().update(object);*/
-			
+			EntityUtils.toString(response.getEntity());
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

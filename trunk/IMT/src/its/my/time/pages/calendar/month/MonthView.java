@@ -23,7 +23,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.util.MonthDisplayHelper;
 import android.util.SparseArray;
 import android.util.TypedValue;
