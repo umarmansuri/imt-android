@@ -111,19 +111,13 @@ public class DetailsFragment extends BasePluginFragment {
 		mTextTitle = (EditText) view.findViewById(R.id.activity_event_details_text_title);
 		mTextJourDeb = (DateButton) view.findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourFin = (DateButton) view.findViewById(R.id.activity_event_details_text_dfin);
-		mTextHeureDeb = (TimeButton) view				.findViewById(R.id.activity_event_details_text_hdeb);
-		mTextHeureFin = (TimeButton) view
-				.findViewById(R.id.activity_event_details_text_hfin);
-		mSpinnerCompte = (Spinner) view
-				.findViewById(R.id.activity_event_details_spinner_compte);
-		mSpinnerRecurrence = (Spinner) view
-				.findViewById(R.id.activity_event_details_spinner_recurrence);
-		mSpinnerParticipation = (Spinner) view
-				.findViewById(R.id.activity_event_details_spinner_participation);
-		mTextDetails = (TextView) view
-				.findViewById(R.id.activity_event_details_text_details);
-		mSwitchAllDay = (Switcher) view
-				.findViewById(R.id.activity_event_details_switcher_allDay);
+		mTextHeureDeb = (TimeButton) view.findViewById(R.id.activity_event_details_text_hdeb);
+		mTextHeureFin = (TimeButton) view.findViewById(R.id.activity_event_details_text_hfin);
+		mSpinnerCompte = (Spinner) view.findViewById(R.id.activity_event_details_spinner_compte);
+		mSpinnerRecurrence = (Spinner) view.findViewById(R.id.activity_event_details_spinner_recurrence);
+		mSpinnerParticipation = (Spinner) view.findViewById(R.id.activity_event_details_spinner_participation);
+		mTextDetails = (TextView) view.findViewById(R.id.activity_event_details_text_details);
+		mSwitchAllDay = (Switcher) view.findViewById(R.id.activity_event_details_switcher_allDay);
 
 		if (state == null) {
 			initialiseValuesFromEvent();
