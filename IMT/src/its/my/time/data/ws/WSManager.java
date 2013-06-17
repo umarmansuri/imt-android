@@ -27,6 +27,7 @@ import its.my.time.data.ws.events.EventBeanWS;
 import its.my.time.data.ws.events.Participant;
 import its.my.time.data.ws.events.WSGetEvent;
 import its.my.time.data.ws.events.WSSendEvent;
+import its.my.time.data.ws.events.participating.WSGetEventParticipating;
 import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
 import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
@@ -188,6 +189,8 @@ public class WSManager {
 		}
 
 
+		new WSGetEventParticipating(context, 1, null).retreiveObject();
+		
 		List<Participant> participantsWs = new ArrayList<Participant>();
 		List<Attachmants> attachementsWs = new ArrayList<Attachmants>();
 		for (Event event : eventsWs) {
