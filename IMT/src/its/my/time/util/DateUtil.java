@@ -84,6 +84,12 @@ public class DateUtil {
 		return dateFormat.format(cal.getTime());
 	}
 
+	public static String getDayHourFrenchSlash(Calendar cal) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.format(cal.getTime());
+	}
+
+	
 	public static CharSequence getHourLabelLong(Calendar cal) {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("à HH'h'mm");
 		return dateFormat.format(cal.getTime());
