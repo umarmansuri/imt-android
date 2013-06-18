@@ -2,6 +2,7 @@ package its.my.time.util;
 
 import its.my.time.Consts;
 import its.my.time.R;
+import its.my.time.SplashActivity;
 import its.my.time.pages.settings.SettingsActivity;
 import its.my.time.receivers.ValidateParticipationActivity;
 import android.app.Notification;
@@ -9,6 +10,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
@@ -22,7 +24,24 @@ public class NotifManager {
 
 	private static Notification voipNotif;
 
+	private static int lastState;
+
+
 	public static void showVoipNotifiaction(Context context, int state) {
+		lastState = state;
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN
+				|| !PreferencesUtil.isVoipNotifExtended()) {
+			showVoipNotification(context, state);
+		} else {
+			showVoipNotificationIcs(context, state);
+		}
+	}
+
+	public static void showVoipNotification(Context context) {
+		showVoipNotifiaction(context, lastState);
+	}
+
+	private static void showVoipNotification(Context context, int state) {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
 		.setSmallIcon(R.drawable.ic_launcher)
 		.setContentTitle("My-Time");
@@ -40,24 +59,15 @@ public class NotifManager {
 			.setContentText("Connexion en cours");
 			break;
 		}
-		// Creates an explicit intent for an Activity in your app
-		Intent resultIntent = new Intent(context, SettingsActivity.class);
-
-		// The stack builder object will contain an artificial back stack for
-		// the
-		// started Activity.
-		// This ensures that navigating backward from the Activity leads out of
-		// your application to the Home screen.
+		Intent resultIntent = new Intent(context, SplashActivity.class);
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(SettingsActivity.class);
-		// Adds the Intent that starts the Activity to the top of the stack
+		stackBuilder.addParentStack(SplashActivity.class);
 		stackBuilder.addNextIntent(resultIntent);
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
-				PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 		mBuilder.setContentIntent(resultPendingIntent);
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		// mId allows you to update the notification later on.
+
+		mBuilder.setPriority(Notification.PRIORITY_HIGH);
 		voipNotif = mBuilder.build();
 		voipNotif.flags = Notification.FLAG_ONGOING_EVENT;
 		if(PreferencesUtil.isVoipNotifEnable()) {
@@ -67,8 +77,46 @@ public class NotifManager {
 
 
 
-	public static void showVoipNotifiaction(Context context) {
-		((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(NOTIF_ID_SIP, voipNotif);
+	private static void showVoipNotificationIcs(Context context, int state) {
+		Notification.Builder mBuilder = new Notification.Builder(context)
+		.setSmallIcon(R.drawable.ic_launcher)
+		.setContentTitle("My-Time");
+		switch (state) {
+		case STATE_REGISTERED:
+			mBuilder.setContentText("En ligne");
+			break;
+		case STATE_UNREGISTERED:
+			mBuilder.setContentText("Hors ligne");
+			break;
+		case STATE_REGISTERING:
+			mBuilder.setContentText("Connexion en cours");
+			break;
+		}
+		
+		Intent resultIntent = new Intent(context, SplashActivity.class);
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+		stackBuilder.addParentStack(SplashActivity.class);
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+		mBuilder.setContentIntent(resultPendingIntent);
+		mBuilder.addAction(android.R.drawable.ic_menu_today, "Ouvrir", resultPendingIntent);
+		
+
+		resultIntent = new Intent(context, SettingsActivity.class);
+		stackBuilder = TaskStackBuilder.create(context);
+		stackBuilder.addParentStack(SettingsActivity.class);
+		stackBuilder.addNextIntent(resultIntent);
+		resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+		mBuilder.addAction(android.R.drawable.ic_menu_preferences, "Réglages", resultPendingIntent);
+
+		mBuilder.setPriority(Notification.PRIORITY_HIGH);
+		
+		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		voipNotif = mBuilder.build();
+		voipNotif.flags = Notification.FLAG_ONGOING_EVENT;
+		if(PreferencesUtil.isVoipNotifEnable()) {
+			mNotificationManager.notify(NOTIF_ID_SIP, voipNotif);
+		}
 	}
 
 
@@ -77,7 +125,7 @@ public class NotifManager {
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.cancel(NOTIF_ID_SIP);
 	}
-	
+
 	public static void showEventNotification(Context context, String message, int id) {
 		long when = System.currentTimeMillis();
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

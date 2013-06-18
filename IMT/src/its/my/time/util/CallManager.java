@@ -58,6 +58,10 @@ public class CallManager {
 
 	public static void initializeManager(Context con) {
 		CallManager.context = con;
+		NotifManager.showVoipNotifiaction(context, NotifManager.STATE_UNREGISTERED);
+		if(!PreferencesUtil.isVoipNetworkEnable() && ConnectionManager.isOnlineWithMobileNetwork(con)) {
+			return;
+		}
 		if(manager == null) {
 			manager = SipManager.newInstance(context);
 		}
@@ -109,12 +113,12 @@ public class CallManager {
 	}
 
 	public static void closeLocalProfile() {
+		NotifManager.showVoipNotifiaction(context, NotifManager.STATE_UNREGISTERED);
 		if (manager == null) {
 			return;
 		}
 		try {
 			manager.setRegistrationListener(me.getUriString(), null);
-			NotifManager.hideVoipNotifiaction(context);
 			if (me != null) {
 				manager.close(me.getUriString());
 			}

@@ -2,6 +2,7 @@ package its.my.time.data.ws;
 
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
+import its.my.time.util.ConnectionManager;
 import its.my.time.util.PreferencesUtil;
 
 import java.net.URI;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class WSLogin {
 
@@ -33,15 +35,23 @@ public class WSLogin {
 	private static LoadToken refreshTask = null;
 
 	public static void checkConnexion(final Context context, final Callback callback) {
-		if(WSBase.context == null) {
-			WSBase.context = context;
-		}
-		Log.d("CTX"," context = " + WSBase.context);
 		try {
+			if(WSBase.context == null) {
+				WSBase.context = context;
+			}
 			((Activity)WSBase.context).runOnUiThread(new Runnable() {
 				
 				@Override
 				public void run() {
+
+					if(!ConnectionManager.isOnline(context)) {
+						Toast.makeText(context, "Vous n'êtes pas connecté à internet.", Toast.LENGTH_SHORT).show();
+						if(callback != null) {
+							callback.done(new Exception());
+						}
+						return;
+					}
+					
 					UtilisateurBean bean = new UtilisateurRepository(WSBase.context).getById(PreferencesUtil.getCurrentUid());
 					if(bean == null || bean.getId() <= 0) {
 						checkConnexion(bean.getPseudo(), bean.getMdp(), WSBase.context, callback);
@@ -56,6 +66,10 @@ public class WSLogin {
 	}
 
 	public static void checkConnexion(String user, String pass, Context context, Callback callback) {
+		if(!ConnectionManager.isOnline(context)) {
+			Toast.makeText(context, "Vous n'êtes pas connecté à internet.", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		WSLogin.context = context ;
 		callBacks.add(callback);
 

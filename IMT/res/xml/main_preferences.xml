@@ -4,16 +4,16 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_synchro_auto"
-            android:title="Synchronisation automatique" />
+            android:title="Synchronisation auto" />
 
         <ListPreference
+            android:defaultValue="120"
             android:dialogTitle="Interval de synchronisation"
             android:entries="@array/entries_list_preference"
             android:entryValues="@array/entryvalues_list_preference"
             android:key="@string/pref_synchro_interval"
-            android:summary="Définit l&apos;interval de temps maximum entre deux synchronisation"
-            android:title="Interval de synchronisation"
-            android:defaultValue="120" />
+            android:summary="Définit l&apos;interval de temps maximum entre deux synchronisations"
+            android:title="Interval de synchronisation" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Gestion des appels" >
         <CheckBoxPreference
@@ -23,14 +23,22 @@
             android:title="Afficher la notification" />
         <CheckBoxPreference
             android:defaultValue="true"
+            android:dependency="@string/pref_voip_notification"
+            android:key="@string/pref_voip_notification_extended"
+            android:summary="Indique si la notification My-Time doit être détaillée, et proposer des actions rapides"
+            android:title="Notification détaillée" />
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="@string/pref_voip_network"
-            android:title="Autoriser sur le réseau mobile" />
+            android:summary="Indique si le réseau mobile peut être utilisé afin de passer des appels"
+            android:title="Autoriser réseau mobile" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Divers" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_location_enable"
-            android:title="Autoriser la géolocalisation" />
+            android:summary="AUtoriser ou non la géolocalisation"
+            android:title="Géolocalisation" />
     </PreferenceCategory>
 
 </PreferenceScreen>

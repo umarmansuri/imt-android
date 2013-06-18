@@ -35,7 +35,7 @@ public class PreferencesUtil {
 
 	private static final String SHPREF_KEY_LAST_REFRESH = "SHPREF_KEY_LAST_REFRESH";
 	private static final String SHPREF_KEY_LAST_ACCESS = "SHPREF_KEY_LAST_ACCESS";
-	
+
 	private static final String SHPREF_KEY_LAST_UPDATE = "SHPREF_KEY_LAST_UPDATE";
 
 	public static void writeBoolean(String key, boolean value) {
@@ -173,15 +173,31 @@ public class PreferencesUtil {
 			Log.d("PREF","key = " + key);
 			if(key.equals(context.getResources().getString(R.string.pref_voip_notification))) {
 				if(isVoipNotifEnable()) {
-					NotifManager.showVoipNotifiaction(context);
+					NotifManager.showVoipNotification(context);
 				} else {
 					NotifManager.hideVoipNotifiaction(context);
+				}
+			} else if(key.equals(context.getResources().getString(R.string.pref_voip_network))) {
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						if(!isVoipNetworkEnable() && ConnectionManager.isOnlineWithMobileNetwork(context)) {
+							CallManager.closeLocalProfile();
+						} else {
+							CallManager.initializeManager(context);
+						}
+					}
+				}).start();
+			} else if(key.equals(context.getResources().getString(R.string.pref_voip_notification_extended))) {
+				if(isVoipNotifEnable()) {
+					NotifManager.showVoipNotification(context);
 				}
 			}
 		}
 	};
 
-	
+
 	public static boolean isSynchroAuto() {
 		return PreferenceManager.getDefaultSharedPreferences(context).
 				getBoolean(context.getResources().getString(R.string.pref_synchro_auto), true);
@@ -192,9 +208,15 @@ public class PreferencesUtil {
 				getBoolean(context.getResources().getString(R.string.pref_voip_notification), true);
 	}
 
-	public static boolean isVoipNetworkEnable() {
+	public static boolean isVoipNotifExtended() {
 		return PreferenceManager.getDefaultSharedPreferences(context).
+				getBoolean(context.getResources().getString(R.string.pref_voip_notification_extended), true);
+	}
+
+	public static boolean isVoipNetworkEnable() {
+		boolean res = PreferenceManager.getDefaultSharedPreferences(context).
 				getBoolean(context.getResources().getString(R.string.pref_voip_network), true);
+		return res;
 	}
 
 	public static boolean isLocationEnable() {
@@ -203,8 +225,8 @@ public class PreferencesUtil {
 	}
 
 	public static int getSynchroInterval() {
-		return PreferenceManager.getDefaultSharedPreferences(context).
-				getInt(context.getResources().getString(R.string.pref_synchro_interval), 120);
+		return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).
+				getString(context.getResources().getString(R.string.pref_synchro_interval), "120"));
 	}
 
 
