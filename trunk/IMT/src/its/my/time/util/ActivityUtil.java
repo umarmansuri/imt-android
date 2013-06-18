@@ -43,15 +43,17 @@ public class ActivityUtil {
 			public void run() {
 				CallManager.closeLocalProfile();
 				PreferencesUtil.setCurrentUid(-1);
-				context.deleteDatabase(DatabaseHandler.DATABASE_NAME);				
+				PreferencesUtil.clearAll(context);
+				context.deleteDatabase(DatabaseHandler.DATABASE_NAME);		
+
+				
+				final Intent i = new Intent(ACTION_FINISH);
+				i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
+				PreferencesUtil.setCurrentUid(-1);
+				context.sendBroadcast(i);
+				startSplashActivity(context);
 			}
-		});
-		
-		final Intent i = new Intent(ACTION_FINISH);
-		i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
-		PreferencesUtil.setCurrentUid(-1);
-		context.sendBroadcast(i);
-		startSplashActivity(context);
+		}).start();
 	}
 
 	public static void startSplashActivity(Context context) {

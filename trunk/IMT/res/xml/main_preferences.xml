@@ -1,34 +1,36 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    
+
     <PreferenceCategory android:title="Synchronisation" >
-        
         <CheckBoxPreference
-            android:key="synchro_auto"
+            android:defaultValue="true"
+            android:key="@string/pref_synchro_auto"
             android:title="Synchronisation automatique" />
+
         <ListPreference
             android:dialogTitle="Interval de synchronisation"
             android:entries="@array/entries_list_preference"
             android:entryValues="@array/entryvalues_list_preference"
-            android:key="synchro_interval"
-            android:summary="Définit l'interval de temps maximum entre deux synchronisation"
-            android:title="Interval de synchronisation" />
+            android:key="@string/pref_synchro_interval"
+            android:summary="Définit l&apos;interval de temps maximum entre deux synchronisation"
+            android:title="Interval de synchronisation"
+            android:defaultValue="120" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="Gestion des appels" >
         <CheckBoxPreference
-            android:key="voip_notification"
+            android:defaultValue="true"
+            android:key="@string/pref_voip_notification"
             android:summary="Indique si la notification My-Time doit être affichée lorsque les appels sont disponibles"
             android:title="Afficher la notification" />
         <CheckBoxPreference
-            android:key="voip_network"
+            android:defaultValue="true"
+            android:key="@string/pref_voip_network"
             android:title="Autoriser sur le réseau mobile" />
     </PreferenceCategory>
-    
-    
     <PreferenceCategory android:title="Divers" >
         <CheckBoxPreference
-            android:key="location_enable"
+            android:defaultValue="true"
+            android:key="@string/pref_location_enable"
             android:title="Autoriser la géolocalisation" />
-        </PreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

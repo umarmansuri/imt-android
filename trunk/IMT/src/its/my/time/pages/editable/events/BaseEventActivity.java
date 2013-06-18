@@ -54,6 +54,8 @@ public abstract class BaseEventActivity extends BaseActivity {
 			this.event = new EventBaseBean();
 			this.event.setTypeId(Types.Event.BASE);
 			
+			event.setMine(true);
+			
 			boolean isAllDay = bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false);
 			Calendar hDeb = DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME));
 			Calendar hFin;

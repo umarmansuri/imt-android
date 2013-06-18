@@ -4,6 +4,7 @@ import its.my.time.R;
 import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.data.ws.Callback;
 import its.my.time.data.ws.WSManager;
+import its.my.time.pages.settings.SettingsActivity;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.CallManager;
 import its.my.time.util.PreferencesUtil;
@@ -34,7 +35,6 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
 			final String action_finish = arg1.getStringExtra("FINISH");
-
 			if (action_finish.equalsIgnoreCase("ACTION.FINISH.LOGOUT")) {
 				unregisterReceiver(MyTimeActivity.this.LOGOUT_RECEIVER);
 				finish();

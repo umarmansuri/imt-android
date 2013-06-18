@@ -180,7 +180,7 @@
             android:theme="@android:style/Theme.Dialog"  android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="its.my.time.pages.SettingsActivity"
+            android:name="its.my.time.pages.settings.SettingsActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Dialog" >
         </activity>

@@ -15,4 +15,10 @@
         <item>1440</item>
         <item>2880</item>
     </string-array>
+    
+    <string name="pref_synchro_auto">pref_synchro_auto</string>
+    <string name="pref_synchro_interval">pref_synchro_interval</string>
+    <string name="pref_voip_notification">pref_voip_notification</string>
+    <string name="pref_voip_network">pref_voip_network</string>
+    <string name="pref_location_enable">pref_location_enable</string>
 </resources>
