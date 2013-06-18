@@ -94,6 +94,10 @@ public class WSManager {
 							}	
 						}
 					}).start();
+				} else {
+					if(callback != null) {
+						callback.done(new Exception());
+					}	
 				}
 			}
 		});

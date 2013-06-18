@@ -170,6 +170,9 @@ public class SplashActivity extends Activity {
 
 			@Override
 			public void run() {
+				if(dialog == null) {
+					dialog = new ProgressDialog(SplashActivity.this);
+				}
 				dialog.setTitle("Patience");
 				dialog.setMessage("Synchronisation en cours...");
 				dialog.setCancelable(true);

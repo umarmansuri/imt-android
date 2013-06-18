@@ -1,5 +1,6 @@
 package its.my.time.data.ws;
 
+import its.my.time.util.ConnectionManager;
 import its.my.time.util.PreferencesUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -14,6 +15,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 public abstract class WSGetBase<T> extends WSBase{
 	@SuppressWarnings("unchecked")
@@ -45,6 +47,10 @@ public abstract class WSGetBase<T> extends WSBase{
 	
 
 	public T retreiveObject() {
+		if(!ConnectionManager.isOnline(context)) {
+			Toast.makeText(context, "Vous n'êtes pas connecté à internet.", Toast.LENGTH_SHORT).show();
+			return null;
+		}
 		try {
 			HttpClient client = createClient();
 			String urlStr = getUrl();
