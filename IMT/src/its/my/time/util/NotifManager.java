@@ -2,7 +2,7 @@ package its.my.time.util;
 
 import its.my.time.Consts;
 import its.my.time.R;
-import its.my.time.pages.SettingsActivity;
+import its.my.time.pages.settings.SettingsActivity;
 import its.my.time.receivers.ValidateParticipationActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -20,7 +20,9 @@ public class NotifManager {
 	public static final int STATE_REGISTERED = 1;
 	public static final int STATE_UNREGISTERED = 2;
 
-	public static void showNotifiaction(Context context, int state) {
+	private static Notification voipNotif;
+
+	public static void showVoipNotifiaction(Context context, int state) {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
 		.setSmallIcon(R.drawable.ic_launcher)
 		.setContentTitle("My-Time");
@@ -56,19 +58,27 @@ public class NotifManager {
 		mBuilder.setContentIntent(resultPendingIntent);
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		// mId allows you to update the notification later on.
-		Notification notif = mBuilder.build();
-		notif.flags = Notification.FLAG_ONGOING_EVENT;
-		mNotificationManager.notify(NOTIF_ID_SIP, notif);
+		voipNotif = mBuilder.build();
+		voipNotif.flags = Notification.FLAG_ONGOING_EVENT;
+		if(PreferencesUtil.isVoipNotifEnable()) {
+			mNotificationManager.notify(NOTIF_ID_SIP, voipNotif);
+		}
 	}
 
 
 
-	public static void hideNotifiaction(Context context) {
+	public static void showVoipNotifiaction(Context context) {
+		((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(NOTIF_ID_SIP, voipNotif);
+	}
+
+
+
+	public static void hideVoipNotifiaction(Context context) {
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.cancel(NOTIF_ID_SIP);
 	}
 	
-	public static void generateNotification(Context context, String message, int id) {
+	public static void showEventNotification(Context context, String message, int id) {
 		long when = System.currentTimeMillis();
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification notification = new Notification(R.drawable.ic_launcher,message, when);

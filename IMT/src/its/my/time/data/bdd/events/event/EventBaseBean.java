@@ -17,6 +17,7 @@ public class EventBaseBean extends BaseBean{
 	private TableAttribut<Integer> typeId;
 	private TableAttribut<Integer> detailsId;
 	private TableAttribut<Integer> isAllDay;
+	private TableAttribut<Integer> isMine;
 
 	public EventBaseBean() {
 		super();
@@ -28,6 +29,7 @@ public class EventBaseBean extends BaseBean{
 		this.typeId = new TableAttribut<Integer>("typeId", -1);
 		this.detailsId = new TableAttribut<Integer>("detailsId", -1);
 		this.isAllDay = new TableAttribut<Integer>("isAllDay", -1);
+		this.isMine = new TableAttribut<Integer>("isMine", -1);
 	}
 
 	public boolean isAllDay() {
@@ -36,6 +38,14 @@ public class EventBaseBean extends BaseBean{
 
 	public void setAllDay(boolean isAllDay) {
 		this.isAllDay.setValue(isAllDay == true ? 1 : 0);
+	}
+
+	public boolean isMine() {
+		return this.isMine.getValue() == 1 ? true : false;
+	}
+
+	public void setMine(boolean isMine) {
+		this.isMine.setValue(isMine == true ? 1 : 0);
 	}
 
 	public String getDetails() {
@@ -104,6 +114,7 @@ public class EventBaseBean extends BaseBean{
 		list.add(typeId);
 		list.add(detailsId);
 		list.add(isAllDay);
+		list.add(isMine);
 		return list;
 	}
 }

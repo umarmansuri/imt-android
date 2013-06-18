@@ -88,7 +88,7 @@ public class WSManager {
 						public void run() {
 							sendLocalUpdate();	
 							getDistanteUpdate();	
-							
+							PreferencesUtil.setLastUpdate(Calendar.getInstance());
 							if(callback != null) {
 								callback.done(null);
 							}	
@@ -202,6 +202,7 @@ public class WSManager {
 			eventBean.sethDeb(Calendar.getInstance());// DateUtil.getDateFromISO(object.getDate()));
 			eventBean.sethFin(Calendar.getInstance());//DateUtil.getDateFromISO(object.getDate_fin()));
 			eventBean.setAllDay(object.getAll_day());
+			eventBean.setMine(true);
 			eventBean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
 			Log.d("WS","Compte ID EVENT = " + eventBean.getCid());
 			if(eventBean.getId() == -1) {

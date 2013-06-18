@@ -23,7 +23,7 @@ import com.google.android.gcm.GCMRegistrar;
 
 public class GCMManager {
 
-	public static void initGcm(Context context) {
+	public static String initGcm(Context context) {
 		String gcmId = null;
 		GCMRegistrar.checkDevice(context);
 		GCMRegistrar.checkManifest(context);
@@ -37,7 +37,7 @@ public class GCMManager {
 		} else {
 			gcmId = regId;
 		}		
-		updateGcmId(gcmId, null);
+		return gcmId;
 	}
 
 
@@ -58,10 +58,6 @@ public class GCMManager {
 		}catch(Exception e){
 			Log.e("upImg", "Error in http connection "+e.toString());
 		}
-	}
-
-	public static void updateGcmId(String gcmId, Callback callback) {
-		GCMManager.gcmId = gcmId;
 	}
 	
 	public static String gcmId = "";

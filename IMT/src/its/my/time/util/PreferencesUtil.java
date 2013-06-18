@@ -1,11 +1,15 @@
 package its.my.time.util;
 
+import its.my.time.R;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class PreferencesUtil {
 
@@ -16,8 +20,11 @@ public class PreferencesUtil {
 
 	private static Context context;
 
+
 	public static void init(Context context) {
 		PreferencesUtil.context = context;
+		//PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(spChanged);
+		PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(spChanged);
 	}
 
 	public static final String PREF_NAME = "IMT";
@@ -28,6 +35,8 @@ public class PreferencesUtil {
 
 	private static final String SHPREF_KEY_LAST_REFRESH = "SHPREF_KEY_LAST_REFRESH";
 	private static final String SHPREF_KEY_LAST_ACCESS = "SHPREF_KEY_LAST_ACCESS";
+	
+	private static final String SHPREF_KEY_LAST_UPDATE = "SHPREF_KEY_LAST_UPDATE";
 
 	public static void writeBoolean(String key, boolean value) {
 		getEditor(context).putBoolean(key, value).commit();
@@ -122,7 +131,7 @@ public class PreferencesUtil {
 		setLastTokenAccess(Calendar.getInstance());
 		setLastTokenRefresh(Calendar.getInstance());
 	}
-	
+
 
 	public static String getCurrentRequestToken() {
 		return readString(SHPREF_KEY_REQUEST_TOKEN, null);
@@ -154,6 +163,60 @@ public class PreferencesUtil {
 			return DateUtil.getDateFromISO(readString(SHPREF_KEY_LAST_REFRESH, null));
 		} catch (Exception e) {
 			return new GregorianCalendar(1970, 0, 1);
+		}
+	}
+
+
+	private static SharedPreferences.OnSharedPreferenceChangeListener spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
+		@Override
+		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+			Log.d("PREF","key = " + key);
+			if(key.equals(context.getResources().getString(R.string.pref_voip_notification))) {
+				if(isVoipNotifEnable()) {
+					NotifManager.showVoipNotifiaction(context);
+				} else {
+					NotifManager.hideVoipNotifiaction(context);
+				}
+			}
+		}
+	};
+
+	
+	public static boolean isSynchroAuto() {
+		return PreferenceManager.getDefaultSharedPreferences(context).
+				getBoolean(context.getResources().getString(R.string.pref_synchro_auto), true);
+	}
+
+	public static boolean isVoipNotifEnable() {
+		return PreferenceManager.getDefaultSharedPreferences(context).
+				getBoolean(context.getResources().getString(R.string.pref_voip_notification), true);
+	}
+
+	public static boolean isVoipNetworkEnable() {
+		return PreferenceManager.getDefaultSharedPreferences(context).
+				getBoolean(context.getResources().getString(R.string.pref_voip_network), true);
+	}
+
+	public static boolean isLocationEnable() {
+		return PreferenceManager.getDefaultSharedPreferences(context).
+				getBoolean(context.getResources().getString(R.string.pref_location_enable), true);
+	}
+
+	public static int getSynchroInterval() {
+		return PreferenceManager.getDefaultSharedPreferences(context).
+				getInt(context.getResources().getString(R.string.pref_synchro_interval), 120);
+	}
+
+
+	public static void setLastUpdate(Calendar cal) {
+		writeString(SHPREF_KEY_LAST_UPDATE, DateUtil.getTimeInIso(cal));
+	}
+	public static Calendar getLastUpdate() {
+		String lastUpdate = readString(SHPREF_KEY_LAST_UPDATE, null);
+		if(lastUpdate == null) {
+			return new GregorianCalendar(1970, 0, 0);
+		} else {
+			return DateUtil.getDateFromISO(lastUpdate);
 		}
 	}
 }

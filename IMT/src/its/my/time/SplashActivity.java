@@ -1,5 +1,7 @@
 package its.my.time;
 
+import java.util.Calendar;
+
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.data.ws.GCMManager;
@@ -49,10 +51,8 @@ public class SplashActivity extends Activity {
 
 
 		PreferencesUtil.init(this);
-		Log.d("UID","ud = " + PreferencesUtil.getCurrentUid());
 		if(PreferencesUtil.getCurrentUid() > 0) {
-			ActivityUtil.startCalendarActivity(this);
-			finish();
+			launchActivity();
 		} else {
 
 			setContentView(R.layout.activity_splash);
@@ -91,7 +91,7 @@ public class SplashActivity extends Activity {
 		callReceiver = new IncomingCallReceiver();
 		this.registerReceiver(callReceiver, filter);
 	}
-	
+
 	private void logFromServer() {
 		dialog = new ProgressDialog(this);
 		dialog.setTitle("Patience");
@@ -133,34 +133,19 @@ public class SplashActivity extends Activity {
 			dialog.hide();
 
 			if(message.what == 0) {
-				new WSGetUser(SplashActivity.this, 1, new WSGetBase.GetCallback<UtilisateurBeanWS>() {
-					@Override public void done(Exception e) {					}
-					@Override public void onGetObject(UtilisateurBeanWS object) {
-						PreferencesUtil.setCurrentUid(object.getId());
-						UtilisateurBean user = new UtilisateurRepository(SplashActivity.this).getByIdDistant(object.getId());
-						new WSSendUser(SplashActivity.this, user, new WSPostBase.PostCallback<UtilisateurBean>() {
-							@Override public void done(Exception e) {
 
-								WSManager.updateAllData(SplashActivity.this, new its.my.time.data.ws.Callback() {
-
-									@Override
-									public void done(Exception e) {
-										ActivityUtil.startCalendarActivity(SplashActivity.this);
-										finish();										
-									}
-								});
-							}
-							@Override public void onGetObject(UtilisateurBean object) {}
-						}).execute();
-					}
-				}).execute();
 				dialog = new ProgressDialog(SplashActivity.this);
 				dialog.setTitle("Patience");
 				dialog.setMessage("Synchronisation en cours...");
 				dialog.setCancelable(true);
 				dialog.show();
-				CallManager.initializeManager(getBaseContext());
-				GCMManager.initGcm(SplashActivity.this);
+				new WSGetUser(SplashActivity.this, 1, new WSGetBase.GetCallback<UtilisateurBeanWS>() {
+					@Override public void done(Exception e) {					}
+					@Override public void onGetObject(UtilisateurBeanWS object) {
+						PreferencesUtil.setCurrentUid(object.getId());
+						launchActivity();
+					}
+				}).execute();
 
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
@@ -178,6 +163,43 @@ public class SplashActivity extends Activity {
 			return false;
 		}
 	});
+
+
+	private void launchActivity() {
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				dialog.setTitle("Patience");
+				dialog.setMessage("Synchronisation en cours...");
+				dialog.setCancelable(true);
+				if(!dialog.isShowing()) {
+					dialog.show();
+				}
+			}
+		});
+		CallManager.initializeManager(getBaseContext());
+		GCMManager.initGcm(SplashActivity.this);
+		UtilisateurBean user = new UtilisateurRepository(SplashActivity.this).getByIdDistant(PreferencesUtil.getCurrentUid());
+		new WSSendUser(SplashActivity.this, user, new WSPostBase.PostCallback<UtilisateurBean>() {
+			@Override public void done(Exception e) {
+
+				if(Calendar.getInstance().getTimeInMillis() - PreferencesUtil.getLastUpdate().getTimeInMillis() >= PreferencesUtil.getSynchroInterval() * 60 * 1000) {
+					WSManager.updateAllData(SplashActivity.this, new its.my.time.data.ws.Callback() {
+						@Override
+						public void done(Exception e) {
+							ActivityUtil.startCalendarActivity(SplashActivity.this);
+							finish();										
+						}
+					});
+				} else {
+					ActivityUtil.startCalendarActivity(SplashActivity.this);
+					finish();
+				}
+			}
+			@Override public void onGetObject(UtilisateurBean object) {}
+		}).execute();
+	}
 
 	public void starAnimation() {
 		Animation animClock = new RotateAnimation(0f, 35f,

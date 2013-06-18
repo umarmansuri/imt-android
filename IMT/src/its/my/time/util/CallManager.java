@@ -92,15 +92,15 @@ public class CallManager {
 
 			manager.setRegistrationListener(me.getUriString(), new SipRegistrationListener() {
 				public void onRegistering(String localProfileUri) {
-					NotifManager.showNotifiaction(context, NotifManager.STATE_REGISTERING);
+					NotifManager.showVoipNotifiaction(context, NotifManager.STATE_REGISTERING);
 				}
 
 				public void onRegistrationDone(String localProfileUri, long expiryTime) {
-					NotifManager.showNotifiaction(context, NotifManager.STATE_REGISTERED);
+					NotifManager.showVoipNotifiaction(context, NotifManager.STATE_REGISTERED);
 				}
 
 				public void onRegistrationFailed(String localProfileUri, int errorCode, String errorMessage) {
-					NotifManager.showNotifiaction(context, NotifManager.STATE_UNREGISTERED);
+					NotifManager.showVoipNotifiaction(context, NotifManager.STATE_UNREGISTERED);
 				}
 			});
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public class CallManager {
 		}
 		try {
 			manager.setRegistrationListener(me.getUriString(), null);
-			NotifManager.hideNotifiaction(context);
+			NotifManager.hideVoipNotifiaction(context);
 			if (me != null) {
 				manager.close(me.getUriString());
 			}
