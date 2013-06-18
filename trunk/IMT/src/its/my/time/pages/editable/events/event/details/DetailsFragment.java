@@ -7,6 +7,7 @@ import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationBean;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
+import its.my.time.pages.editable.events.event.EventActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
@@ -21,8 +22,14 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +50,7 @@ public class DetailsFragment extends BasePluginFragment {
 	private static final String KEY_BUNDLE_ALL_DAY = "KEY_BUNDLE_ALL_DAY";
 	private static final String KEY_BUNDLE_COMPTE = "KEY_BUNDLE_COMPTE";
 	private static final String KEY_BUNDLE_RECURRENCE = "KEY_BUNDLE_RECURRENCE";
+	private static final String KEY_BUNDLE_RAPPEL = "KEY_BUNDLE_RAPPEL";
 	private static final String KEY_BUNDLE_PARTICIPATION = "KEY_BUNDLE_PARTICIPATION";
 
 	private TimeButton mTextHeureDeb;
@@ -54,8 +62,10 @@ public class DetailsFragment extends BasePluginFragment {
 	private Spinner mSpinnerCompte;
 	private Spinner mSpinnerRecurrence;
 	private Spinner mSpinnerParticipation;
+	private Spinner mSpinnerRappel;
 	private TextView mTextDetails;
 	private String[] array_recurrence;
+	private String[] array_rappel;
 	private ParticipationBean participationBean;
 	private ParticipationRepository participationRepo;
 
@@ -111,14 +121,15 @@ public class DetailsFragment extends BasePluginFragment {
 		mTextTitle = (EditText) view.findViewById(R.id.activity_event_details_text_title);
 		mTextJourDeb = (DateButton) view.findViewById(R.id.activity_event_details_text_ddeb);
 		mTextJourFin = (DateButton) view.findViewById(R.id.activity_event_details_text_dfin);
+
 		mTextHeureDeb = (TimeButton) view.findViewById(R.id.activity_event_details_text_hdeb);
 		mTextHeureFin = (TimeButton) view.findViewById(R.id.activity_event_details_text_hfin);
 		mSpinnerCompte = (Spinner) view.findViewById(R.id.activity_event_details_spinner_compte);
 		mSpinnerRecurrence = (Spinner) view.findViewById(R.id.activity_event_details_spinner_recurrence);
+		mSpinnerRappel = (Spinner) view.findViewById(R.id.activity_event_details_spinner_rappel);
 		mSpinnerParticipation = (Spinner) view.findViewById(R.id.activity_event_details_spinner_participation);
 		mTextDetails = (TextView) view.findViewById(R.id.activity_event_details_text_details);
 		mSwitchAllDay = (Switcher) view.findViewById(R.id.activity_event_details_switcher_allDay);
-
 		if (state == null) {
 			initialiseValuesFromEvent();
 		} else {
@@ -169,6 +180,7 @@ public class DetailsFragment extends BasePluginFragment {
 		}
 		mSpinnerCompte.setSelection(state.getInt(KEY_BUNDLE_COMPTE));
 		mSpinnerRecurrence.setSelection(state.getInt(KEY_BUNDLE_RECURRENCE));
+		mSpinnerRappel.setSelection(state.getInt(KEY_BUNDLE_RAPPEL));
 		mSpinnerParticipation.setSelection(state.getInt(KEY_BUNDLE_PARTICIPATION));
 	}
 
@@ -225,6 +237,13 @@ public class DetailsFragment extends BasePluginFragment {
 			public void onNothingSelected(AdapterView<?> container) {}
 		});
 
+		array_rappel = getResources().getStringArray(
+				R.array.array_rappel);
+		final ArrayAdapter<Object> adapter_rappel = new CustomAdapter(
+				getActivity(), android.R.layout.simple_spinner_item,
+				array_rappel, 0);
+		adapter_rappel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mSpinnerRappel.setAdapter(adapter_rappel);
 
 		mSwitchAllDay.setOnStateChangedListener(new OnStateChangedListener() {
 			@Override
@@ -290,6 +309,7 @@ public class DetailsFragment extends BasePluginFragment {
 		outState.putBoolean(KEY_BUNDLE_ALL_DAY, mSwitchAllDay.isChecked());
 		outState.putInt(KEY_BUNDLE_COMPTE,mSpinnerCompte.getSelectedItemPosition());
 		outState.putInt(KEY_BUNDLE_RECURRENCE, mSpinnerRecurrence.getSelectedItemPosition());
+		outState.putInt(KEY_BUNDLE_RAPPEL, mSpinnerRecurrence.getSelectedItemPosition());
 		outState.putInt(KEY_BUNDLE_PARTICIPATION, mSpinnerParticipation.getSelectedItemPosition());
 		state = outState;
 
@@ -345,8 +365,39 @@ public class DetailsFragment extends BasePluginFragment {
 			participationRepo.update(participationBean);		
 		}
 		getParentActivity().setEvent(getParentActivity().getEvent());
+
+		/*Calendar calendar = new GregorianCalendar();
+		calendar = Calendar.getInstance();
+		calendar.add(calendar.SECOND, 15);
+		Date date = new Date();
+		date = calendar.getTime();
+
+		TimerTask task = new TimerTask() {
+
+				public void run() {
+					NotifManager.generateNotification(getActivity(), "test notif", getParentActivity().getEvent().getId());
+				}
+		};
+		Timer t = new Timer();
+		t.schedule(task, date); */
+
+		NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+		Calendar calendar = Calendar.getInstance();
+		Calendar calendar2 = Calendar.getInstance();
+		calendar2.add(Calendar.MINUTE, 1);
+		long laps = calendar2.getTimeInMillis() - calendar.getTimeInMillis();
+		Log.d("BUUUUG", " "+calendar.getTimeInMillis()+ " "+calendar.getTime());
+		Notification notification = new Notification(R.drawable.ic_launcher,"Rappel événement", laps);
+		String title = getActivity().getString(R.string.app_name);
+		Intent notificationIntent = new Intent(getActivity(),EventActivity.class);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent intent = PendingIntent.getActivity(getActivity(), 0,notificationIntent, 0);
+		notification.setLatestEventInfo(getActivity(), title, getParentActivity().getEvent().getTitle()+" - "+getParentActivity().getEvent().getDetails()+" - "+getParentActivity().getEvent().gethDeb()+ "-"+getParentActivity().getEvent().gethFin(), intent);
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		notificationManager.notify(0, notification);
+
 		super.launchSave();
-	}
+	};
 
 	@Override
 	public void launchCancel() {
@@ -398,10 +449,10 @@ public class DetailsFragment extends BasePluginFragment {
 			this.label = label;
 		}
 
-		@Override
 		public String toString() {
 			return label;
 		}
 	}
+
 
 }

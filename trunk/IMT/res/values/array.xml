@@ -12,4 +12,12 @@
         <item>Mois</item>
         <item>Années</item>
     </string-array>
+    <string-array name="array_rappel">
+        <item>Rappel</item>
+        <item>1 Heure</item>
+        <item>2 Heures</item>
+        <item>24 Heures</item>
+        <item>1 Semaine</item>
+    </string-array>
+
 </resources>

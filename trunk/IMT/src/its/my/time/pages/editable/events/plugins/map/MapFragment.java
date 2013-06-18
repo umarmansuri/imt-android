@@ -45,7 +45,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 public class MapFragment extends BasePluginMapFragment implements OnCheckedChangeListener, OnInfoWindowClickListener, OnMarkerClickListener{
 
 
-
 	private PolylineOptions currentRouteOptions;
 	private Polyline currentRoute;
 

@@ -102,8 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="4dp" 
-                android:orientation="vertical">
+                android:layout_margin="4dp"
+                android:orientation="vertical" >
             </LinearLayout>
 
             <FrameLayout
@@ -163,8 +163,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7" />
             </LinearLayout>
-            
-           <LinearLayout
+
+            <LinearLayout
+                android:id="@+id/activity_event_details_layout_rappel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp" >
+                
+                <TextView
+                    android:id="@+id/activity_event_details_lib_rappel"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="4"
+                    android:hint="@string/view_event_detail_rappel" />
+
+                <Spinner
+                    android:id="@+id/activity_event_details_spinner_rappel"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/activity_event_details_spinner_bis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

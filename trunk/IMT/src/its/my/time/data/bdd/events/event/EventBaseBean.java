@@ -17,6 +17,7 @@ public class EventBaseBean extends BaseBean{
 	private TableAttribut<Integer> typeId;
 	private TableAttribut<Integer> detailsId;
 	private TableAttribut<Integer> isAllDay;
+	private TableAttribut<Integer> rappel;
 	private TableAttribut<Integer> isMine;
 
 	public EventBaseBean() {
@@ -29,6 +30,7 @@ public class EventBaseBean extends BaseBean{
 		this.typeId = new TableAttribut<Integer>("typeId", -1);
 		this.detailsId = new TableAttribut<Integer>("detailsId", -1);
 		this.isAllDay = new TableAttribut<Integer>("isAllDay", -1);
+		this.rappel = new TableAttribut<Integer>("rappel", -1);
 		this.isMine = new TableAttribut<Integer>("isMine", -1);
 	}
 
@@ -103,7 +105,15 @@ public class EventBaseBean extends BaseBean{
 	public void setDetailsId(int detailsId) {
 		this.detailsId.setValue(detailsId);
 	}
-	
+
+	public int getRappel() {
+		return this.rappel.getValue();
+	}
+
+	public void setRappel(int rappel) {
+		this.rappel.setValue(rappel);
+	}
+
 	@Override
 	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
 		list.add(details);
@@ -114,6 +124,7 @@ public class EventBaseBean extends BaseBean{
 		list.add(typeId);
 		list.add(detailsId);
 		list.add(isAllDay);
+		list.add(rappel);
 		list.add(isMine);
 		return list;
 	}
