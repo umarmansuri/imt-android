@@ -13,6 +13,7 @@ import its.my.time.view.menu.MenuGroupe;
 import its.my.time.view.menu.MenuObjet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -56,6 +57,9 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 			mProgressBar.setIndeterminate(true);
 			menuItemMaj.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 			menuItemMaj.setOnMenuItemClickListener(this);
+			if(Calendar.getInstance().getTimeInMillis() - PreferencesUtil.getLastUpdate().getTimeInMillis() >= PreferencesUtil.getSynchroInterval() * 60 * 1000) {
+				onMajCalled();
+			}
 		}
 		return super.onCreateOptionsMenu(menu);		
 	}
@@ -70,7 +74,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 		}
 		return false;
 	}
-
+	
 	public void onMajCalled() {
 		menuItemMaj.setActionView(mProgressBar);
 

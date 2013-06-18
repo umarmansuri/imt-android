@@ -4,6 +4,7 @@ import its.my.time.R;
 import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
+import its.my.time.data.ws.WSManager;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
 import its.my.time.pages.calendar.day.DayPagerAdapter;
@@ -96,9 +97,9 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 			new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
 		}
 
-		super.onResume();
+		super.onStart();
 	}
-
+	
 	@Override
 	protected void initialiseActionBar() {
 		super.initialiseActionBar();

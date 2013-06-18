@@ -1,13 +1,10 @@
 package its.my.time;
 
-import java.util.Calendar;
-
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
 import its.my.time.data.ws.GCMManager;
 import its.my.time.data.ws.WSGetBase;
 import its.my.time.data.ws.WSLogin;
-import its.my.time.data.ws.WSManager;
 import its.my.time.data.ws.WSPostBase;
 import its.my.time.data.ws.user.UtilisateurBeanWS;
 import its.my.time.data.ws.user.WSGetUser;
@@ -25,7 +22,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -130,15 +126,7 @@ public class SplashActivity extends Activity {
 
 		@Override
 		public boolean handleMessage(Message message) {
-			dialog.hide();
-
 			if(message.what == 0) {
-
-				dialog = new ProgressDialog(SplashActivity.this);
-				dialog.setTitle("Patience");
-				dialog.setMessage("Synchronisation en cours...");
-				dialog.setCancelable(true);
-				dialog.show();
 				new WSGetUser(SplashActivity.this, 1, new WSGetBase.GetCallback<UtilisateurBeanWS>() {
 					@Override public void done(Exception e) {					}
 					@Override public void onGetObject(UtilisateurBeanWS object) {
@@ -166,39 +154,15 @@ public class SplashActivity extends Activity {
 
 
 	private void launchActivity() {
-		runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				if(dialog == null) {
-					dialog = new ProgressDialog(SplashActivity.this);
-				}
-				dialog.setTitle("Patience");
-				dialog.setMessage("Synchronisation en cours...");
-				dialog.setCancelable(true);
-				if(!dialog.isShowing()) {
-					dialog.show();
-				}
-			}
-		});
 		CallManager.initializeManager(getBaseContext());
 		GCMManager.initGcm(SplashActivity.this);
 		UtilisateurBean user = new UtilisateurRepository(SplashActivity.this).getByIdDistant(PreferencesUtil.getCurrentUid());
 		new WSSendUser(SplashActivity.this, user, new WSPostBase.PostCallback<UtilisateurBean>() {
 			@Override public void done(Exception e) {
 
-				if(Calendar.getInstance().getTimeInMillis() - PreferencesUtil.getLastUpdate().getTimeInMillis() >= PreferencesUtil.getSynchroInterval() * 60 * 1000) {
-					WSManager.updateAllData(SplashActivity.this, new its.my.time.data.ws.Callback() {
-						@Override
-						public void done(Exception e) {
-							ActivityUtil.startCalendarActivity(SplashActivity.this);
-							finish();										
-						}
-					});
-				} else {
-					ActivityUtil.startCalendarActivity(SplashActivity.this);
-					finish();
-				}
+				ActivityUtil.startCalendarActivity(SplashActivity.this);
+				finish();
+
 			}
 			@Override public void onGetObject(UtilisateurBean object) {}
 		}).execute();
