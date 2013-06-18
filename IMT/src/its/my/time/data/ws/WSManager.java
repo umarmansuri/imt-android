@@ -44,6 +44,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 
@@ -63,9 +64,10 @@ public class WSManager {
 	private static ParticipantRepository participantRepo;
 	private static ParticipationRepository participationRepo;
 
-	public static void updateAllData(Activity context, final Callback callback) {
-
-		WSManager.context = context;
+	public static void updateAllData(Context context, final Callback callback) {
+		try {
+			WSManager.context = (Activity) context;
+		} catch (Exception e) {}
 		utilisateurRepo = new UtilisateurRepository(context);
 		compteRepo = new CompteRepository(context);
 		eventRepo = new EventBaseRepository(context);

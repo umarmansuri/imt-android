@@ -15,13 +15,13 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
 
-import android.app.Activity;
+import android.content.Context;
 
 public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 
 	private T object;
 
-	public WSPostBase(Activity context, T object, PostCallback<? extends BaseBean> callBack) {
+	public WSPostBase(Context context, T object, PostCallback<? extends BaseBean> callBack) {
 		super(context, callBack);
 		this.object = object;
 	}

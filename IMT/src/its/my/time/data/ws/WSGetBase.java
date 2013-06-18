@@ -12,7 +12,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,12 +21,6 @@ public abstract class WSGetBase<T> extends WSBase{
 	Class<T> persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	private int id;
 	private GetCallback<T> callback;
-
-	public WSGetBase(Activity context, int id, GetCallback<T> callBack) {
-		super(context, callBack);
-		this.id = id;
-		this.callback = callBack;
-	}
 
 	public WSGetBase(Context context, int id, GetCallback<T> callBack) {
 		super(context, callBack);

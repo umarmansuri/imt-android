@@ -11,11 +11,11 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
+import android.content.Context;
 
 public class WSSendUser extends WSPostBase<UtilisateurBean>{
 
-	public WSSendUser(Activity context, UtilisateurBean user, PostCallback<UtilisateurBean> callBack) {
+	public WSSendUser(Context context, UtilisateurBean user, PostCallback<UtilisateurBean> callBack) {
 		super(context, user, callBack);
 	}
 
