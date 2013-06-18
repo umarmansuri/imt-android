@@ -32,7 +32,13 @@ public class DatabaseHandler {
 	}
 
 	public DatabaseHandler open() throws SQLException {
-		this.db = this.DBHelper.getWritableDatabase();
+		synchronized (DATABASE_NAME) {
+			try {
+				this.db = this.DBHelper.getWritableDatabase();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return this;
 	}
 

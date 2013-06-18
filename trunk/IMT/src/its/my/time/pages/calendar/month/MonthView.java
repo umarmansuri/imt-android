@@ -285,7 +285,7 @@ public class MonthView extends BaseView implements OnDayClickListener {
 
 	@SuppressWarnings("unchecked")
 	private void initialiseListeners(final ViewGroup parent, int day) {
-		final GregorianCalendar calListener = new GregorianCalendar(helper.getYear(), helper.getMonth() + 1, day);
+		final GregorianCalendar calListener = new GregorianCalendar(helper.getYear(), helper.getMonth(), day);
 		parent.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

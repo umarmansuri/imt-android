@@ -61,16 +61,27 @@ public abstract class BaseFragment extends SherlockFragment{
 		if(isVisibleToUser) {
 			new Handler().postDelayed(new Runnable() {
 
+
 				@Override
 				public void run() {
 					if(isVisible()) {
-						new CreateView().execute();
+						task = new CreateView();
+						task.execute();
 					}
 				}
 			}, 400);
 		}
 	}
 
+	@Override
+	public void onDestroy() {
+		if(task != null) {
+			task.cancel(true);
+		}
+		super.onDestroy();
+	}
+
+	private CreateView task;
 	protected abstract BaseView createView(OnViewCreated onViewCreated);
 
 	public class CreateView extends AsyncTask<Void, Void, View> {
@@ -128,13 +139,21 @@ public abstract class BaseFragment extends SherlockFragment{
 				}
 			});
 
-
-
 			return null;
+		}
+		
+		@Override
+		protected void onCancelled() {
+			
+		}
+		
+		@Override
+		protected void onCancelled(View result) {
+			
 		}
 	}
 
-
+	
 	private OnObjectChangedListener<CompteBean> onCompteChangedListener = new OnObjectChangedListener<CompteBean>() {
 		@Override public void onObjectAdded(CompteBean object) {
 			comptes.put(object.getId(), object);

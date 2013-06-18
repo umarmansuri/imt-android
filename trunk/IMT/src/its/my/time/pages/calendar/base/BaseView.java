@@ -24,7 +24,9 @@ public abstract class BaseView extends FrameLayout {
 			getActivity().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
+					try {
 					onViewCreated.onViewCreated(BaseView.this);
+					} catch (Exception e) {}
 				}
 			});
 
