@@ -1,10 +1,10 @@
 package its.my.time.pages;
 
 import its.my.time.R;
-import its.my.time.data.bdd.DatabaseHandler;
 import its.my.time.data.ws.Callback;
 import its.my.time.data.ws.WSManager;
 import its.my.time.pages.settings.SettingsActivity;
+import its.my.time.receivers.IncomingCallReceiver;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.CallManager;
 import its.my.time.util.PreferencesUtil;
@@ -47,6 +47,7 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 	private MenuItem menuItemMaj;
 	private ProgressBar mProgressBar;
 	private MenuGroupe menuReglages;
+	private static IncomingCallReceiver callReceiver;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,6 +110,12 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if(callReceiver == null) {
+			IntentFilter filter = new IntentFilter();
+			filter.addAction(CallManager.INTENT_FILTER);
+			callReceiver = new IncomingCallReceiver();
+			this.registerReceiver(callReceiver, filter);
+		}
 		registerReceiver(this.LOGOUT_RECEIVER, new IntentFilter(ActivityUtil.ACTION_FINISH));
 	}
 

@@ -46,6 +46,7 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 
+
 		PreferencesUtil.init(this);
 		if(PreferencesUtil.getCurrentUid() > 0) {
 			launchActivity();
@@ -76,16 +77,6 @@ public class SplashActivity extends Activity {
 			this.pseudo = (EditText) findViewById(R.id.splash_login);
 			this.mdp = (EditText) findViewById(R.id.splash_mdp);
 		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(CallManager.INTENT_FILTER);
-		callReceiver = new IncomingCallReceiver();
-		this.registerReceiver(callReceiver, filter);
 	}
 
 	private void logFromServer() {
@@ -155,9 +146,9 @@ public class SplashActivity extends Activity {
 
 	private void launchActivity() {
 		CallManager.initializeManager(getBaseContext());
-		GCMManager.initGcm(SplashActivity.this);
+		String gcmId = GCMManager.initGcm(SplashActivity.this);
 		UtilisateurBean user = new UtilisateurRepository(SplashActivity.this).getByIdDistant(PreferencesUtil.getCurrentUid());
-		new WSSendUser(SplashActivity.this, user, new WSPostBase.PostCallback<UtilisateurBean>() {
+		new WSSendUser(SplashActivity.this, user, gcmId, new WSPostBase.PostCallback<UtilisateurBean>() {
 			@Override public void done(Exception e) {
 
 				ActivityUtil.startCalendarActivity(SplashActivity.this);

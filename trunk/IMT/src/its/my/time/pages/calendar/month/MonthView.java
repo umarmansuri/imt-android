@@ -238,7 +238,7 @@ public class MonthView extends BaseView implements OnDayClickListener {
 		}
 		accountsColors.put(event.getCid(), color);
 		for(int i = 0; i< daysViews.size(); i++) {
-			if(DateUtil.isInDay(event, new GregorianCalendar(helper.getYear(), helper.getMonth()+1, i))) {
+			if(DateUtil.isInDay(event, new GregorianCalendar(helper.getYear(), helper.getMonth(), i))) {
 				final ViewGroup parent =  daysViews.get(i);
 				List<EventBaseBean> events = (ArrayList<EventBaseBean>) parent.getTag();
 				LinearLayout layoutEvents = (LinearLayout)parent.findViewById(R.id.activity_calendar_month_day_events);
