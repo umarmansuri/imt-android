@@ -18,5 +18,4 @@ public class WSGetEvent extends WSGetBase<EventBeanWS>{
 	public String getUrl() {
 		return "api/events/";
 	}
-
 }

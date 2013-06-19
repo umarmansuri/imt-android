@@ -16,19 +16,16 @@
 package its.my.time.receivers;
 
 import its.my.time.Consts;
-import its.my.time.R;
+import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
-import its.my.time.data.ws.WSGetBase.GetCallback;
 import its.my.time.data.ws.events.EventBeanWS;
 import its.my.time.data.ws.events.WSGetEvent;
+import its.my.time.util.DateUtil;
 
 import java.util.Calendar;
 
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
@@ -55,11 +52,32 @@ public class GCMIntentService extends GCMBaseIntentService {
 		cal.add(Calendar.MINUTE, -10);
 		if(event != null && event.getId() >= 0) {
 			if(event.getDateSync().before(cal)) {
-				new WSGetEvent(context, id, null).execute();
+				retreiveEvent(context, id);
 			}
 		} else {
-			new WSGetEvent(context, id, null).execute();
+			retreiveEvent(context, id);
 		}
+	}
+
+	private void retreiveEvent(Context context, int id) {
+		EventBaseRepository eventRepo = new EventBaseRepository(context);
+		CompteRepository compteRepo = new CompteRepository(context);
+		EventBeanWS object = new WSGetEvent(context, id, null).retreiveObject();
+
+		EventBaseBean eventBean = eventRepo.getByIdDistant(object.getId());
+		eventBean.setIdDistant(object.getId());
+		eventBean.setTitle(object.getTitle());
+		eventBean.sethDeb(DateUtil.getDateFromISO(object.getDate()));
+		eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
+		eventBean.setAllDay(object.getAll_day());
+		eventBean.setMine(true);
+		eventBean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
+		if(eventBean.getId() == -1) {
+			eventRepo.insert(eventBean);
+		} else {
+			eventRepo.update(eventBean);
+		}		
+
 	}
 
 	@Override protected void onError(Context arg0, String arg1) {}

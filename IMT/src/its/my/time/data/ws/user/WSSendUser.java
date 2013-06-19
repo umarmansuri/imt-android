@@ -3,7 +3,6 @@ package its.my.time.data.ws.user;
 import its.my.time.data.bdd.base.BaseRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurBean;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
-import its.my.time.data.ws.GCMManager;
 import its.my.time.data.ws.WSPostBase;
 
 import java.util.List;
@@ -15,8 +14,11 @@ import android.content.Context;
 
 public class WSSendUser extends WSPostBase<UtilisateurBean>{
 
-	public WSSendUser(Context context, UtilisateurBean user, PostCallback<UtilisateurBean> callBack) {
+	private String gcmId;
+
+	public WSSendUser(Context context, UtilisateurBean user, String gcmId, PostCallback<UtilisateurBean> callBack) {
 		super(context, user, callBack);
+		this.gcmId = gcmId;
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class WSSendUser extends WSPostBase<UtilisateurBean>{
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
 
 		UtilisateurBean user = getObject();
-        nameValuePairs.add(new BasicNameValuePair("gcm_id", GCMManager.gcmId));
+        nameValuePairs.add(new BasicNameValuePair("gcm_id", gcmId));
         nameValuePairs.add(new BasicNameValuePair("name", user.getNom()));
         nameValuePairs.add(new BasicNameValuePair("firstname", user.getPrenom()));
 		return nameValuePairs;

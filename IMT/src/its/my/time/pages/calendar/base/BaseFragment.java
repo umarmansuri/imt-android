@@ -42,8 +42,8 @@ public abstract class BaseFragment extends SherlockFragment{
 
 	public BaseFragment(Calendar calDeb, Calendar calFin) {
 		super();
-		this.calDeb = calDeb;
-		this.calFin = calFin;
+		this.calDeb = (Calendar) calDeb.clone();
+		this.calFin = (Calendar) calFin.clone();
 	}
 
 	@Override
@@ -59,17 +59,17 @@ public abstract class BaseFragment extends SherlockFragment{
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		if(isVisibleToUser) {
-			new Handler().postDelayed(new Runnable() {
-
-
-				@Override
-				public void run() {
-					if(isVisible()) {
-						task = new CreateView();
-						task.execute();
+			if(task == null) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						if(isVisible()) {
+							task = new CreateView();
+							task.execute();
+						}
 					}
-				}
-			}, 400);
+				}, 400);
+			}
 		}
 	}
 
@@ -110,7 +110,7 @@ public abstract class BaseFragment extends SherlockFragment{
 						}
 					}
 
-					List<EventBaseBean> res = eventBaseRepo.getAllEvents(calDeb, calFin);
+					List<EventBaseBean> res = eventBaseRepo.getAllEvent();
 					events = new SparseArray<EventBaseBean>();
 					for (EventBaseBean eventBaseBean : res) {
 						events.put(eventBaseBean.getId(), eventBaseBean);
@@ -141,19 +141,19 @@ public abstract class BaseFragment extends SherlockFragment{
 
 			return null;
 		}
-		
+
 		@Override
 		protected void onCancelled() {
-			
+
 		}
-		
+
 		@Override
 		protected void onCancelled(View result) {
-			
+
 		}
 	}
 
-	
+
 	private OnObjectChangedListener<CompteBean> onCompteChangedListener = new OnObjectChangedListener<CompteBean>() {
 		@Override public void onObjectAdded(CompteBean object) {
 			comptes.put(object.getId(), object);
@@ -162,7 +162,7 @@ public abstract class BaseFragment extends SherlockFragment{
 			comptes.remove(object.getId());
 		}
 		@Override public void onObjectUpdated(final CompteBean object) {
-			List<View> alreadyDone = new ArrayList<View>();
+			final List<View> alreadyDone = new ArrayList<View>();
 
 			for (int i = 0; i < eventViews.size(); i++) {
 				int eventId = eventViews.keyAt(i);
@@ -170,17 +170,23 @@ public abstract class BaseFragment extends SherlockFragment{
 					final View v = eventViews.get(eventId);
 					if(!alreadyDone.contains(v)) {
 						alreadyDone.add(v);
-						new Handler().postDelayed(new Runnable() {
-
+						getActivity().runOnUiThread(new Runnable() {
+							
 							@Override
 							public void run() {
-								if(object.isShowed()) {
-									showView(v, true);
-								} else {
-									hideView(v, true);
-								}						
+								new Handler().postDelayed(new Runnable() {
+
+									@Override
+									public void run() {
+										if(object.isShowed()) {
+											showView(v, true);
+										} else {
+											hideView(v, true);
+										}						
+									}
+								}, 600* (alreadyDone.size()-1));								
 							}
-						}, 600* (alreadyDone.size()-1));
+						});
 					}
 				}
 			}

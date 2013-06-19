@@ -18,9 +18,9 @@ public class BootReceiver extends BroadcastReceiver {
 		PreferencesUtil.init(context);
 		if(PreferencesUtil.getCurrentUid() > 0) {
 			CallManager.initializeManager(context);
-			GCMManager.initGcm(context);
+			String gcmId = GCMManager.initGcm(context);
 			UtilisateurBean user = new UtilisateurRepository(context).getByIdDistant(PreferencesUtil.getCurrentUid());
-			new WSSendUser(context, user, null).execute();
+			new WSSendUser(context, user, gcmId, null).execute();
 		} else {
 			NotifManager.showVoipNotifiaction(context, NotifManager.STATE_UNREGISTERED);
 		}

@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
+import android.util.Log;
 
 public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 
@@ -52,7 +53,8 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
-			EntityUtils.toString(response.getEntity());
+			String result = EntityUtils.toString(response.getEntity());
+			Log.d("WS",result);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

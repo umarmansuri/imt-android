@@ -36,7 +36,7 @@ public class GCMManager {
 			gcmId = GCMRegistrar.getRegistrationId(context);
 		} else {
 			gcmId = regId;
-		}		
+		}
 		return gcmId;
 	}
 
@@ -59,7 +59,5 @@ public class GCMManager {
 			Log.e("upImg", "Error in http connection "+e.toString());
 		}
 	}
-	
-	public static String gcmId = "";
 }
 

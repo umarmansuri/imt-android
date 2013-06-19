@@ -27,6 +27,7 @@ import its.my.time.data.ws.events.EventBeanWS;
 import its.my.time.data.ws.events.Participant;
 import its.my.time.data.ws.events.WSGetEvent;
 import its.my.time.data.ws.events.WSSendEvent;
+import its.my.time.data.ws.events.participating.Participating;
 import its.my.time.data.ws.events.participating.WSGetEventParticipating;
 import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
@@ -37,7 +38,9 @@ import its.my.time.data.ws.user.Account;
 import its.my.time.data.ws.user.UtilisateurBeanWS;
 import its.my.time.data.ws.user.WSGetUser;
 import its.my.time.data.ws.user.WSSendUser;
+import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.util.Types;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +49,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseArray;
 
 
 @SuppressWarnings({ "unused" })
@@ -110,7 +114,8 @@ public class WSManager {
 
 
 	private static void sendLocalUpdate() {
-		new WSSendUser(context,utilisateurRepo.getById(uid),null).run();
+		String gcmId = GCMManager.initGcm(context);
+		new WSSendUser(context,utilisateurRepo.getById(uid),gcmId,null).run();
 
 		List<CompteBean> comptes = compteRepo.getAllUpdatable();
 		for (CompteBean compte : comptes) {
@@ -162,8 +167,8 @@ public class WSManager {
 	}
 
 	private static void getDistanteUpdate() {
-
-		UtilisateurBeanWS user = new WSGetUser(context, 1, null).retreiveObject();	
+		int uid = (int)PreferencesUtil.getCurrentUid();
+		UtilisateurBeanWS user = new WSGetUser(context, uid, null).retreiveObject();	
 
 		UtilisateurBean bean = utilisateurRepo.getByIdDistant(user.getId());
 		bean .setIdDistant(user.getId());
@@ -175,6 +180,7 @@ public class WSManager {
 			utilisateurRepo.update(bean);
 		}
 
+		SparseArray<CompteBean> comptes = new SparseArray<CompteBean>();
 		List<Event> eventsWs = new ArrayList<Event>();
 		for (Account account : user.getAccounts()) {
 			CompteBeanWS object = new WSGetAccount(context, account.getId(), null).retreiveObject();
@@ -186,31 +192,53 @@ public class WSManager {
 				comtpeBean.setShowed(true);
 				comtpeBean.setUid(uid);
 				if(comtpeBean.getId() == -1) {
-					compteRepo.insert(comtpeBean);
+					comtpeBean.setId((int)compteRepo.insert(comtpeBean));
 				} else {
 					compteRepo.update(comtpeBean);
 				}
+				comptes.put(comtpeBean.getIdDistant(), comtpeBean);
 				eventsWs.addAll(object.getEvents());
 			}
 		}
 
 
-		new WSGetEventParticipating(context, 1, null).retreiveObject();
-		
 		List<Participant> participantsWs = new ArrayList<Participant>();
 		List<Attachmants> attachementsWs = new ArrayList<Attachmants>();
+
+		List<Participating> participating =  new WSGetEventParticipating(context, uid, null).retreiveObject();
+		for (Participating parti : participating) {
+			new WSGetEvent(context, parti.getIdEvent(), null).retreiveObject();
+			EventBeanWS object = new WSGetEvent(context, parti.getIdEvent(), null).retreiveObject();
+
+			EventBaseBean eventBean = eventRepo.getByIdDistant(object.getId());
+			eventBean.setIdDistant(object.getId());
+			eventBean.setTitle(object.getTitle());
+			eventBean.sethDeb(DateUtil.getDateFromISO(object.getDate()));
+			eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
+			eventBean.setAllDay(object.getAll_day());
+			eventBean.setMine(false);
+			eventBean.setCid(comptes.get(parti.getIdAccount()).getId());
+			if(eventBean.getId() == -1) {
+				eventRepo.insert(eventBean);
+			} else {
+				eventRepo.update(eventBean);
+			}		
+			participantsWs.addAll(object.getParticipants());
+			attachementsWs.addAll(object.getAttachments());
+
+		}
+		
 		for (Event event : eventsWs) {
 			EventBeanWS object = new WSGetEvent(context, event.getId(), null).retreiveObject();
 
 			EventBaseBean eventBean = eventRepo.getByIdDistant(object.getId());
 			eventBean.setIdDistant(object.getId());
 			eventBean.setTitle(object.getTitle());
-			eventBean.sethDeb(Calendar.getInstance());// DateUtil.getDateFromISO(object.getDate()));
-			eventBean.sethFin(Calendar.getInstance());//DateUtil.getDateFromISO(object.getDate_fin()));
+			eventBean.sethDeb(DateUtil.getDateFromISO(object.getDate()));
+			eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
 			eventBean.setAllDay(object.getAll_day());
 			eventBean.setMine(true);
 			eventBean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
-			Log.d("WS","Compte ID EVENT = " + eventBean.getCid());
 			if(eventBean.getId() == -1) {
 				eventRepo.insert(eventBean);
 			} else {
