@@ -82,8 +82,6 @@ public class DayView extends BaseView {
 		llEvent = (LinearLayout) view.findViewById(R.id.activity_calendar_day_layout_event);
 		mainScroll = (ScrollView) view.findViewById(R.id.activity_calendar_day_mainscroll);
 
-		createTabHeure();
-
 		ligneHeight = getResources().getDimension(R.dimen.view_day_height_ligne_heure);
 
 		final OnGlobalLayoutListener listener = new OnGlobalLayoutListener() {
@@ -102,27 +100,6 @@ public class DayView extends BaseView {
 	@Override
 	protected String getTopBarText() {
 		return DateUtil.getLongDate(cal);
-	}
-
-	private void createTabHeure() {
-		final Calendar calDeb = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
-		calDeb.set(Calendar.HOUR_OF_DAY, 0);
-		calDeb.set(Calendar.MINUTE, 0);
-		calDeb.set(Calendar.SECOND, 0);
-
-		final Calendar calFin = new GregorianCalendar(
-				calDeb.get(Calendar.YEAR), calDeb.get(Calendar.MONTH),
-				calDeb.get(Calendar.DAY_OF_MONTH),
-				calDeb.get(Calendar.HOUR_OF_DAY), calDeb.get(Calendar.MINUTE),
-				calDeb.get(Calendar.SECOND));
-		calFin.add(Calendar.DAY_OF_MONTH, 1);
-		events = new EventBaseRepository(getContext()).getAllEvents(calDeb, calFin);
-
-		for (final EventBaseBean event : events) {
-			if (firstCal == null || event.gethDeb().before(firstCal)) {
-				firstCal = event.gethDeb();
-			}
-		}
 	}
 
 	@Override

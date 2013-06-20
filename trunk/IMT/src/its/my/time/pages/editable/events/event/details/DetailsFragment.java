@@ -386,7 +386,6 @@ public class DetailsFragment extends BasePluginFragment {
 		Calendar calendar2 = Calendar.getInstance();
 		calendar2.add(Calendar.MINUTE, 1);
 		long laps = calendar2.getTimeInMillis() - calendar.getTimeInMillis();
-		Log.d("BUUUUG", " "+calendar.getTimeInMillis()+ " "+calendar.getTime());
 		Notification notification = new Notification(R.drawable.ic_launcher,"Rappel événement", laps);
 		String title = getActivity().getString(R.string.app_name);
 		Intent notificationIntent = new Intent(getActivity(),EventActivity.class);

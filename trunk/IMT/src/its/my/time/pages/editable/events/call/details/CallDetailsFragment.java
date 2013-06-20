@@ -261,10 +261,10 @@ OnClickListener, OnCorrespondantChange {
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
 			if (TelephonyManager.CALL_STATE_RINGING == state) {
-				Log.d("Phone", "RINGING");
+				
 			}
 			if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
-				Log.d("Phone", "OFFHOOK");
+
 			}
 			if (TelephonyManager.CALL_STATE_IDLE == state) {
 				if (!isStarted) {

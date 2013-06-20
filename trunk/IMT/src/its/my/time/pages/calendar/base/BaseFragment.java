@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,7 +112,8 @@ public abstract class BaseFragment extends SherlockFragment{
 						}
 					}
 
-					List<EventBaseBean> res = eventBaseRepo.getAllEvent();
+
+					List<EventBaseBean> res = eventBaseRepo.getAllEvents(calDeb, calFin);
 					events = new SparseArray<EventBaseBean>();
 					for (EventBaseBean eventBaseBean : res) {
 						events.put(eventBaseBean.getId(), eventBaseBean);
@@ -118,7 +121,7 @@ public abstract class BaseFragment extends SherlockFragment{
 						eventViews.put(eventBaseBean.getId(), v.addEvent(eventBaseBean, compte.getColor(), View.INVISIBLE));
 					}
 
-					getActivity().runOnUiThread(new Runnable() {
+					activity.runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
@@ -170,7 +173,7 @@ public abstract class BaseFragment extends SherlockFragment{
 					final View v = eventViews.get(eventId);
 					if(!alreadyDone.contains(v)) {
 						alreadyDone.add(v);
-						getActivity().runOnUiThread(new Runnable() {
+						activity.runOnUiThread(new Runnable() {
 							
 							@Override
 							public void run() {
@@ -184,7 +187,7 @@ public abstract class BaseFragment extends SherlockFragment{
 											hideView(v, true);
 										}						
 									}
-								}, 600* (alreadyDone.size()-1));								
+								}, 200* (alreadyDone.size()-1));								
 							}
 						});
 					}
@@ -192,6 +195,7 @@ public abstract class BaseFragment extends SherlockFragment{
 			}
 		}
 	};
+	private Activity activity;
 
 	private void showView(View v, boolean withAnim) {
 		if(v == null) {
@@ -218,11 +222,16 @@ public abstract class BaseFragment extends SherlockFragment{
 		}
 	}
 
-
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		this.activity = activity;
+	}
+	
 	private OnObjectChangedListener<EventBaseBean> onEventChangedListener = new OnObjectChangedListener<EventBaseBean>() {
 		@Override public void onObjectAdded(final EventBaseBean object) {
 			if(object.gethDeb().before(calFin) || object.gethFin().after(calDeb)) {
-				getActivity().runOnUiThread(new Runnable() {
+				activity.runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
@@ -239,7 +248,7 @@ public abstract class BaseFragment extends SherlockFragment{
 			}
 		}
 		@Override public void onObjectDeleted(final EventBaseBean object) {
-			getActivity().runOnUiThread(new Runnable() {
+			activity.runOnUiThread(new Runnable() {
 
 				@Override
 				public void run() {
@@ -253,7 +262,7 @@ public abstract class BaseFragment extends SherlockFragment{
 		@Override public void onObjectUpdated(final EventBaseBean object) {
 			if(object.gethDeb().before(calFin) || object.gethFin().after(calDeb)) {
 
-				getActivity().runOnUiThread(new Runnable() {
+				activity.runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {

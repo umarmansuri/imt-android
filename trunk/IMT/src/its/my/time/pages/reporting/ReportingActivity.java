@@ -182,7 +182,6 @@ public class ReportingActivity extends SherlockFragmentActivity {
 						return;
 					}
 					count++;
-					Log.d("JS","load JS!");
 					mWebView.loadUrl("javascript: document.getElementsByTagName('form')[0].elements['input-username'].value = 'ad.hugon';");
 					mWebView.loadUrl("javascript: document.getElementsByTagName('form')[0].elements['input-password'].value = 'azerazer';");
 					mWebView.loadUrl("javascript: document.getElementsByTagName('form')[0].submit();");
@@ -214,20 +213,19 @@ public class ReportingActivity extends SherlockFragmentActivity {
 		String idsString = Arrays.toString(selecteCid.toArray(new Integer[]{})); 
 		mWebView.postUrl(WSBase.URL_REPORTING,EncodingUtils.getBytes(
 				"datedebut=" + DateUtil.getDayHourFrenchSlash(mTextJourDeb.getDate()) +
-						"&datefin=" + DateUtil.getDayHourFrenchSlash(mTextJourFin.getDate()) +
-						"&account=" + selecteCid.toArray().toString() +
-						"&imt_event_form_general_account=" + selectedType +
-						"&tailleecran=" + width,"BASE64"));
+				"&datefin=" + DateUtil.getDayHourFrenchSlash(mTextJourFin.getDate()) +
+				"&account=" + selecteCid.toArray().toString() +
+				"&imt_event_form_general_account=" + selectedType +
+				"&tailleecran=" + width,"BASE64"));
 
 	}
 
 
 	static class MyJavaScriptInterface
 	{
-		@SuppressWarnings("unused")
 		public void processHTML(String html)
 		{
-			Log.d("HTML",html);
+			//Log.d("HTML",html);
 		}
 	}
 

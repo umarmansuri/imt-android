@@ -106,8 +106,7 @@ public class PreferencesUtil {
 	}
 
 	public static void clearAll(Context context) {
-		getEditor(context).remove(SHPREF_KEY_ACCESS_TOKEN);
-		getEditor(context).remove(KEY_CURRENT_UID);
+		getEditor(context).clear().commit();
 	}
 
 	public static String getCurrentAccessToken() {
@@ -170,7 +169,6 @@ public class PreferencesUtil {
 	private static SharedPreferences.OnSharedPreferenceChangeListener spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
 		@Override
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-			Log.d("PREF","key = " + key);
 			if(key.equals(context.getResources().getString(R.string.pref_voip_notification))) {
 				if(isVoipNotifEnable()) {
 					NotifManager.showVoipNotification(context);

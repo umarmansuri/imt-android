@@ -180,7 +180,6 @@ public abstract class MenuActivity extends SherlockFragmentActivity implements O
 	private ELVAdapter menuAdapter;
 
 	public void initialiseMenu() {
-		Log.d("Menu","initialise menu");
 		this.menuGroupes = new ArrayList<MenuGroupe>();
 		this.menuGroupes = onCreateMenu(this.menuGroupes);
 		if (this.menuGroupes == null) {

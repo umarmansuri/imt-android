@@ -17,18 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_above="@+id/splash_login"
+            android:layout_margin="30dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/splash_horloge_background" />
-
-        <ImageView
-            android:id="@+id/splash_foreground"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_above="@+id/splash_login"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/splash_horloge_foreground" />
+            android:src="@drawable/imt_grey" />
 
         <EditText
             android:id="@+id/splash_login"

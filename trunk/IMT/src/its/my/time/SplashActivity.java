@@ -9,28 +9,26 @@ import its.my.time.data.ws.WSPostBase;
 import its.my.time.data.ws.user.UtilisateurBeanWS;
 import its.my.time.data.ws.user.WSGetUser;
 import its.my.time.data.ws.user.WSSendUser;
-import its.my.time.receivers.IncomingCallReceiver;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.CallManager;
 import its.my.time.util.PreferencesUtil;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class SplashActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+
+public class SplashActivity extends SherlockActivity {
 
 	private Button btnConnexion;
 	private TextView btnInscription;
@@ -39,13 +37,11 @@ public class SplashActivity extends Activity {
 	private EditText mdp;
 	private OnClickListener clickListener;
 	private ProgressDialog dialog;
-	private IncomingCallReceiver callReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-
-
 
 		PreferencesUtil.init(this);
 		if(PreferencesUtil.getCurrentUid() > 0) {
@@ -145,33 +141,23 @@ public class SplashActivity extends Activity {
 
 
 	private void launchActivity() {
+		ActivityUtil.startCalendarActivity(SplashActivity.this);
 		CallManager.initializeManager(getBaseContext());
 		String gcmId = GCMManager.initGcm(SplashActivity.this);
 		UtilisateurBean user = new UtilisateurRepository(SplashActivity.this).getByIdDistant(PreferencesUtil.getCurrentUid());
 		new WSSendUser(SplashActivity.this, user, gcmId, new WSPostBase.PostCallback<UtilisateurBean>() {
 			@Override public void done(Exception e) {
-
-				ActivityUtil.startCalendarActivity(SplashActivity.this);
 				finish();
-
 			}
 			@Override public void onGetObject(UtilisateurBean object) {}
 		}).execute();
 	}
 
 	public void starAnimation() {
-		Animation animClock = new RotateAnimation(0f, 35f,
-				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-				0.5f);
-		animClock.setFillBefore(true);
-		animClock.setDuration(2000);
-		animClock.setFillAfter(true);
-
 		btnConnexion.setEnabled(false);
 		btnInscription.setEnabled(false);
 		btnMdpLost.setEnabled(false);
 		pseudo.setEnabled(false);
 		mdp.setEnabled(false);
-		findViewById(R.id.splash_foreground).startAnimation(animClock);
 	}
 }
