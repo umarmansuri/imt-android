@@ -16,7 +16,7 @@ public class DateUtil {
 	public static final int DATETIMESELECTOR_ID = 5;
 	public static final int DEFAULTDATESELECTOR_ID = 0;
 	public static final int FIRST_DAY = 2;
-	public static String FORMAT_DATE_ISO = "yyyy-MM-dd'T'HH:mm:ssZ";
+	public static String FORMAT_DATE_ISO = "yyyy-MM-dd'T'HH:mm:ss";
 
 	public static final int MONTHYEARDATESELECTOR_ID = 3;
 

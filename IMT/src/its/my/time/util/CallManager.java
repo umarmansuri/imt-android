@@ -38,7 +38,6 @@ public class CallManager {
 		public void onCallEstablished(SipAudioCall call) {
 			CallManager.call = call;
 			call.startAudio();
-			Log.d(TAG, "appel etablie");
 			for (SipAudioCall.Listener listener : listeners) {
 				listener.onCallEstablished(call);	
 			}
@@ -47,7 +46,6 @@ public class CallManager {
 		@Override
 		public void onCallEnded(SipAudioCall call) {
 			CallManager.call = null;
-			Log.d(TAG, "appel finit");
 			for (SipAudioCall.Listener listener : listeners) {
 				listener.onCallEnded(call);	
 			}

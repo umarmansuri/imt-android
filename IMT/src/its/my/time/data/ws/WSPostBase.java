@@ -54,7 +54,6 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());
-			Log.d("WS",result);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

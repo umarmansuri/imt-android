@@ -54,9 +54,8 @@ public class GCMManager {
 			HttpPost httppost = new HttpPost(Consts.URL_UPLOAD);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
-			Log.d("upImg", EntityUtils.toString(response.getEntity()));
 		}catch(Exception e){
-			Log.e("upImg", "Error in http connection "+e.toString());
+			e.printStackTrace();
 		}
 	}
 }

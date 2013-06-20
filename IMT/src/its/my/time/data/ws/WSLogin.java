@@ -76,9 +76,6 @@ public class WSLogin {
 		if(refreshTask == null) {
 			refreshTask = new LoadToken(user, pass);
 			refreshTask.execute();
-			Log.d("WS","task is null");
-		} else {
-			Log.d("WS","task not null");
 		}
 	}
 
@@ -153,14 +150,12 @@ public class WSLogin {
 										return;
 									}
 									count++;
-									Log.d("JS","load JS!");
 									webview.loadUrl("javascript: document.forms['login'].elements['username'].value = '" + username + "';");
 									webview.loadUrl("javascript: document.forms['login'].elements['password'].value = '" + pass +"';");
 									//webview.loadUrl("javascript: document.forms['login'].elements['username'].value = 'ad.hugon';");
 									//webview.loadUrl("javascript: document.forms['login'].elements['password'].value = 'azerazer';");
 									webview.loadUrl("javascript: document.forms['login'].submit();");
 								} else if ( url.startsWith(WSBase.URL_FORM_ACCEPT) ) {
-									Log.d("JS","load JS!");
 									webview.loadUrl("javascript: document.forms['login'].elements['imt_oauth_server_authorize_allowAccess'].checked = true;");
 									webview.loadUrl("javascript: document.forms['login'].submit();");
 								}
@@ -185,7 +180,7 @@ public class WSLogin {
 			@SuppressWarnings("unused")
 			public void processHTML(String html)
 			{
-				Log.d("HTML",html);
+				//Log.d("HTML",html);
 			}
 		}
 

@@ -56,7 +56,6 @@ public class WSGetEventParticipating extends WSBase{
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());
-			Log.d("WS",result);
 			ObjectMapper mapper = new ObjectMapper();
 			List<Participating> myObjects = mapper.readValue(result, new TypeReference<List<Participating>>(){});
 

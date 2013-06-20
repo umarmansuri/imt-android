@@ -166,7 +166,6 @@ public class ContactsUtil {
 	public static ContactInfoBean getContactInfoById(Context context, long id) {
 		Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email._ID + " = " + id, null, null);
 		if(cursor.getCount() > 0) {
-			Log.d(TAG,"Count = " + cursor.getCount());
 			cursor.moveToNext();
 
 

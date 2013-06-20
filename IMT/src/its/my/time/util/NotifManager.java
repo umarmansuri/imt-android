@@ -43,7 +43,7 @@ public class NotifManager {
 
 	private static void showVoipNotification(Context context, int state) {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-		.setSmallIcon(R.drawable.ic_launcher)
+		.setSmallIcon(R.drawable.app_icon)
 		.setContentTitle("My-Time");
 		switch (state) {
 		case STATE_REGISTERED:
@@ -79,7 +79,7 @@ public class NotifManager {
 
 	private static void showVoipNotificationIcs(Context context, int state) {
 		Notification.Builder mBuilder = new Notification.Builder(context)
-		.setSmallIcon(R.drawable.ic_launcher)
+		.setSmallIcon(R.drawable.app_icon)
 		.setContentTitle("My-Time");
 		switch (state) {
 		case STATE_REGISTERED:

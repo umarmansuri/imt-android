@@ -1,28 +1,31 @@
 package its.my.time.pages.editable.events.plugins.note;
 
-import fr.adrienhugon.richedit.RichEditText;
 import its.my.time.data.bdd.events.plugins.note.NoteBean;
 import its.my.time.data.bdd.events.plugins.note.NoteRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.PreferencesUtil;
+import its.my.time.view.WebviewDisabled;
+import android.content.Context;
 import android.os.Bundle;
-import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings.RenderPriority;
+import android.webkit.WebSettings.ZoomDensity;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class NoteFragment extends BasePluginFragment {
 
-
-	private RichEditText mRichEditText;
 	private NoteBean noteBean;
 	private NoteRepository noteRepo;
+	private WebviewDisabled mWebView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		mRichEditText = new RichEditText(getActivity());
-		mRichEditText.setEnabled(false);
-		
 		int eid = getParentActivity().getEvent().getId();
 		long uid = PreferencesUtil.getCurrentUid();
 		
@@ -35,13 +38,54 @@ public class NoteFragment extends BasePluginFragment {
 			noteBean.setName("Note");
 			noteBean.setUid(uid);
 			noteBean.setHtml("");
-		}
+		} 
 
-		mRichEditText.setText(Html.fromHtml(noteBean.getHtml()));
+		mWebView = new WebviewDisabled(getActivity());
+		mWebView.setVisibility(View.INVISIBLE);
+		mWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				super.onPageFinished(view, url);
+				String load = "javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + noteBean.getHtml() + "\");";
+				Log.d("Webview", "load: " + load);
+				mWebView.loadUrl(load);
+				mWebView.setVisibility(View.VISIBLE);
+			}
+		});
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setDomStorageEnabled(true);
+		mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+		mWebView.getSettings().setLoadsImagesAutomatically(true);
+		mWebView.getSettings().setRenderPriority(RenderPriority.HIGH);
 		
-		return mRichEditText;
-	}
+		mWebView.getSettings().setBuiltInZoomControls(false);
+		mWebView.getSettings().setSupportZoom(false);
+		mWebView.getSettings().setDefaultZoom(ZoomDensity.FAR);
+		
+		mWebView.setHorizontalScrollBarEnabled(false);
+		mWebView.setVerticalScrollBarEnabled(false);
+		mWebView.loadUrl("file:///android_asset/tinymce/wysiwyg.html");
+		mWebView.requestFocus(View.FOCUS_DOWN);
+		mWebView.setEnabled(false);
+		mWebView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
 
+		return mWebView;
+	}
+	
+	class MyJavaScriptInterface
+	{
+	    public void processHTML(String html)
+	    {
+	    	noteBean.setHtml(html);
+	    	Log.d("Webview","save html: " + html);
+			if(noteBean.getId() > -1) {
+				noteRepo.update(noteBean);	
+			} else {
+				noteBean.setId((int)noteRepo.insert(noteBean));
+			}
+	    }
+	}
+	
 	@Override
 	public String getTitle() {
 		return "Notes";
@@ -49,26 +93,24 @@ public class NoteFragment extends BasePluginFragment {
 
 	@Override
 	public void launchEdit() {
-		mRichEditText.setEnabled(true);
+		mWebView.setEnabled(true);
+		mWebView.loadUrl("javascript:document.getElementById('mce_0_ifr').click();");
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(mWebView, InputMethodManager.SHOW_FORCED);
 		super.launchEdit();
 	}
 
 	@Override
 	public void launchSave() {
-		noteBean.setHtml(mRichEditText.getTextHtml());
-		if(noteBean.getId() > -1) {
-			noteRepo.update(noteBean);	
-		} else {
-			noteRepo.insert(noteBean);
-		}
-		mRichEditText.setEnabled(false);
+		mWebView.loadUrl("javascript:window.HTMLOUT.processHTML(document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML);");
+		mWebView.setEnabled(false);
 		super.launchSave();
 	}
 
 	@Override
 	public void launchCancel() {
-		mRichEditText.setText(Html.fromHtml(noteBean.getHtml()));
-		mRichEditText.setEnabled(false);
+		mWebView.loadUrl("javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + noteBean.getHtml() + "\");");
+		mWebView.setEnabled(false);
 		super.launchCancel();
 	}
 
