@@ -21,7 +21,7 @@ public class EventActivity extends BaseEventActivity {
 	@Override
 	public ArrayList<PluginFragment> getPages() {
 		final ArrayList<PluginFragment> fragments = new ArrayList<PluginFragment>();
-		BasePluginFragment fragment = new DetailsFragment(Types.Event.BASE);
+		BasePluginFragment fragment = new DetailsFragment();
 		fragments.add(fragment);
 		fragment = new ParticipantsFragment();
 		fragments.add(fragment);

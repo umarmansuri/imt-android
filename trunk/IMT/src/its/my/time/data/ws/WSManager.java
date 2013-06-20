@@ -217,6 +217,7 @@ public class WSManager {
 			eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
 			eventBean.setAllDay(object.getAll_day());
 			eventBean.setMine(false);
+			//TODO eventBean.setTypeId(Types.Event.getIdByLabel(object.get));
 			eventBean.setCid(comptes.get(parti.getIdAccount()).getId());
 			if(eventBean.getId() == -1) {
 				eventRepo.insert(eventBean);

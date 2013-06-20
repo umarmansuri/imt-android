@@ -75,15 +75,9 @@ public class DetailsFragment extends BasePluginFragment {
 
 	private EditText mTextTitle;
 
-	//private int typeEvent;
 	protected static Bundle state;
 
 	public DetailsFragment() {
-		//typeEvent = Types.Event.BASE;
-	}
-
-	public DetailsFragment(int typeEvent) {
-		//typeEvent = typeEvent;
 	}
 
 	@Override
@@ -364,7 +358,6 @@ public class DetailsFragment extends BasePluginFragment {
 			new EventBaseRepository(getActivity()).update(getParentActivity().getEvent());
 			participationRepo.update(participationBean);		
 		}
-		getParentActivity().setEvent(getParentActivity().getEvent());
 
 		/*Calendar calendar = new GregorianCalendar();
 		calendar = Calendar.getInstance();
