@@ -12,13 +12,24 @@ public class Types {
 		public static final int MEETING = 2;
 		public static final int CALL = 3;
 
-	public static String getLabelBy(int id) {
-		if(id==BASE) return "event";
-		else if (id == TASK) return "task";
-		else if (id == MEETING) return "metting";
-		else if (id ==CALL) return "call";
-		else return null;
-	}
+		public static String getLabelById(int id) {
+			if(id==BASE) return "event";
+			else if (id == TASK) return "task";
+			else if (id == MEETING) return "metting";
+			else if (id ==CALL) return "call";
+			else return null;
+		}
+
+		public static int getIdByLabel(String label) {
+			if(label == null) {
+				return BASE;
+			}
+			if(label.equals("event")) return BASE;
+			else if (label.equals("task")) return TASK;
+			else if (label.equals("metting")) return MEETING;
+			else if (label.equals("call")) return CALL;
+			else return BASE;
+		}
 	
 	public static String[] getAll() {
 		return new String[]{"Evènement", "Réunion","Appel"};

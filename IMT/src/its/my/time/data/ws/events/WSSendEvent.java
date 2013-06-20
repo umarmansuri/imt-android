@@ -59,7 +59,7 @@ public class WSSendEvent extends WSPostBase<EventBaseBean>{
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_allDay", String.valueOf(event.isAllDay())));
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_account", String.valueOf(event.getCid())));
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_importance", "0"));
-        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_type", Types.Event.getLabelBy(event.getTypeId())));
+        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_type", Types.Event.getLabelById(event.getTypeId())));
 		return nameValuePairs;
 	}
 

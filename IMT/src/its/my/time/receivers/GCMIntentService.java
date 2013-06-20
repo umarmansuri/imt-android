@@ -71,6 +71,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
 		eventBean.setAllDay(object.getAll_day());
 		eventBean.setMine(true);
+		//TODO eventBean.setTypeId(Types.Event.getIdByLabel(object.get));
 		eventBean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
 		if(eventBean.getId() == -1) {
 			eventRepo.insert(eventBean);

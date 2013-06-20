@@ -32,7 +32,7 @@ public class NoteFragment extends BasePluginFragment {
 		noteRepo = new NoteRepository(getActivity());
 		noteBean = noteRepo.getByUidEid(eid, uid);
 		
-		if(noteBean == null) {
+		if(noteBean.getEid() < 0) {
 			noteBean = new NoteBean();
 			noteBean.setEid(eid);
 			noteBean.setName("Note");
@@ -46,9 +46,12 @@ public class NoteFragment extends BasePluginFragment {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
-				String load = "javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + noteBean.getHtml() + "\");";
-				Log.d("Webview", "load: " + load);
+				String content = noteBean.getHtml();
+				content = content.replace("'", "\\'");
+				content = content.replace("\"","\\\"");
+				String load = "javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + content + "\"";
 				mWebView.loadUrl(load);
+				mWebView.loadUrl("javascript:document.getElementById('trick').click();");
 				mWebView.setVisibility(View.VISIBLE);
 			}
 		});
@@ -103,13 +106,19 @@ public class NoteFragment extends BasePluginFragment {
 	@Override
 	public void launchSave() {
 		mWebView.loadUrl("javascript:window.HTMLOUT.processHTML(document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML);");
+		mWebView.loadUrl("javascript:document.getElementById('trick').click();");
 		mWebView.setEnabled(false);
 		super.launchSave();
 	}
 
 	@Override
 	public void launchCancel() {
-		mWebView.loadUrl("javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + noteBean.getHtml() + "\");");
+		String content = noteBean.getHtml();
+		content = content.replace("'", "\\'");
+		content = content.replace("\"","\\\"");
+		String load = "javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + content + "\"";
+		mWebView.loadUrl(load);
+		mWebView.loadUrl("javascript:document.getElementById('trick').click();");
 		mWebView.setEnabled(false);
 		super.launchCancel();
 	}
