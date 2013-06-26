@@ -26,6 +26,7 @@ import its.my.time.data.ws.events.plugins.pj.WSSendPj;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.PluginFragment;
 import its.my.time.util.ActivityUtil;
+import its.my.time.util.ConnectionManager;
 import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
@@ -244,6 +245,9 @@ public abstract class BaseEventActivity extends BaseActivity {
 	protected void showSave() {
 		this.mPager.setPagingEnabled(true);
 		getActiveFragment().launchSave();
+		if(ConnectionManager.isOnline(BaseEventActivity.this)) {
+			onMajCalled();
+		}
 	}
 
 	@Override

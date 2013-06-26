@@ -4,8 +4,9 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="9"
-        android:targetSdkVersion="17"/>
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -102,10 +103,10 @@
 
         <activity
             android:name="its.my.time.SplashActivity"
-            android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -115,47 +116,56 @@
         <activity
             android:name="its.my.time.pages.editable.profil.ProfilActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.comptes.ComptesActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.comptes.compte.CompteActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.calendar.CalendarActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.event.EventActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name"  android:screenOrientation="portrait" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.meeting.MeetingActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.task.TaskActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.editable.events.call.CallActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name"  android:screenOrientation="portrait" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.data.ws.PrepareRequestTokenActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name"  android:screenOrientation="portrait" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -175,12 +185,14 @@
         <activity
             android:name="its.my.time.receivers.ValidateParticipationActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog"  android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
             android:name="its.my.time.pages.AboutActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog"  android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
             android:name="its.my.time.pages.settings.SettingsActivity"
@@ -189,21 +201,23 @@
         </activity>
         <activity
             android:name="its.my.time.pages.reporting.ReportingActivity"
-            android:label="Reporting" 
-            android:configChanges="orientation|keyboardHidden">
+            android:configChanges="orientation|keyboardHidden"
+            android:label="Reporting" >
         </activity>
         <activity
             android:name="its.my.time.pages.call.IncomingCallActivity"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="its.my.time.pages.call.OnCallActivity"
-            android:label="@string/app_name" android:screenOrientation="portrait"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-        
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDlU0Wn35JBR8d9zMF7CSVXIjvvHnuL45A" />
+            android:value="AIzaSyAkNpZsTtqqqDlYCwNM4yoE-5qDuqmyrWk" />
     </application>
 
 </manifest>

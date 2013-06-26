@@ -41,7 +41,7 @@ public class ActivityUtil {
 			
 			@Override
 			public void run() {
-				CallManager.closeLocalProfile();
+				//CallManager.closeLocalProfile();
 				PreferencesUtil.setCurrentUid(0);
 				PreferencesUtil.clearAll(context);
 				context.deleteDatabase(DatabaseHandler.DATABASE_NAME);		

@@ -29,6 +29,9 @@ import its.my.time.data.ws.events.WSGetEvent;
 import its.my.time.data.ws.events.WSSendEvent;
 import its.my.time.data.ws.events.participating.Participating;
 import its.my.time.data.ws.events.participating.WSGetEventParticipating;
+import its.my.time.data.ws.events.plugins.commentaires.CommentBeanWS;
+import its.my.time.data.ws.events.plugins.commentaires.CommentBeanWS;
+import its.my.time.data.ws.events.plugins.commentaires.WSGetCommentaireByEvent;
 import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
 import its.my.time.data.ws.events.plugins.note.NoteBeanWS;
 import its.my.time.data.ws.events.plugins.note.WSGetNote;
@@ -46,12 +49,19 @@ import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import android.app.Activity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseArray;
 
 
@@ -299,7 +309,22 @@ public class WSManager {
 				pjRepo.update(pjbean);
 			}		
 		}
-
+		
+		List<CommentBeanWS> comments = new WSGetCommentaireByEvent(context, eventBean.getIdDistant(), null).retreiveObject();
+		for (CommentBeanWS object : comments) {
+			CommentBean commentBean = commentRepo.getByIdDistant(object.getId());
+			commentBean.setIdDistant(object.getId());
+			commentBean.setUid(uid);
+			commentBean.setEid(eventBean.getId());
+			commentBean.setComment(object.getBody());
+			commentBean.setDateSync(Calendar.getInstance());
+			if(commentBean.getId() == 0) {
+				commentBean.setId((int)commentRepo.insert(commentBean));
+			} else {
+				commentRepo.update(commentBean);
+			}
+		}
+		
 		for (Participant participant : participantsWs) {
 
 		}
@@ -307,5 +332,20 @@ public class WSManager {
 		//new WSGetUser(context, 1, userCallback).execute();
 	}
 
+	public static void retreiveComments(int id) throws Exception {
+		HttpClient client = WSBase.createClient();
+		String urlStr = "/api/events/" + id + "/comments.json";
+		URI website = new URI(WSBase.URL_BASE + urlStr);	
+
+		HttpGet request = new HttpGet();
+		String accessToken = PreferencesUtil.getCurrentAccessToken();
+		request.setHeader("Authorization", "Bearer "+accessToken);
+		request.setURI(website);
+		HttpResponse response = client.execute(request);
+		String result = EntityUtils.toString(response.getEntity());
+		Log.d("WS",result);
+		ObjectMapper mapper = new ObjectMapper();
+		//T object = mapper.readValue(result, persistentClass);
+	}
 
 }

@@ -10,7 +10,7 @@ public class ParticipantBeanWS {
 
     private Integer id;
     private Integer participation_state;
-    private Event event;
+    private Event event; 
     private Participant participant;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

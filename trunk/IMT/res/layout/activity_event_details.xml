@@ -103,7 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="4dp"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone" >
             </LinearLayout>
 
             <FrameLayout
@@ -161,15 +162,17 @@
                     android:id="@+id/activity_event_details_spinner_recurrence"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="7" />
+                    android:layout_weight="7"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/activity_event_details_layout_rappel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp" >
-                
+                android:layout_margin="4dp"
+                android:visibility="gone" >
+
                 <TextView
                     android:id="@+id/activity_event_details_lib_rappel"
                     android:layout_width="0dip"

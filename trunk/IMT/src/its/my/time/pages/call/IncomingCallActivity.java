@@ -1,7 +1,6 @@
 package its.my.time.pages.call;
 
 import its.my.time.R;
-import its.my.time.util.CallManager;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -30,17 +29,17 @@ public class IncomingCallActivity extends Activity implements OnClickListener{
 		mBtnRac.setOnClickListener(this);
 		mTxtCaller = (TextView)findViewById(R.id.textCaller);
 		
-		String caller = CallManager.getCallerLabel();
-		mTxtCaller.setText(caller);
+		//TODO remettre pour call String caller = CallManager.getCallerLabel();
+		//TODO remettre pour call mTxtCaller.setText(caller);
 	}
 	
 	@Override
 	public void onClick(View v) {
 		if(v == mBtnDec) {
-			CallManager.answer();
+			//TODO remettre pour call CallManager.answer();
 			
 		} else {
-			CallManager.hangup();
+			//TODO remettre pour call CallManager.hangup();
 		}
 		finish();
 	}
