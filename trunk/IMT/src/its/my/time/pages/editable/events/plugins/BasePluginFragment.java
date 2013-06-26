@@ -2,6 +2,7 @@ package its.my.time.pages.editable.events.plugins;
 
 import its.my.time.pages.editable.events.BaseEventActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public abstract class BasePluginFragment extends SherlockFragment implements Plu
 	@Override
 	public void setMenuVisibility(boolean menuVisible) {
 
+		Log.d("Visibility","" + menuVisible);
 		if (menuVisible) {
 			try {
 				if (this.parentActivity == null) {

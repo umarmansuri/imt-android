@@ -10,8 +10,6 @@ import its.my.time.data.bdd.events.plugins.note.NoteBean;
 import its.my.time.data.bdd.events.plugins.note.NoteRepository;
 import its.my.time.data.bdd.events.plugins.odj.OdjBean;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
-import its.my.time.data.bdd.events.plugins.participant.ParticipantBean;
-import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationBean;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
@@ -36,6 +34,8 @@ import its.my.time.data.ws.events.plugins.note.NoteBeanWS;
 import its.my.time.data.ws.events.plugins.note.WSGetNote;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
 import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
+import its.my.time.data.ws.events.plugins.participant.ParticipantsBeanWS;
+import its.my.time.data.ws.events.plugins.participant.WSGetParticipantByEvent;
 import its.my.time.data.ws.events.plugins.participation.WSSendParticipation;
 import its.my.time.data.ws.events.plugins.pj.PjBeanWS;
 import its.my.time.data.ws.events.plugins.pj.WSGetPj;
@@ -48,19 +48,11 @@ import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 
 
@@ -77,7 +69,6 @@ public class WSManager {
 	private static PjRepository pjRepo;
 	private static OdjRepository odjRepo;
 	private static NoteRepository noteRepo;
-	private static ParticipantRepository participantRepo;
 	private static ParticipationRepository participationRepo;
 
 	public static void updateAllData(Context context, final Callback callback) {
@@ -119,7 +110,6 @@ public class WSManager {
 		pjRepo = new PjRepository(context);
 		odjRepo = new OdjRepository(context);
 		noteRepo = new NoteRepository(context);
-		participantRepo = new ParticipantRepository(context);
 		participationRepo = new ParticipationRepository(context);
 		uid = PreferencesUtil.getCurrentUid();
 	}
@@ -159,8 +149,8 @@ public class WSManager {
 		}
 
 
-		List<ParticipantBean> participants = participantRepo.getAllUpdatable();
-		for (ParticipantBean participant : participants) {
+		List<ParticipationBean> participants = participationRepo.getAllUpdatable();
+		for (ParticipationBean participant : participants) {
 			new WSSendParticipation(context, participant, null).run();
 		}
 
@@ -309,7 +299,7 @@ public class WSManager {
 			}		
 		}
 		
-		List<CommentBeanWS> comments = new WSGetCommentaireByEvent(context, eventBean.getIdDistant(), null).retreiveObject();
+		List<CommentBeanWS> comments = new WSGetCommentaireByEvent	(context, eventBean.getIdDistant(), null).retreiveObject();
 		for (CommentBeanWS object : comments) {
 			CommentBean commentBean = commentRepo.getByIdDistant(object.getId());
 			commentBean.setIdDistant(object.getId());
@@ -326,27 +316,21 @@ public class WSManager {
 			}
 		}
 		
-		for (Participant participant : participantsWs) {
 
+		
+		List<ParticipantsBeanWS> participants = new WSGetParticipantByEvent(context, eventBean.getIdDistant(), null).retreiveObject();
+		for (ParticipantsBeanWS object : participants) {
+			ParticipationBean participantBean = participationRepo.getByIdDistant(object.getId());
+			participantBean.setIdDistant(object.getId());
+			participantBean.setEid(eventBean.getId());
+			participantBean.setDateSync(Calendar.getInstance());
+			participantBean.setUid(uid);
+			participantBean.setParticipant(object.getParticipant().getFirstname() + " " + object.getParticipant().getName());
+			if(participantBean.getId() == 0) {
+				participantBean.setId((int)participationRepo.insert(participantBean));
+			} else {
+				participationRepo.update(participantBean);
+			}
 		}
-
-		//new WSGetUser(context, 1, userCallback).execute();
 	}
-
-	public static void retreiveComments(int id) throws Exception {
-		HttpClient client = WSBase.createClient();
-		String urlStr = "/api/events/" + id + "/comments.json";
-		URI website = new URI(WSBase.URL_BASE + urlStr);	
-
-		HttpGet request = new HttpGet();
-		String accessToken = PreferencesUtil.getCurrentAccessToken();
-		request.setHeader("Authorization", "Bearer "+accessToken);
-		request.setURI(website);
-		HttpResponse response = client.execute(request);
-		String result = EntityUtils.toString(response.getEntity());
-		Log.d("WS",result);
-		ObjectMapper mapper = new ObjectMapper();
-		//T object = mapper.readValue(result, persistentClass);
-	}
-
 }
