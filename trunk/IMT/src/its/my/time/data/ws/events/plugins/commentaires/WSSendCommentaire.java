@@ -33,10 +33,10 @@ public class WSSendCommentaire extends WSPostBase<CommentBean>{
 	
 	@Override
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
-		if(getObject().getId() <= 0) {
+		if(getObject().getIdDistant() <= 0) {
 	        nameValuePairs.add(new BasicNameValuePair("comment_id ", "" + 0));
 		} else {
-	        nameValuePairs.add(new BasicNameValuePair("comment_id ", "" + getObject().getId()));
+	        nameValuePairs.add(new BasicNameValuePair("comment_id ", "" + getObject().getIdDistant()));
 		}
 		EventBaseBean event = new EventBaseRepository(getContext()).getById(getObject().getEid());
         nameValuePairs.add(new BasicNameValuePair("event_type", Types.Event.getLabelById(event.getTypeId())));

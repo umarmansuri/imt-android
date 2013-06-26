@@ -9,6 +9,7 @@ public class CommentBeanWS {
     private Integer id;
     private String body;
     private Author author;
+    private String createdAt;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getId() {
@@ -33,6 +34,14 @@ public class CommentBeanWS {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Map<String, Object> getAdditionalProperties() {
