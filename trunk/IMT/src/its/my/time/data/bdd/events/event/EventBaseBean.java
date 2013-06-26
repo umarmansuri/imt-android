@@ -26,12 +26,12 @@ public class EventBaseBean extends BaseBean{
 		this.hDeb  = new TableAttribut<Calendar>("hDeb", DateUtil.createCalendar());
 		this.hFin = new TableAttribut<Calendar>("hFin", DateUtil.createCalendar());
 		this.title = new TableAttribut<String>("title", "");
-		this.cid = new TableAttribut<Integer>("cid", -1);
-		this.typeId = new TableAttribut<Integer>("typeId", -1);
-		this.detailsId = new TableAttribut<Integer>("detailsId", -1);
-		this.isAllDay = new TableAttribut<Integer>("isAllDay", -1);
-		this.rappel = new TableAttribut<Integer>("rappel", -1);
-		this.isMine = new TableAttribut<Integer>("isMine", -1);
+		this.cid = new TableAttribut<Integer>("cid", 0);
+		this.typeId = new TableAttribut<Integer>("typeId", 0);
+		this.detailsId = new TableAttribut<Integer>("detailsId", 0);
+		this.isAllDay = new TableAttribut<Integer>("isAllDay", 0);
+		this.rappel = new TableAttribut<Integer>("rappel", 0);
+		this.isMine = new TableAttribut<Integer>("isMine", 0);
 	}
 
 	public boolean isAllDay() {

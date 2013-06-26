@@ -30,6 +30,7 @@ import its.my.time.data.ws.events.WSSendEvent;
 import its.my.time.data.ws.events.participating.Participating;
 import its.my.time.data.ws.events.participating.WSGetEventParticipating;
 import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
+import its.my.time.data.ws.events.plugins.note.NoteBeanWS;
 import its.my.time.data.ws.events.plugins.note.WSGetNote;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
 import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
@@ -173,11 +174,11 @@ public class WSManager {
 		UtilisateurBeanWS user = new WSGetUser(context, uid, null).retreiveObject();	
 
 		UtilisateurBean bean = utilisateurRepo.getByIdDistant(user.getId());
-		bean .setIdDistant(user.getId());
+		bean.setIdDistant(user.getId());
 		bean.setNom(user.getUsername());
 		bean.setMail(user.getEmail());
 		bean.setDateSync(Calendar.getInstance());
-		if(bean.getId() == -1) {
+		if(bean.getId() == 0) {
 			utilisateurRepo.insert(bean);
 		} else {
 			utilisateurRepo.update(bean);
@@ -196,7 +197,7 @@ public class WSManager {
 				comtpeBean.setUid(uid);
 				comtpeBean.setType(Types.Comptes.getIdFromLabel(object.getType()));
 				comtpeBean.setDateSync(Calendar.getInstance());
-				if(comtpeBean.getId() == -1) {
+				if(comtpeBean.getId() == 0) {
 					comtpeBean.setId((int)compteRepo.insert(comtpeBean));
 				} else {
 					compteRepo.update(comtpeBean);
@@ -213,7 +214,7 @@ public class WSManager {
 		}
 
 		for (Event event : eventsWs) {
-			retreiveEvent(event.getId(), -1, true, comptes);
+			retreiveEvent(event.getId(), 0, true, comptes);
 		}
 	}
 
@@ -244,13 +245,13 @@ public class WSManager {
 		} else {
 			eventBean.setCid(comptes.get(distanteAccountId).getId());
 		}
-		if(eventBean.getId() == -1) {
+		if(eventBean.getId() == 0) {
 			eventBean.setId((int)eventRepo.insert(eventBean));
 		} else {
 			eventRepo.update(eventBean);
 		}
 		if(eventBean.getTypeId() == Types.Event.MEETING) {
-			String noteVal = new WSGetNote(context, eventBean.getIdDistant(), null).retreiveObject();
+			NoteBeanWS noteVal = new WSGetNote(context, eventBean.getIdDistant(), null).retreiveObject();
 			List<NoteBean> notes = noteRepo.getAllByEid(eventBean.getId());
 			NoteBean note = null;
 			if(notes == null || notes.size() == 0) {
@@ -259,9 +260,9 @@ public class WSManager {
 				note = notes.get(0);
 			}
 			note.setEid(eventBean.getId());
-			note.setHtml(noteVal);
+			note.setHtml(noteVal.getNote_content());
 			note.setDateSync(Calendar.getInstance());
-			if(note.getId() == -1) {
+			if(note.getId() == 0) {
 				note.setId((int)noteRepo.insert(note));
 			} else {
 				noteRepo.update(note);
@@ -292,7 +293,7 @@ public class WSManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if(pjbean.getId() == -1) {
+			if(pjbean.getId() == 0) {
 				pjbean.setId((int)pjRepo.insert(pjbean));
 			} else {
 				pjRepo.update(pjbean);

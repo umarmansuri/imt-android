@@ -35,7 +35,7 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 	}
 	
 	@Override
-	protected Exception run() {
+	public String run() {
 		try {
 			HttpClient client = createClient();
 			String urlStr = getUrl();
@@ -58,10 +58,10 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());
 			Log.d("WSPost",result);
-			return null;
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return e;
+			return null;
 		}
 	}
 	

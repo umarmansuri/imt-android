@@ -13,8 +13,8 @@ public class ParticipantBean extends PluginBaseBean{
 
 	public ParticipantBean() {
 		super();
-		idContactInfo = new TableAttribut<Integer>("uid", -1);
-		cid = new TableAttribut<Integer>("cid", -1);
+		idContactInfo = new TableAttribut<Integer>("uid", 0);
+		cid = new TableAttribut<Integer>("cid", 0);
 	}
 	public int getIdContactInfo() {
 		return idContactInfo.getValue();

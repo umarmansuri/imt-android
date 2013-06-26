@@ -23,7 +23,7 @@ public class PjBean extends PluginBaseBean{
 		this.base64 = new TableAttribut<String>("base64", "");
 		this.mime = new TableAttribut<String>("mime", "");
 		this.path = new TableAttribut<String>("path", "");
-		this.uid = new TableAttribut<Long>("uid", -1l);
+		this.uid = new TableAttribut<Long>("uid", 0l);
 	}
 
 	public String getName() {

@@ -192,7 +192,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 					ContactInfoBean contactInfo = ContactsUtil.getContactInfoById(getActivity(), participant.getIdContactInfo());
 					contactsInfo.add(contactInfo);
 					if(contactInfo == null) {
-						contacts.put(-1L, new ContactBean());
+						contacts.put(0L, new ContactBean());
 					} else if(!contacts.containsKey(contactInfo.getContactId())) {
 						contacts.put(contactInfo.getContactId(), ContactsUtil.getContatById(getActivity(), (int) contactInfo.getContactId()));
 					}
@@ -205,7 +205,7 @@ public class ParticipantsFragment extends BasePluginFragment {
 		@Override
 		public View getView(final int position, View convertView,ViewGroup parent) {
 			ContactInfoBean contactInfo = contactsInfo.get(position);
-			ContactBean contact = contacts.get(contactInfo != null ? contactInfo.getContactId() : -1);
+			ContactBean contact = contacts.get(contactInfo != null ? contactInfo.getContactId() : 0);
 			final ParticipantsView view = new ParticipantsView(getActivity(),contact, contactInfo, this.isInEditMode);
 
 			if(isInEditMode) {

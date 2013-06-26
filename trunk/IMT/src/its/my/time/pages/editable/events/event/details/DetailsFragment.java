@@ -90,7 +90,7 @@ public class DetailsFragment extends BasePluginFragment {
 
 		if(participationBean == null) {
 			participationBean = new ParticipationBean();
-			participationBean.setParticipation(-1);
+			participationBean.setParticipation(0);
 			participationBean.setEid(eid);
 			participationBean.setUid(uid);
 		}
@@ -168,7 +168,7 @@ public class DetailsFragment extends BasePluginFragment {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> container) {
-				getParentActivity().getEvent().setCid(-1);
+				getParentActivity().getEvent().setCid(0);
 			}
 		});
 
@@ -283,7 +283,7 @@ public class DetailsFragment extends BasePluginFragment {
 				mTextHeureFin.getDate().get(Calendar.MINUTE));
 		getParentActivity().getEvent().sethFin(cal);
 		getParentActivity().getEvent().setTitle(mTextTitle.getText().toString());
-		if(getParentActivity().getEvent().getId() == -1) {
+		if(getParentActivity().getEvent().getId() == 0) {
 			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insert(getParentActivity().getEvent()));
 			participationBean.setEid(getParentActivity().getEvent().getId());
 			participationRepo.insert(participationBean);
@@ -326,7 +326,7 @@ public class DetailsFragment extends BasePluginFragment {
 
 	@Override
 	public void launchCancel() {
-		if(getParentActivity().getEvent().getId() == -1) {
+		if(getParentActivity().getEvent().getId() == 0) {
 			getSherlockActivity().finish();
 		} else {
 			ViewUtil.enableAllView(view, false);

@@ -42,14 +42,14 @@ public class ActivityUtil {
 			@Override
 			public void run() {
 				CallManager.closeLocalProfile();
-				PreferencesUtil.setCurrentUid(-1);
+				PreferencesUtil.setCurrentUid(0);
 				PreferencesUtil.clearAll(context);
 				context.deleteDatabase(DatabaseHandler.DATABASE_NAME);		
 
 				
 				final Intent i = new Intent(ACTION_FINISH);
 				i.putExtra("FINISH", "ACTION.FINISH.LOGOUT");
-				PreferencesUtil.setCurrentUid(-1);
+				PreferencesUtil.setCurrentUid(0);
 				context.sendBroadcast(i);
 				startSplashActivity(context);
 			}
@@ -134,7 +134,7 @@ public class ActivityUtil {
 
 	private static void startEventActivity(Context context, Calendar calHeure,int typeEvent, boolean isAllDay) {
 		final Intent intent = getEventIntentFromType(context, typeEvent);
-		intent.putExtra(KEY_EXTRA_ID, -1);
+		intent.putExtra(KEY_EXTRA_ID, 0);
 		intent.putExtra(KEY_EXTRA_ISO_TIME, DateUtil.getTimeInIso(calHeure));
 		intent.putExtra(KEY_EXTRA_ALL_DAY, isAllDay);
 		context.startActivity(intent);

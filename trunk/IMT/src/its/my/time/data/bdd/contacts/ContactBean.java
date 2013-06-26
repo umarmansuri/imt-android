@@ -13,7 +13,7 @@ public class ContactBean extends BaseBean{
 
 	public ContactBean() {
 		super();
-		rawContactId = new TableAttribut<Integer>("rawContactId", -1);
+		rawContactId = new TableAttribut<Integer>("rawContactId", 0);
 		nom = new TableAttribut<String>("nom", "");
 		prenom = new TableAttribut<String>("prenmo", "");
 	}

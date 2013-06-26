@@ -72,7 +72,7 @@ public class ProfilActivity extends BaseActivity implements Callback {
 	@Override
 	protected void onViewCreated() {
 		initialiseFields();
-		if (PreferencesUtil.getCurrentUid() >= 0) {
+		if (PreferencesUtil.getCurrentUid() > 0) {
 			isNew = false;
 			user = new UtilisateurRepository(this).getById(PreferencesUtil.getCurrentUid());
 			if(state == null) {

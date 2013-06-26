@@ -16,7 +16,6 @@ import org.codehaus.jackson.type.TypeReference;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 public class WSGetEventParticipating extends WSBase{
 	private int id;
@@ -35,7 +34,7 @@ public class WSGetEventParticipating extends WSBase{
 	}
 
 	@Override
-	protected Exception run() {
+	public String run() {
 		if(retreiveObject() != null){
 			return null;
 		} else {

@@ -55,7 +55,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MINUTE, -10);
-		if(event != null && event.getId() >= 0) {
+		if(event != null && event.getId() > 0) {
 			if(event.getDateSync().before(cal)) {
 				retreiveEvent(context, id);
 			}

@@ -33,7 +33,7 @@ public class ValidateParticipationActivity extends Activity implements OnClickLi
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 
-		bean = new EventBaseRepository(this).getById(getIntent().getIntExtra(Consts.EXTRA_EID, -1));
+		bean = new EventBaseRepository(this).getById(getIntent().getIntExtra(Consts.EXTRA_EID, 0));
 		
 		
 		if(bean == null) {

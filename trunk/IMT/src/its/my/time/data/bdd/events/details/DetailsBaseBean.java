@@ -11,7 +11,7 @@ public abstract class DetailsBaseBean extends BaseBean{
 
 	public DetailsBaseBean() {
 		super();
-		this.eid = new TableAttribut<Long>("eid", -1l);
+		this.eid = new TableAttribut<Long>("eid", 0l);
 	}
 
 	public long getEid() {

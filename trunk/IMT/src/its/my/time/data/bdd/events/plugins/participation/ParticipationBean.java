@@ -12,8 +12,8 @@ public class ParticipationBean extends PluginBaseBean{
 	private TableAttribut<Integer> participation;
 	
 	public ParticipationBean() {
-		uid = new TableAttribut<Long>("uid", -1l);
-		participation = new TableAttribut<Integer>("participation", -1);
+		uid = new TableAttribut<Long>("uid", 0l);
+		participation = new TableAttribut<Integer>("participation", 0);
 	}
 	
 	public long getUid() {

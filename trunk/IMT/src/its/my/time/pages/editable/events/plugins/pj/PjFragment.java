@@ -91,7 +91,7 @@ public class PjFragment extends BasePluginFragment {
 
 				pj.setPath(theFilePath);
 				pj.setName(decoupeNom[decoupeNom.length - 1]);
-
+				pj.setIdDistant(0);
 				try {
 					FileInputStream mFileInputStream = new FileInputStream(theFilePath);
 					ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -5,9 +5,24 @@ import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
-import its.my.time.data.ws.Callback;
+import its.my.time.data.bdd.events.plugins.comment.CommentBean;
+import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
+import its.my.time.data.bdd.events.plugins.note.NoteBean;
+import its.my.time.data.bdd.events.plugins.note.NoteRepository;
+import its.my.time.data.bdd.events.plugins.odj.OdjBean;
+import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
+import its.my.time.data.bdd.events.plugins.participant.ParticipantBean;
+import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
+import its.my.time.data.bdd.events.plugins.pj.PjBean;
+import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.ws.WSManager;
-import its.my.time.pages.MyTimeActivity;
+import its.my.time.data.ws.events.PostEventReturn;
+import its.my.time.data.ws.events.WSSendEvent;
+import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
+import its.my.time.data.ws.events.plugins.note.WSSendNote;
+import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
+import its.my.time.data.ws.events.plugins.participants.WSSendParticipant;
+import its.my.time.data.ws.events.plugins.pj.WSSendPj;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.PluginFragment;
 import its.my.time.util.ActivityUtil;
@@ -20,6 +35,8 @@ import its.my.time.view.menu.MenuGroupe;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -54,15 +71,15 @@ public abstract class BaseEventActivity extends BaseActivity {
 
 		final Bundle bundle = getIntent().getExtras();
 		isNew = false;
-		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) >= 0) {
+		if (bundle.getInt(ActivityUtil.KEY_EXTRA_ID) > 0) {
 			this.event = new EventBaseRepository(this).getById(bundle.getInt(ActivityUtil.KEY_EXTRA_ID));
 		}
 		if (this.event == null) {
 			this.event = new EventBaseBean();
 			this.event.setTypeId(Types.Event.BASE);
-			
+
 			event.setMine(true);
-			
+
 			boolean isAllDay = bundle.getBoolean(ActivityUtil.KEY_EXTRA_ALL_DAY, false);
 			Calendar hDeb = DateUtil.getDateFromISO(bundle.getString(ActivityUtil.KEY_EXTRA_ISO_TIME));
 			Calendar hFin;
@@ -81,7 +98,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 			}
 			this.event.sethDeb(hDeb);
 			this.event.sethFin(hFin);
-			
+
 			this.event.setAllDay(isAllDay);
 			isNew = true;
 		}
@@ -114,14 +131,14 @@ public abstract class BaseEventActivity extends BaseActivity {
 		menuGroupes.add(menuSuppression);
 		return super.onCreateMenu(menuGroupes);
 	}
-	
+
 	@Override
 	protected void onMenuGroupClick(ExpandableListView parent,
 			MenuGroupe group, long id) {
 		if(group==menuSuppression) {
 			AlertDialog.Builder alertSupperssion = new AlertDialog.Builder(this);
 			alertSupperssion.setTitle("Supprimer l'événement ?");
-			
+
 			DialogInterface.OnClickListener listenerButon = new DialogInterface.OnClickListener() {	
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -130,23 +147,23 @@ public abstract class BaseEventActivity extends BaseActivity {
 						evRepo.delete(getEvent());
 						dialog.dismiss();
 						finish();
-				    }
-				    else { 
-				        dialog.cancel();
-				        
-				    }
-					
+					}
+					else { 
+						dialog.cancel();
+
+					}
+
 				}
 			};
 			alertSupperssion.setPositiveButton("Oui", listenerButon);
 			alertSupperssion.setNeutralButton("Non", listenerButon);
 			alertSupperssion.show();
-			
+
 		} else {
 			super.onMenuGroupClick(parent, group, id);
 		}
 	}
-	
+
 	public abstract ArrayList<PluginFragment> getPages();
 
 	@Override
@@ -188,8 +205,8 @@ public abstract class BaseEventActivity extends BaseActivity {
 			return true;
 		}
 	};
-	
-	
+
+
 	public PluginFragment getActiveFragment() {
 		if (this.mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
 			final FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) this.mPager.getAdapter();
@@ -235,7 +252,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 			launchEdit();
 		}
 	}
-	
+
 	@Override
 	protected boolean onBackButtonPressed() {
 		for (PluginFragment fragment : fragments) {
@@ -246,35 +263,71 @@ public abstract class BaseEventActivity extends BaseActivity {
 		}
 		return super.onBackButtonPressed();
 	}
-	
+
 	@Override
 	public void onMajCalled() {
 		super.onMajCalled();
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
-				CompteRepository compteRepo = new CompteRepository(BaseEventActivity.this);
-				SparseArray<CompteBean> comptes = new SparseArray<CompteBean>(); 
-				for (CompteBean compte : compteRepo.getAllByUid(PreferencesUtil.getCurrentUid())) {
-					comptes.put(compte.getIdDistant(), compte);
-				}
-				WSManager.init(BaseEventActivity.this);
-				WSManager.retreiveEvent(getEvent().getIdDistant(), -1, true, comptes);
-				event = new EventBaseRepository(BaseEventActivity.this).getById(event.getId());
-				runOnUiThread(new Runnable() {
-					public void run() {
-						for (PluginFragment fragment : fragments) {
-							try {
-							fragment.refresh();
-							} catch (Exception e) {
-								
-							}
-						}
-						majFinished(null);
+					String result = new WSSendEvent(BaseEventActivity.this, event, null).run();
+					ObjectMapper mapper = new ObjectMapper();
+					PostEventReturn object = mapper.readValue(result, PostEventReturn.class);
+					event.setIdDistant(object.getIdEvent());
+					if(event.getId() <= 0) {
+						event.setId((int)new EventBaseRepository(BaseEventActivity.this).insert(event));
+					} else {
+						new EventBaseRepository(BaseEventActivity.this).update(event);
 					}
-				});
+					List<CommentBean> comments = new CommentRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
+					for (CommentBean comment : comments) {
+						new WSSendCommentaire(BaseEventActivity.this, comment, null).run();
+					}
+					
+					List<NoteBean> notes = new NoteRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
+					for (NoteBean note : notes) {
+						new WSSendNote(BaseEventActivity.this, note, null).run();
+					}
+					
+					List<OdjBean> odjs = new OdjRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
+					for (OdjBean odj : odjs) {
+						new WSSendOdj(BaseEventActivity.this, odj, null).run();
+					}
+					
+					List<ParticipantBean> participants = new ParticipantRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
+					for (ParticipantBean participant : participants) {
+						new WSSendParticipant(BaseEventActivity.this, participant, null).run();
+					}
+
+					
+					List<PjBean> pjs = new PjRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
+					for (PjBean pj : pjs) {
+						new WSSendPj(BaseEventActivity.this, pj, null).run();
+					}
+					
+					
+					CompteRepository compteRepo = new CompteRepository(BaseEventActivity.this);
+					SparseArray<CompteBean> comptes = new SparseArray<CompteBean>(); 
+					for (CompteBean compte : compteRepo.getAllByUid(PreferencesUtil.getCurrentUid())) {
+						comptes.put(compte.getIdDistant(), compte);
+					}
+					WSManager.init(BaseEventActivity.this);
+					WSManager.retreiveEvent(getEvent().getIdDistant(), -1, true, comptes);
+					event = new EventBaseRepository(BaseEventActivity.this).getById(event.getId());
+					runOnUiThread(new Runnable() {
+						public void run() {
+							for (PluginFragment fragment : fragments) {
+								try {
+									fragment.refresh();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+							majFinished(null);
+						}
+					});
 				} catch (final Exception e) {
 					runOnUiThread(new Runnable() {
 						public void run() {

@@ -113,7 +113,7 @@ public class OdjFragment extends BasePluginFragment {
 		for(int i = 0; i < odjs.size(); i++) {
 			odj = odjs.get(i);
 			odj.setOrder(i);
-			if(odj.getId() == -1) {
+			if(odj.getId() == 0) {
 				repo.insert(odj);
 			} else {
 				repo.update(odj);
