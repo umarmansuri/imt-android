@@ -29,7 +29,7 @@
             android:layout_above="@+id/splash_mdp"
             android:layout_margin="6dp"
             android:hint="Pseudo"
-            android:inputType="textNoSuggestions"
+            android:inputType="textVisiblePassword"
             android:maxLines="1" />
 
         <EditText

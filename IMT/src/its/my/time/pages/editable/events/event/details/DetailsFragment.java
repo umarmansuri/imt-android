@@ -43,15 +43,6 @@ import android.widget.TextView;
 
 public class DetailsFragment extends BasePluginFragment {
 
-	private static final String KEY_BUNDLE_DATE_DEB = "KEY_BUNDLE_DATE_DEB";
-	private static final String KEY_BUNDLE_DATE_FIN = "KEY_BUNDLE_DATE_FIN";
-	private static final String KEY_BUNDLE_TITLE = "KEY_BUNDLE_TITLE";
-	private static final String KEY_BUNDLE_DETAILS = "KEY_BUNDLE_DETAILS";
-	private static final String KEY_BUNDLE_ALL_DAY = "KEY_BUNDLE_ALL_DAY";
-	private static final String KEY_BUNDLE_COMPTE = "KEY_BUNDLE_COMPTE";
-	private static final String KEY_BUNDLE_RECURRENCE = "KEY_BUNDLE_RECURRENCE";
-	private static final String KEY_BUNDLE_RAPPEL = "KEY_BUNDLE_RAPPEL";
-	private static final String KEY_BUNDLE_PARTICIPATION = "KEY_BUNDLE_PARTICIPATION";
 
 	private TimeButton mTextHeureDeb;
 	private TimeButton mTextHeureFin;
@@ -124,11 +115,7 @@ public class DetailsFragment extends BasePluginFragment {
 		mSpinnerParticipation = (Spinner) view.findViewById(R.id.activity_event_details_spinner_participation);
 		mTextDetails = (TextView) view.findViewById(R.id.activity_event_details_text_details);
 		mSwitchAllDay = (Switcher) view.findViewById(R.id.activity_event_details_switcher_allDay);
-		if (state == null) {
-			initialiseValuesFromEvent();
-		} else {
-			initialiseValueFromInstance();
-		}
+		refresh();
 		initialiseActions();
 
 		ViewUtil.enableAllView(view, false);
@@ -140,7 +127,7 @@ public class DetailsFragment extends BasePluginFragment {
 		return null;
 	}
 
-	public void initialiseValuesFromEvent() {
+	public void refresh() {
 		mTextTitle.setText(getParentActivity().getEvent().getTitle());
 		mTextJourDeb.setDate(getParentActivity().getEvent().gethDeb());
 		mTextHeureDeb.setDate(getParentActivity().getEvent().gethDeb());
@@ -154,28 +141,6 @@ public class DetailsFragment extends BasePluginFragment {
 		if (getParentActivity().getEvent().isAllDay()) {
 			mSwitchAllDay.changeState(getParentActivity().getEvent().isAllDay(), true);
 		}
-	}
-
-	public void initialiseValueFromInstance() {
-		mTextTitle.setText(state.getString(KEY_BUNDLE_TITLE));
-
-		Calendar cal = DateUtil.getDateFromISO(state
-				.getString(KEY_BUNDLE_DATE_DEB));
-		mTextJourDeb.setDate(cal);
-		mTextHeureDeb.setDate(cal);
-
-		cal = DateUtil.getDateFromISO(state.getString(KEY_BUNDLE_DATE_FIN));
-		mTextHeureFin.setDate(cal);
-		mTextJourFin.setDate(cal);
-
-		mTextDetails.setText(state.getString(KEY_BUNDLE_DETAILS));
-		if (getParentActivity().getEvent().isAllDay()) {
-			mSwitchAllDay.changeState(state.getBoolean(KEY_BUNDLE_ALL_DAY), false);
-		}
-		mSpinnerCompte.setSelection(state.getInt(KEY_BUNDLE_COMPTE));
-		mSpinnerRecurrence.setSelection(state.getInt(KEY_BUNDLE_RECURRENCE));
-		mSpinnerRappel.setSelection(state.getInt(KEY_BUNDLE_RAPPEL));
-		mSpinnerParticipation.setSelection(state.getInt(KEY_BUNDLE_PARTICIPATION));
 	}
 
 	public void initialiseActions() {
@@ -277,38 +242,6 @@ public class DetailsFragment extends BasePluginFragment {
 		state = null;
 	}
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		Calendar cal = new GregorianCalendar(mTextJourDeb.getDate().get(
-				Calendar.YEAR),
-				mTextJourDeb.getDate().get(Calendar.MONTH),
-				mTextJourDeb.getDate().get(Calendar.DAY_OF_MONTH),
-				mTextHeureDeb.getDate().get(Calendar.HOUR_OF_DAY),
-				mTextHeureDeb.getDate().get(Calendar.MINUTE));
-		outState.putString(KEY_BUNDLE_DATE_DEB, DateUtil.getTimeInIso(cal));
-
-		cal = new GregorianCalendar(mTextJourFin.getDate().get(
-				Calendar.YEAR),
-				mTextJourFin.getDate().get(Calendar.MONTH),
-				mTextJourFin.getDate().get(Calendar.DAY_OF_MONTH),
-				mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
-				mTextHeureFin.getDate().get(Calendar.MINUTE));
-		outState.putString(KEY_BUNDLE_DATE_FIN, DateUtil.getTimeInIso(cal));
-
-		outState.putString(KEY_BUNDLE_TITLE, mTextTitle.getText()
-				.toString());
-		outState.putString(KEY_BUNDLE_DETAILS, mTextDetails.getText()
-				.toString());
-		outState.putBoolean(KEY_BUNDLE_ALL_DAY, mSwitchAllDay.isChecked());
-		outState.putInt(KEY_BUNDLE_COMPTE,mSpinnerCompte.getSelectedItemPosition());
-		outState.putInt(KEY_BUNDLE_RECURRENCE, mSpinnerRecurrence.getSelectedItemPosition());
-		outState.putInt(KEY_BUNDLE_RAPPEL, mSpinnerRecurrence.getSelectedItemPosition());
-		outState.putInt(KEY_BUNDLE_PARTICIPATION, mSpinnerParticipation.getSelectedItemPosition());
-		state = outState;
-
-	}
-
 	public EventBaseBean getEvent() {
 		return getParentActivity().getEvent();
 	}
@@ -397,7 +330,7 @@ public class DetailsFragment extends BasePluginFragment {
 			getSherlockActivity().finish();
 		} else {
 			ViewUtil.enableAllView(view, false);
-			initialiseValuesFromEvent();
+			refresh();
 		}
 		super.launchCancel();
 	}

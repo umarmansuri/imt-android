@@ -26,33 +26,13 @@ public class NoteFragment extends BasePluginFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		int eid = getParentActivity().getEvent().getId();
-		long uid = PreferencesUtil.getCurrentUid();
-		
-		noteRepo = new NoteRepository(getActivity());
-		noteBean = noteRepo.getByUidEid(eid, uid);
-		
-		if(noteBean.getEid() < 0) {
-			noteBean = new NoteBean();
-			noteBean.setEid(eid);
-			noteBean.setName("Note");
-			noteBean.setUid(uid);
-			noteBean.setHtml("");
-		} 
-
 		mWebView = new WebviewDisabled(getActivity());
 		mWebView.setVisibility(View.INVISIBLE);
 		mWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
-				String content = noteBean.getHtml();
-				content = content.replace("'", "\\'");
-				content = content.replace("\"","\\\"");
-				String load = "javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + content + "\"";
-				mWebView.loadUrl(load);
-				mWebView.loadUrl("javascript:document.getElementById('trick').click();");
-				mWebView.setVisibility(View.VISIBLE);
+				refresh();
 			}
 		});
 		mWebView.getSettings().setJavaScriptEnabled(true);
@@ -60,11 +40,11 @@ public class NoteFragment extends BasePluginFragment {
 		mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 		mWebView.getSettings().setLoadsImagesAutomatically(true);
 		mWebView.getSettings().setRenderPriority(RenderPriority.HIGH);
-		
+
 		mWebView.getSettings().setBuiltInZoomControls(false);
 		mWebView.getSettings().setSupportZoom(false);
 		mWebView.getSettings().setDefaultZoom(ZoomDensity.FAR);
-		
+
 		mWebView.setHorizontalScrollBarEnabled(false);
 		mWebView.setVerticalScrollBarEnabled(false);
 		mWebView.loadUrl("file:///android_asset/tinymce/wysiwyg.html");
@@ -74,21 +54,44 @@ public class NoteFragment extends BasePluginFragment {
 
 		return mWebView;
 	}
-	
+
+
+	@Override
+	public void refresh() {
+		int eid = getParentActivity().getEvent().getId();
+		long uid = PreferencesUtil.getCurrentUid();
+
+		noteRepo = new NoteRepository(getActivity());
+		noteBean = noteRepo.getByUidEid(eid, uid);
+
+		if(noteBean.getEid() < 0) {
+			noteBean = new NoteBean();
+			noteBean.setEid(eid);
+			noteBean.setHtml("");
+		} 
+		String content = noteBean.getHtml();
+		content = content.replace("'", "\\'");
+		content = content.replace("\"","\\\"");
+		String load = "javascript:document.getElementById('mce_0_ifr').contentWindow.document.body.innerHTML = \"" + content + "\"";
+		mWebView.loadUrl(load);
+		mWebView.loadUrl("javascript:document.getElementById('trick').click();");
+		mWebView.setVisibility(View.VISIBLE);
+
+	}
 	class MyJavaScriptInterface
 	{
-	    public void processHTML(String html)
-	    {
-	    	noteBean.setHtml(html);
-	    	Log.d("Webview","save html: " + html);
+		public void processHTML(String html)
+		{
+			noteBean.setHtml(html);
+			Log.d("Webview","save html: " + html);
 			if(noteBean.getId() > -1) {
 				noteRepo.update(noteBean);	
 			} else {
 				noteBean.setId((int)noteRepo.insert(noteBean));
 			}
-	    }
+		}
 	}
-	
+
 	@Override
 	public String getTitle() {
 		return "Notes";

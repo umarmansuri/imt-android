@@ -35,7 +35,6 @@ public class CommentairesFragment extends BasePluginFragment {
 
 		final RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_commentaires, null);
 		this.mListComment = (ListView) mView.findViewById(R.id.event_comment_liste);
-		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
 		this.mTextCommentaire = (EditText) mView.findViewById(R.id.event_comment_editComment);
 
 		this.mButtonSend = (Button) mView.findViewById(R.id.event_comment_save);
@@ -59,11 +58,16 @@ public class CommentairesFragment extends BasePluginFragment {
 				CommentairesFragment.this.mTextCommentaire.setText("");
 			}
 		});
-
+		refresh();
 		
 		return mView;
 	}
 
+	@Override
+	public void refresh() {
+		this.mListComment.setAdapter(new CommentairesAdapter(getActivity(),getParentActivity().getEvent().getId(), false));
+	}
+	
 	@Override
 	public String getTitle() {
 		return "Commentaires";

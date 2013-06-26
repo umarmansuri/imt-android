@@ -20,19 +20,7 @@ public class WSSendContact extends WSPostBase<ContactBean>{
 
 	@Override
 	public String getUrl() {
-		return "";
-	}
-
-	@Override
-	public ContactBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getIdParam() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/api/contact.json";
 	}
 	
 	@Override
@@ -42,10 +30,12 @@ public class WSSendContact extends WSPostBase<ContactBean>{
 	
 	@Override
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
-        nameValuePairs.add(new BasicNameValuePair("", ""));
-        nameValuePairs.add(new BasicNameValuePair("", ""));
-        nameValuePairs.add(new BasicNameValuePair("", ""));
-        nameValuePairs.add(new BasicNameValuePair("", ""));
+		nameValuePairs.add(new BasicNameValuePair("contact_id ", ""));
+        nameValuePairs.add(new BasicNameValuePair("contact_firstname", ""));
+        nameValuePairs.add(new BasicNameValuePair("contact_name", ""));
+        nameValuePairs.add(new BasicNameValuePair("contact_email", ""));
+        nameValuePairs.add(new BasicNameValuePair("contact_user", ""));
+        nameValuePairs.add(new BasicNameValuePair("contact_account", ""));
 		return nameValuePairs;
 	}
 }

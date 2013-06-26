@@ -12,11 +12,11 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
+import android.content.Context;
 
 public class WSSendAccount extends WSPostBase<CompteBean>{
 
-	public WSSendAccount(Activity context, CompteBean compte, PostCallback<CompteBean> callBack) {
+	public WSSendAccount(Context context, CompteBean compte, PostCallback<CompteBean> callBack) {
 		super(context, compte, callBack);
 	}
 
@@ -25,21 +25,10 @@ public class WSSendAccount extends WSPostBase<CompteBean>{
 		return "/api/account";
 	}
 
-	@Override
-	public CompteBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public BaseRepository<CompteBean> getRepository() {
 		return new CompteRepository(getContext());
-	}
-	
-	@Override
-	public String getIdParam() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override

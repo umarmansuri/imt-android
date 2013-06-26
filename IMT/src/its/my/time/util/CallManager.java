@@ -11,7 +11,6 @@ import android.net.sip.SipException;
 import android.net.sip.SipManager;
 import android.net.sip.SipProfile;
 import android.net.sip.SipRegistrationListener;
-import android.util.Log;
 
 
 public class CallManager {

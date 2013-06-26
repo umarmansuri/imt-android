@@ -56,14 +56,9 @@ public class OdjFragment extends BasePluginFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		final RelativeLayout mView = (RelativeLayout) inflater.inflate(
-				R.layout.activity_event_odjs, null);
-		this.mListOdj = (DragSortListView) mView
-				.findViewById(R.id.event_odj_liste);
-		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),false));
-		this.mListOdj.setDropListener(this.onDrop);
-		this.mListOdj.setDragScrollProfile(this.ssProfile);
+		final RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_odjs, null);
+		this.mListOdj = (DragSortListView) mView.findViewById(R.id.event_odj_liste);
+		refresh();
 
 		this.mTextOdj = (EditText) mView.findViewById(R.id.event_odj_editOdj);
 		this.mButtonSend = (Button) mView.findViewById(R.id.event_odj_save);
@@ -84,6 +79,13 @@ public class OdjFragment extends BasePluginFragment {
 		layoutNew = mView.findViewById(R.id.event_layout_new_odj);
 
 		return mView;
+	}
+	
+	@Override
+	public void refresh() {
+		this.mListOdj.setAdapter(new OdjAdapter(getActivity(), getParentActivity().getEvent().getId(),false));
+		this.mListOdj.setDropListener(this.onDrop);
+		this.mListOdj.setDragScrollProfile(this.ssProfile);	
 	}
 
 	private OdjAdapter getOdjAdapter() {

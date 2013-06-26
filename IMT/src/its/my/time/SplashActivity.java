@@ -24,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -47,7 +48,6 @@ public class SplashActivity extends SherlockActivity {
 		if(PreferencesUtil.getCurrentUid() > 0) {
 			launchActivity();
 		} else {
-
 			setContentView(R.layout.activity_splash);
 			this.clickListener = new OnClickListener() {
 
@@ -113,6 +113,9 @@ public class SplashActivity extends SherlockActivity {
 
 		@Override
 		public boolean handleMessage(Message message) {
+			if(dialog != null) {
+				dialog.hide();
+			}
 			if(message.what == 0) {
 				new WSGetUser(SplashActivity.this, 1, new WSGetBase.GetCallback<UtilisateurBeanWS>() {
 					@Override public void done(Exception e) {					}

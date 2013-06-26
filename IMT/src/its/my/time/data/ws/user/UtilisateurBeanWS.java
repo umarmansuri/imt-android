@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class UtilisateurBeanWS {
 
     private Integer id;
@@ -13,6 +15,7 @@ public class UtilisateurBeanWS {
     private String email;
     private List<Event> events = new ArrayList<Event>();
     private List<Account> accounts = new ArrayList<Account>();
+    private List<Profil> profils = new ArrayList<Profil>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getId() {
@@ -53,6 +56,14 @@ public class UtilisateurBeanWS {
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public List<Profil> getProfils() {
+        return profils;
+    }
+
+    public void setProfils(List<Profil> profils) {
+        this.profils = profils;
     }
 
     public Map<String, Object> getAdditionalProperties() {

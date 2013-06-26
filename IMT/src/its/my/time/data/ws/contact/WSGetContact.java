@@ -12,7 +12,7 @@ public class WSGetContact extends WSGetBase<ContactBean>{
 
 	@Override
 	public String getUrl() {
-		return "";
+		return "/api/contacts/";
 	}
 
 }

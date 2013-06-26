@@ -9,11 +9,13 @@ public class OdjBean extends PluginBaseBean{
 
 	private TableAttribut<String> value;
 	private TableAttribut<Integer> order;
+	private TableAttribut<Integer> state;
 
 	public OdjBean() {
 		super();
 		this.value = new TableAttribut<String>("val", "");
 		this.order = new TableAttribut<Integer>("ordre", -1);
+		this.state = new TableAttribut<Integer>("state", 0);
 	}
 
 	public String getValue() {
@@ -22,6 +24,14 @@ public class OdjBean extends PluginBaseBean{
 
 	public void setValue(String value) {
 		this.value.setValue(value);
+	}
+
+	public Boolean getState() {
+		return this.state.getValue() == 1;
+	}
+
+	public void setValue(Boolean state) {
+		this.state.setValue(state == true ? 1 : 0);
 	}
 
 	public int getOrder() {
