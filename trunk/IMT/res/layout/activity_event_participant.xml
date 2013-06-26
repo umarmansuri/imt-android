@@ -4,39 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/event_layout_new_participant"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true">
-
-        <AutoCompleteTextView
-            android:id="@+id/event_participants_ajout_text"
-            android:layout_width="0dip"
-            android:layout_weight="1"
-            android:imeOptions="actionDone"
-            android:inputType="textEmailAddress"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_margin="5dp"
-            android:singleLine="true" />
-
-        <com.fonts.mooncake.MooncakeIcone
-            android:id="@+id/event_participants_ajout_btn"
-            style="@style/Btn.Green"
-            android:layout_margin="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
     <ListView
         android:id="@+id/event_participants_liste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/event_layout_new_participant" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

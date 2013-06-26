@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_height_large"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="5dp" >
 
     <TextView
         android:id="@+id/event_comment_owner"
@@ -26,46 +27,21 @@
         android:textColor="@color/grey"
         android:textSize="@dimen/text_size_medium" />
 
-    <RelativeLayout
-        android:layout_width="0dip"
-        android:layout_height="0dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/event_comment_owner"
-        android:layout_toLeftOf="@+id/delete"
-        android:background="@color/white" >
+    <TextView
+        android:id="@+id/event_comment_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:ellipsize="end"
+        android:minLines="2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ImageView
-            android:id="@+id/event_coment_icone"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:contentDescription="Image Profil"
-            android:src="@drawable/ic_action_profil_black" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/event_coment_icone" >
-
-            <TextView
-                android:id="@+id/event_comment_comments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:ellipsize="end"
-                android:minLines="2"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/event_comment_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/event_comment_comments"
-                android:layout_marginLeft="5dp"
-                android:hint="Date et heure du commentaire" >
-            </TextView>
-        </RelativeLayout>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/event_comment_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_comment_comments"
+        android:layout_marginLeft="10dp"
+        android:hint="Date et heure du commentaire" />
 
 </RelativeLayout>
