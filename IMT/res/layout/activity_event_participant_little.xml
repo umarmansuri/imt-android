@@ -6,13 +6,6 @@
     android:background="@drawable/background_simple_list_item" 
     android:padding="1dp">
 
-    <FrameLayout
-        android:id="@+id/event_participant_icone"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerVertical="true" >
-    </FrameLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,16 +23,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/event_participant_mail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/event_participant_name"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/event_participant_icone"
-            android:text="Mard 17 octobre 2012 à 18h30"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/black" />
     </RelativeLayout>
 
     <com.fonts.mooncake.MooncakeIcone
@@ -47,7 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/event_participant_name"
         android:background="@color/white"
         android:gravity="center"
         android:paddingRight="6dp"
