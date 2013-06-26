@@ -18,10 +18,10 @@ import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.ws.WSManager;
 import its.my.time.data.ws.events.PostEventReturn;
 import its.my.time.data.ws.events.WSSendEvent;
-import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
+import its.my.time.data.ws.events.plugins.commentaire.WSSendCommentaire;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
 import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
-import its.my.time.data.ws.events.plugins.participants.WSSendParticipant;
+import its.my.time.data.ws.events.plugins.participation.WSSendParticipation;
 import its.my.time.data.ws.events.plugins.pj.WSSendPj;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.PluginFragment;
@@ -302,7 +302,7 @@ public abstract class BaseEventActivity extends BaseActivity {
 					
 					List<ParticipantBean> participants = new ParticipantRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
 					for (ParticipantBean participant : participants) {
-						new WSSendParticipant(BaseEventActivity.this, participant, null).run();
+						new WSSendParticipation(BaseEventActivity.this, participant, null).run();
 					}
 
 					

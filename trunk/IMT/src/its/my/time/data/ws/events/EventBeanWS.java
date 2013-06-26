@@ -8,12 +8,10 @@ import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EventBeanWS {
 
     private Integer id;
-    private String type;
     private String title;
     private String content;
     private String date;
@@ -25,7 +23,8 @@ public class EventBeanWS {
     private List<Account> accounts = new ArrayList<Account>();
     private List<Participant> participants = new ArrayList<Participant>();
     private List<Attachmants> attachments = new ArrayList<Attachmants>();
-    private Integer importance;
+    private String type;
+    private List<Object> orders = new ArrayList<Object>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getId() {
@@ -34,14 +33,6 @@ public class EventBeanWS {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getTitle() {
@@ -132,12 +123,20 @@ public class EventBeanWS {
         this.attachments = attachments;
     }
 
-    public Integer getImportance() {
-        return importance;
+    public String getType() {
+        return type;
     }
 
-    public void setImportance(Integer importance) {
-        this.importance = importance;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<Object> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Object> orders) {
+        this.orders = orders;
     }
 
     public Map<String, Object> getAdditionalProperties() {
