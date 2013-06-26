@@ -20,20 +20,20 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-public class WSGetCommentaireByEvent {
+public class WSGetParticipantByEvent {
 
 	private int id;
 	private Context context;
-	private WSGetBase.GetCallback<List<CommentBeanWS>> callBack;
+	private WSGetBase.GetCallback<List<ParticipantsBeanWS>> callBack;
 
-	public WSGetCommentaireByEvent(Context context, int id, GetCallback<List<CommentBeanWS>> callBack) {
+	public WSGetParticipantByEvent(Context context, int id, GetCallback<List<ParticipantsBeanWS>> callBack) {
 
 		this.id = id;
 		this.context = context;
 		this.callBack = callBack;
 	}
 	
-	public List<CommentBeanWS> retreiveObject() {
+	public List<ParticipantsBeanWS> retreiveObject() {
 
 		if(!ConnectionManager.isOnline(context)) {
 			Toast.makeText(context, "Vous n'êtes pas connecté à internet.", Toast.LENGTH_SHORT).show();
@@ -41,7 +41,7 @@ public class WSGetCommentaireByEvent {
 		}
 		try {
 			HttpClient client =WSBase.createClient();
-			URI website = new URI(WSBase.URL_BASE + "api/events/" + id + "/comments.json");	
+			URI website = new URI(WSBase.URL_BASE + "api/events/" + id + "/participants.json");	
 
 			HttpGet request = new HttpGet();
 			String accessToken = PreferencesUtil.getCurrentAccessToken();
@@ -51,7 +51,7 @@ public class WSGetCommentaireByEvent {
 			String result = EntityUtils.toString(response.getEntity());
 			Log.d("WS",result);
 			ObjectMapper mapper = new ObjectMapper();
-			List<CommentBeanWS> myObjects = mapper.readValue(result, new TypeReference<List<CommentBeanWS>>(){});
+			List<ParticipantsBeanWS> myObjects = mapper.readValue(result, new TypeReference<List<ParticipantsBeanWS>>(){});
 
 			if(callBack != null) {
 				callBack.onGetObject(myObjects);

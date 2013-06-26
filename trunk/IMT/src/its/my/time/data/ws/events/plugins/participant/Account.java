@@ -1,20 +1,24 @@
 
 package its.my.time.data.ws.events.plugins.participant;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Author {
 
-    private String username;
+
+public class Account {
+
+    private List<Event> events = new ArrayList<Event>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public String getUsername() {
-        return username;
+    public List<Event> getEvents() {
+        return events;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public Map<String, Object> getAdditionalProperties() {
