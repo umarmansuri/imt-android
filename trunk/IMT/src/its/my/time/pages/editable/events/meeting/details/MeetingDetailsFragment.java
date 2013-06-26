@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 public class MeetingDetailsFragment extends DetailsFragment {
 
-	private static final String KEY_BUNDLE_ADDRESS = "KEY_BUNDLE_ADDRESS";
 	private EditText mEditAddress;
 	
 	@Override
@@ -38,14 +37,9 @@ public class MeetingDetailsFragment extends DetailsFragment {
 		}
 	}
 	
-	public void initialiseValuesFromEvent() {
+	public void refresh() {
+		super.refresh();
 		mEditAddress.setText(getParentActivity().getMeetingDetails().getAddress());
-		super.initialiseValuesFromEvent();
-	}
-
-	public void initialiseValueFromInstance() {
-		mEditAddress.setText(state.getString(KEY_BUNDLE_ADDRESS));
-		super.initialiseValueFromInstance();
 	}
 
 	@Override

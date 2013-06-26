@@ -123,6 +123,13 @@ public class ParticipantsFragment extends BasePluginFragment {
 	}
 
 	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	@Override
 	public void onResume() {
 		adapterContact = new ContactAdapter(getActivity());
 		mEditSearch.setAdapter(adapterContact);

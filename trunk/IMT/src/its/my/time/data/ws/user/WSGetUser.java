@@ -1,11 +1,11 @@
 package its.my.time.data.ws.user;
 
 import its.my.time.data.ws.WSGetBase;
-import android.app.Activity;
+import android.content.Context;
 
 public class WSGetUser extends WSGetBase<UtilisateurBeanWS>{
 
-	public WSGetUser(Activity context, int id, GetCallback<UtilisateurBeanWS> callBack) {
+	public WSGetUser(Context context, int id, GetCallback<UtilisateurBeanWS> callBack) {
 		super(context, id, callBack);
 	}
 

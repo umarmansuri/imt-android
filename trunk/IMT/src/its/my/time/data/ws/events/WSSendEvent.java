@@ -12,11 +12,11 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
+import android.content.Context;
 
 public class WSSendEvent extends WSPostBase<EventBaseBean>{
 
-	public WSSendEvent(Activity context, EventBaseBean event, PostCallback<EventBaseBean> callBack) {
+	public WSSendEvent(Context context, EventBaseBean event, PostCallback<EventBaseBean> callBack) {
 		super(context, event, callBack);
 	}
 
@@ -24,22 +24,10 @@ public class WSSendEvent extends WSPostBase<EventBaseBean>{
 	public String getUrl() {
 		return "api/events";
 	}
-
-	@Override
-	public EventBaseBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
+	
 	@Override
 	public BaseRepository<EventBaseBean> getRepository() {
 		return new EventBaseRepository(getContext());
-	}
-
-	@Override
-	public String getIdParam() {
-		return "imt_event_form_general_idEvent";
 	}
 	
 	@Override

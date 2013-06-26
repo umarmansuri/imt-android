@@ -19,7 +19,6 @@ import android.net.sip.SipAudioCall;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -27,13 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CallDetailsFragment extends DetailsFragment implements
-OnClickListener, OnCorrespondantChange {
-
-	private static final String KEY_BUNDLE_PHONE = "KEY_BUNDLE_PHONE";
-	private static final String KEY_BUNDLE_USER = "KEY_BUNDLE_USER";
-	private static final String KEY_BUNDLE_IDENTIFIANT = "KEY_BUNDLE_IDENTIFIANT";
-	private static final String KEY_BUNDLE_COUNT = "KEY_BUNDLE_COUNT";
+public class CallDetailsFragment extends DetailsFragment implements OnClickListener, OnCorrespondantChange {
 
 	private EditText mEditCorrespondant;
 	private Button mButtonCall;
@@ -104,14 +97,15 @@ OnClickListener, OnCorrespondantChange {
 		mButtonCall.setEnabled(false);
 	}
 
-	public void initialiseValuesFromEvent() {
+	public void refresh() {
+		super.refresh();
 		CallDetailsBean details = getParentActivity().getCallDetails();
 		user = details.getUser();
 		identifiant = details.getIdentifiant();
 		phone = details.getPhone();
 		duration = details.getDuration();
 		update();
-		super.initialiseValuesFromEvent();
+		super.refresh();
 	}
 
 	private CharSequence getDurationLabel(long duration) {
@@ -119,15 +113,6 @@ OnClickListener, OnCorrespondantChange {
 		calendar.add(Calendar.SECOND, (int) duration);
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("m'min' s's'");
 		return dateFormat.format(calendar.getTime());
-	}
-
-	public void initialiseValueFromInstance() {
-		user = state.getString(KEY_BUNDLE_USER);
-		identifiant = state.getString(KEY_BUNDLE_IDENTIFIANT);
-		phone = state.getString(KEY_BUNDLE_PHONE);
-		duration = state.getInt(KEY_BUNDLE_COUNT);
-		update();
-		super.initialiseValueFromInstance();
 	}
 
 	private void update() {

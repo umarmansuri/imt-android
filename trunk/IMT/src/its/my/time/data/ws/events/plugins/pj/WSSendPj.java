@@ -9,30 +9,17 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
-import android.app.Activity;
+import android.content.Context;
 
 public class WSSendPj extends WSPostBase<PjBean>{
 
-	public WSSendPj(Activity context, PjBean pj, PostCallback<PjBean> callBack) {
+	public WSSendPj(Context context, PjBean pj, PostCallback<PjBean> callBack) {
 		super(context, pj, callBack);
 	}
 
 	@Override
 	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PjBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public String getIdParam() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/api/attachment.json";
 	}
 	
 	@Override
@@ -41,10 +28,10 @@ public class WSSendPj extends WSPostBase<PjBean>{
 	}
 
 	@Override
-	public List<NameValuePair> intitialiseParams(
-			List<NameValuePair> nameValuePairs) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
+        //nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_allDay", String.valueOf(event.isAllDay())));
+
+        return nameValuePairs;
 	}
 
 }

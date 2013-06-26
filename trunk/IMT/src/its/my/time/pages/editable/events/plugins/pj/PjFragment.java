@@ -4,9 +4,9 @@ import its.my.time.R;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
+import its.my.time.util.PreferencesUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -35,12 +36,10 @@ public class PjFragment extends BasePluginFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final RelativeLayout mView = (RelativeLayout) inflater.inflate(
-				R.layout.activity_event_piecejointe, null);
+		final RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_piecejointe, null);
 		this.mListPj = (ListView) mView.findViewById(R.id.event_pj_liste);
-		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(),
-				false));
-
+		refresh(); 
+		
 		this.mButtonSend = (Button) mView.findViewById(R.id.event_pj_Btenvoi);
 
 		this.mButtonSend.setOnClickListener(new OnClickListener() {
@@ -66,6 +65,10 @@ public class PjFragment extends BasePluginFragment {
 	}
 
 	@Override
+	public void refresh() {
+		this.mListPj.setAdapter(new PjAdapter(getActivity(), getParentActivity().getEvent().getId(),false));	
+	}
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -76,15 +79,16 @@ public class PjFragment extends BasePluginFragment {
 				final String theFilePath = data.getData().getEncodedPath();
 				final String[] decoupeNom = theFilePath.split("/");
 
-				// TODO envoyer via ws
 				final PjBean pj = new PjBean();
 				pj.setName(decoupeNom[decoupeNom.length - 1]);
-				pj.setLink(theFilePath);
-				pj.setDate(Calendar.getInstance());
+				
+				final MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
+				final String ext = MimeTypeMap.getFileExtensionFromUrl(theFilePath);
+				String type = mimeMap.getMimeTypeFromExtension(ext);
+				
+				pj.setPath(theFilePath);
 				pj.setEid(getParentActivity().getEvent().getId());
-				// TODO utilisateur désactivé
-				// pj.setUid(PreferencesUtil.getCurrentUid(getActivity()));
-				pj.setUid(1);
+				pj.setUid(PreferencesUtil.getCurrentUid());
 				final long res = new PjRepository(getActivity()).insert(pj);
 				if (res < 0) {
 					Toast.makeText(getActivity(),
@@ -154,8 +158,7 @@ public class PjFragment extends BasePluginFragment {
 			if (this.pjs == null) {
 				this.pjs = new ArrayList<PjBean>();
 			}
-			this.pjs = new PjRepository(getActivity())
-					.getAllByEid(getParentActivity().getEvent().getId());
+			this.pjs = new PjRepository(getActivity()).getAllByEid(getParentActivity().getEvent().getId());
 		}
 
 		@Override
@@ -169,8 +172,7 @@ public class PjFragment extends BasePluginFragment {
 		@Override
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
-			final PjView view = new PjView(getActivity(),
-					this.pjs.get(position), this.isInEditMode);
+			final PjView view = new PjView(getActivity(),this.pjs.get(position), this.isInEditMode);
 			view.setOnDeleteClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

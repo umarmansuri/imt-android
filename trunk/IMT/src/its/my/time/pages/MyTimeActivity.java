@@ -51,16 +51,14 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if(true) {
-			menuItemMaj = menu.add("Mise à jour");
-			menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
-			mProgressBar = new ProgressBar(this);
-			mProgressBar.setIndeterminate(true);
-			menuItemMaj.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-			menuItemMaj.setOnMenuItemClickListener(this);
-			if(Calendar.getInstance().getTimeInMillis() - PreferencesUtil.getLastUpdate().getTimeInMillis() >= PreferencesUtil.getSynchroInterval() * 60 * 1000) {
-				onMajCalled();
-			}
+		menuItemMaj = menu.add("Mise à jour");
+		menuItemMaj.setIcon(R.drawable.ic_menu_refresh);
+		mProgressBar = new ProgressBar(this);
+		mProgressBar.setIndeterminate(true);
+		menuItemMaj.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		menuItemMaj.setOnMenuItemClickListener(this);
+		if(Calendar.getInstance().getTimeInMillis() - PreferencesUtil.getLastUpdate().getTimeInMillis() >= PreferencesUtil.getSynchroInterval() * 60 * 1000) {
+			onMajCalled();
 		}
 		return super.onCreateOptionsMenu(menu);		
 	}
@@ -75,17 +73,9 @@ public abstract class MyTimeActivity extends MenuActivity implements OnMenuItemC
 		}
 		return false;
 	}
-	
+
 	public void onMajCalled() {
 		menuItemMaj.setActionView(mProgressBar);
-
-		WSManager.updateAllData(MyTimeActivity.this, new Callback() {
-
-			@Override
-			public void done(Exception e) {
-				majFinished(e);
-			}
-		});
 	}
 
 	public final void majFinished(Exception e) {

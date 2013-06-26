@@ -8,24 +8,11 @@ import java.util.List;
 
 public class NoteBean extends PluginBaseBean{
 
-	private TableAttribut<String> name;
 	private TableAttribut<String> html;
-	private TableAttribut<Integer> uid;
 
 	public NoteBean() {
 		super();
-		this.name = new TableAttribut<String>("name", "");
 		this.html = new TableAttribut<String>("html", "");
-		this.uid = new TableAttribut<Integer>("uid", -1);
-	}
-
-
-	public String getName() {
-		return this.name.getValue();
-	}
-
-	public void setName(String name) {
-		this.name.setValue(name);
 	}
 
 	public String getHtml() {
@@ -36,19 +23,9 @@ public class NoteBean extends PluginBaseBean{
 		this.html.setValue(html);
 	}
 
-	public long getUid() {
-		return this.uid.getValue();
-	}
-
-	public void setUid(long uid) {
-		this.uid.setValue(uid);
-	}
-
 	@Override
 	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
-		list.add(name);
 		list.add(html);
-		list.add(uid);
 		return super.getAttributs(list);
 	}
 }

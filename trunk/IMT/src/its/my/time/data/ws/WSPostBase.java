@@ -60,12 +60,9 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 			return e;
 		}
 	}
-
-
-	public abstract String getIdParam();
+	
 	public abstract BaseRepository<T> getRepository();
 	public abstract String getUrl();
-	public abstract T createObjectFromJson(String json);
 	public abstract List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs);
 	
 	public interface PostCallback<T> extends Callback {

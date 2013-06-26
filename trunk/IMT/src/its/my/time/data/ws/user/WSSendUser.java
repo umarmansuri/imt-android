@@ -26,21 +26,9 @@ public class WSSendUser extends WSPostBase<UtilisateurBean>{
 		return "/api/user";
 	}
 	
-
-	@Override
-	public UtilisateurBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	@Override
 	public BaseRepository<UtilisateurBean> getRepository() {
 		return new UtilisateurRepository(getContext());
-	}
-
-	@Override
-	public String getIdParam() {
-		return null;
 	}
 	
 	@Override

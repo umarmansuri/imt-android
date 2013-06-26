@@ -1,18 +1,16 @@
 package its.my.time.data.ws.events.plugins.pj;
 
-import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.ws.WSGetBase;
-import android.app.Activity;
+import android.content.Context;
 
-public class WSGetPj extends WSGetBase<PjBean>{
+public class WSGetPj extends WSGetBase<PjBeanWS>{
 
-	public WSGetPj(Activity context, int id, GetCallback<PjBean> callBack) {
+	public WSGetPj(Context context, int id, GetCallback<PjBeanWS> callBack) {
 		super(context, id, callBack);
 	}
 
 	@Override
 	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/api/attachments/";
 	}
 }

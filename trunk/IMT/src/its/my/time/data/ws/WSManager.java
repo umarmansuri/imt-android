@@ -30,9 +30,12 @@ import its.my.time.data.ws.events.WSSendEvent;
 import its.my.time.data.ws.events.participating.Participating;
 import its.my.time.data.ws.events.participating.WSGetEventParticipating;
 import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
+import its.my.time.data.ws.events.plugins.note.WSGetNote;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
 import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
 import its.my.time.data.ws.events.plugins.participants.WSSendParticipant;
+import its.my.time.data.ws.events.plugins.pj.PjBeanWS;
+import its.my.time.data.ws.events.plugins.pj.WSGetPj;
 import its.my.time.data.ws.events.plugins.pj.WSSendPj;
 import its.my.time.data.ws.user.Account;
 import its.my.time.data.ws.user.UtilisateurBeanWS;
@@ -48,14 +51,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 
 
 @SuppressWarnings({ "unused" })
 public class WSManager {
 
-	private static Activity context;
+	private static Context context;
 	private static long uid;
 
 	private static UtilisateurRepository utilisateurRepo;
@@ -69,23 +71,8 @@ public class WSManager {
 	private static ParticipationRepository participationRepo;
 
 	public static void updateAllData(Context context, final Callback callback) {
-		try {
-			WSManager.context = (Activity) context;
-		} catch (Exception e) {}
-		utilisateurRepo = new UtilisateurRepository(context);
-		compteRepo = new CompteRepository(context);
-		eventRepo = new EventBaseRepository(context);
-		commentRepo = new CommentRepository(context);
-		pjRepo = new PjRepository(context);
-		odjRepo = new OdjRepository(context);
-		noteRepo = new NoteRepository(context);
-		participantRepo = new ParticipantRepository(context);
-		participationRepo = new ParticipationRepository(context);
-		uid = PreferencesUtil.getCurrentUid();
-
-
+		init(context);
 		WSLogin.checkConnexion(context, new Callback() {
-
 			@Override
 			public void done(Exception e) {
 				if(e == null) {
@@ -109,6 +96,22 @@ public class WSManager {
 		});
 
 
+	}
+
+
+
+	public static void init(Context context) {
+		WSManager.context = context;
+		utilisateurRepo = new UtilisateurRepository(context);
+		compteRepo = new CompteRepository(context);
+		eventRepo = new EventBaseRepository(context);
+		commentRepo = new CommentRepository(context);
+		pjRepo = new PjRepository(context);
+		odjRepo = new OdjRepository(context);
+		noteRepo = new NoteRepository(context);
+		participantRepo = new ParticipantRepository(context);
+		participationRepo = new ParticipationRepository(context);
+		uid = PreferencesUtil.getCurrentUid();
 	}
 
 
@@ -139,7 +142,6 @@ public class WSManager {
 		for (NoteBean note : notes) {
 			new WSSendNote(context, note, null).run();
 		}
-
 
 		List<OdjBean> odjs = odjRepo.getAllUpdatable();
 		for (OdjBean odj : odjs) {
@@ -202,57 +204,77 @@ public class WSManager {
 		}
 
 
+		List<Participating> participating =  new WSGetEventParticipating(context, uid, null).retreiveObject();
+		for (Participating parti : participating) {
+			retreiveEvent(parti.getIdEvent(), parti.getIdAccount(), false, comptes);
+		}
+
+		for (Event event : eventsWs) {
+			retreiveEvent(event.getId(), -1, true, comptes);
+		}
+	}
+
+
+	public static void retreiveEvent(int distanteId, int distanteAccountId, boolean isMine, SparseArray<CompteBean> comptes) {
+		
 		List<Participant> participantsWs = new ArrayList<Participant>();
 		List<Attachmants> attachementsWs = new ArrayList<Attachmants>();
 
-		List<Participating> participating =  new WSGetEventParticipating(context, uid, null).retreiveObject();
-		for (Participating parti : participating) {
-			new WSGetEvent(context, parti.getIdEvent(), null).retreiveObject();
-			EventBeanWS object = new WSGetEvent(context, parti.getIdEvent(), null).retreiveObject();
-
-			EventBaseBean eventBean = eventRepo.getByIdDistant(object.getId());
-			eventBean.setIdDistant(object.getId());
-			eventBean.setTitle(object.getTitle());
-			eventBean.sethDeb(DateUtil.getDateFromISO(object.getDate()));
-			eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
-			eventBean.setAllDay(object.getAll_day());
-			eventBean.setMine(false);
-			//TODO eventBean.setTypeId(Types.Event.getIdByLabel(object.get));
-			eventBean.setCid(comptes.get(parti.getIdAccount()).getId());
-			if(eventBean.getId() == -1) {
-				eventRepo.insert(eventBean);
-			} else {
-				eventRepo.update(eventBean);
-			}		
-			participantsWs.addAll(object.getParticipants());
-			attachementsWs.addAll(object.getAttachments());
-
-		}
 		
-		for (Event event : eventsWs) {
-			EventBeanWS object = new WSGetEvent(context, event.getId(), null).retreiveObject();
+		EventBeanWS eventObject = new WSGetEvent(context, distanteId, null).retreiveObject();
 
-			EventBaseBean eventBean = eventRepo.getByIdDistant(object.getId());
-			eventBean.setIdDistant(object.getId());
-			eventBean.setTitle(object.getTitle());
-			eventBean.sethDeb(DateUtil.getDateFromISO(object.getDate()));
-			eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
-			eventBean.setAllDay(object.getAll_day());
-			eventBean.setMine(true);
-			eventBean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
-			if(eventBean.getId() == -1) {
-				eventRepo.insert(eventBean);
-			} else {
-				eventRepo.update(eventBean);
-			}		
-			participantsWs.addAll(object.getParticipants());
-			attachementsWs.addAll(object.getAttachments());
+		EventBaseBean eventBean = eventRepo.getByIdDistant(eventObject.getId());
+		if(eventBean == null) {
+			eventBean = new EventBaseBean();
 		}
+		eventBean.setIdDistant(eventObject.getId());
+		eventBean.setTitle(eventObject.getTitle());
+		eventBean.sethDeb(DateUtil.getDateFromISO(eventObject.getDate()));
+		eventBean.sethFin(DateUtil.getDateFromISO(eventObject.getDate_fin()));
+		eventBean.setDetails(eventObject.getContent());
+		eventBean.setAllDay(eventObject.getAll_day());
+		eventBean.setMine(false);
+		eventBean.setTypeId(Types.Event.getIdByLabel(eventObject.getType()));
+		if(isMine) {
+			eventBean.setCid(comptes.get(eventObject.getAccounts().get(0).getId()).getId());
+		} else {
+			eventBean.setCid(comptes.get(distanteAccountId).getId());
+		}
+		if(eventBean.getId() == -1) {
+			eventRepo.insert(eventBean);
+		} else {
+			eventRepo.update(eventBean);
+		}		
+		participantsWs.addAll(eventObject.getParticipants());
+		attachementsWs.addAll(eventObject.getAttachments());
 
 
 		for (Attachmants attachmants : attachementsWs) {
+			PjBeanWS object = new WSGetPj(context, attachmants.getId(), null).retreiveObject();
 
+			PjBean pjbean = pjRepo.getByIdDistant(object.getId());
+			pjbean.setIdDistant(object.getId());
+			pjbean.setBase64(object.getFile_base64());
+			pjbean.setExtension(object.getExtension());
+			pjbean.setMime(object.getMime());
+			pjbean.setName(object.getName());
+			try {
+				int idEvent = eventRepo.getByIdDistant(object.getEvent().getId()).getId();
+				pjbean.setEid(idEvent);
+
+				int idUser = utilisateurRepo.getByIdDistant(object.getUser().getId()).getId();
+				pjbean.setUid(idUser);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if(pjbean.getId() == -1) {
+				pjbean.setId((int)pjRepo.insert(pjbean));
+			} else {
+				pjRepo.update(pjbean);
+			}		
 		}
+
 		for (Participant participant : participantsWs) {
 
 		}

@@ -13,6 +13,6 @@ public interface PluginFragment {
 	public abstract boolean isCancelable();
 	public abstract boolean isSavable();
 	public abstract String getTitle();
-
 	
+	public void refresh();
 }

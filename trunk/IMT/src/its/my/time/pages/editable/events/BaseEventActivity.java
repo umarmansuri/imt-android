@@ -1,12 +1,18 @@
 package its.my.time.pages.editable.events;
 
 import its.my.time.R;
+import its.my.time.data.bdd.compte.CompteBean;
+import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
+import its.my.time.data.ws.Callback;
+import its.my.time.data.ws.WSManager;
+import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.editable.BaseActivity;
 import its.my.time.pages.editable.events.plugins.PluginFragment;
 import its.my.time.util.ActivityUtil;
 import its.my.time.util.DateUtil;
+import its.my.time.util.PreferencesUtil;
 import its.my.time.util.Types;
 import its.my.time.view.ControledViewPager;
 import its.my.time.view.menu.MenuGroupe;
@@ -23,6 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.SparseArray;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -34,7 +41,7 @@ import com.fonts.mooncake.MooncakeIcone;
 public abstract class BaseEventActivity extends BaseActivity {
 
 	protected ControledViewPager mPager;
-	private static ArrayList<PluginFragment> fragments;
+	private ArrayList<PluginFragment> fragments;
 	private boolean isNew;
 	protected EventBaseBean event;
 	private MenuGroupe menuSuppression;
@@ -185,15 +192,11 @@ public abstract class BaseEventActivity extends BaseActivity {
 	
 	public PluginFragment getActiveFragment() {
 		if (this.mPager.getAdapter() instanceof FragmentStatePagerAdapter) {
-			final FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) this.mPager
-					.getAdapter();
-			return (PluginFragment) a.instantiateItem(this.mPager,
-					this.mPager.getCurrentItem());
+			final FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) this.mPager.getAdapter();
+			return (PluginFragment) a.instantiateItem(this.mPager,this.mPager.getCurrentItem());
 		} else {
-			final String name = makeFragmentName(this.mPager.getId(),
-					this.mPager.getCurrentItem());
-			return (PluginFragment) getSupportFragmentManager()
-					.findFragmentByTag(name);
+			final String name = makeFragmentName(this.mPager.getId(),this.mPager.getCurrentItem());
+			return (PluginFragment) getSupportFragmentManager().findFragmentByTag(name);
 		}
 	}
 
@@ -242,6 +245,45 @@ public abstract class BaseEventActivity extends BaseActivity {
 			}
 		}
 		return super.onBackButtonPressed();
+	}
+	
+	@Override
+	public void onMajCalled() {
+		super.onMajCalled();
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+				CompteRepository compteRepo = new CompteRepository(BaseEventActivity.this);
+				SparseArray<CompteBean> comptes = new SparseArray<CompteBean>(); 
+				for (CompteBean compte : compteRepo.getAllByUid(PreferencesUtil.getCurrentUid())) {
+					comptes.put(compte.getIdDistant(), compte);
+				}
+				WSManager.init(BaseEventActivity.this);
+				WSManager.retreiveEvent(getEvent().getIdDistant(), -1, true, comptes);
+				event = new EventBaseRepository(BaseEventActivity.this).getById(event.getId());
+				runOnUiThread(new Runnable() {
+					public void run() {
+						for (PluginFragment fragment : fragments) {
+							try {
+							fragment.refresh();
+							} catch (Exception e) {
+								
+							}
+						}
+						majFinished(null);
+					}
+				});
+				} catch (final Exception e) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							majFinished(e);
+						}
+					});
+				}
+			}
+		}).start();
 	}
 
 	public class EventPagerAdapter extends FragmentStatePagerAdapter {

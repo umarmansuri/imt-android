@@ -12,7 +12,6 @@ public class WSGetOdj extends WSGetBase<OdjBean>{
 
 	@Override
 	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/api/orders/";
 	}
 }

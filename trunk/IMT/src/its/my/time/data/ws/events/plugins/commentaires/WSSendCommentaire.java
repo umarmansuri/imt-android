@@ -9,28 +9,16 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
-import android.app.Activity;
+import android.content.Context;
 
 public class WSSendCommentaire extends WSPostBase<CommentBean>{
 
-	public WSSendCommentaire(Activity context, CommentBean coment, PostCallback<CommentBean> callBack) {
+	public WSSendCommentaire(Context context, CommentBean coment, PostCallback<CommentBean> callBack) {
 		super(context, coment, callBack);
 	}
 
 	@Override
 	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommentBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getIdParam() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -63,6 +63,7 @@ public abstract class WSGetBase<T> extends WSBase{
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());
+			Log.d("WS",result);
 			ObjectMapper mapper = new ObjectMapper();
 			T object = mapper.readValue(result, persistentClass);
 			if(callback != null) {
@@ -70,6 +71,7 @@ public abstract class WSGetBase<T> extends WSBase{
 			}
 			return object;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

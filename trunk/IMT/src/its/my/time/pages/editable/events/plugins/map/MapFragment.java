@@ -44,7 +44,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapFragment extends BasePluginMapFragment implements OnCheckedChangeListener, OnInfoWindowClickListener, OnMarkerClickListener{
 
-
 	private PolylineOptions currentRouteOptions;
 	private Polyline currentRoute;
 
@@ -101,6 +100,10 @@ public class MapFragment extends BasePluginMapFragment implements OnCheckedChang
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, locationListener);
 		}
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 100, locationListener);
+	}
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
 	}
 
 	@Override

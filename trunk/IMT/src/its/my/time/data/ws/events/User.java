@@ -1,18 +1,14 @@
 
-package its.my.time.data.ws.comptes;
+package its.my.time.data.ws.events;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 
-public class Contact {
+public class User {
 
     private Integer id;
-    private User user;
-    private List<Object> events = new ArrayList<Object>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getId() {
@@ -21,22 +17,6 @@ public class Contact {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Object> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Object> events) {
-        this.events = events;
     }
 
     public Map<String, Object> getAdditionalProperties() {

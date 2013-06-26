@@ -10,25 +10,20 @@ import java.util.List;
 public class PjBean extends PluginBaseBean{
 
 	private TableAttribut<String> name;
-	private TableAttribut<Calendar> date;
-	private TableAttribut<String> link;
+	private TableAttribut<String> base64;
+	private TableAttribut<String> extension;
+	private TableAttribut<String> mime;
+	private TableAttribut<String> path;
 	private TableAttribut<Long> uid;
 
 	public PjBean() {
 		super();
-		this.date = new TableAttribut<Calendar>("date", DateUtil.createCalendar());
 		this.name = new TableAttribut<String>("name", "");
-		this.link = new TableAttribut<String>("link", "");
+		this.extension = new TableAttribut<String>("extension", "");
+		this.base64 = new TableAttribut<String>("base64", "");
+		this.mime = new TableAttribut<String>("mime", "");
+		this.path = new TableAttribut<String>("path", "");
 		this.uid = new TableAttribut<Long>("uid", -1l);
-	}
-
-
-	public Calendar getDate() {
-		return this.date.getValue();
-	}
-
-	public void setDate(Calendar date) {
-		this.date.setValue(date);
 	}
 
 	public String getName() {
@@ -39,14 +34,41 @@ public class PjBean extends PluginBaseBean{
 		this.name.setValue(name);
 	}
 
-	public String getLink() {
-		return this.link.getValue();
+	public String getPath() {
+		return this.path.getValue();
 	}
 
-	public void setLink(String link) {
-		this.link.setValue(link);
+	public void setPath(String path) {
+		this.path.setValue(path);
 	}
 
+
+	public String getMime() {
+		return this.mime.getValue();
+	}
+
+	public void setMime(String mime) {
+		this.mime.setValue(mime);
+	}
+
+	
+	public String getBase64() {
+		return this.base64.getValue();
+	}
+
+	public void setBase64(String base64) {
+		this.base64.setValue(base64);
+	}
+
+	public String getExtension() {
+		return this.extension.getValue();
+	}
+
+	public void setExtension(String extension) {
+		this.extension.setValue(extension);
+	}
+
+	
 	public long getUid() {
 		return this.uid.getValue();
 	}
@@ -58,8 +80,10 @@ public class PjBean extends PluginBaseBean{
 	@Override
 	public List<TableAttribut<?>> getAttributs(List<TableAttribut<?>> list) {
 		list.add(name);
-		list.add(date);
-		list.add(link);
+		list.add(extension);
+		list.add(base64);
+		list.add(mime);
+		list.add(path);
 		list.add(uid);
 		return super.getAttributs(list);
 	}

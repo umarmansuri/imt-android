@@ -4,6 +4,7 @@ import its.my.time.R;
 import its.my.time.data.bdd.base.BaseRepository.OnObjectChangedListener;
 import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
+import its.my.time.data.ws.Callback;
 import its.my.time.data.ws.WSManager;
 import its.my.time.pages.MyTimeActivity;
 import its.my.time.pages.calendar.base.BasePagerAdapter;
@@ -401,5 +402,17 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	@Override
 	public boolean isUpdatable() {
 		return false;
+	}
+	
+	@Override
+	public void onMajCalled() {
+		super.onMajCalled();
+		WSManager.updateAllData(CalendarActivity.this, new Callback() {
+
+			@Override
+			public void done(Exception e) {
+				majFinished(e);
+			}
+		});
 	}
 }

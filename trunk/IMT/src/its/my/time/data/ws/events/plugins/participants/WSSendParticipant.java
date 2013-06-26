@@ -11,11 +11,11 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
+import android.content.Context;
 
 public class WSSendParticipant extends WSPostBase<ParticipantBean>{
 
-	public WSSendParticipant(Activity context, ParticipantBean participant, PostCallback<ParticipantBean> callBack) {
+	public WSSendParticipant(Context context, ParticipantBean participant, PostCallback<ParticipantBean> callBack) {
 		super(context, participant, callBack);
 	}
 
@@ -25,19 +25,8 @@ public class WSSendParticipant extends WSPostBase<ParticipantBean>{
 	}
 
 	@Override
-	public ParticipantBean createObjectFromJson(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public BaseRepository<ParticipantBean> getRepository() {
 		return new ParticipantRepository(getContext());
-	}
-	
-	@Override
-	public String getIdParam() {
-		return "idParticipant";
 	}
 	
 	@Override

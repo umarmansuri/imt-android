@@ -16,18 +16,23 @@
 package its.my.time.receivers;
 
 import its.my.time.Consts;
+import its.my.time.data.bdd.compte.CompteBean;
 import its.my.time.data.bdd.compte.CompteRepository;
 import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
+import its.my.time.data.ws.WSManager;
 import its.my.time.data.ws.events.EventBeanWS;
 import its.my.time.data.ws.events.WSGetEvent;
 import its.my.time.util.DateUtil;
+import its.my.time.util.PreferencesUtil;
+import its.my.time.util.Types;
 
 import java.util.Calendar;
 
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.util.SparseArray;
 
 import com.google.android.gcm.GCMBaseIntentService;
 //import android.util.Log;
@@ -60,25 +65,13 @@ public class GCMIntentService extends GCMBaseIntentService {
 	}
 
 	private void retreiveEvent(Context context, int id) {
-		EventBaseRepository eventRepo = new EventBaseRepository(context);
 		CompteRepository compteRepo = new CompteRepository(context);
-		EventBeanWS object = new WSGetEvent(context, id, null).retreiveObject();
-
-		EventBaseBean eventBean = eventRepo.getByIdDistant(object.getId());
-		eventBean.setIdDistant(object.getId());
-		eventBean.setTitle(object.getTitle());
-		eventBean.sethDeb(DateUtil.getDateFromISO(object.getDate()));
-		eventBean.sethFin(DateUtil.getDateFromISO(object.getDate_fin()));
-		eventBean.setAllDay(object.getAll_day());
-		eventBean.setMine(true);
-		//TODO eventBean.setTypeId(Types.Event.getIdByLabel(object.get));
-		eventBean.setCid(compteRepo.getByIdDistant(object.getAccounts().get(0).getId()).getId());
-		if(eventBean.getId() == -1) {
-			eventRepo.insert(eventBean);
-		} else {
-			eventRepo.update(eventBean);
-		}		
-
+		SparseArray<CompteBean> comptes = new SparseArray<CompteBean>(); 
+		for (CompteBean compte : compteRepo.getAllByUid(PreferencesUtil.getCurrentUid())) {
+			comptes.put(compte.getIdDistant(), compte);
+		}
+		WSManager.init(context);
+		WSManager.retreiveEvent(id, -1, true, comptes);
 	}
 
 	@Override protected void onError(Context arg0, String arg1) {}
