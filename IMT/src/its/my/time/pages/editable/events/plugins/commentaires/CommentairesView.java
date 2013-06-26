@@ -24,8 +24,8 @@ public class CommentairesView extends EditableLittleView {
 
 	private void initialiseDetails() {
 		super.initialiseValues();
-		((TextView) findViewById(R.id.event_comment_date)).setVisibility(View.GONE);
-		((TextView) findViewById(R.id.event_comment_comments))
-				.setText(this.comment.getComment());
+		((TextView) findViewById(R.id.event_comment_date)).setText(DateUtil.getLongDateTime(this.comment.getDate()));
+		((TextView) findViewById(R.id.event_comment_comments)).setText(this.comment.getComment());
+		((TextView) findViewById(R.id.event_comment_owner)).setText(this.comment.getAuthor());
 	}
 }

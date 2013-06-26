@@ -29,15 +29,14 @@ import its.my.time.data.ws.events.WSGetEvent;
 import its.my.time.data.ws.events.WSSendEvent;
 import its.my.time.data.ws.events.participating.Participating;
 import its.my.time.data.ws.events.participating.WSGetEventParticipating;
-import its.my.time.data.ws.events.plugins.commentaires.CommentBeanWS;
-import its.my.time.data.ws.events.plugins.commentaires.CommentBeanWS;
-import its.my.time.data.ws.events.plugins.commentaires.WSGetCommentaireByEvent;
-import its.my.time.data.ws.events.plugins.commentaires.WSSendCommentaire;
+import its.my.time.data.ws.events.plugins.commentaire.CommentBeanWS;
+import its.my.time.data.ws.events.plugins.commentaire.WSGetCommentaireByEvent;
+import its.my.time.data.ws.events.plugins.commentaire.WSSendCommentaire;
 import its.my.time.data.ws.events.plugins.note.NoteBeanWS;
 import its.my.time.data.ws.events.plugins.note.WSGetNote;
 import its.my.time.data.ws.events.plugins.note.WSSendNote;
 import its.my.time.data.ws.events.plugins.odj.WSSendOdj;
-import its.my.time.data.ws.events.plugins.participants.WSSendParticipant;
+import its.my.time.data.ws.events.plugins.participation.WSSendParticipation;
 import its.my.time.data.ws.events.plugins.pj.PjBeanWS;
 import its.my.time.data.ws.events.plugins.pj.WSGetPj;
 import its.my.time.data.ws.events.plugins.pj.WSSendPj;
@@ -162,7 +161,7 @@ public class WSManager {
 
 		List<ParticipantBean> participants = participantRepo.getAllUpdatable();
 		for (ParticipantBean participant : participants) {
-			new WSSendParticipant(context, participant, null).run();
+			new WSSendParticipation(context, participant, null).run();
 		}
 
 
@@ -318,6 +317,8 @@ public class WSManager {
 			commentBean.setEid(eventBean.getId());
 			commentBean.setComment(object.getBody());
 			commentBean.setDateSync(Calendar.getInstance());
+			commentBean.setDate(DateUtil.getDateFromISO(object.getCreatedAt()));
+			commentBean.setAuthor(object.getAuthor().getUsername());
 			if(commentBean.getId() == 0) {
 				commentBean.setId((int)commentRepo.insert(commentBean));
 			} else {
