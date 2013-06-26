@@ -176,6 +176,7 @@ public class WSManager {
 		bean .setIdDistant(user.getId());
 		bean.setNom(user.getUsername());
 		bean.setMail(user.getEmail());
+		bean.setDateSync(Calendar.getInstance());
 		if(bean.getId() == -1) {
 			utilisateurRepo.insert(bean);
 		} else {
@@ -193,6 +194,7 @@ public class WSManager {
 				comtpeBean.setColor(object.getColor());
 				comtpeBean.setShowed(true);
 				comtpeBean.setUid(uid);
+				comtpeBean.setDateSync(Calendar.getInstance());
 				if(comtpeBean.getId() == -1) {
 					comtpeBean.setId((int)compteRepo.insert(comtpeBean));
 				} else {
@@ -235,16 +237,36 @@ public class WSManager {
 		eventBean.setAllDay(eventObject.getAll_day());
 		eventBean.setMine(false);
 		eventBean.setTypeId(Types.Event.getIdByLabel(eventObject.getType()));
+		eventBean.setDateSync(Calendar.getInstance());
 		if(isMine) {
 			eventBean.setCid(comptes.get(eventObject.getAccounts().get(0).getId()).getId());
 		} else {
 			eventBean.setCid(comptes.get(distanteAccountId).getId());
 		}
 		if(eventBean.getId() == -1) {
-			eventRepo.insert(eventBean);
+			eventBean.setId((int)eventRepo.insert(eventBean));
 		} else {
 			eventRepo.update(eventBean);
+		}
+		if(eventBean.getTypeId() == Types.Event.MEETING) {
+			String noteVal = new WSGetNote(context, eventBean.getIdDistant(), null).retreiveObject();
+			List<NoteBean> notes = noteRepo.getAllByEid(eventBean.getId());
+			NoteBean note = null;
+			if(notes == null || notes.size() == 0) {
+				note = new NoteBean();
+			} else {
+				note = notes.get(0);
+			}
+			note.setEid(eventBean.getId());
+			note.setHtml(noteVal);
+			note.setDateSync(Calendar.getInstance());
+			if(note.getId() == -1) {
+				note.setId((int)noteRepo.insert(note));
+			} else {
+				noteRepo.update(note);
+			}
 		}		
+		
 		participantsWs.addAll(eventObject.getParticipants());
 		attachementsWs.addAll(eventObject.getAttachments());
 
@@ -258,6 +280,7 @@ public class WSManager {
 			pjbean.setExtension(object.getExtension());
 			pjbean.setMime(object.getMime());
 			pjbean.setName(object.getName());
+			pjbean.setDateSync(Calendar.getInstance());
 			try {
 				int idEvent = eventRepo.getByIdDistant(object.getEvent().getId()).getId();
 				pjbean.setEid(idEvent);

@@ -7,12 +7,15 @@ import its.my.time.data.ws.WSPostBase;
 import its.my.time.util.DateUtil;
 import its.my.time.util.Types;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 public class WSSendEvent extends WSPostBase<EventBaseBean>{
 
@@ -31,19 +34,19 @@ public class WSSendEvent extends WSPostBase<EventBaseBean>{
 	}
 	
 	@Override
-	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
+	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs){
 		EventBaseBean event = getObject();
 		
 		if(event.getDateSync().equals(DateUtil.createCalendar())) {
 	        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_idEvent", String.valueOf(0)));
 		} else {
-	        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_idEvent", String.valueOf(event.getId())));
+	        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_idEvent", String.valueOf(event.getIdDistant())));
 		}
 		
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_title", event.getTitle()));
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_content", event.getDetails()));
-        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_date", String.valueOf(event.gethDeb().getTimeInMillis())));
-        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_dateEnd", String.valueOf(event.gethFin().getTimeInMillis())));
+        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_date", DateUtil.getTimeInIso(event.gethDeb())));
+        nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_dateFin", DateUtil.getTimeInIso(event.gethFin())));
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_allDay", String.valueOf(event.isAllDay())));
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_account", String.valueOf(event.getCid())));
         nameValuePairs.add(new BasicNameValuePair("imt_event_form_general_importance", "0"));
