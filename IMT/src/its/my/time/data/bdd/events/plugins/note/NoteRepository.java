@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.database.Cursor;
 
 public class NoteRepository extends PluginBaseRepository<NoteBean> {
 	
@@ -18,16 +17,6 @@ public class NoteRepository extends PluginBaseRepository<NoteBean> {
 	public String getTableName() {
 		return "note";
 	}
-
-	public NoteBean getByUidEid(int eid, long uid) {
-		open();
-		Cursor c = this.db.query(getTableName(), getAllAttr(), 
-				"eid =? AND uid=?", new String[] { String.valueOf(eid) , String.valueOf(uid)}, null, null, null);
-		NoteBean res = convertCursorToOneObject(c);
-		close();
-		return res;
-	}
-
 
 	protected void objectAdded(NoteBean object) {
 		for (OnObjectChangedListener<NoteBean> listener: onObjectChangedListeners) {

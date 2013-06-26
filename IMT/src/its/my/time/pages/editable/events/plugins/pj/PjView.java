@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -50,9 +51,13 @@ public class PjView extends EditableLittleView {
 					os.write(pdfAsBytes);
 					os.flush();
 					os.close();
-
+					
+					final MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
+					final String ext = MimeTypeMap.getFileExtensionFromUrl(filePath.getAbsolutePath());
+					String type = mimeMap.getMimeTypeFromExtension(ext);
+					
 					final Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setDataAndType(Uri.fromFile(filePath), pj.getMime());
+					intent.setDataAndType(Uri.fromFile(filePath), type);
 					getContext().startActivity(intent);
 				} catch (Exception e) {
 					e.printStackTrace();

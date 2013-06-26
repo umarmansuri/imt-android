@@ -6,6 +6,9 @@ import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
 import its.my.time.util.PreferencesUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,7 +43,7 @@ public class PjFragment extends BasePluginFragment {
 		final RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.activity_event_piecejointe, null);
 		this.mListPj = (ListView) mView.findViewById(R.id.event_pj_liste);
 		refresh(); 
-		
+
 		this.mButtonSend = (Button) mView.findViewById(R.id.event_pj_Btenvoi);
 
 		this.mButtonSend.setOnClickListener(new OnClickListener() {
@@ -80,13 +84,29 @@ public class PjFragment extends BasePluginFragment {
 				final String[] decoupeNom = theFilePath.split("/");
 
 				final PjBean pj = new PjBean();
-				pj.setName(decoupeNom[decoupeNom.length - 1]);
-				
+
 				final MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
 				final String ext = MimeTypeMap.getFileExtensionFromUrl(theFilePath);
 				String type = mimeMap.getMimeTypeFromExtension(ext);
-				
+
 				pj.setPath(theFilePath);
+				pj.setName(decoupeNom[decoupeNom.length - 1]);
+
+				try {
+					FileInputStream mFileInputStream = new FileInputStream(theFilePath);
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					byte[] b = new byte[1024];
+					int bytesRead = 0;
+					while ((bytesRead = mFileInputStream.read(b)) != -1) {
+						bos.write(b, 0, bytesRead);
+					}
+					byte[] ba = bos.toByteArray();
+					pj.setBase64(Base64.encodeToString(ba, 0));		
+					pj.setMime(ext);
+					mFileInputStream.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				pj.setEid(getParentActivity().getEvent().getId());
 				pj.setUid(PreferencesUtil.getCurrentUid());
 				final long res = new PjRepository(getActivity()).insert(pj);
@@ -99,8 +119,8 @@ public class PjFragment extends BasePluginFragment {
 						getParentActivity().getEvent().getId(), false));
 			}
 		}
-			;
-			break;
+		;
+		break;
 		}
 	}
 

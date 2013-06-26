@@ -1,11 +1,11 @@
 package its.my.time.data.ws.events.plugins.note;
 
 import its.my.time.data.ws.WSGetBase;
-import android.app.Activity;
+import android.content.Context;
 
 public class WSGetNote extends WSGetBase<String>{
 
-	public WSGetNote(Activity context, int id, GetCallback<String> callBack) {
+	public WSGetNote(Context context, int id, GetCallback<String> callBack) {
 		super(context, id, callBack);
 	}
 

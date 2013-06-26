@@ -174,7 +174,7 @@ public abstract class BaseFragment extends SherlockFragment{
 					if(!alreadyDone.contains(v)) {
 						alreadyDone.add(v);
 						activity.runOnUiThread(new Runnable() {
-							
+
 							@Override
 							public void run() {
 								new Handler().postDelayed(new Runnable() {
@@ -227,7 +227,7 @@ public abstract class BaseFragment extends SherlockFragment{
 		super.onAttach(activity);
 		this.activity = activity;
 	}
-	
+
 	private OnObjectChangedListener<EventBaseBean> onEventChangedListener = new OnObjectChangedListener<EventBaseBean>() {
 		@Override public void onObjectAdded(final EventBaseBean object) {
 			if(object.gethDeb().before(calFin) || object.gethFin().after(calDeb)) {
@@ -235,13 +235,17 @@ public abstract class BaseFragment extends SherlockFragment{
 
 					@Override
 					public void run() {
-						CompteBean compte = comptes.get(object.getCid());
-						int visibility = compte.isShowed() ? View.VISIBLE : View.INVISIBLE;
-						final View v = baseView.addEvent(object, compte.getColor(), visibility 	);
-						events.put(object.getId(), object);
-						eventViews.put(object.getId(), v);
-						if(compte.isShowed()) {
-							showView(v, true);
+						try {
+							CompteBean compte = comptes.get(object.getCid());
+							int visibility = compte.isShowed() ? View.VISIBLE : View.INVISIBLE;
+							final View v = baseView.addEvent(object, compte.getColor(), visibility 	);
+							events.put(object.getId(), object);
+							eventViews.put(object.getId(), v);
+							if(compte.isShowed()) {
+								showView(v, true);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 					}
 				});

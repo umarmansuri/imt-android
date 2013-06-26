@@ -3,7 +3,6 @@ package its.my.time.pages.editable.events.plugins.note;
 import its.my.time.data.bdd.events.plugins.note.NoteBean;
 import its.my.time.data.bdd.events.plugins.note.NoteRepository;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
-import its.my.time.util.PreferencesUtil;
 import its.my.time.view.WebviewDisabled;
 import android.content.Context;
 import android.os.Bundle;
@@ -59,11 +58,15 @@ public class NoteFragment extends BasePluginFragment {
 	@Override
 	public void refresh() {
 		int eid = getParentActivity().getEvent().getId();
-		long uid = PreferencesUtil.getCurrentUid();
 
 		noteRepo = new NoteRepository(getActivity());
-		noteBean = noteRepo.getByUidEid(eid, uid);
-
+		try {
+		noteBean = noteRepo.getAllByEid(eid).get(0);
+		} catch (Exception e) {
+			noteBean = new NoteBean();
+		}
+		
+		
 		if(noteBean.getEid() < 0) {
 			noteBean = new NoteBean();
 			noteBean.setEid(eid);
