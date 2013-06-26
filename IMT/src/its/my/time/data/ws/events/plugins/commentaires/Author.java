@@ -6,15 +6,15 @@ import java.util.Map;
 
 public class Author {
 
-    private Integer id;
+    private String username;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public Integer getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Map<String, Object> getAdditionalProperties() {
