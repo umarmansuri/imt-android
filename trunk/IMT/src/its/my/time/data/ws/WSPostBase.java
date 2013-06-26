@@ -14,6 +14,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
@@ -52,17 +53,7 @@ public abstract class WSPostBase<T extends BaseBean> extends WSBase{
 			request.setHeader("Authorization", "Bearer "+accessToken);
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 			nameValuePairs = intitialiseParams(nameValuePairs);
-			
-			List<NameValuePair> nameValuePairsFinal = new ArrayList<NameValuePair>(2);
-			for (NameValuePair nameValuePair : nameValuePairs) {
-				try {
-					Integer.parseInt(nameValuePair.getValue());
-					nameValuePairsFinal.add(new BasicNameValuePair(nameValuePair.getName(),nameValuePair.getValue()));
-				} catch (Exception e) {
-					nameValuePairsFinal.add(new BasicNameValuePair(nameValuePair.getName(),TextUtils.htmlEncode(nameValuePair.getValue())));	
-				}
-			}
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairsFinal));
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
 			request.setURI(website);
 			HttpResponse response = client.execute(request);
 			String result = EntityUtils.toString(response.getEntity());

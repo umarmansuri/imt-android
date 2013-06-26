@@ -13,6 +13,7 @@ public class CompteBeanWS {
     private Integer id;
     private String title;
     private String color;
+    private String type;
     private Boolean active;
     private User user;
     private List<Contact> contacts = new ArrayList<Contact>();
@@ -46,7 +47,15 @@ public class CompteBeanWS {
     public Boolean getActive() {
         return active;
     }
+    
+    public String getType() {
+		return type;
+	}
 
+    public void setType(String type) {
+		this.type = type;
+	}
+    
     public void setActive(Boolean active) {
         this.active = active;
     }

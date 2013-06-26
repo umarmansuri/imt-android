@@ -194,6 +194,7 @@ public class WSManager {
 				comtpeBean.setColor(object.getColor());
 				comtpeBean.setShowed(true);
 				comtpeBean.setUid(uid);
+				comtpeBean.setType(Types.Comptes.getIdFromLabel(object.getType()));
 				comtpeBean.setDateSync(Calendar.getInstance());
 				if(comtpeBean.getId() == -1) {
 					comtpeBean.setId((int)compteRepo.insert(comtpeBean));
