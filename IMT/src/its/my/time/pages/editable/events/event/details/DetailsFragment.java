@@ -7,9 +7,7 @@ import its.my.time.data.bdd.events.event.EventBaseBean;
 import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationBean;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
-import its.my.time.pages.editable.events.event.EventActivity;
 import its.my.time.pages.editable.events.plugins.BasePluginFragment;
-import its.my.time.util.DateUtil;
 import its.my.time.util.PreferencesUtil;
 import its.my.time.util.ViewUtil;
 import its.my.time.view.Switcher;
@@ -22,14 +20,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,7 +120,11 @@ public class DetailsFragment extends BasePluginFragment {
 	}
 
 	public void refresh() {
-		mTextTitle.setText(getParentActivity().getEvent().getTitle());
+		String title = getParentActivity().getEvent().getTitle();
+		if(title == null || title == "" || title.equals("")) {
+			title = getTitle();
+		}
+		mTextTitle.setText(title);
 		mTextJourDeb.setDate(getParentActivity().getEvent().gethDeb());
 		mTextHeureDeb.setDate(getParentActivity().getEvent().gethDeb());
 		mTextJourFin = (DateButton) view.findViewById(R.id.activity_event_details_text_dfin);
@@ -282,7 +278,12 @@ public class DetailsFragment extends BasePluginFragment {
 				mTextHeureFin.getDate().get(Calendar.HOUR_OF_DAY),
 				mTextHeureFin.getDate().get(Calendar.MINUTE));
 		getParentActivity().getEvent().sethFin(cal);
-		getParentActivity().getEvent().setTitle(mTextTitle.getText().toString());
+		
+		String title = mTextTitle.getText().toString();
+		if(title == null || title == "" || title.equals("")) {
+			title =" ";
+		}
+		getParentActivity().getEvent().setTitle(title);
 		if(getParentActivity().getEvent().getId() == 0) {
 			getParentActivity().getEvent().setId((int) new EventBaseRepository(getActivity()).insert(getParentActivity().getEvent()));
 			participationBean.setEid(getParentActivity().getEvent().getId());
@@ -291,36 +292,6 @@ public class DetailsFragment extends BasePluginFragment {
 			new EventBaseRepository(getActivity()).update(getParentActivity().getEvent());
 			participationRepo.update(participationBean);		
 		}
-
-		/*Calendar calendar = new GregorianCalendar();
-		calendar = Calendar.getInstance();
-		calendar.add(calendar.SECOND, 15);
-		Date date = new Date();
-		date = calendar.getTime();
-
-		TimerTask task = new TimerTask() {
-
-				public void run() {
-					NotifManager.generateNotification(getActivity(), "test notif", getParentActivity().getEvent().getId());
-				}
-		};
-		Timer t = new Timer();
-		t.schedule(task, date); */
-
-		NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-		Calendar calendar = Calendar.getInstance();
-		Calendar calendar2 = Calendar.getInstance();
-		calendar2.add(Calendar.MINUTE, 1);
-		long laps = calendar2.getTimeInMillis() - calendar.getTimeInMillis();
-		Notification notification = new Notification(R.drawable.ic_launcher,"Rappel événement", laps);
-		String title = getActivity().getString(R.string.app_name);
-		Intent notificationIntent = new Intent(getActivity(),EventActivity.class);
-		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		PendingIntent intent = PendingIntent.getActivity(getActivity(), 0,notificationIntent, 0);
-		notification.setLatestEventInfo(getActivity(), title, getParentActivity().getEvent().getTitle()+" - "+getParentActivity().getEvent().getDetails()+" - "+getParentActivity().getEvent().gethDeb()+ "-"+getParentActivity().getEvent().gethFin(), intent);
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		notificationManager.notify(0, notification);
-
 		super.launchSave();
 	};
 

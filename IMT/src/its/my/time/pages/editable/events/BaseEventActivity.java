@@ -11,8 +11,8 @@ import its.my.time.data.bdd.events.plugins.note.NoteBean;
 import its.my.time.data.bdd.events.plugins.note.NoteRepository;
 import its.my.time.data.bdd.events.plugins.odj.OdjBean;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
-import its.my.time.data.bdd.events.plugins.participant.ParticipantBean;
-import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
+import its.my.time.data.bdd.events.plugins.participation.ParticipationBean;
+import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjBean;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.ws.WSManager;
@@ -300,8 +300,8 @@ public abstract class BaseEventActivity extends BaseActivity {
 						new WSSendOdj(BaseEventActivity.this, odj, null).run();
 					}
 					
-					List<ParticipantBean> participants = new ParticipantRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
-					for (ParticipantBean participant : participants) {
+					List<ParticipationBean> participants = new ParticipationRepository(BaseEventActivity.this).getAllpdatableByEid(event.getId());
+					for (ParticipationBean participant : participants) {
 						new WSSendParticipation(BaseEventActivity.this, participant, null).run();
 					}
 

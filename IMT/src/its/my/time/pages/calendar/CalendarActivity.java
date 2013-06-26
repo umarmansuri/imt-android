@@ -72,7 +72,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 	private MenuObjet menuAgendaJour;
 	private MenuObjet menuAgendaMois;
 
-	private MenuObjet menuAgendaListe;
 
 	private SparseBooleanArray accountVisibility;
 
@@ -177,8 +176,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		donnees.add(menuAgendaJour);
 		menuAgendaMois = new MenuObjet(menuAgenda, "Mois",MooncakeIcone.icon_calendar_month);
 		donnees.add(menuAgendaMois);
-		menuAgendaListe = new MenuObjet(menuAgenda, "Liste",MooncakeIcone.icon_list_2);
-		donnees.add(menuAgendaListe);
 		menuAgenda.setObjets(donnees);
 		menuGroupes.add(menuAgenda);
 
@@ -253,12 +250,6 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 			} else {
 				new ChangePageTask().execute(INDEX_MENU_AGENDA_MONTH);
 			}
-		} else if (objet == menuAgendaListe) {	
-			if (this.indexCurrentPager == INDEX_MENU_AGENDA_LISTE) {
-				Toast.makeText(this, "Vous êtes déjà en vue liste!",Toast.LENGTH_SHORT).show();
-			} else {
-				new ChangePageTask().execute(INDEX_MENU_AGENDA_LISTE);
-			}
 		}
 		super.onMenuChildClick(parent, group, objet, id);
 
@@ -324,6 +315,12 @@ public class CalendarActivity extends MyTimeActivity implements OnPageChangeList
 		reload();
 	}
 
+	@Override
+	protected void reload() {
+		super.reload();
+		new ChangePageTask().execute(this.indexCurrentPager);
+	}
+	
 	private void changeTitle(final String title) {
 		runOnUiThread(new Runnable() {
 			@Override
