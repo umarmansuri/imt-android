@@ -4,12 +4,11 @@ package its.my.time.data.ws.events.plugins.participant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommentBeanWS {
+
+
+public class Event {
 
     private Integer id;
-    private String body;
-    private Author author;
-    private String createdAt;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getId() {
@@ -18,30 +17,6 @@ public class CommentBeanWS {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Map<String, Object> getAdditionalProperties() {

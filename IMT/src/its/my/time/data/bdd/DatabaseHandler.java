@@ -7,7 +7,6 @@ import its.my.time.data.bdd.events.event.EventBaseRepository;
 import its.my.time.data.bdd.events.plugins.comment.CommentRepository;
 import its.my.time.data.bdd.events.plugins.note.NoteRepository;
 import its.my.time.data.bdd.events.plugins.odj.OdjRepository;
-import its.my.time.data.bdd.events.plugins.participant.ParticipantRepository;
 import its.my.time.data.bdd.events.plugins.participation.ParticipationRepository;
 import its.my.time.data.bdd.events.plugins.pj.PjRepository;
 import its.my.time.data.bdd.utilisateur.UtilisateurRepository;
@@ -57,7 +56,6 @@ public class DatabaseHandler {
 			db.execSQL(new CompteRepository(context).getCreateRequest());
 			db.execSQL(new EventBaseRepository(context).getCreateRequest());		
 			db.execSQL(new CommentRepository(context).getCreateRequest());
-			db.execSQL(new ParticipantRepository(context).getCreateRequest());		
 			db.execSQL(new PjRepository(context).getCreateRequest());
 			db.execSQL(new OdjRepository(context).getCreateRequest());		
 			db.execSQL(new NoteRepository(context).getCreateRequest());		
