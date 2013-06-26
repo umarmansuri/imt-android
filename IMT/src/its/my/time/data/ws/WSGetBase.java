@@ -29,7 +29,7 @@ public abstract class WSGetBase<T> extends WSBase{
 	}
 
 	@Override
-	protected Exception run() {
+	public String run() {
 		if(retreiveObject() != null){
 			return null;
 		} else {

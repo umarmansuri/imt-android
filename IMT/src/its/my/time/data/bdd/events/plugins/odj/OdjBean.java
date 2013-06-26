@@ -14,7 +14,7 @@ public class OdjBean extends PluginBaseBean{
 	public OdjBean() {
 		super();
 		this.value = new TableAttribut<String>("val", "");
-		this.order = new TableAttribut<Integer>("ordre", -1);
+		this.order = new TableAttribut<Integer>("ordre", 0);
 		this.state = new TableAttribut<Integer>("state", 0);
 	}
 

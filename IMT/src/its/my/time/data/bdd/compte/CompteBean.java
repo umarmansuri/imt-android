@@ -17,9 +17,9 @@ public class CompteBean extends BaseBean{
 		super();
 		title = new TableAttribut<String>("title", "");
 		color = new TableAttribut<String>("color", "fc-event-orange");
-		type = new TableAttribut<Integer>("type", -1);
+		type = new TableAttribut<Integer>("type", 0);
 		isShowed = new TableAttribut<Integer>("isShowed", 0);
-		uid = new TableAttribut<Long>("uid", -1l);
+		uid = new TableAttribut<Long>("uid", 0l);
 	}
 
 	public String getTitle() {

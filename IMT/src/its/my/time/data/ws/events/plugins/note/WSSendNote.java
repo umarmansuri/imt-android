@@ -22,7 +22,7 @@ public class WSSendNote extends WSPostBase<NoteBean>{
 
 	@Override
 	public String getUrl() {
-		return "/api/note.json";
+		return "/api/note";
 	}
 
 	@Override

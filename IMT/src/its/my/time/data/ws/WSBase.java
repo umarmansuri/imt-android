@@ -93,13 +93,17 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 		WSLogin.checkConnexion(context, new Callback() {			
 			@Override
 			public void done(Exception e) {
-				final Exception exception = run();
+				final String string = run();
 				if(callBack != null) {
 					try {
 						((Activity)context).runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								callBack.done(exception);
+								if(string == null) {
+									callBack.done(new Exception());
+								} else {
+									callBack.done(null);
+								}
 							}
 						});
 
@@ -110,7 +114,7 @@ public abstract class WSBase extends AsyncTask<Void, Void, Void>{
 		return null;
 	}
 
-	protected abstract Exception run();
+	public abstract String run();
 
 }
 

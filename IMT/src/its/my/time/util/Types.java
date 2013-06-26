@@ -15,7 +15,7 @@ public class Types {
 		public static String getLabelById(int id) {
 			if(id==BASE) return "event";
 			else if (id == TASK) return "task";
-			else if (id == MEETING) return "metting";
+			else if (id == MEETING) return "meeting";
 			else if (id ==CALL) return "call";
 			else return null;
 		}
@@ -26,7 +26,7 @@ public class Types {
 			}
 			if(label.equals("event")) return BASE;
 			else if (label.equals("task")) return TASK;
-			else if (label.equals("metting")) return MEETING;
+			else if (label.equals("meeting")) return MEETING;
 			else if (label.equals("call")) return CALL;
 			else return BASE;
 		}
@@ -39,10 +39,8 @@ public class Types {
 
 	public static class Comptes {
 
-		public final static Compte GOOGLE = new Compte(0, "Google", "gmail");
-
-
-		public final static Compte MYTIME = new Compte(1, "My Time", "imt");
+		public final static Compte GOOGLE = new Compte(1, "Google", "gmail");
+		public final static Compte MYTIME = new Compte(2, "My Time", "imt");
 
 		public static List<Compte> getAllCompte() {
 			List<Compte> all = new ArrayList<Types.Comptes.Compte>();
@@ -77,8 +75,11 @@ public class Types {
 		}
 
 		public static int getIdFromLabel(String label) {
-			if(label == MYTIME.label) {return MYTIME.id;}
-			if(label == GOOGLE.label) {return GOOGLE.id;}
+			if(label == null) {
+				return 0;
+			}
+			if(label.equals(MYTIME.label)) {return MYTIME.id;}
+			if(label.equals(GOOGLE.label)) {return GOOGLE.id;}
 			return 0;
 		}
 

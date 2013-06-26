@@ -22,7 +22,7 @@ public class WSSendPj extends WSPostBase<PjBean>{
 
 	@Override
 	public String getUrl() {
-		return "/api/attachment.json";
+		return "/api/attachment";
 	}
 	
 	@Override
@@ -32,7 +32,11 @@ public class WSSendPj extends WSPostBase<PjBean>{
 
 	@Override
 	public List<NameValuePair> intitialiseParams(List<NameValuePair> nameValuePairs) {
-        nameValuePairs.add(new BasicNameValuePair("attachment_id", String.valueOf(getObject().getIdDistant())));
+		if(getObject().getIdDistant() == 0) {
+	        nameValuePairs.add(new BasicNameValuePair("attachment_id", String.valueOf(0)));
+		} else {
+	        nameValuePairs.add(new BasicNameValuePair("attachment_id", String.valueOf(getObject().getIdDistant())));	
+		}
         nameValuePairs.add(new BasicNameValuePair("attachment_name", String.valueOf(getObject().getName())));
         nameValuePairs.add(new BasicNameValuePair("attachment_mime", String.valueOf(getObject().getMime())));
         nameValuePairs.add(new BasicNameValuePair("attachment_base64", String.valueOf(getObject().getBase64())));

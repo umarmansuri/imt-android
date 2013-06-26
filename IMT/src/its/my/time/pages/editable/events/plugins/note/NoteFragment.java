@@ -87,7 +87,7 @@ public class NoteFragment extends BasePluginFragment {
 		{
 			noteBean.setHtml(html);
 			Log.d("Webview","save html: " + html);
-			if(noteBean.getId() > -1) {
+			if(noteBean.getId() > 0) {
 				noteRepo.update(noteBean);	
 			} else {
 				noteBean.setId((int)noteRepo.insert(noteBean));

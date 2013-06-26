@@ -17,7 +17,7 @@ public class CommentBean extends PluginBaseBean{
 		super();
 		this.comment = new TableAttribut<String>("comment", "");
 		this.date = new TableAttribut<Calendar>("date", DateUtil.createCalendar());
-		this.uid = new TableAttribut<Long>("uid", -1l);
+		this.uid = new TableAttribut<Long>("uid", 0l);
 	}
 
 	public String getComment() {

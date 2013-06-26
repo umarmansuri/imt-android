@@ -16,8 +16,8 @@ public class ContactInfoBean extends BaseBean{
 	public ContactInfoBean() {
 		super();
 		value = new TableAttribut<String>("value", "");
-		type = new TableAttribut<Integer>("type", -1);
-		contactId = new TableAttribut<Long>("contactId", -1l);
+		type = new TableAttribut<Integer>("type", 0);
+		contactId = new TableAttribut<Long>("contactId", 0l);
 	}
 	
 	public String getValue() {

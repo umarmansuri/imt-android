@@ -14,8 +14,8 @@ public abstract class BaseBean {
 	private TableAttribut<Calendar> dateSync;
 
 	public BaseBean() {
-		idDistant = new TableAttribut<Integer>("idDistant", -1);
-		id = new TableAttribut<Integer>("id", -1);
+		idDistant = new TableAttribut<Integer>("idDistant", 0);
+		id = new TableAttribut<Integer>("id", 0);
 		dateModif = new TableAttribut<Calendar>("dateModif", DateUtil.createCalendar());
 		dateSync = new TableAttribut<Calendar>("dateSync", DateUtil.createCalendar());
 	}

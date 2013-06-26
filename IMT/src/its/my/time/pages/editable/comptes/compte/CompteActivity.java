@@ -40,7 +40,7 @@ public class CompteActivity extends BaseActivity implements OnClickListener, Tex
 	public void onCreate(Bundle savedInstance) {
 
 		final Bundle bundle = getIntent().getExtras();
-		if (bundle.getLong(ActivityUtil.KEY_EXTRA_ID) >= 0) {
+		if (bundle.getLong(ActivityUtil.KEY_EXTRA_ID) > 0) {
 			this.compte = new CompteRepository(this).getById(bundle.getLong(ActivityUtil.KEY_EXTRA_ID));
 			color = compte.getColor();
 		} else {

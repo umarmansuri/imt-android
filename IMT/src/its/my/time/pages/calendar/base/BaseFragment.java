@@ -284,7 +284,6 @@ public abstract class BaseFragment extends SherlockFragment{
 		}
 	};
 
-
 	public interface OnViewCreated {
 		public void onViewCreated(BaseView v);
 	}
