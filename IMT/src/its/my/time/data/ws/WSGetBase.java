@@ -36,8 +36,8 @@ public abstract class WSGetBase<T> extends WSBase{
 			return null;
 		}
 	}
-	
-	
+
+
 
 	public T retreiveObject() {
 		if(!ConnectionManager.isOnline(context)) {
@@ -47,15 +47,17 @@ public abstract class WSGetBase<T> extends WSBase{
 		try {
 			HttpClient client = createClient();
 			String urlStr = getUrl();
-			
-			URI website;
+
 			if(urlStr.startsWith("/")) {
 				urlStr = urlStr.substring(1);
 			}
-			if(!urlStr.endsWith("/")) {
-				urlStr = urlStr + "/";
+			if(!isUrlComplete()) {
+				if(!urlStr.endsWith("/")) {
+					urlStr = urlStr + "/";
+				}
+				urlStr = urlStr + id + ".json";
 			}
-			website = new URI(URL_BASE + urlStr + id + ".json");	
+			URI website = new URI(URL_BASE + urlStr);	
 
 			HttpGet request = new HttpGet();
 			String accessToken = PreferencesUtil.getCurrentAccessToken();
@@ -74,6 +76,10 @@ public abstract class WSGetBase<T> extends WSBase{
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public boolean isUrlComplete() {
+		return false;
 	}
 
 	public abstract String getUrl();

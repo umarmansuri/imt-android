@@ -4,7 +4,6 @@ import its.my.time.R;
 import its.my.time.data.bdd.events.details.call.CallDetailsBean;
 import its.my.time.pages.editable.events.call.CallActivity;
 import its.my.time.pages.editable.events.event.details.DetailsFragment;
-import its.my.time.util.CallManager;
 import its.my.time.util.Types;
 
 import java.text.SimpleDateFormat;
@@ -142,9 +141,9 @@ public class CallDetailsFragment extends DetailsFragment implements OnClickListe
 			} else if (phone != null && !phone.equals("")) {
 				launchPhoneCall(phone);
 			} else if (identifiant != null && !identifiant.equals("")) {
-				launchVoipCall(identifiant);
+				//TODO remettre pour call launchVoipCall(identifiant);
 			} else {
-				launchVoipCall("101");
+				//TODO remettre pour call launchVoipCall("101");
 			}
 		}
 	}
@@ -158,6 +157,8 @@ public class CallDetailsFragment extends DetailsFragment implements OnClickListe
 		startActivity(intent);
 	}
 
+
+	/*TODO remettre pour call
 	private void launchVoipCall(final String identifiant) {
 		new Thread(new Runnable() {
 			@Override public void run() {runVoipCall(identifiant);}
@@ -167,7 +168,7 @@ public class CallDetailsFragment extends DetailsFragment implements OnClickListe
 	private void runVoipCall(String identifiant2) {
 		CallManager.addListener(sipAudioCallListener);
 		CallManager.call(identifiant2);
-	}
+	}*/
 
 	private SipAudioCall currentCall = null;
 	private SipAudioCall.Listener sipAudioCallListener  = new SipAudioCall.Listener() {
@@ -205,7 +206,7 @@ public class CallDetailsFragment extends DetailsFragment implements OnClickListe
 	};;
 
 	public void closeCall() {
-		CallManager.hangup();
+		//TODO remettre pour call CallManager.hangup();
 		currentCall.close();
 		currentCall = null;
 		endCount();
@@ -214,7 +215,7 @@ public class CallDetailsFragment extends DetailsFragment implements OnClickListe
 		mButtonCall.setOnClickListener(CallDetailsFragment.this);
 		mButtonCall.setLayoutParams(layoutParamBtnCall);
 
-		CallManager.removeListener(sipAudioCallListener);
+		//TODO remettre pour call CallManager.removeListener(sipAudioCallListener);
 	}
 
 	private long launchTime;
@@ -283,7 +284,7 @@ public class CallDetailsFragment extends DetailsFragment implements OnClickListe
 			if(v.getId() == R.id.correspondant_phone) {
 				launchPhoneCall(phone);
 			} else if(v.getId() == R.id.correspondant_voip) {
-				launchVoipCall(identifiant);
+				//TODO remettre pour call launchVoipCall(identifiant);
 			}
 		}
 	}

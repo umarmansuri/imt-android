@@ -10,7 +10,6 @@ import its.my.time.data.ws.user.UtilisateurBeanWS;
 import its.my.time.data.ws.user.WSGetUser;
 import its.my.time.data.ws.user.WSSendUser;
 import its.my.time.util.ActivityUtil;
-import its.my.time.util.CallManager;
 import its.my.time.util.PreferencesUtil;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -24,7 +23,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -145,7 +143,7 @@ public class SplashActivity extends SherlockActivity {
 
 	private void launchActivity() {
 		ActivityUtil.startCalendarActivity(SplashActivity.this);
-		CallManager.initializeManager(getBaseContext());
+		//CallManager.initializeManager(getBaseContext());
 		String gcmId = GCMManager.initGcm(SplashActivity.this);
 		UtilisateurBean user = new UtilisateurRepository(SplashActivity.this).getByIdDistant(PreferencesUtil.getCurrentUid());
 		new WSSendUser(SplashActivity.this, user, gcmId, new WSPostBase.PostCallback<UtilisateurBean>() {

@@ -6,6 +6,7 @@ import its.my.time.pages.editable.events.plugins.EditableLittleView;
 import its.my.time.util.DateUtil;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.View;
 import android.widget.TextView;
 
 public class CommentairesView extends EditableLittleView {
@@ -23,8 +24,7 @@ public class CommentairesView extends EditableLittleView {
 
 	private void initialiseDetails() {
 		super.initialiseValues();
-		((TextView) findViewById(R.id.event_comment_date)).setText(DateUtil
-				.getLongDateTime(this.comment.getDate()));
+		((TextView) findViewById(R.id.event_comment_date)).setVisibility(View.GONE);
 		((TextView) findViewById(R.id.event_comment_comments))
 				.setText(this.comment.getComment());
 	}

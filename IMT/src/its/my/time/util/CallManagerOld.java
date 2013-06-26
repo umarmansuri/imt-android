@@ -13,7 +13,7 @@ import android.net.sip.SipProfile;
 import android.net.sip.SipRegistrationListener;
 
 
-public class CallManager {
+public class CallManagerOld {
 
 	protected static final String TAG = "SIP";
 
@@ -35,7 +35,7 @@ public class CallManager {
 
 		@Override
 		public void onCallEstablished(SipAudioCall call) {
-			CallManager.call = call;
+			CallManagerOld.call = call;
 			call.startAudio();
 			for (SipAudioCall.Listener listener : listeners) {
 				listener.onCallEstablished(call);	
@@ -44,7 +44,7 @@ public class CallManager {
 
 		@Override
 		public void onCallEnded(SipAudioCall call) {
-			CallManager.call = null;
+			CallManagerOld.call = null;
 			for (SipAudioCall.Listener listener : listeners) {
 				listener.onCallEnded(call);	
 			}
@@ -54,7 +54,7 @@ public class CallManager {
 	private static Context context;
 
 	public static void initializeManager(Context con) {
-		CallManager.context = con;
+		CallManagerOld.context = con;
 		NotifManager.showVoipNotifiaction(context, NotifManager.STATE_UNREGISTERED);
 		if(!PreferencesUtil.isVoipNetworkEnable() && ConnectionManager.isOnlineWithMobileNetwork(con)) {
 			return;

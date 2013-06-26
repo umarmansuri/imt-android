@@ -44,7 +44,6 @@ public class CommentairesFragment extends BasePluginFragment {
 				// TODO envoyer via ws
 				final CommentBean commentaire = new CommentBean();
 				commentaire.setComment(CommentairesFragment.this.mTextCommentaire.getText().toString());
-				commentaire.setDate(Calendar.getInstance());
 				commentaire.setEid(getParentActivity().getEvent().getId());
 				commentaire.setUid(PreferencesUtil.getCurrentUid());
 				final long res = new CommentRepository(getActivity()).insert(commentaire);

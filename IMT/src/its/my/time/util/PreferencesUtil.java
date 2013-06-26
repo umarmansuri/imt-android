@@ -181,9 +181,9 @@ public class PreferencesUtil {
 					@Override
 					public void run() {
 						if(!isVoipNetworkEnable() && ConnectionManager.isOnlineWithMobileNetwork(context)) {
-							CallManager.closeLocalProfile();
+							//CallManager.closeLocalProfile();
 						} else {
-							CallManager.initializeManager(context);
+							//CallManager.initializeManager(context);
 						}
 					}
 				}).start();
